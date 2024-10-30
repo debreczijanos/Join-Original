@@ -1,0 +1,83 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 232px;
+  height: 1024px;
+  background-color: #2a3647;
+  padding: 64px 0px;
+}
+
+.logo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.ofice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: center;
+
+  button {
+    padding: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #2a3647;
+    color: #cdcdcd;
+  }
+}
+
+.ofice > button:hover {
+  color: #29b2ea;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+
+  button {
+    border: none;
+    font-size: 16px;
+    font-weight: 400;
+    background-color: #2a3647;
+    color: #cdcdcd;
+  }
+}
+
+.menu > div:hover {
+  background-color: #293d59;
+  cursor: pointer;
+}
+
+.menu > div:hover button {
+  background-color: #293d59;
+  cursor: pointer;
+}
+
+.menu > div:hover img {
+  filter: brightness(0.8); /* Bild leicht abdunkeln */
+}
+
+.summary,
+.addTask,
+.board,
+.contacts {
+  display: flex;
+  gap: 20px;
+}
+
+.summaryMenu,
+.addTaskMenu,
+.boardMenu,
+.contactsMenu {
+  display: flex;
+  padding: 8px 56px;
+}
