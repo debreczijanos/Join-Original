@@ -1,10 +1,97 @@
-html{
-    font-family: 'Figtree';
-
+body {
+  max-width: 1440px;
+  width: 100%;
+  height: 1024px;
+  display: flex;
+  flex-direction: column;
 }
 
-body{
-    margin: 0;
-    padding: 0;
-    font-family: 'Figtree';
+button {
+  cursor: pointer;
+}
+
+.identify {
+  display: flex;
+  gap: 35px;
+  padding-top: 67px;
+  padding-left: 1039px;
+  align-items: center;
+}
+
+.identify > span {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.identify > button {
+  background-color: #2a3647;
+  padding: 15px 16px;
+  display: flex;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.logIn {
+  width: 652px;
+  height: 493px;
+  display: flex;
+  flex-direction: column;
+align-items: center;
+  gap: 32px;
+  padding: 48px 115px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px #0000000a;
+}
+
+.logInHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 315px;
+  height: 89px;
+}
+.logInHeader > span {
+  color: #000000;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 73.2px;
+  margin: 0;
+  padding: 0;
+}
+
+.logInHeader > hr {
+  border: 3px solid #29abe2;
+  width: 150px;
+}
+
+.logInDate{
+    display: flex;
+    flex-direction: column;
+    width: 422px;
+    height: 196px;
+    gap: 20px;
+}
+
+.logInPersonal{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 422px;
+    height: 152px;
+}
+
+.logInPersonal > input {
+    width: 422px;
+    height: 48px;
+    display: flex;
+    gap: 8px;
+    border: solid 1px #d1d1d1;
+    border-radius: 10px;
+    padding: 12px 21px;
 }
