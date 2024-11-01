@@ -18,32 +18,50 @@
     <!-- <div class="logoDark">
 <img src="./img/logoDark.png" alt="Logo">
 </div> -->
-
-    <div class="identify">
-        <span> Not a Join user?</span>
-        <button>Sign up</button>
-    </div>
-
-    <div class="logIn">
-        <div class="logInHeader">
-            <span>Log in</span>
-            <hr>
+    <div class="mein">
+        <div class="identify">
+            <span> Not a Join user?</span>
+            <button>Sign up</button>
         </div>
+        <div class="center">
+            <div class="logIn">
+                <div class="logInHeader">
+                    <span>Log in</span>
+                    <hr>
+                </div>
 
+                <form class="logInDate">
 
-        <div class="logInDate">
+                    <div class="logInPersonal">
+                        <div class="inputEmail">
+                            <input type="email" name="email" id="email" placeholder="Email" required>
+                            <img src="./img/mail.png" alt="mail Logo">
+                        </div>
 
-            <div class="logInPersonal">
-            <input type="email" name="email" id="email" placeholder="Email" required>
-            <input type="password" name="password" id="password" placeholder="Password" required >
+                        <div class="inputPasword">
+                            <input type="password" name="password" id="password" placeholder="Password" required>
+                            <img src="./img/lock.png" alt="Lock">
+
+                        </div>
+                        <p class="error">Check your email and pasword. Plase try again</p>
+                    </div>
+
+                    <div class="checkbox">
+                        <div class="checkboxResult">
+                            <input type="checkbox" name="checkbox" id="checkbox">
+                            <p>Remember me</p>
+                        </div>
+                        <button>I forgot my password</button>
+                    </div>
+
+                </form>
+                <div class="logInBtn">
+                    <button>Log In</button>
+                    <button>Guest Log in </button>
+                </div>
             </div>
-            <div>    
-            <input type="checkbox" name="checkbox" id="checkbox">
-            <p>Remember me</p>
-        </div>
         </div>
     </div>
-
 </body>
 
 </html>

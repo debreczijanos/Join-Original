@@ -1,9 +1,10 @@
-body {
+.mein {
   max-width: 1440px;
   width: 100%;
   height: 1024px;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 button {
@@ -16,6 +17,9 @@ button {
   padding-top: 67px;
   padding-left: 1039px;
   align-items: center;
+  margin: 0 auto;
+  max-width: 1440px;
+  width: 100%;
 }
 
 .identify > span {
@@ -39,7 +43,7 @@ button {
   height: 493px;
   display: flex;
   flex-direction: column;
-align-items: center;
+  align-items: center;
   gap: 32px;
   padding: 48px 115px;
   background-color: #ffffff;
@@ -68,30 +72,123 @@ align-items: center;
 .logInHeader > hr {
   border: 3px solid #29abe2;
   width: 150px;
+  margin-block: 0;
 }
 
-.logInDate{
-    display: flex;
-    flex-direction: column;
-    width: 422px;
-    height: 196px;
-    gap: 20px;
+.logInDate {
+  display: flex;
+  flex-direction: column;
+  width: 422px;
+  height: 196px;
+  gap: 20px;
 }
 
-.logInPersonal{
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    width: 422px;
-    height: 152px;
+.logInPersonal {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 422px;
+  height: 152px;
 }
 
-.logInPersonal > input {
-    width: 422px;
-    height: 48px;
-    display: flex;
-    gap: 8px;
-    border: solid 1px #d1d1d1;
-    border-radius: 10px;
-    padding: 12px 21px;
+.logInPersonal > .inputEmail {
+  width: 422px;
+  height: 48px;
+  display: flex;
+  gap: 10px;
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  padding: 12px 21px;
+}
+
+.logInPersonal > .inputEmail > input {
+  width: 380px;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+}
+
+.inputEmail:focus-within {
+  border-color: #29abe2; /* Farbe des Fokusrahmens */
+}
+
+.logInPersonal > .inputPasword {
+  width: 422px;
+  height: 48px;
+  display: flex;
+  gap: 10px;
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  padding: 12px 21px;
+}
+
+.logInPersonal > .inputPasword > input {
+  width: 380px;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+}
+
+.inputPasword:focus-within {
+  border-color: #29abe2; /* Farbe des Fokusrahmens */
+}
+
+.error{
+  padding: 5px;
+  margin: 0;
+  height: 12px;
+  font-size: 16px;
+    margin: 0;
+}
+
+
+.checkbox {
+  display: flex;
+  width: 422px;
+  height: 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkbox > button {
+  border: solid 2px #29ABE2;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px; 
+  font-size: 16px;
+  background: #29ABE2;
+}
+.checkboxResult{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 39px ;
+}
+#checkbox{
+  border-radius: 3px;
+}
+
+.checkbox > p{
+  font-size: 16px;
+  font-weight: 400;
+}
+.center {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
