@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <script src="../JS/contacts.js"></script>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+        }
+
+        .contacts-container{
+            height: 90vh;
+            width: 380px; 
+        }
+
+        .white-box{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .contact-baloon{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgb(122, 122, 209);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    
+      
+    </style>
+    
+</head>    
+<body onload="renderContacts()">
+
+    <section class="contacts-container">
+        <div id="prototype"></div>
+    </section>
+    
+</body>
+</html>

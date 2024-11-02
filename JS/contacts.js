@@ -25,16 +25,37 @@ let allContacts = [
 
 function renderContacts(){
     let contacts = document.getElementById('prototype'); 
-    content.innerHTML = ``; 
+    contacts.innerHTML = ``; 
 
-    for (let i = 0; i < allContacts.length; i++) {
-      document.getElementById('content').innerHTML += showRenderContacts(allContacts, i);
+    for (let i = 0; i < 1; i++) {
+      document.getElementById('prototype').innerHTML += showRenderContacts(allContacts, i);
     }
 }
 
 
 function showRenderContacts(allContacts, i){
-    return `<div><${allContacts[i]}div>`; // hier sollen die Kontakte dargestellt werden. Man könnte eine Liste separat erstellen und es wie bei der PokeAPI fetchen. (falls das möglich ist)
+    return /*html*/`
+
+
+    <div class="white-box">
+
+      <div class="contact-baloon">Test</div>
+
+      <div>
+        <h3>Name Surname</h3>
+        <span>mail adresse</span>
+      </div>
+      
+
+      </div>
+
+    </div>`; 
+    
+    
+    
+    
+    
+    // hier sollen die Kontakte dargestellt werden. Man könnte eine Liste separat erstellen und es wie bei der PokeAPI fetchen. (falls das möglich ist) Suchfunktion sollte hinzugefügt werden. 
 }
 
 
