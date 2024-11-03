@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/fonts.css">
+    <link rel="stylesheet" href="../style/singUp.css">
+    <link rel="stylesheet" href="../style/style.css">
+
+    <script src="../JS/navigateToIndex.js"></script>
+    <script src="../JS/signUpSubmit.js"></script>
+    
+    <title>Join</title>
+</head>
+
+<body>
+
+    <div class="mein-singUp">
+        <div class="logo">
+            <img src="../img/logoDark.png" alt="Logo">
+
+        </div>
+        <div class="center">
+            <img class="arrow-left-line" src="../img/arrow-left-line.png" alt="arrow left" onclick="navigateToIndex()" >
+            <div class="sign-up">
+                <div class="sign-up-header">
+                    <span>Sign up</span>
+                    <hr>
+                </div>
+
+
+                <form class="sign-up-daten">
+                    <div class="input-ctn">
+                        <div class="costume-input">
+                            <input type="text" required placeholder="Name ">
+                            <img src="../img/person.png" alt="person">
+                        </div>
+                        <div class="costume-input">
+                            <input type="email" required placeholder=" Email ">
+                            <img src="../img/mail.png" alt="mail">
+                        </div>
+                        <div class="costume-input">
+                            <input type="password" required placeholder="Password ">
+                            <img src="../img/lock.png" alt="lock">
+                        </div>
+                        <div class="costume-input">
+                            <input type="password" required placeholder=" Confirm Password ">
+                            <img src="../img/lock.png" alt="lock">
+                        </div>
+                
+                    <p class="error">Check your email and pasword. Plase try again</p>
+                
+                    </div>
+                    <div class="checkbox">
+                        <input type="checkbox">
+                        <span>I accept the <a href="../html/privacyPolicy.html"> Privacy policy </a> </span>
+                    </div>
+
+                    <button disabled class="sign-up-btn" id="submitButton">Sign up</button>
+                   
+                </form>
+            </div>
+        </div>
+        <div id="successMessage">Sie haben sich erfolgreich registriert!</div>
+        <footer>
+            <a href="../html/privacyPolicy.html">Privacy Policy </a>
+            <a href="../html/legalNotice.html"> Legal notice</a>
+        </footer>
+    </div>
+
+
+
+</body>
+
+</html>

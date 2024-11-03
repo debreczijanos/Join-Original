@@ -1,3 +1,6 @@
+body {
+  background-color: #f6f7f8;
+}
 .mein {
   max-width: 1440px;
   width: 100%;
@@ -11,7 +14,7 @@ button {
   cursor: pointer;
 }
 
-.logoDark{
+.logoDark {
   position: absolute;
   top: 80px;
   left: 77px;
@@ -45,8 +48,8 @@ button {
   border: none;
 }
 
-.identify > button:hover{
-  background-color: #29ABE2;
+.identify > button:hover {
+  background-color: #29abe2;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -123,7 +126,6 @@ button {
   flex: 1;
   font-size: 20px;
   font-weight: 400;
-  border: none;
 }
 
 .inputEmail:focus-within {
@@ -229,33 +231,33 @@ button {
   gap: 10px;
 }
 
-.logInButton:hover{
-  background-color: #29ABE2;
+.logInButton:hover {
+  background-color: #29abe2;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
 }
 
-.logInButtonGuest{
+.logInButtonGuest {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   height: 48px;
   padding: 15px 24px;
-  border: solid 1px #2A3647;
+  border: solid 1px #2a3647;
   border-radius: 8px;
-  background-color: #FFFFFF;
-  color: #2A3647;
+  background-color: #ffffff;
+  color: #2a3647;
   font-size: 21px;
   font-weight: 700;
 }
 
 .logInButtonGuest:hover {
-  color: #29ABE2;
-  border: 1px solid #29ABE2;
+  color: #29abe2;
+  border: 1px solid #29abe2;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
 }
 
-footer{
+footer {
   position: absolute;
   bottom: 35px;
   width: 100%;
@@ -265,24 +267,21 @@ footer{
   justify-content: center;
   gap: 8px;
 
-  a{
+  a {
     display: flex;
     padding: 8px;
     gap: 8px;
     font-size: 16px;
     font-weight: 400;
-    color: #A8A8A8;
+    color: #a8a8a8;
     text-decoration: none;
   }
 
-  a:hover{
-    color: #29ABE2;
+  a:hover {
+    color: #29abe2;
     font-weight: bold;
   }
 }
-
-
-
 
 .screen-Logo {
   display: flex;
@@ -290,11 +289,13 @@ footer{
   align-items: center;
   width: 100%;
   height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  background-color: white;
+  background-color: #f6f7f8;
   animation: logoScreen 1.5s forwards;
   animation-timing-function: ease;
   animation-delay: 1s;
@@ -328,38 +329,38 @@ footer{
 
 @keyframes JoinlogoScreen {
   from {
-      top: 50%;
-      left: 50%;
-      width: 274px;
-      height: 334px;
+    top: 50%;
+    left: 50%;
+    width: 274px;
+    height: 334px;
   }
   to {
-      top: 190px;
-      left: 150px;
-      width: 274px;
-      height: 334px;
+    top: 190px;
+    left: 150px;
+    width: 274px;
+    height: 334px;
   }
 }
 
 @keyframes logoScreen {
   0% {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      background-color: white;
-      z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    background-color: #f6f7f8;
+    z-index: 1000;
   }
   20% {
-      background-color: white;
+    background-color: #f6f7f8;
   }
   25% {
-      background-color: transparent;
+    background-color: transparent;
   }
   100% {
-      background: none;
-      transform: scale(0.5) translate(-50%, -50%);
-      opacity: 1;
-      z-index: -1;
+    background: none;
+    transform: scale(0.5) translate(-50%, -50%);
+    opacity: 1;
+    z-index: -1;
   }
 }

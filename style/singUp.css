@@ -1,0 +1,176 @@
+body {
+  background-color: #f6f7f8;
+}
+.mein-singUp {
+  max-width: 1440px;
+  height: 100vh;
+  width: 100%;
+  background-color: #f6f7f8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.logo {
+  position: absolute;
+  left: 77px;
+  top: 80px;
+}
+
+.sign-up {
+  width: 598px;
+  height: 630px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 48px 88px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px #0000000a;
+}
+
+.sign-up-header {
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+.sign-up-header > span {
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 73.2px;
+  margin: 0;
+  padding: 0;
+}
+
+.sign-up-header > hr {
+  border: 3px solid #29abe2;
+  height: auto;
+  width: 150px;
+  margin-block: 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 326px;
+  gap: 16px;
+}
+
+.input-ctn {
+  height: 286px;
+  width: 422px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.costume-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 422px;
+  height: 48px;
+  border-radius: 10px;
+  padding: 12px 21px;
+  border: solid 1px #d1d1d1;
+}
+
+.costume-input > input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: transparent;
+  justify-content: space-between;
+  height: 24px;
+  width: 380px;
+}
+
+.costume-input:focus-within {
+  border-color: #29abe2; /* Farbe des Fokusrahmens */
+}
+
+.error {
+  bottom: 20px !important;
+}
+
+.checkbox {
+  display: flex;
+  gap: 10px;
+  justify-content: center !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.checkbox > span > a {
+  color: #29abe2;
+  text-decoration: none;
+}
+
+.checkbox > span > a:hover {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.sign-up-btn {
+  display: flex;
+  padding: 15px 24px;
+  gap: 10px;
+  background-color: #2a3647;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 21px;
+  font-weight: 700;
+  width: 126px;
+  height: 55px;
+  cursor: default;
+}
+
+.sign-up-btn:hover:enabled {
+  background-color: #29abe2;
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.arrow-left-line {
+  cursor: pointer;
+  position: relative;
+  top: -230px;
+  left: 60px;
+  z-index: 1;
+}
+
+#successMessage {
+  display: none; /* Anfangs versteckt */
+  color: green;
+  font-weight: bold;
+  font-size: 24px;
+  position: fixed;
+  bottom: -50px; /* Startet unter dem Bildschirm */
+  left: 50%;
+  transform: translateX(-50%);
+  animation: slideUp 1s ease-out forwards;
+  text-align: center;
+  z-index: 1000; /* Über andere Elemente */
+}
+
+/* Animation für das Hochfahren des Texts */
+@keyframes slideUp {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 50%; /* Mitte des Bildschirms */
+    opacity: 1;
+  }
+}
