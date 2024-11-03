@@ -11,6 +11,12 @@ button {
   cursor: pointer;
 }
 
+.logoDark{
+  position: absolute;
+  top: 80px;
+  left: 77px;
+}
+
 .identify {
   display: flex;
   gap: 35px;
@@ -36,6 +42,12 @@ button {
   font-size: 16px;
   font-weight: 700;
   border-radius: 8px;
+  border: none;
+}
+
+.identify > button:hover{
+  background-color: #29ABE2;
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
 }
 
 .logIn {
@@ -145,14 +157,17 @@ button {
   border-color: #29abe2; /* Farbe des Fokusrahmens */
 }
 
-.error{
+.error {
+  position: relative;
+  bottom: 30px;
+  display: none;
+  margin-block: 0;
   padding: 5px;
   margin: 0;
   height: 12px;
   font-size: 16px;
-    margin: 0;
+  color: #ff8997;
 }
-
 
 .checkbox {
   display: flex;
@@ -163,32 +178,188 @@ button {
 }
 
 .checkbox > button {
-  border: solid 2px #29ABE2;
+  border: solid 2px #29abe2;
   border-radius: 8px;
-  display: flex;
-  gap: 10px; 
+  display: none;
+  gap: 10px;
   font-size: 16px;
-  background: #29ABE2;
+  background: #29abe2;
 }
-.checkboxResult{
+.checkboxResult {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-left: 39px ;
+  padding-left: 39px;
 }
-#checkbox{
+#checkbox {
   border-radius: 3px;
 }
 
-.checkbox > p{
+.checkbox > p {
   font-size: 16px;
   font-weight: 400;
 }
 .center {
   margin: 0 auto;
   width: 100%;
+  height: 100%;
   max-width: 1440px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.allLogInBtn {
+  display: flex;
+  gap: 35px;
+}
+
+.logInButton {
+  background-color: #2a3647;
+  color: #ffffff;
+  padding: 15px 24px;
+  border: none;
+  border-radius: 8px;
+  height: 48px;
+  font-size: 21px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.logInButton:hover{
+  background-color: #29ABE2;
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logInButtonGuest{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 15px 24px;
+  border: solid 1px #2A3647;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  color: #2A3647;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.logInButtonGuest:hover {
+  color: #29ABE2;
+  border: 1px solid #29ABE2;
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
+}
+
+footer{
+  position: absolute;
+  bottom: 35px;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  a{
+    display: flex;
+    padding: 8px;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #A8A8A8;
+    text-decoration: none;
+  }
+
+  a:hover{
+    color: #29ABE2;
+    font-weight: bold;
+  }
+}
+
+
+
+
+.screen-Logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: white;
+  animation: logoScreen 1.5s forwards;
+  animation-timing-function: ease;
+  animation-delay: 1s;
+  z-index: 1000;
+}
+
+.join-logo {
+  position: absolute;
+  width: 274px;
+  height: 334px;
+  top: 33%;
+  left: 42%;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+  animation: JoinlogoScreen 1.5s forwards;
+  animation-delay: 1s;
+}
+
+.final-logo {
+  display: none;
+  position: absolute;
+  width: 140px;
+  height: 190px;
+  top: 33%;
+  left: 33%;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+  animation: FinalLogoScreen 1.5s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes JoinlogoScreen {
+  from {
+      top: 50%;
+      left: 50%;
+      width: 274px;
+      height: 334px;
+  }
+  to {
+      top: 190px;
+      left: 150px;
+      width: 274px;
+      height: 334px;
+  }
+}
+
+@keyframes logoScreen {
+  0% {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      background-color: white;
+      z-index: 1000;
+  }
+  20% {
+      background-color: white;
+  }
+  25% {
+      background-color: transparent;
+  }
+  100% {
+      background: none;
+      transform: scale(0.5) translate(-50%, -50%);
+      opacity: 1;
+      z-index: -1;
+  }
 }
