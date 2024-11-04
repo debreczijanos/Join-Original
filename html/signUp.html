@@ -13,7 +13,7 @@
 
     <script src="../JS/navigateToIndex.js"></script>
     <script src="../JS/signUpSubmit.js"></script>
-    
+
     <title>Join</title>
 </head>
 
@@ -25,7 +25,7 @@
 
         </div>
         <div class="center">
-            <img class="arrow-left-line" src="../img/arrow-left-line.png" alt="arrow left" onclick="navigateToIndex()" >
+            <img class="arrow-left-line" src="../img/arrow-left-line.png" alt="arrow left" onclick="navigateToIndex()">
             <div class="sign-up">
                 <div class="sign-up-header">
                     <span>Sign up</span>
@@ -33,35 +33,31 @@
                 </div>
 
 
-                <form class="sign-up-daten">
+                <form class="sign-up-daten" id="signUpForm">
                     <div class="input-ctn">
                         <div class="costume-input">
-                            <input type="text" required placeholder="Name ">
+                            <input type="text" id="nameInput" required placeholder="Name ">
                             <img src="../img/person.png" alt="person">
                         </div>
                         <div class="costume-input">
-                            <input type="email" required placeholder=" Email ">
+                            <input type="email" id="emailInput" required placeholder="Email ">
                             <img src="../img/mail.png" alt="mail">
                         </div>
                         <div class="costume-input">
-                            <input type="password" required placeholder="Password ">
+                            <input type="password" id="passwordInput" required placeholder="Password ">
                             <img src="../img/lock.png" alt="lock">
                         </div>
                         <div class="costume-input">
-                            <input type="password" required placeholder=" Confirm Password ">
+                            <input type="password" id="confirmPasswordInput" required placeholder="Confirm Password ">
                             <img src="../img/lock.png" alt="lock">
                         </div>
-                
-                    <p class="error">Check your email and pasword. Plase try again</p>
-                
                     </div>
                     <div class="checkbox">
-                        <input type="checkbox">
+                        <input type="checkbox" id="acceptTerms">
                         <span>I accept the <a href="../html/privacyPolicy.html"> Privacy policy </a> </span>
                     </div>
 
                     <button disabled class="sign-up-btn" id="submitButton">Sign up</button>
-                   
                 </form>
             </div>
         </div>
