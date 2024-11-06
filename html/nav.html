@@ -8,14 +8,27 @@
     <link rel="stylesheet" href="../style/assets.css">
     <link rel="stylesheet" href="../style/nav.css">
     <link rel="stylesheet" href="../style/fonts.css">
-    
+    <link rel="stylesheet" href="../style/header.css">
 
-
+    <script src="../JS/navToggel.js"></script>
     <title>Join</title>
 </head>
 
 <body>
-
+    <header>
+        <p>Kanban Project Management Tool</p>
+        <div class="log-in-info">
+            <a href="#">
+                <img class="help" src="../img/help.png" alt="help img">
+            </a>
+            <button onclick="navToggel()" id="user-init"> GG </button>
+            <div class="nav-toggel" id="myLinks">
+                <button>Legal Notice</button>
+                <button>Provacy Policy</button>
+                <button>Log out</button>
+            </div>
+        </div>
+    </header>
     <div class="nav">
 
         <div class="logo">
@@ -57,6 +70,8 @@
         </div>
 
     </div>
+
+
 </body>
 
 </html>

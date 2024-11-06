@@ -1,0 +1,83 @@
+header {
+  width: 100vw;
+  /* max-width: calc(100vw - 232px); */
+  max-width: 1440px;
+  height: 96px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px 20px 348px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+}
+
+header > p {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: black;
+}
+
+.log-in-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+}
+
+.help:hover {
+  transform: scale(1.2);
+}
+
+#user-init {
+  display: flex;
+  border: 3px solid #2a3647;
+  border-radius: 100%;
+  width: 56px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+
+  color: #29abe2;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#user-init:hover {
+  background-color: #0c2e621f;
+  cursor: pointer;
+}
+
+.nav-toggel {
+  display: none;
+  flex-direction: column;
+  width: 150px;
+  height: 158px;
+  border-radius: 20px 0 20px 20px;
+  background-color: #2a3647;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 96px;
+  right: 0px;
+}
+
+.nav-toggel > button {
+  border: 0;
+  background-color: transparent;
+  width: 130px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #cdcdcd;
+}
+
+.nav-toggel > button:hover {
+  background-color: #2a3d59;
+}

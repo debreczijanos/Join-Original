@@ -3,9 +3,13 @@
   flex-direction: column;
   justify-content: space-between;
   width: 232px;
-  height: 1024px;
+  height: 100vh;
+  max-height: 1024px;
   background-color: #2a3647;
   padding: 64px 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .logo {
