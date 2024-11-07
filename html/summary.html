@@ -9,6 +9,7 @@
 
     <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
+    <script src="../JS/currentDate.js"></script>
     <title>Join</title>
 
 </head>
@@ -19,15 +20,77 @@
 
 
         <div class="mein-content">
-            <button>test
+            <div class="summary-header">
+                <span>Join 360</span>
+                <hr>
+                <p>Key Metrics at a Glance</p>
+            </div>
+            <div class="summary-ctn">
+                <div class="summary-to-do-done">
+                    <div class="ctn-to-do">
+                        <div class="pen-img">
+                            <img src="../img/pencilbg.png" alt="pen img ">
+                        </div>
+                        <div class="summary-number">
+                            <span> 0 </span>
+                            <p>To-do</p>
+                        </div>
+                    </div>
 
-            </button>
+                    <div class="ctn-done">
+                        <div class="ctn-to-do">
+                            <div class="check-img">
+                                <img src="../img/checkbg.png" alt="pen img ">
+                            </div>
+                            <div class="summary-number">
+                                <span> 0 </span>
+                                <p>Done</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="urgent-ctn">
+                    <div class="urgent-ctn-img">
+                        <img src="../img/urgent.png" alt="urgent img">
+                        <div class="urgent-ctn-number">
+                            <span>1 </span>
+                            <p>Urgent</p>
+                        </div>
+
+                    </div>
+                    <hr>
+                    <div class="date">
+                        <span id="current-date"> October 16, 2022</span>
+                        <p>Upcoming Deadline</p>
+                    </div>
+                </div>
+
+                <div class="tasks-ctn">
+                    <div class="tasks-ctn-board">
+                        <span> 5 </span>
+                        <p>tasks in Board</p>
+                    </div>
+                    <div class="tasks-ctn-board">
+                        <span>2</span>
+                        <p>Tasks in Progress</p>
+                    </div>
+                    <div class="tasks-ctn-board">
+                        <span>2</span>
+                        <p>Awaiting Feedback</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="greating">
+                <span>Good morning, </span>
+                <h1>Sofia Müller </h1>
+            </div>
         </div>
-    </div>
-    <script>
-        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-        includeHTML('#include-container', './nav.html');
-    </script>
+        <script>
+            // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+            includeHTML('#include-container', './nav.html');
+        </script>
 </body>
 
 </html>

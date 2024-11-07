@@ -7,11 +7,250 @@
   margin: 0 auto;
   position: relative;
 }
+
 .mein-content {
   display: flex;
   height: 100vh;
   max-height: 1024px;
-  margin-left: 232px; /* Platz für Sidebar lassen */
-  padding-top: 96px; /* Platz für Header lassen */
+  margin-left: 232px;
+  padding-top: 96px;
   box-sizing: border-box;
+}
+
+/* Gemeinsame Einstellungen für Container mit Hover-Effekt */
+.ctn-to-do,
+.urgent-ctn,
+.tasks-ctn-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 80ms ease-out;
+}
+
+.ctn-to-do:hover,
+.urgent-ctn:hover,
+.tasks-ctn-board:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  color: white;
+  background-color: #2a3647;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  height: 73px;
+  width: 625px;
+  position: absolute;
+  top: 206px;
+  left: 328px;
+}
+
+.summary-header > span {
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 73.2px;
+  color: #000000;
+}
+
+.summary-header > hr {
+  border: solid 3px #29abe2;
+  height: 59px;
+}
+
+.summary-header > p {
+  font-size: 27px;
+  line-height: 32.4px;
+  font-weight: 400;
+  color: #2a3647;
+}
+
+.summary-ctn {
+  position: absolute;
+  top: 335px;
+  left: 328px;
+  height: 562px;
+  width: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-to-do-done {
+  display: flex;
+  width: 560px;
+  height: 168px;
+  justify-content: space-between;
+}
+
+.ctn-to-do {
+  width: 264px;
+  height: 168px;
+  padding: 38px 19px;
+  gap: 18px;
+}
+
+.ctn-to-do:hover .pen-img {
+  content: url(../img/Frame59.png);
+  animation-duration: 80ms;
+}
+
+.ctn-to-do:hover .check-img {
+  content: url(../img/Frame599.png);
+}
+
+.urgent-ctn {
+  width: 560px;
+  height: 168px;
+  padding: 28px 48px;
+  gap: 61px;
+  transform-origin: top left;
+}
+
+.urgent-ctn-img {
+  width: 130px;
+  height: 96px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.urgent-ctn-img > img {
+  height: 60px;
+  width: 60px;
+}
+
+.urgent-ctn-number,
+.summary-number {
+  height: 101px;
+  width: 98px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.urgent-ctn-number > span,
+.summary-number > span {
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 76.8px;
+  margin: 0;
+}
+
+.urgent-ctn-number > p,
+.summary-number > p {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.urgent-ctn > hr {
+  border: solid 2px #d1d1d1;
+  height: 102.02px;
+}
+
+.urgent-ctn:hover hr {
+  border-color: white;
+}
+
+.urgent-ctn:hover .urgent-ctn-number span,
+.urgent-ctn:hover .urgent-ctn-number p,
+.urgent-ctn:hover .date span,
+.urgent-ctn:hover .date p {
+  color: white;
+}
+
+.date {
+  width: 178px;
+  height: 57px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.date > span {
+  margin: 0;
+  font-size: 21px;
+  line-height: 25.2px;
+  font-weight: 700;
+  color: #2a3647;
+}
+
+.date > p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 400;
+  color: #2a3647;
+}
+
+.tasks-ctn {
+  display: flex;
+  width: 560px;
+  height: 170px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tasks-ctn-board {
+  width: 168px;
+  height: 168px;
+  padding: 25px 0;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.tasks-ctn-board > span {
+  margin: 0;
+  font-size: 64px;
+  line-height: 68.8px;
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+}
+
+.tasks-ctn-board > p {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #2a3647;
+  text-align: center;
+  margin: 0;
+}
+
+.tasks-ctn-board:hover span,
+.tasks-ctn-board:hover p {
+  color: white;
+}
+
+.greating {
+  height: 136px;
+  width: 385px;
+  left: 968px;
+  top: 547.5px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.greating > span {
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 56.4px;
+  color: #2a3647;
+  margin: 0;
+  padding: 0;
+}
+
+.greating > h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 76.8px;
+  color: #29abe2;
+  margin-block: 0;
 }
