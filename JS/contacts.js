@@ -1,61 +1,52 @@
-let allContacts = [
-  {
-    nickname: 'bill',
-    firstName: "Bill",
-    lastName: "Stevens",
-    number: "07872937209",
-    address: ['Park Road', 'Blaby', 'Leicester', 46]
-  },
-  {
-    nickname: 'bill',
-    firstName: "William",
-    lastName: "Fisher",
-    number: "078729234209",
-    address: ['Moose Road', 'Whitby', 'Yorkshire', 146]
-  },
-  {
-    nickname: 'steve',
-    firstName: "Steve",
-    lastName: "Elliott",
-    number: "07970943757",
-    address: ['Park Road2', 'Blaby2', 'Leicester2', 462]
-  }
-];
+const ContactsURL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase.app/';
 
-
-function renderContacts(){
-    let contacts = document.getElementById('prototype'); 
-    contacts.innerHTML = ``; 
-
-    for (let i = 0; i < 1; i++) {
-      document.getElementById('prototype').innerHTML += showRenderContacts(allContacts, i);
+async function loadContacts() {
+    try {
+        let response = await fetch(ContactsURL + 'users.json');
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log("fetched Data:", data);
+        renderContacts(Object.values(data));
+    } catch (error) {
+        console.error("Failed to fetch contacts:", error);
     }
 }
 
 
-function showRenderContacts(allContacts, i){
-    return /*html*/`
+function renderContacts(allContacts) {
+    let contactCard = document.getElementById('contactId');
+    contactCard.innerHTML = '';
+
+    for (let i = 0; i < allContacts.length; i++) {
+        const contact = allContacts[i];
 
 
-    <div class="white-box">
+        const name = contact.name || "No Name";
+        const email = contact.email || "No Email";
+        const phone = contact.phone || "No Phone;"
 
-      <div class="contact-baloon">Test</div>
+        contactCard.innerHTML += showRenderedContactsMainData(i, {
+            name,
+            email,
+            phone
+        });
 
-      <div>
-        <h3>Name Surname</h3>
-        <span>mail adresse</span>
-      </div>
-      
-
-      </div>
-
-    </div>`; 
-    
-    
-    
-    
-    
-    // hier sollen die Kontakte dargestellt werden. Man könnte eine Liste separat erstellen und es wie bei der PokeAPI fetchen. (falls das möglich ist) Suchfunktion sollte hinzugefügt werden. 
+    }
 }
 
 
+function showRenderedContactsMainData(index, contact) {
+    return /*html*/ `
+    <div onclick="openContact(${index})">
+      <div class="contact-name">
+        <h3>${contact.name}</h3>
+      </div>
+      <div class="contact-details">
+        <span>Email: ${contact.email}</span>
+        <span>Phone: ${contact.phone}</span>
+      </div>
+    </div>
+  `
+}
