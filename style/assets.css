@@ -22,3 +22,22 @@ input {
 button {
   cursor: pointer;
 }
+
+.gesamt {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.mein-content {
+  display: flex;
+  height: 100vh;
+  max-height: 1024px;
+  margin-left: 232px;
+  padding-top: 96px;
+  box-sizing: border-box;
+}

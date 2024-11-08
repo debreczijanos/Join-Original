@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/addTask.css">
+
+    <script src="../JS/assignedDropdown.js"></script>
+    <script src="../JS/navToggel.js"></script>
+    <script src="../JS/includeHTML.js"></script>
+
+    <title>Join</title>
+</head>
+
+<body>
+
+
+    <div class="gesamt">
+        <div id="include-container"></div>
+
+        <div class="mein-content">
+
+            <div class="add-task-header">
+                <span>Add Task</span>
+            </div>
+
+            <div class="add-task-ctn">
+                <div class="add-task-title">
+                    <label for="title">Title <span>*</span> </label>
+                    <input type="text" name="title" id="title" placeholder="Enter a title" required>
+                </div>
+
+                <div class="add-task-description">
+                    <label for="desctiption">Description</label>
+                    <textarea name="desctiption" id="description" placeholder="Enter a Description"> </textarea>
+                </div>
+
+                <div class="add-task-assigned">
+                    <label for="assigned">Assigned to</label>
+
+
+                    <div class="dropdown">
+                        <input type="text" id="dropdownInput" placeholder="Select contacts to assign"
+                            onclick="toggleDropdown()" onkeyup="filterList()">
+                        <img class="dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
+                        <div id="dropdownMenu" class="dropdown-menu">
+                            <!-- Kontakte werden hier dynamisch eingefügt -->
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+        includeHTML('#include-container', './nav.html');
+
+    </script>
+</body>
+
+</html>

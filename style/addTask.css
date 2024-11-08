@@ -1,0 +1,163 @@
+.add-task-header {
+  position: absolute;
+  top: 206px;
+  left: 328px;
+}
+
+.add-task-header > span {
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 73.2px;
+  color: #000000;
+}
+
+.add-task-ctn,
+.add-task-title,
+.add-task-description,
+.add-task-assigned {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+}
+
+.add-task-ctn {
+  position: absolute;
+  top: 327px;
+  left: 328px;
+  height: 376px;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.add-task-title {
+  justify-content: center;
+  gap: 8px;
+
+  height: 96px;
+}
+
+.add-task-title > label,
+.add-task-title > label > span,
+.add-task-description > label,
+.add-task-assigned > label {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+label {
+  color: #2a3647;
+}
+
+label > span {
+  color: red;
+}
+
+#title,
+#description,
+.dropdown {
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+}
+#title {
+  width: 440px;
+  height: 48px;
+  padding: 12px 21px;
+}
+
+#title:focus-within,
+#description:focus-within {
+  border-color: #29abe2;
+  outline: none;
+}
+
+#title > ::placeholder,
+#description > ::placeholder-shown {
+  color: #d1d1d1;
+}
+
+.add-task-description {
+  height: 168px;
+  gap: 8px;
+}
+
+.add-task-description > textarea {
+  padding: 18px 16px;
+  max-width: 440px;
+  max-height: 100%;
+}
+
+.add-task-assigned {
+  height: 80px;
+  gap: 8px;
+}
+
+.dropdown {
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#dropdownInput {
+  width: 100%;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  border: none;
+  background-color: transparent;
+}
+
+#dropdownInput::placeholder {
+  color: #000000;
+}
+
+#dropdownInput:focus-within {
+  outline: none;
+}
+
+.dropdown-arrow {
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown-arrow:hover {
+  background-color: #d1d1d1;
+  border-radius: 50%;
+  padding: 0.01px;
+}
+/* muss noch gemacht werden  */
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-menu label {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-menu label:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-menu input[type="checkbox"] {
+  margin-right: 10px;
+}
