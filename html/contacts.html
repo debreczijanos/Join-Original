@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts</title>
-    <script src="../JS/contacts.js"></script>
+
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/summary.css">
+
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/fonts.css">
+    <link rel="stylesheet" href="../style/nav.css">
+    <link rel="stylesheet" href="../style/assets.css">
+
+    <script src="../JS/navToggel.js"></script>
+    <script src="../JS/includeHTML.js"></script>
+    <script src="../JS/currentDate.js"></script>
+    <title>Join</title>
 
     <style>
-        body{
+        body {
             display: flex;
             justify-content: center;
         }
 
-        .contacts-container{
+        .contacts-container {
             height: 90vh;
-            width: 380px; 
+            width: 380px;
         }
 
-        .white-box{
+        .white-box {
             display: flex;
             justify-content: space-evenly;
             align-items: center;
         }
 
-        .contact-baloon{
+        .contact-baloon {
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -33,13 +46,28 @@
             align-items: center;
         }
     </style>
-    
-</head>    
+
+</head>
+
 <body onload="loadContacts()">
 
-    <section class="contacts-container">
-        <div id="contactId"></div>
-    </section>
-    
+   
+    <div class="gesamt">
+        <div id="include-container"></div>
+
+
+        <div class="mein-content">
+
+            <section class="contacts-container">
+                <div id="contactId"></div>
+            </section>
+
+        </div>
+
+        <script>
+            // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+            includeHTML('#include-container', './nav.html');
+        </script>
 </body>
+
 </html>
