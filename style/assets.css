@@ -41,3 +41,8 @@ button {
   padding-top: 96px;
   box-sizing: border-box;
 }
+
+.filter-color-to-white {
+  filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1000%)
+    contrast(100%);
+}

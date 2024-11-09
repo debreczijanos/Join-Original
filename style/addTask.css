@@ -14,7 +14,10 @@
 .add-task-ctn,
 .add-task-title,
 .add-task-description,
-.add-task-assigned {
+.add-task-assigned,
+.add-task-date,
+.add-task-date-value,
+.add-task-date-prio {
   display: flex;
   flex-direction: column;
   width: 440px;
@@ -40,7 +43,10 @@
 .add-task-title > label,
 .add-task-title > label > span,
 .add-task-description > label,
-.add-task-assigned > label {
+.add-task-assigned > label,
+.add-task-date-value > label,
+.add-task-date-prio > label,
+.add-task-date-category {
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
@@ -70,7 +76,8 @@ label > span {
 }
 
 #title:focus-within,
-#description:focus-within {
+#description:focus-within,
+.add-task-date-value > input:focus-within {
   border-color: #29abe2;
   outline: none;
 }
@@ -89,6 +96,7 @@ label > span {
   padding: 18px 16px;
   max-width: 440px;
   max-height: 100%;
+  color: #000000;
 }
 
 .add-task-assigned {
@@ -160,4 +168,86 @@ label > span {
 
 .dropdown-menu input[type="checkbox"] {
   margin-right: 10px;
+}
+
+/*  ab hier erledigt  */
+
+.partition {
+  border: 1px solid #d1d1d1;
+  width: 0;
+  height: 424px;
+  position: absolute;
+  top: 327px;
+  left: 816.25px;
+}
+
+.add-task-date {
+  position: absolute;
+  top: 327px;
+  left: 864.25px;
+  height: 416px;
+}
+
+.add-task-date-value {
+  height: 96px;
+  gap: 8px;
+}
+
+.add-task-date-prio {
+  height: 88px;
+  gap: 8px;
+}
+
+.add-task-date-value > input {
+  height: 48px;
+  width: 440px;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: solid 1px #d1d1d1;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.prio-btn {
+  width: 440px;
+  height: 56px;
+  display: flex;
+  gap: 16px;
+}
+
+.prio-btn > button {
+  border: none;
+  border-radius: 10px;
+  padding: 16px 10px;
+  width: 136px;
+  height: 56px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000000;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prio-btn > button:hover {
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.prio-btn button.urgent.active {
+  background-color: #ff3d00;
+  color: white;
+}
+
+.prio-btn button.medium.active {
+  background-color: #ffa800;
+  color: white;
+}
+
+.prio-btn button.low.active {
+  background-color: #7ae229;
+  color: white;
 }
