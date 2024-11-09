@@ -86,3 +86,8 @@
   display: flex;
   padding: 8px 56px;
 }
+
+.bottom-menu-link a {
+  text-decoration: none;
+  color: #a8a8a8;
+}
