@@ -17,7 +17,9 @@
 .add-task-assigned,
 .add-task-date,
 .add-task-date-value,
-.add-task-date-prio {
+.add-task-date-prio,
+.add-task-date-category,
+.add-subtasks {
   display: flex;
   flex-direction: column;
   width: 440px;
@@ -36,7 +38,6 @@
 .add-task-title {
   justify-content: center;
   gap: 8px;
-
   height: 96px;
 }
 
@@ -46,7 +47,9 @@
 .add-task-assigned > label,
 .add-task-date-value > label,
 .add-task-date-prio > label,
-.add-task-date-category {
+.add-task-date-category > label,
+.add-subtasks > label,
+.subtasks-wrapper > input {
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
@@ -62,7 +65,8 @@ label > span {
 
 #title,
 #description,
-.dropdown {
+.dropdown,
+.custom-dropdown {
   border: solid 1px #d1d1d1;
   border-radius: 10px;
   font-size: 20px;
@@ -77,13 +81,15 @@ label > span {
 
 #title:focus-within,
 #description:focus-within,
-.add-task-date-value > input:focus-within {
+.add-task-date-value > input:focus-within,
+.custom-dropdown:focus-within {
   border-color: #29abe2;
   outline: none;
 }
 
 #title > ::placeholder,
-#description > ::placeholder-shown {
+#description > ::placeholder-shown,
+.subtasks-wrapper > input ::placeholder {
   color: #d1d1d1;
 }
 
@@ -99,12 +105,15 @@ label > span {
   color: #000000;
 }
 
-.add-task-assigned {
+.add-task-assigned,
+.add-task-date-category,
+.add-subtasks {
   height: 80px;
   gap: 8px;
 }
 
-.dropdown {
+.dropdown,
+.custom-dropdown {
   width: 100%;
   height: 48px;
   padding: 12px 16px;
@@ -112,7 +121,8 @@ label > span {
   justify-content: space-between;
 }
 
-#dropdownInput {
+#dropdownInput,
+#customDropdownInput {
   width: 100%;
   color: #000000;
   font-size: 20px;
@@ -122,20 +132,25 @@ label > span {
   background-color: transparent;
 }
 
-#dropdownInput::placeholder {
+#dropdownInput::placeholder,
+#customDropdownInput::placeholder {
   color: #000000;
 }
 
-#dropdownInput:focus-within {
+#dropdownInput:focus-within,
+#customDropdownInput:focus-within,
+.subtasks-wrapper > input:focus-within {
   outline: none;
 }
 
-.dropdown-arrow {
+.dropdown-arrow,
+#iconAdd {
   width: 24px;
   height: 24px;
 }
 
-.dropdown-arrow:hover {
+.dropdown-arrow:hover,
+#iconAdd:hover {
   background-color: #d1d1d1;
   border-radius: 50%;
   padding: 0.01px;
@@ -250,4 +265,48 @@ label > span {
 .prio-btn button.low.active {
   background-color: #7ae229;
   color: white;
+}
+
+/* Styling für den Custom Dropdown */
+
+#customDropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+}
+
+.custom-dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.subtasks-wrapper {
+  display: flex;
+  width: 440px;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: space-between;
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+}
+
+.subtasks-wrapper > input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.subtasks-wrapper.focused {
+  border-color: #29abe2; /* Beispiel: Blau bei Fokus */
+}
+
+.hidden {
+  display: none;
 }
