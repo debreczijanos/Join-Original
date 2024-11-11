@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/Legal-Helpp_privacy.css">
     <link rel="stylesheet" href="../style/privacyPolicy.css">
     <link rel="stylesheet" href="../style/fonts.css">
+
+    <script src="../JS/navToggel.js"></script>
+    <script src="../JS/includeHTML.js"></script>
+    <script src="../JS/currentDate.js"></script>
 
     <title>Document</title>
 </head>
 
 
 <body>
+
+  <div class="gesamt">
+    <div id="include-container"></div>
+
+
+    <div class="mein-content">
+
+        <section class="contacts-container">
+            <div id="contactId"></div>
+        </section>
+
     <section>
         <div class="header">
           <h1 class="responsiceH1">Privacy Police</h1>
@@ -66,7 +84,7 @@
           </p>
           <p>
             Impressum:
-            <a href="https://join-388.developerakademie.net/impressum.html" target="_blank">https://join-361.developerakademie.net/impressum.html</a>
+            <a href="https://join-388.developerakademie.net/impressum.html" target="_blank">https://join-388.developerakademie.net/impressum.html</a>
           </p>
           <h2 id="mOverview">Übersicht der Verarbeitungen</h2>
           <p>
@@ -499,5 +517,9 @@
           et, imperdiet semper justo. 
         </p>
       </section>
+      <script>
+        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+        includeHTML('#include-container', './nav.html');
+    </script>
 </body>
 </html>
