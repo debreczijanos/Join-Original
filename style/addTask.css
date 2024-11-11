@@ -14,7 +14,12 @@
 .add-task-ctn,
 .add-task-title,
 .add-task-description,
-.add-task-assigned {
+.add-task-assigned,
+.add-task-date,
+.add-task-date-value,
+.add-task-date-prio,
+.add-task-date-category,
+.add-subtasks {
   display: flex;
   flex-direction: column;
   width: 440px;
@@ -33,14 +38,20 @@
 .add-task-title {
   justify-content: center;
   gap: 8px;
-
   height: 96px;
 }
 
 .add-task-title > label,
 .add-task-title > label > span,
 .add-task-description > label,
-.add-task-assigned > label {
+.add-task-assigned > label,
+.add-task-date-value > label,
+.add-task-date-prio > label,
+.add-task-date-category > label,
+.add-subtasks > label,
+.subtasks-wrapper > input,
+.required,
+.clear-btn {
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
@@ -50,18 +61,21 @@ label {
   color: #2a3647;
 }
 
-label > span {
+label > span,
+p > span {
   color: red;
 }
 
 #title,
 #description,
-.dropdown {
+.dropdown,
+.custom-dropdown {
   border: solid 1px #d1d1d1;
   border-radius: 10px;
   font-size: 20px;
   line-height: 24px;
   font-weight: 400;
+  background-color: #ffffff;
 }
 #title {
   width: 440px;
@@ -70,13 +84,16 @@ label > span {
 }
 
 #title:focus-within,
-#description:focus-within {
+#description:focus-within,
+.add-task-date-value > input:focus-within,
+.custom-dropdown:focus-within {
   border-color: #29abe2;
   outline: none;
 }
 
 #title > ::placeholder,
-#description > ::placeholder-shown {
+#description > ::placeholder-shown,
+.subtasks-wrapper > input ::placeholder {
   color: #d1d1d1;
 }
 
@@ -89,14 +106,18 @@ label > span {
   padding: 18px 16px;
   max-width: 440px;
   max-height: 100%;
+  color: #000000;
 }
 
-.add-task-assigned {
+.add-task-assigned,
+.add-task-date-category,
+.add-subtasks {
   height: 80px;
   gap: 8px;
 }
 
-.dropdown {
+.dropdown,
+.custom-dropdown {
   width: 100%;
   height: 48px;
   padding: 12px 16px;
@@ -104,7 +125,8 @@ label > span {
   justify-content: space-between;
 }
 
-#dropdownInput {
+#dropdownInput,
+#customDropdownInput {
   width: 100%;
   color: #000000;
   font-size: 20px;
@@ -114,20 +136,29 @@ label > span {
   background-color: transparent;
 }
 
-#dropdownInput::placeholder {
+#dropdownInput::placeholder,
+#customDropdownInput::placeholder {
   color: #000000;
 }
 
-#dropdownInput:focus-within {
+#dropdownInput:focus-within,
+#customDropdownInput:focus-within,
+.subtasks-wrapper > input:focus-within {
   outline: none;
 }
 
-.dropdown-arrow {
+.dropdown-arrow,
+#iconAdd {
   width: 24px;
   height: 24px;
 }
 
-.dropdown-arrow:hover {
+.dropdown {
+  background-color: #ffffff;
+}
+
+.dropdown-arrow:hover,
+.subtask-icon:hover {
   background-color: #d1d1d1;
   border-radius: 50%;
   padding: 0.01px;
@@ -137,10 +168,11 @@ label > span {
 .dropdown-menu {
   display: none;
   position: absolute;
+  top: 96%;
+  left: 0;
   width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: #ffffff;
+  border-radius: 10px;
   max-height: 150px;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -150,14 +182,302 @@ label > span {
 .dropdown-menu label {
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
 }
 
 .dropdown-menu label:hover {
-  background-color: #f1f1f1;
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
+
+.dropdown-menu label button {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .dropdown-menu input[type="checkbox"] {
-  margin-right: 10px;
+  position: absolute;
+  right: 22px;
+  cursor: pointer;
+}
+
+/*  ab hier erledigt  */
+
+.partition {
+  border: 1px solid #d1d1d1;
+  width: 0;
+  height: 424px;
+  position: absolute;
+  top: 327px;
+  left: 816.25px;
+}
+
+.add-task-date {
+  position: absolute;
+  top: 327px;
+  left: 864.25px;
+  height: 416px;
+}
+
+.add-task-date-value {
+  height: 96px;
+  gap: 8px;
+}
+
+.add-task-date-prio {
+  height: 88px;
+  gap: 8px;
+}
+
+.add-task-date-value > input {
+  height: 48px;
+  width: 440px;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: solid 1px #d1d1d1;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.prio-btn {
+  width: 440px;
+  height: 56px;
+  display: flex;
+  gap: 16px;
+}
+
+.prio-btn > button {
+  border: none;
+  border-radius: 10px;
+  padding: 16px 10px;
+  width: 136px;
+  height: 56px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000000;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prio-btn > button:hover {
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.prio-btn button.urgent.active {
+  background-color: #ff3d00;
+  color: white;
+}
+
+.prio-btn button.medium.active {
+  background-color: #ffa800;
+  color: white;
+}
+
+.prio-btn button.low.active {
+  background-color: #7ae229;
+  color: white;
+}
+
+/* Styling für den Custom Dropdown */
+
+#customDropdownMenu {
+  position: absolute;
+  top: 64%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.custom-dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #eeeeee;
+}
+
+.subtasks-wrapper {
+  display: flex;
+  width: 440px;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: space-between;
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  cursor: text;
+  background-color: #ffffff;
+}
+
+.subtasks-wrapper > input {
+  border: none;
+  outline: none;
+  flex: 1;
+  background-color: transparent;
+}
+
+.subtasks-wrapper.focused {
+  border-color: #29abe2;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Liste der Subtasks */
+.subtask-list {
+  height: 90px;
+  width: 440px;
+  overflow-y: auto; /* Vertikalen Scrollbalken anzeigen */
+  overflow-x: hidden; /* Horizontales Scrollen verhindern */
+  position: absolute;
+  top: 83%;
+}
+
+/* Subtask-Item */
+.subtask-item {
+  padding: 10px;
+
+  background-color: transparent;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover-Effekt für Subtask */
+.subtask-item:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+/* Icons für Bearbeiten und Löschen */
+.subtask-actions {
+  display: none;
+}
+
+.subtask-item:hover .subtask-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.subtask-icon-action {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.subtask-icon-action:hover {
+  transform: scale(1.2);
+}
+
+/* Vertikaler Scrollbalken */
+.subtask-list::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.subtask-list::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.subtask-list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.subtask-list::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.subtask-list::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
+/* Trennlinie */
+.divider {
+  width: 1px; /* Breite der Linie */
+  height: 20px; /* Höhe passend zu den Icons */
+  background-color: #d1d1d1; /* Farbe der Linie */
+  margin: 0 2px; /* Abstand zwischen den Icons und der Linie */
+}
+
+.required {
+  position: absolute;
+  top: 926px;
+  left: 328px;
+}
+
+.submit-btn {
+  position: absolute;
+  top: 889px;
+  left: 995.25px;
+  display: flex;
+  gap: 16px;
+  width: 309px;
+  height: 56px;
+  justify-content: center;
+  align-items: center;
+}
+.clear-btn,
+.create-task-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 56px;
+  gap: 4px;
+  padding: 16px;
+}
+
+.clear-btn {
+  border: solid 1px #2a3647;
+  color: #2a3647;
+  width: 110px;
+  background-color: #f6f7f8;
+}
+
+.create-task-btn {
+  border: none;
+  color: white;
+  background-color: #2a3647;
+  width: 183px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+.clear-btn:hover {
+  color: #29abe2;
+  border: solid 1px #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.create-task-btn:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
