@@ -81,8 +81,7 @@
                         <input type="text" id="customDropdownInput" placeholder="Select task category" required>
                         <img class="dropdown-arrow dropdown-arrow-img" src="../img/arrow_drop_down.png " alt="dropdown">
 
-                        <div id="customDropdownMenu"
-                            style="display:none; border: 1px solid #ccc; padding: 5px; max-height: 100px; overflow-y: auto;">
+                        <div id="customDropdownMenu" style="display:none; max-height: 100px; overflow-y: auto;">
                             <div class="custom-dropdown-item">Technical Task</div>
                             <div class="custom-dropdown-item">User Story</div>
                         </div>
@@ -91,54 +90,34 @@
 
                 <div class="add-subtasks">
                     <label for="subtasks">Subtasks</label>
-                    <div class="subtasks-wrapper">
+                    <div class="subtasks-wrapper" onclick="focusInput()">
                         <input type="text" id="subtaskInput" placeholder="Add new subtask">
                         <img class="subtask-icon" id="iconAdd" src="../img/subTaskIcon.svg" alt="Add subtask">
-                        <img class="subtask-icon hidden" id="iconCancel" src="../img/cancel-icon.svg" alt="Cancel"
-                            onclick="clearInput()">
-                        <img class="subtask-icon hidden" id="iconConfirm" src="../img/check-icon.svg" alt="Confirm">
+                        <img class="subtask-icon hidden" id="iconCancel" src="../img/subTaskCancel.svg" alt="Cancel"
+                            onclick="clearInput(event)">
+                        <img class="subtask-icon hidden" id="iconConfirm" src="../img/subTaskEnter.svg" alt="Confirm"
+                            onclick="addSubtask(event)">
+                    </div>
+
+                    <div class="subtask-list" id="subtaskList">
+                        <!-- Subtasks werden hier dynamisch eingefügt -->
                     </div>
                 </div>
             </div>
+            <div class="required">
+                <p><span>*</span>This filed is required</p>
+            </div>
 
+            <div class="submit-btn">
+                <button class="clear-btn">Clear X</button>
+                <button class="create-task-btn">Create Task <img src="../img/check.svg" alt="Check"></button>
+            </div>
         </div>
     </div>
 
 
     <script src="../JS/addTask.js"></script>
-
-    <script>
-        const subtaskInput = document.getElementById("subtaskInput");
-        const iconAdd = document.getElementById("iconAdd");
-        const iconCancel = document.getElementById("iconCancel");
-        const iconConfirm = document.getElementById("iconConfirm");
-        const subtasksWrapper = document.querySelector(".subtasks-wrapper");
-
-        // Event: Fokus auf Input
-        subtaskInput.addEventListener("focus", () => {
-            subtasksWrapper.classList.add("focused"); // Fokusrand
-            iconAdd.classList.add("hidden"); // Plus-Icon ausblenden
-            iconCancel.classList.remove("hidden"); // Cancel-Icon anzeigen
-            iconConfirm.classList.remove("hidden"); // Confirm-Icon anzeigen
-        });
-
-        // Event: Fokusverlust (Blur)
-        subtaskInput.addEventListener("blur", () => {
-            // Wenn das Eingabefeld leer ist, wechsle zurück zu Plus-Icon
-            if (subtaskInput.value.trim() === "") {
-                subtasksWrapper.classList.remove("focused"); // Fokus entfernen
-                iconAdd.classList.remove("hidden"); // Plus-Icon anzeigen
-                iconCancel.classList.add("hidden"); // Cancel-Icon ausblenden
-                iconConfirm.classList.add("hidden"); // Confirm-Icon ausblenden
-            }
-        });
-
-        // Event: Eingabe löschen (Cancel-Icon)
-        function clearInput() {
-            subtaskInput.value = ""; // Eingabefeld leeren
-            subtaskInput.focus(); // Fokus zurück auf Input setzen
-        }
-    </script>
+    <script src="../JS/addSubtask.js"></script>
 </body>
 
 </html>

@@ -44,14 +44,36 @@ async function loadContacts() {
         checkbox.type = "checkbox";
         checkbox.value = contact.name; // Name des Kontakts
 
-        label.appendChild(checkbox);
+        // Button mit dem Anfangsbuchstaben des Namens erstellen
+        const button = document.createElement("button");
+        button.textContent = contact.name.charAt(0).toUpperCase(); // Erster Buchstabe
+        button.style.marginRight = "10px"; // Abstand zum Namen
+
+        // Dynamische Hintergrundfarbe setzen
+        const firstLetter = contact.name.charAt(0).toUpperCase();
+        button.style.backgroundColor = generateColorFromLetter(firstLetter);
+
+        // Button und Name in das Label einfügen
+        label.appendChild(button);
         label.appendChild(document.createTextNode(contact.name));
+
+        // Checkbox ans Ende hinzufügen
+        label.appendChild(checkbox);
+
+        // Label ins Dropdown-Menü einfügen
         dropdownMenu.appendChild(label);
       }
     }
   } catch (error) {
     console.error("Fehler beim Laden der Kontakte:", error);
   }
+}
+
+// Funktion zur Erzeugung dynamischer Farben basierend auf dem Buchstaben
+function generateColorFromLetter(letter) {
+  const charCode = letter.toUpperCase().charCodeAt(0); // ASCII-Wert des Buchstabens
+  const hue = (charCode - 65) * 15; // Umwandlung in Farbton (HSL)
+  return `hsl(${hue}, 70%, 50%)`; // Dynamische Farbe (Farbton, Sättigung, Helligkeit)
 }
 
 // Funktion wird einmal beim Laden der Seite aufgerufen, um die Kontakte zu laden

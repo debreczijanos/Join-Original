@@ -46,3 +46,35 @@ button {
   filter: invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(1000%)
     contrast(100%);
 }
+
+/* Verstecke die Standard-Checkbox */
+input[type="checkbox"] {
+  appearance: none; /* Entfernt das native Checkbox-Styling */
+  -webkit-appearance: none; /* Für Safari */
+  width: 20px; /* Größe der Checkbox */
+  height: 20px;
+  background-color: transparent; /* Hintergrund */
+  border: 2px solid black; /* Schwarzer Rahmen */
+  border-radius: 4px; /* Leicht gerundete Ecken */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Styling für die Checkbox, wenn sie aktiv ist */
+input[type="checkbox"]:checked {
+  background-color: white; /* Hintergrundfarbe beim Aktivieren */
+  border: 2px solid black;
+}
+
+input[type="checkbox"]:checked::after {
+  content: ""; /* Der Haken */
+  display: block;
+  width: 6px;
+  height: 18px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: relative;
+  top: -6px;
+  left: 8px;
+}
