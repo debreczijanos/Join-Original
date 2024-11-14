@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../style/addTask.css">
 
-    <script src="../JS/assignedDropdown.js"></script>
+
     <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
 
@@ -46,11 +46,14 @@
 
                     <div class="dropdown">
                         <input type="text" id="dropdownInput" placeholder="Select contacts to assign"
-                            onclick="toggleDropdown()" onkeyup="filterList()">
+                            onclick="toggleDropdown('dropdownMenu')">
                         <img class="dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
                         <div id="dropdownMenu" class="dropdown-menu">
 
                         </div>
+
+                        <!-- Neuer Container für die ausgewählten Namen -->
+                        <div id="selectedContacts" class="selected-contacts"></div>
                     </div>
 
 
@@ -78,7 +81,8 @@
                 <div class="add-task-date-category">
                     <label for="category"> Category <span>*</span></label>
                     <div class="custom-dropdown">
-                        <input type="text" id="customDropdownInput" placeholder="Select task category" required>
+                        <input type="text" id="customDropdownInput" onclick="toggleDropdown('customDropdownMenu')"
+                            placeholder="Select task category" required>
                         <img class="dropdown-arrow dropdown-arrow-img" src="../img/arrow_drop_down.png " alt="dropdown">
 
                         <div id="customDropdownMenu" style="display:none; max-height: 100px; overflow-y: auto;">
@@ -118,6 +122,8 @@
 
     <script src="../JS/addTask.js"></script>
     <script src="../JS/addSubtask.js"></script>
+    <script src="../JS/clearUndCreateTask.js"></script>
+    <script src="../JS/assignedDropdown.js"></script>
 </body>
 
 </html>

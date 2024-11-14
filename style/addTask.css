@@ -32,7 +32,7 @@
   height: 376px;
 
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .add-task-title {
@@ -168,7 +168,7 @@ p > span {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 96%;
+  top: 99%;
   left: 0;
   width: 100%;
   background-color: #ffffff;
@@ -210,6 +210,27 @@ p > span {
   cursor: pointer;
 }
 
+.selected-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+}
+
+.selected-contacts button {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
 /*  ab hier erledigt  */
 
 .partition {
@@ -226,6 +247,7 @@ p > span {
   top: 327px;
   left: 864.25px;
   height: 416px;
+  justify-content: space-around;
 }
 
 .add-task-date-value {
@@ -296,7 +318,7 @@ p > span {
 
 #customDropdownMenu {
   position: absolute;
-  top: 64%;
+  top: 74.5%;
   left: 0;
   width: 100%;
   background-color: white;
@@ -349,7 +371,7 @@ p > span {
   overflow-y: auto; /* Vertikalen Scrollbalken anzeigen */
   overflow-x: hidden; /* Horizontales Scrollen verhindern */
   position: absolute;
-  top: 83%;
+  top: 98%;
 }
 
 /* Subtask-Item */
@@ -480,4 +502,32 @@ p > span {
 .create-task-btn:hover {
   background-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Gemeinsamer Stil für alle Fehlermeldungen */
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* Spezifische Fehlermeldung für den Titel */
+.error-title {
+  position: absolute;
+  top: 94px;
+  margin-left: 10px;
+}
+
+/* Spezifische Fehlermeldung für das Fälligkeitsdatum */
+.error-due-date {
+  position: absolute;
+  top: 91px;
+  margin-left: 10px;
+}
+
+/* Spezifische Fehlermeldung für die Kategorie */
+.error-category {
+  position: absolute;
+  top: 74%;
+  left: 0;
+  margin-left: 10px;
 }
