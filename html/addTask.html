@@ -9,9 +9,10 @@
 
     <link rel="stylesheet" href="../style/addTask.css">
 
-    <script src="../JS/assignedDropdown.js"></script>
+
     <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
+
 
     <title>Join</title>
 </head>
@@ -30,13 +31,13 @@
 
             <div class="add-task-ctn">
                 <div class="add-task-title">
-                    <label for="title">Title <span>*</span> </label>
+                    <label for="title">Title<span>*</span> </label>
                     <input type="text" name="title" id="title" placeholder="Enter a title" required>
                 </div>
 
                 <div class="add-task-description">
                     <label for="desctiption">Description</label>
-                    <textarea name="desctiption" id="description" placeholder="Enter a Description"> </textarea>
+                    <textarea name="desctiption" id="description" placeholder="Enter a Description"></textarea>
                 </div>
 
                 <div class="add-task-assigned">
@@ -45,27 +46,84 @@
 
                     <div class="dropdown">
                         <input type="text" id="dropdownInput" placeholder="Select contacts to assign"
-                            onclick="toggleDropdown()" onkeyup="filterList()">
+                            onclick="toggleDropdown('dropdownMenu')">
                         <img class="dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
                         <div id="dropdownMenu" class="dropdown-menu">
-                            <!-- Kontakte werden hier dynamisch eingefügt -->
+
                         </div>
+
+                        <!-- Neuer Container für die ausgewählten Namen -->
+                        <div id="selectedContacts" class="selected-contacts"></div>
                     </div>
 
 
 
                 </div>
             </div>
+            <div class="partition"></div>
+
+            <div class="add-task-date">
+
+                <div class="add-task-date-value">
+                    <label for="date">Due date<span>*</span></label>
+                    <input type="date" required>
+                </div>
+
+                <div class="add-task-date-prio">
+                    <label for="Prio">Prio</label>
+                    <div class="prio-btn">
+                        <button class="urgent">Urgent <img src="../img/Priorityhigh.png" alt="high"></button>
+                        <button class="medium">Medium <img src="../img/Prioritymiddel.png" alt="middel"></button>
+                        <button class="low">Low <img src="../img/Prioritylow.png" alt="low"> </button>
+                    </div>
+                </div>
+
+                <div class="add-task-date-category">
+                    <label for="category"> Category <span>*</span></label>
+                    <div class="custom-dropdown">
+                        <input type="text" id="customDropdownInput" onclick="toggleDropdown('customDropdownMenu')"
+                            placeholder="Select task category" required>
+                        <img class="dropdown-arrow dropdown-arrow-img" src="../img/arrow_drop_down.png " alt="dropdown">
+
+                        <div id="customDropdownMenu" style="display:none; max-height: 100px; overflow-y: auto;">
+                            <div class="custom-dropdown-item">Technical Task</div>
+                            <div class="custom-dropdown-item">User Story</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-subtasks">
+                    <label for="subtasks">Subtasks</label>
+                    <div class="subtasks-wrapper" onclick="focusInput()">
+                        <input type="text" id="subtaskInput" placeholder="Add new subtask">
+                        <img class="subtask-icon" id="iconAdd" src="../img/subTaskIcon.svg" alt="Add subtask">
+                        <img class="subtask-icon hidden" id="iconCancel" src="../img/subTaskCancel.svg" alt="Cancel"
+                            onclick="clearInput(event)">
+                        <img class="subtask-icon hidden" id="iconConfirm" src="../img/subTaskEnter.svg" alt="Confirm"
+                            onclick="addSubtask(event)">
+                    </div>
+
+                    <div class="subtask-list" id="subtaskList">
+                        <!-- Subtasks werden hier dynamisch eingefügt -->
+                    </div>
+                </div>
+            </div>
+            <div class="required">
+                <p><span>*</span>This filed is required</p>
+            </div>
+
+            <div class="submit-btn">
+                <button class="clear-btn">Clear X</button>
+                <button class="create-task-btn">Create Task <img src="../img/check.svg" alt="Check"></button>
+            </div>
         </div>
     </div>
 
 
-
-    <script>
-        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-        includeHTML('#include-container', './nav.html');
-
-    </script>
+    <script src="../JS/addTask.js"></script>
+    <script src="../JS/addSubtask.js"></script>
+    <script src="../JS/clearUndCreateTask.js"></script>
+    <script src="../JS/assignedDropdown.js"></script>
 </body>
 
 </html>

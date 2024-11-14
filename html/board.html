@@ -7,69 +7,58 @@
     <link rel="stylesheet" href="../style/board.css">
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/fonts.css">
-    <link rel="stylesheet" href="../style/header.css">
-    <script src="board.js"></script>
+    <script src="../JS/board.js"></script>
 </head>
 <body>
 
 <div class="whole-content">
-
     <!-- Seitenleiste (grauer Balken) -->
     <aside class="black-nav-bar">
         <div class="logo">
             <img class="logo-img" src="../img/Capa2.png" alt="logo">
         </div>
-
         <div class="nav-item-container">
             <div class="nav-item">Summary</div>
             <div class="nav-item">Add Task</div>
             <div class="nav-item">Board</div>
             <div class="nav-item">Contacts</div>
         </div>
-
         <div class="nav-footer">
             <div>Privacy Policy</div>
             <div>Legal notice</div>
         </div>
     </aside>
 
-
-        <!-- Header (helleres Weiß) -->
-        <header class="header">
-            <div class="second-header-div">
-                <h2>Kanban Project Management Tool</h2>
-                <div>
-                    <div class="log-in-info">
-                        <a href="#">
-                            <img class="help" src="../img/help.png" alt="help img">
-                        </a>
-                    </div>
-                    <div class="user-icon">SM
-
-                    </div>
+    <!-- Header (helleres Weiß) -->
+    <header class="header">
+        <div class="second-header-div">
+            <h2>Kanban Project Management Tool</h2>
+            <div>
+                <div class="log-in-info">
+                    <a href="#">
+                        <img class="help" src="../img/help.png" alt="help img">
+                    </a>
                 </div>
+                <div class="user-icon">SM</div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <section class="white-side-content">
-            <div class="inner-content-container"> <!-- Neuer innerer Container -->
-        
-                <section class="board-header">
-                    <div class="title-board">
-                        <h2>Board</h2>
-                    </div>
-                    <div class="task-choice-nav">
-                        <input type="text" placeholder="Find Task" id="task-search">
-                        <button>Add task</button>
-                    </div>
-                </section>
+    <section class="white-side-content">
+        <div class="inner-content-container">
+            <section class="board-header">
+                <div class="title-board">
+                    <h2>Board</h2>
+                </div>
+                <div class="task-choice-nav">
+                    <input type="text" placeholder="Find Task" id="task-search">
+                    <button onclick="createPreContainer()">Add task</button>
+                </div>
+            </section>
 
-                <div id="content"></div>
-        
-            </div>
-        </section>
-        
-
+            <div class="content-class" id="content"></div>
+        </div>
+    </section>
 </div>
 
 </body>

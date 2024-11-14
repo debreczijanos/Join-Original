@@ -26,7 +26,7 @@
   width: 100%;
   text-align: center;
 
-  button {
+  a {
     padding: 8px;
     border: none;
     font-size: 16px;
@@ -36,7 +36,7 @@
   }
 }
 
-.ofice > button:hover {
+.ofice > a:hover {
   color: #29b2ea;
   font-weight: bold;
   cursor: pointer;
@@ -85,4 +85,9 @@
 .contactsMenu {
   display: flex;
   padding: 8px 56px;
+}
+
+.bottom-menu-link a {
+  text-decoration: none;
+  color: #a8a8a8;
 }
