@@ -4,10 +4,7 @@ const apiURL =
 
 //Dropdown-Management
 // Dropdown umschalten
-// Dropdown umschalten
-// Dropdown umschalten
-function toggleDropdown(dropdownId, event) {
-  console.log(`toggleDropdown called with id: ${dropdownId}`);
+function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
 
   if (!dropdownMenu) {
@@ -15,40 +12,53 @@ function toggleDropdown(dropdownId, event) {
     return;
   }
 
-  // Toggle das Dropdown-Menü
   const isCurrentlyVisible = dropdownMenu.style.display === "block";
   dropdownMenu.style.display = isCurrentlyVisible ? "none" : "block";
-
-  console.log(
-    `Dropdown menu with id "${dropdownId}" is now ${dropdownMenu.style.display}`
-  );
-
-  // Verhindere, dass das Event nach oben propagiert wird
-  if (event) {
-    event.stopPropagation();
-  }
 }
 
-// Dropdown schließen bei Klick außerhalb
 function closeDropdownOnOutsideClick(inputId, dropdownId) {
   document.addEventListener("click", (event) => {
     const input = document.getElementById(inputId);
     const dropdownMenu = document.getElementById(dropdownId);
 
-    if (!input || !dropdownMenu) {
-      console.error("Input or dropdown menu not found");
-      return;
-    }
-
-    // Schließen nur auslösen, wenn der Klick außerhalb des Dropdowns und Inputs erfolgt
     if (
-      event.target !== input && // Nicht das Input-Feld
-      !dropdownMenu.contains(event.target) // Nicht innerhalb des Dropdown-Menüs
+      input &&
+      dropdownMenu &&
+      event.target !== input &&
+      !dropdownMenu.contains(event.target)
     ) {
       dropdownMenu.style.display = "none";
-      console.log(`Closed dropdown menu with id: ${dropdownId}`);
     }
   });
+}
+
+// Neue Funktion zur Initialisierung
+// Gemeinsame Initialisierungsfunktion für Dropdowns
+function initializeDropdown(inputId, menuId, filterSelector) {
+  const input = document.getElementById(inputId);
+  const menu = document.getElementById(menuId);
+
+  if (!input || !menu) {
+    console.error(`Input or menu with ID ${inputId} or ${menuId} not found.`);
+    return;
+  }
+
+  // Öffnen/Schließen des Dropdowns bei Klick auf das Input-Feld
+  input.addEventListener("click", (event) => {
+    event.stopPropagation(); // Klick nicht nach oben propagieren
+    toggleDropdown(menuId);
+  });
+
+  // Filterfunktion für das Dropdown
+  input.addEventListener("input", () => {
+    filterDropdown(inputId, filterSelector);
+  });
+
+  // Dropdown schließen, wenn außerhalb geklickt wird
+  closeDropdownOnOutsideClick(inputId, menuId);
+
+  // Wert setzen, wenn ein Dropdown-Element angeklickt wird
+  setDropdownValueOnClick(menuId, inputId);
 }
 
 // Dropdown filtern
@@ -89,6 +99,9 @@ function setDropdownValueOnClick(menuId, inputId) {
 
 // Initialisierung der Dropdowns
 document.addEventListener("DOMContentLoaded", () => {
+  initializeDropdown("dropdownInput", "dropdownMenu");
+  initializeDropdown("customDropdownInput", "customDropdownMenu");
+
   const assignedInputId = "dropdownInput";
   const assignedMenuId = "dropdownMenu";
 
