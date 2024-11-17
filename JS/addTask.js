@@ -13,8 +13,7 @@ function includeHTML(containerSelector, filePath) {
 
 includeHTML("#include-container", "./nav.html");
 
-//Button-Management (Prio-Buttons)
-//Entfernen aktiver Zustände
+// Button-Management (Prio-Buttons)
 function clearActiveStates(buttons) {
   buttons.forEach((btn) => {
     btn.classList.remove("active");
@@ -23,14 +22,12 @@ function clearActiveStates(buttons) {
   });
 }
 
-//Aktivieren eines Buttons
 function activateButton(button) {
   button.classList.add("active");
   const img = button.querySelector("img");
   if (img) img.classList.add("filter-color-to-white");
 }
 
-//Event-Listener für Buttons
 function setupButtonListeners(buttons) {
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -40,5 +37,44 @@ function setupButtonListeners(buttons) {
   });
 }
 
-const buttons = document.querySelectorAll(".prio-btn button");
-setupButtonListeners(buttons);
+function addInputListeners() {
+  const fieldsToValidate = getRequiredFields();
+
+  fieldsToValidate.forEach(({ input, errorClass }) => {
+    addErrorRemovalListeners(input, errorClass);
+  });
+
+  handleCategoryDropdown();
+}
+
+function addErrorRemovalListeners(input, errorClass) {
+  input.addEventListener("input", () => removeError(input, errorClass));
+  if (input.type === "date") {
+    input.addEventListener("change", () => removeError(input, errorClass));
+  }
+}
+
+function handleCategoryDropdown() {
+  const categoryInput = document.getElementById("customDropdownInput");
+  const dropdownMenu = document.getElementById("customDropdownMenu");
+
+  ["input", "focus"].forEach((event) =>
+    categoryInput.addEventListener(event, () =>
+      removeError(categoryInput, "error-category")
+    )
+  );
+
+  dropdownMenu.addEventListener("click", (event) => {
+    if (event.target.classList.contains("custom-dropdown-item")) {
+      removeError(categoryInput, "error-category");
+    }
+  });
+}
+
+function removeError(input, errorClass) {
+  if (input.value.trim()) {
+    input.classList.remove("error");
+    const errorText = document.querySelector(`.${errorClass}`);
+    if (errorText) errorText.remove();
+  }
+}
