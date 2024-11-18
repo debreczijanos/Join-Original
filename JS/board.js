@@ -2,7 +2,7 @@ function openTaskField() {
     document.getElementById('show-hide-class').classList.remove('d-none');
 }
 
-function closeTaskWindow() {
+function TaskWindow() {
     document.getElementById('show-hide-class').classList.add('d-none');
 }
 
