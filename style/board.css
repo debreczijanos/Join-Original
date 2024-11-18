@@ -230,6 +230,11 @@ header div{
     margin-top: 15px;  
 }
 
+.description::placeholder{
+  font-family: "Figtree", sans-serif;
+}
+
+
 .first-form{
   height: 74%;
   width: 50%;
@@ -318,7 +323,6 @@ input[type="text"]::placeholder {
 
 .date-input input {
     flex: 1;
-    padding-right: 30px;
 }
 
 .calendar-icon {

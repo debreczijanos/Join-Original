@@ -69,6 +69,7 @@
 </div>
 
 <!-- Statischer Add Task Bereich -->
+
 <div class="background-box d-none" id="show-hide-class">
     <div class="great-open-Task">
         <div class="title-and-out">
@@ -77,17 +78,20 @@
         </div>
 
         <div class="form-section">
-            <div class="first-form">
+            <div class="first-form form">
                 <form>
-                    <label for="title">Titel<span class="required">*</span></label>
+                    <label for="title">Title<span class="required">*</span></label>
                     <input type="text" id="title" placeholder="Enter a title" required>
 
                     <label for="description">Description</label>
-                    <textarea id="description" placeholder="Enter a Description"></textarea>
+                    <textarea id="description" class="description" placeholder="Enter a description" style="resize: none;"></textarea>
 
                     <label for="assigned">Assigned to</label>
                     <select id="assigned">
                         <option value="" disabled selected>Select contacts to assign</option>
+                        <option value="John Doe">John Doe</option>
+                        <option value="Jane Smith">Jane Smith</option>
+                        <option value="Team A">Team A</option>
                     </select>
                 </form>
             </div>
@@ -98,19 +102,19 @@
                 <form>
                     <label for="due-date">Due date<span class="required">*</span></label>
                     <div class="date-input">
-                        <input type="text" id="due-date" placeholder="dd/mm/yyyy" required>
-                        <span class="calendar-icon">📅</span>
+                        <input type="date" id="due-date" class="description" placeholder="dd/mm/yyyy" required>
+                        <span class="calendar-icon"></span>
                     </div>
 
-                    <label for="priority">Prio</label>
+                    <label for="priority">Priority</label>
                     <div class="priority-buttons">
-                        <button class="priority-button urgent">Urgent
+                        <button type="button" class="priority-button urgent" onclick="selectPriority(this)">Urgent
                             <img src="../img/Priorityhigh.png" alt="arrows upwards">
                         </button>
-                        <button class="priority-button medium">Medium
+                        <button type="button" class="priority-button medium" onclick="selectPriority(this)">Medium
                             <img src="../img/Prioritymiddel.png" alt="priority middle">
                         </button>
-                        <button class="priority-button low">Low
+                        <button type="button" class="priority-button low" onclick="selectPriority(this)">Low
                             <img src="../img/Prioritylow.png" alt="priority low">
                         </button>
                     </div>
@@ -118,14 +122,19 @@
                     <label for="category">Category<span class="required">*</span></label>
                     <select id="category" required>
                         <option value="" disabled selected>Select task category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Development">Development</option>
+                        <option value="Testing">Testing</option>
                     </select>
 
                     <label for="subtasks">Subtask</label>
                     <div class="subtasks">
                         <div class="input-container">
-                            <input type="text" placeholder="Add new subtask">
-                            <button class="add-subtask-button">+</button>
+                            <input type="text" id="subtask-input" placeholder="Add new subtask">
+                            <button type="button" class="add-subtask-button" onclick="addSubtask()">+</button>
                         </div>
+                        <ul id="subtask-list"></ul>
                     </div>
                 </form>
             </div>
@@ -139,12 +148,13 @@
             <button class="cancel-button" onclick="closeTaskWindow()">Cancel
                 <span>X</span>
             </button>
-            <button class="create-task-button">Create Task
+            <button type="button" class="create-task-button" onclick="createTask()">Create Task
                 <img src="../img/checkbg.png" alt="">
             </button>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
