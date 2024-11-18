@@ -161,5 +161,3 @@ function setupEventListeners() {
   iconCancel.addEventListener("click", clearInput);
   iconConfirm.addEventListener("click", addSubtask);
 }
-
-setupEventListeners();

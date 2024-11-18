@@ -169,14 +169,6 @@ function addErrorRemovalListeners(input, errorClass) {
   }
 }
 
-function removeError(input, errorClass) {
-  if (input.value.trim()) {
-    input.classList.remove("error");
-    const errorText = document.querySelector(`.${errorClass}`);
-    if (errorText) errorText.remove();
-  }
-}
-
 function handleCategoryDropdown() {
   const categoryInput = document.getElementById("customDropdownInput");
   const dropdownMenu = document.getElementById("customDropdownMenu");
@@ -192,6 +184,14 @@ function handleCategoryDropdown() {
       removeError(categoryInput, "error-category");
     }
   });
+}
+
+function removeError(input, errorClass) {
+  if (input.value.trim()) {
+    input.classList.remove("error");
+    const errorText = document.querySelector(`.${errorClass}`);
+    if (errorText) errorText.remove();
+  }
 }
 
 // Event-Listener beim Laden der Seite hinzufügen

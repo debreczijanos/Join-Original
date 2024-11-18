@@ -13,11 +13,16 @@
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/nav.css">
     <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/contacts.css">
+  
 
     <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/currentDate.js"></script>
     <script src="../JS/contacts.js"></script>
+    <script src="../JS/firebase.js"></script>
+    <script src="../JS/signUpSubmit.js"></script>
+
     <title>Join</title>
 
     <style>
@@ -46,6 +51,40 @@
             justify-content: center;
             align-items: center;
         }
+           
+/* nur provisorisch css für button*/
+            .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        /* profesorisch button */
+        
     </style>
 
 </head>
@@ -63,11 +102,80 @@
                 <div id="contactId"></div>
             </section>
 
+           
+<div class="form-container">
+    <form id="userForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-Mail-Adresse:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Telefonnummer:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <button type="submit" class="createButton">Create</button>
+    </form>
+    <div class="error" style="display:none; color:red;">Fehler: Bitte überprüfen Sie Ihre Eingaben.</div>
+</div>
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+
+        try {
+            await saveUserData(name, email, phone);
+            alert('Benutzer erfolgreich erstellt!');
+        } catch (error) {
+            console.error('Fehler beim Speichern der Benutzerdaten:', error);
+            document.querySelector('.error').style.display = 'block';
+        }
+    });
+</script>
+<!--button für später fensterpopup öffnen -->
+            <div class="addContact">
+                <button onclick="openClosePopUp('open', key = false)" class="addContactButton position-fixed">Add new Contact
+                  <img src="../img/person.png" alt=""></button>
+                
+              </div>
+    
+
         </div>
+
+
+
+
+       
+
+
+
+
 
         <script>
             // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
             includeHTML('#include-container', './nav.html');
+
+// wird der kontakt ihn firebase gespeichert
+            document.getElementById('userForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+
+        try {
+            await saveUserData(name, email, phone);
+            alert('Benutzer erfolgreich erstellt!');
+        } catch (error) {
+            console.error('Fehler beim Speichern der Benutzerdaten:', error);
+            document.querySelector('.error').style.display = 'block';
+        }
+    });
+
         </script>
 
     </div>

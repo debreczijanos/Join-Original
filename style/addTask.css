@@ -125,6 +125,13 @@ p > span {
   justify-content: space-between;
 }
 
+.dropdown:hover,
+.custom-dropdown:hover,
+#dropdownInput:hover,
+#customDropdownInput:hover {
+  cursor: pointer;
+}
+
 #dropdownInput,
 #customDropdownInput {
   width: 100%;
@@ -162,6 +169,7 @@ p > span {
   background-color: #d1d1d1;
   border-radius: 50%;
   padding: 0.01px;
+  cursor: pointer;
 }
 /* muss noch gemacht werden  */
 
@@ -177,6 +185,10 @@ p > span {
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1;
+}
+
+.dropdown-menu.open {
+  display: block !important;
 }
 
 .dropdown-menu label {
@@ -324,6 +336,10 @@ p > span {
   background-color: white;
   z-index: 1000;
   border-radius: 0px 0px 10px 10px;
+}
+
+#customDropdownMenu.open {
+  display: block !important;
 }
 
 .custom-dropdown-item {

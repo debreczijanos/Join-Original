@@ -7,67 +7,52 @@ const apiURL =
 function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
 
-  if (!dropdownMenu) {
-    console.error(`Dropdown menu with id "${dropdownId}" not found.`);
-    return;
-  }
+  if (!dropdownMenu) return;
 
-  const isCurrentlyVisible = dropdownMenu.style.display === "block";
-  dropdownMenu.style.display = isCurrentlyVisible ? "none" : "block";
+  dropdownMenu.classList.toggle("open");
 }
 
-function closeDropdownOnOutsideClick(inputId, dropdownId) {
+// Schließen des Dropdowns bei Klick außerhalb
+function closeDropdownOnOutsideClick(inputId, menuId) {
   document.addEventListener("click", (event) => {
     const input = document.getElementById(inputId);
-    const dropdownMenu = document.getElementById(dropdownId);
+    const dropdownMenu = document.getElementById(menuId);
 
     if (
       input &&
       dropdownMenu &&
-      event.target !== input &&
-      !dropdownMenu.contains(event.target)
+      event.target !== input && // Klick ist nicht auf das Input-Feld
+      !dropdownMenu.contains(event.target) // Klick ist nicht innerhalb des Dropdown-Menüs
     ) {
-      dropdownMenu.style.display = "none";
+      dropdownMenu.classList.remove("open");
     }
   });
 }
 
-// Neue Funktion zur Initialisierung
 // Gemeinsame Initialisierungsfunktion für Dropdowns
-function initializeDropdown(inputId, menuId, filterSelector) {
+function initializeDropdown(inputId, menuId) {
   const input = document.getElementById(inputId);
   const menu = document.getElementById(menuId);
 
-  if (!input || !menu) {
-    console.error(`Input or menu with ID ${inputId} or ${menuId} not found.`);
-    return;
-  }
+  if (!input || !menu) return;
 
-  // Öffnen/Schließen des Dropdowns bei Klick auf das Input-Feld
+  // Verhindere doppelte Listener
+  if (input.dataset.listenerAdded) return;
+  input.dataset.listenerAdded = true;
+
   input.addEventListener("click", (event) => {
-    event.stopPropagation(); // Klick nicht nach oben propagieren
+    event.stopPropagation();
     toggleDropdown(menuId);
   });
 
-  // Filterfunktion für das Dropdown
-  input.addEventListener("input", () => {
-    filterDropdown(inputId, filterSelector);
-  });
-
-  // Dropdown schließen, wenn außerhalb geklickt wird
   closeDropdownOnOutsideClick(inputId, menuId);
-
-  // Wert setzen, wenn ein Dropdown-Element angeklickt wird
   setDropdownValueOnClick(menuId, inputId);
 }
 
 // Dropdown filtern
 function filterDropdown(inputId, menuSelector) {
   const input = document.getElementById(inputId);
-  if (!input) {
-    console.error(`Input with id "${inputId}" not found.`);
-    return;
-  }
+  if (!input) return;
 
   const filter = input.value.toLowerCase();
   const items = document.querySelectorAll(menuSelector);
@@ -81,17 +66,14 @@ function filterDropdown(inputId, menuSelector) {
 // Dropdown-Wert setzen
 function setDropdownValueOnClick(menuId, inputId) {
   const menu = document.getElementById(menuId);
-  if (!menu) {
-    console.error(`Menu with id "${menuId}" not found.`);
-    return;
-  }
+  if (!menu) return;
 
   menu.addEventListener("click", (event) => {
     if (event.target.classList.contains("custom-dropdown-item")) {
       const input = document.getElementById(inputId);
       if (input) {
-        input.value = event.target.textContent;
-        menu.style.display = "none";
+        input.value = event.target.textContent.trim(); // Setzt den Text als Wert
+        menu.style.display = "none"; // Schließt das Dropdown
       }
     }
   });
@@ -108,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const assignedInput = document.getElementById(assignedInputId);
   if (assignedInput) {
     assignedInput.addEventListener("click", (event) => {
-      event.stopPropagation(); // Klick auf das Input-Feld nicht weiterleiten
+      event.stopPropagation();
       toggleDropdown(assignedMenuId, event);
     });
     assignedInput.addEventListener("keyup", () => {
@@ -123,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryInput = document.getElementById(categoryInputId);
   if (categoryInput) {
     categoryInput.addEventListener("click", (event) => {
-      event.stopPropagation(); // Klick auf das Input-Feld nicht weiterleiten
+      event.stopPropagation();
       toggleDropdown(categoryMenuId, event);
     });
     categoryInput.addEventListener("input", () => {
@@ -137,6 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setDropdownValueOnClick(categoryMenuId, categoryInputId);
 });
+
 //Filter-Management
 //Kontakte laden
 async function loadContacts(apiURL, dropdownId) {
@@ -242,10 +225,3 @@ function generateColorFromLetter(letter) {
   const hue = (charCode - 65) * 15;
   return `hsl(${hue}, 70%, 50%)`;
 }
-
-//Initialisierung
-//Setup beim Laden
-window.onload = () => {
-  loadContacts(apiURL, "dropdownMenu");
-  closeDropdownOnOutsideClick("dropdownInput", "dropdownMenu");
-};
