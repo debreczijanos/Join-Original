@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../style/summary.css">
 
-    <script src="../JS/navToggel.js"></script>
+    <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/currentDate.js"></script>
     <title>Join</title>
@@ -86,12 +86,15 @@
             </div>
             <div class="greating">
                 <span>Good morning, </span>
-                <h1>Sofia Müller </h1>
+                <h1>Guest . </h1>
             </div>
         </div>
         <script>
             // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-            includeHTML('#include-container', './nav.html');
+            includeHTML('#include-container', './nav.html', function () {
+                // Header-Funktionalität initialisieren
+                initializeHeader();
+            });
         </script>
 </body>
 

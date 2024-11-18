@@ -59,7 +59,7 @@ async function handleSubmit(event) {
       // Erfolgsmeldung anzeigen und Animation starten
       document.querySelector(".center").style.display = "none";
       const successMessage = document.getElementById("successMessage");
-      successMessage.style.display = "block";
+      successMessage.style.display = "flex";
       successMessage.style.animation = "slideUp 1s ease-out forwards";
 
       // Nach 3 Sekunden zur index.html weiterleiten

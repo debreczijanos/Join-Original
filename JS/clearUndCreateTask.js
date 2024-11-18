@@ -142,8 +142,15 @@ function sendTaskToAPI(task) {
   )
     .then((response) => {
       if (response.ok) {
-        alert("Task successfully created!");
-        clearForm();
+        // Overlay und Erfolgsmeldung anzeigen
+        const overlay = document.getElementById("overlay");
+        overlay.style.display = "flex";
+
+        // Nach 3 Sekunden das Overlay ausblenden und Formular zurücksetzen
+        setTimeout(() => {
+          overlay.style.display = "none";
+          clearForm(); // Formular leeren
+        }, 3000);
       } else {
         console.error("Error creating task.");
       }

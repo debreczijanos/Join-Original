@@ -148,9 +148,16 @@ form {
 
 #successMessage {
   display: none; /* Anfangs versteckt */
-  color: green;
-  font-weight: bold;
-  font-size: 24px;
+  color: white;
+  padding: 0px 25px;
+  border-radius: 20px;
+  background-color: #2a3647;
+  height: 74px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: -50px; /* Startet unter dem Bildschirm */
   left: 50%;
