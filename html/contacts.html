@@ -119,41 +119,7 @@
     <div class="error" style="display:none; color:red;">Fehler: Bitte überprüfen Sie Ihre Eingaben.</div>
 </div>
 
-<script>
-    document.getElementById('userForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-
-        try {
-            await saveUserData(name, email, phone);
-            alert('Benutzer erfolgreich erstellt!');
-        } catch (error) {
-            console.error('Fehler beim Speichern der Benutzerdaten:', error);
-            document.querySelector('.error').style.display = 'block';
-        }
-    });
-</script>
-<!--button für später fensterpopup öffnen -->
-            <div class="addContact">
-                <button onclick="openClosePopUp('open', key = false)" class="addContactButton position-fixed">Add new Contact
-                  <img src="../img/person.png" alt=""></button>
-                
-              </div>
-    
-
         </div>
-
-
-
-
-       
-
-
-
-
 
         <script>
             // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
@@ -175,6 +141,8 @@
             document.querySelector('.error').style.display = 'block';
         }
     });
+   
+    
 
         </script>
 

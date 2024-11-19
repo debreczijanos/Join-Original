@@ -2,7 +2,7 @@ const ContactsURL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase
 
 async function loadContacts() {
     try {
-        let response = await fetch(ContactsURL + 'users.json');
+        let response = await fetch(ContactsURL + 'contacts.json');
         if (!response.ok) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
@@ -59,7 +59,7 @@ function showRenderedContactsMainData(index, contact) {
 // Funktion zum Speichern von Benutzerdaten in Firebase
 async function saveUserData(name, email, phone) {
   try {
-      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -78,7 +78,7 @@ async function saveUserData(name, email, phone) {
 // Funktion zum Abrufen von Benutzerdaten aus Firebase
 async function getUserData(email) {
   try {
-      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json');
+      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
       const usersData = await response.json();
 
       for (const userId in usersData) {
@@ -94,25 +94,7 @@ async function getUserData(email) {
   }
 }
 
-// Beispiel für die Verwendung der Funktionen
-async function handleLogin(event) {
-  event.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value.trim();
-
-  try {
-      const user = await getUserData(email);
-      if (user && user.password === password) {
-          window.location.href = "./html/board.html";
-      } else {
-          document.querySelector('.error').style.display = 'block';
-      }
-  } catch (error) {
-      console.error('Fehler beim Login:', error);
-      alert('Ein Fehler ist aufgetreten. Bitte versuche es später erneut.');
-  }
-}
 
 
 
