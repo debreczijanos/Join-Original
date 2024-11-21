@@ -2,8 +2,11 @@ function openTaskField() {
     document.getElementById('show-hide-class').classList.remove('d-none');
 }
 
-function TaskWindow() {
-    document.getElementById('show-hide-class').classList.add('d-none');
+
+function closeTaskWindow() {
+    const taskWindow = document.getElementById('show-hide-class');
+    taskWindow.classList.add('d-none');
+    clearFormFields(); // Felder leeren (auch bei Schließen)
 }
 
 function selectPriority(button) {
@@ -21,10 +24,10 @@ function collectTaskData() {
 
     const priority = document.querySelector('.priority-buttons .selected')?.textContent || 'Low';
 
-    const subtasks = Array.from(document.querySelectorAll('#subtask-list li')).map(item => item.textContent);
+    const subtasks = Array.from(document.querySelectorAll('#subtask-list li .subtask-text')).map(item => item.textContent);
 
     return {
-        title, 
+        title,
         description,
         dueDate,
         assigned,
@@ -40,15 +43,80 @@ function addSubtask() {
 
     if (input.value.trim() !== '') {
         const li = document.createElement('li');
-        li.textContent = input.value;
+        
+        li.innerHTML = `
+            <span class="subtask-text">${input.value}</span>
+            <button class="edit-subtask" onclick="editSubtask(this)">Edit</button>
+            <button class="delete-subtask" onclick="deleteSubtask(this)">Delete</button>
+        `;
+
         subtaskList.appendChild(li);
-        input.value = ''; // Eingabefeld zurücksetzen
+        input.value = ''; // Leeren des Input-Felds nach Hinzufügen
     }
 }
 
-async function createTask() {
-    const taskData = collectTaskData();
+function editSubtask(button) {
+    const subtaskText = button.parentElement.querySelector('.subtask-text');
+    const newText = prompt('Edit your subtask:', subtaskText.textContent);
 
+    if (newText !== null && newText.trim() !== '') {
+        subtaskText.textContent = newText.trim();
+    }
+}
+
+function deleteSubtask(button) {
+    const li = button.parentElement;
+    li.remove();
+}
+
+function clearFormFields() {
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('due-date').value = '';
+    document.getElementById('assigned').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('subtask-list').innerHTML = '';
+
+    const priorityButtons = document.querySelectorAll('.priority-button');
+    priorityButtons.forEach(btn => btn.classList.remove('selected'));
+}
+
+function validateForm() {
+    let isValid = true;
+
+    const requiredFields = [
+        { id: 'title', message: 'This field is required.' },
+        { id: 'due-date', message: 'This field is required.' },
+        { id: 'category', message: 'This field is required.' }
+    ];
+
+    requiredFields.forEach(field => {
+        const input = document.getElementById(field.id);
+        const errorMessage = input.nextElementSibling;
+
+        // Bestehende Fehlermeldung entfernen
+        if (errorMessage && errorMessage.classList.contains('error-message')) {
+            errorMessage.remove();
+        }
+
+        // Validierung prüfen
+        if (!input.value.trim()) {
+            isValid = false;
+            const error = document.createElement('div');
+            error.classList.add('error-message');
+            error.textContent = field.message;
+            input.insertAdjacentElement('afterend', error);
+        }
+    });
+
+    return isValid;
+}
+
+// Aufgabe erstellen
+async function createTask() {
+    if (!validateForm()) return; // Abbruch, wenn Validierung fehlschlägt
+
+    const taskData = collectTaskData();
     const apiUrl = "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
     try {
@@ -66,6 +134,10 @@ async function createTask() {
 
         const data = await response.json();
         console.log('Erfolgreich erstellt:', data);
+
+        // Eingabefelder zurücksetzen und Fenster schließen
+        clearFormFields();
+        closeTaskWindow();
     } catch (error) {
         console.error('Fehler bei der Anfrage:', error);
     }
