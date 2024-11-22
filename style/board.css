@@ -514,35 +514,73 @@ margin-top: -10px;
 margin-bottom: 10px;
 }
 
-.priority-button {
-background-color: #f0f0f0;
-color: #000;
-border: 1px solid #ccc;
-transition: background-color 0.3s, color 0.3s;
-}
-
-.priority-button.active {
-background-color: #007BFF; 
-color: #fff;
-border-color: #0056b3;
-}
-
 .edit-subtask, .delete-subtask {
-margin-left: 10px;
-font-size: 15px;
-font-family: "Figtree", sans-serif;
-background-color: transparent;
-border: none;
-color: #007bff;
-cursor: pointer;
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Figtree", sans-serif;
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}  
+
+.priority-button {
+  flex: 1;
+  padding: 3px 0;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.edit-subtask:hover, .delete-subtask:hover {
-text-decoration: underline;
+
+.priority-button.urgent {
+  color: #d9534f;
+  background-color: white;
+}
+
+.priority-button.urgent:hover {
+  background-color: #f2b5b4; /* Hellerer Rotton beim Hover */
+}
+
+.priority-button.selected.urgent {
+  background-color: #b52b27; /* Dunklerer Rotton beim Klicken */
+  color: white;
+  border-color: #8f1f1c;
 }
 
 
+.priority-button.medium {
+  background-color: #f0ad4e; 
+  color: white;
+  border: 1px solid #d98429;
+}
 
+.priority-button.medium:hover {
+  background-color: #f7d3a6; 
+}
+
+.priority-button.selected.medium {
+  background-color: #e38b28; 
+  border-color: #d98429;
+}
+
+.priority-button.low {
+  color: #5cb85c;
+  background-color: white;
+}
+
+.priority-button.low:hover {
+  background-color: #cbe5cb; 
+}
+
+.priority-button.selected.low {
+  background-color: #4cae4c;
+  color: white;
+  border-color: #3d8f3d;
+}
 
 
 

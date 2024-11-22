@@ -9,12 +9,18 @@ function closeTaskWindow() {
     clearFormFields(); // Felder leeren (auch bei Schließen)
 }
 
-function selectPriority(button) {
-    const priorityButtons = document.querySelectorAll('.priority-button');
-    priorityButtons.forEach(btn => btn.classList.remove('selected'));
-    button.classList.add('selected');
-}
 
+document.addEventListener("DOMContentLoaded", function () {
+    const priorityButtons = document.querySelectorAll(".priority-button");
+    priorityButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            priorityButtons.forEach((btn) => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+});
+  
+  
 function collectTaskData() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
