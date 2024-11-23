@@ -28,6 +28,7 @@
 /* slide fenster style*/
   .popUp.slide-in {
     animation: slideIn 0.5s forwards;
+    display: flex;
   }
 
 
