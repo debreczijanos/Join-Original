@@ -1,57 +1,58 @@
 const BASE_URL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase.app/';
 
+
 /**
- * Loads data from the specified path in the Firebase Realtime Database.
- *
- * @param {string} [path=""] - The path in the database to load data from.
- * @returns {Promise<Object>} A promise that resolves to the loaded data or an empty object if no data is found.
+ * This function load the data from Firebase database.
+ * 
+ * @param {string} path - The path of the firebase.
  */
-async function loadData(path = "") {
-    const response = await fetch(`${BASE_URL}${path}.json`);
-    const data = await response.json();
-    return data || {};
+async function getData(path = "") {
+  let response = await fetch(BASE_URL + path + ".json");
+  return await response.json();
 }
 
 /**
- * Saves data to the specified path in the Firebase Realtime Database.
- * Uses the POST method to add new data to a collection.
- *
- * @param {string} path - The path in the database where the data should be saved.
- * @param {Object} data - The data object to be saved.
- * @returns {Promise<Object>} A promise that resolves to the result object containing the generated key (e.g., 'name').
+ *  This function save the data in Firebase database.
+ * 
+ * @param {string} path - The path of the firebase.
+ * @param {string} data - The data to save in firebase.
  */
-async function saveData(path, data) {
-    const response = await fetch(`${BASE_URL}${path}.json`, {
-        method: 'POST',
-        body: JSON.stringify(data)
-    });
-    const result = await response.json();
-    return result; // Contains the generated key field 'name'
+async function postData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    header: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
 }
 
 /**
- * Updates data at the specified path in the Firebase Realtime Database.
- * Uses the PUT method to overwrite existing data at the specified path.
- *
- * @param {string} path - The path in the database where the data should be updated.
- * @param {Object} data - The data object to update with.
- * @returns {Promise<void>} A promise that resolves when the data has been updated.
+ * This function update the firebase database.
+ * 
+ * @param {string} path - The path of the firebase.
+ * @param {string} data - The data to save in firebase.
  */
-async function updateData(path, data) {
-    await fetch(`${BASE_URL}${path}.json`, {
-        method: 'PUT',
-        body: JSON.stringify(data)
-    });
+async function putData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "PUT",
+    header: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
 }
 
 /**
- * Deletes data at the specified path in the Firebase Realtime Database.
- *
- * @param {string} path - The path in the database where the data should be deleted.
- * @returns {Promise<void>} A promise that resolves when the data has been deleted.
+ * This function delete entries in firebase.
+ * 
+ * @param {string} path - Path from the entrie. 
  */
-async function deleteData(path) {
-    await fetch(`${BASE_URL}${path}.json`, {
-        method: 'DELETE'
-    });
+async function deleteDate(path = "") {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "DELETE",
+  });
+  return await response.json();
 }
