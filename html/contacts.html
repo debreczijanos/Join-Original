@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
@@ -190,29 +190,27 @@
 
         <script>
             // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-            includeHTML('#include-container', './nav.html');
+        includeHTML('#include-container', './nav.html');
 
-            // wird der kontakt ihn firebase gespeichert
-            document.getElementById('userForm').addEventListener('submit', async function (event) {
-                event.preventDefault();
+        document.getElementById('userForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Verhindert die Standardaktion des Formulars
 
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const phone = document.getElementById('phone').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
 
-                try {
-                    await saveUserData(name, email, phone);
-                    alert('Benutzer erfolgreich erstellt!');
-                } catch (error) {
-                    console.error('Fehler beim Speichern der Benutzerdaten:', error);
-                    document.querySelector('.error').style.display = 'block';
-                }
-            });
+            try {
+                await saveUserData(name, email, phone); // Speichert die Daten in Firebase
+                alert('Benutzer erfolgreich erstellt!');
+                loadContacts(); // Aktualisiert die Kontaktliste
+            } catch (error) {
+                console.error('Fehler beim Speichern der Benutzerdaten:', error);
+                document.querySelector('.error').style.display = 'block';
+            }
+        });
 
 
-
-        </script>
-
+    </script>
     </div>
 </body>
 

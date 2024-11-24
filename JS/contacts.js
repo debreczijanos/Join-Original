@@ -1,4 +1,5 @@
 const ContactsURL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase.app/';
+const ContactSaveURL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contacts.json';
 
 async function loadContacts() {
     try {
@@ -13,7 +14,6 @@ async function loadContacts() {
         console.error("Failed to fetch contacts:", error);
     }
 }
-
 
 function renderContacts(allContacts) {
     let contactCard = document.getElementById('contactId');
@@ -36,7 +36,6 @@ function renderContacts(allContacts) {
     }
 }
 
-
 function showRenderedContactsMainData(index, contact) {
     return /*html*/ `
     <div onclick="openContact(${index})">
@@ -47,55 +46,58 @@ function showRenderedContactsMainData(index, contact) {
         <span>Email: ${contact.email}</span>
         <span>Phone: ${contact.phone}</span>
       </div>
-    </div>
-  `
-} 
+    </div>`;
+}
 
-/** beni , contact in firebase hinzufügen
- * 
- */
+function appendContactToUI(contact) {
+    const contactCard = document.getElementById('contactId');
+    contactCard.innerHTML += showRenderedContactsMainData(contact.id, contact);
+}
 
-
+// beni , contact in firebase hinzufügen//
 // Funktion zum Speichern von Benutzerdaten in Firebase
 async function saveUserData(name, email, phone) {
-  try {
-      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name, email, phone })
-      });
-      if (!response.ok) {
-          throw new Error('Fehler beim Speichern der Benutzerdaten');
-      }
-      console.log('Benutzerdaten erfolgreich gespeichert');
-  } catch (error) {
-      console.error('Fehler beim Speichern der Benutzerdaten:', error);
-  }
+    try {
+        const response = await fetch(ContactSaveURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                phone,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error('Fehler beim Speichern der Benutzerdaten');
+        }
+        const result = await response.json(); // Enthält die ID des neuen Eintrags
+        console.log('Benutzerdaten erfolgreich gespeichert:', result);
+
+        return { id: result.name, name, email, phone };
+    } catch (error) {
+        console.error('Fehler beim Speichern der Benutzerdaten:', error);
+        throw error; 
+    }
 }
+
 
 // Funktion zum Abrufen von Benutzerdaten aus Firebase
 async function getUserData(email) {
-  try {
-      const response = await fetch('https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-      const usersData = await response.json();
+    try {
+        const response = await fetch(ContactSaveURL);
+        const usersData = await response.json();
 
-      for (const userId in usersData) {
-          const user = usersData[userId];
-          if (user.email === email) {
-              return user;
-          }
-      }
-      return null;
-  } catch (error) {
-      console.error('Fehler beim Abrufen der Benutzerdaten:', error);
-      return null;
-  }
+        for (const userId in usersData) {
+            const user = usersData[userId];
+            if (user.email === email) {
+                return user;
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Benutzerdaten:', error);
+        return null;
+    }
 }
-
-
-
-
-
-
