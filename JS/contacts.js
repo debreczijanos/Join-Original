@@ -100,4 +100,4 @@ async function getUserData(email) {
         console.error('Fehler beim Abrufen der Benutzerdaten:', error);
         return null;
     }
-}
+}   

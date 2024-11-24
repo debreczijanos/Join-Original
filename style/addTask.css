@@ -598,3 +598,56 @@ p > span {
     opacity: 1;
   }
 }
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .mein-content {
+    flex-direction: column; /* Elemente untereinander */
+    gap: 20px;
+  }
+
+  .add-task-header > span {
+    font-size: 48px;
+  }
+
+  .add-task-ctn {
+    width: 100%; /* Passt die Breite an */
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  .mein-content {
+    margin: 0;
+    padding: 0;
+  }
+
+  .add-task-header > span {
+    font-size: 36px; /* Kleinere Schriftgröße */
+  }
+
+  .add-task-ctn {
+    padding: 0 16px; /* Abstand für kleinere Bildschirme */
+  }
+
+  .partition {
+    display: none; /* Trennlinie ausblenden */
+  }
+}
+
+/* Kleine Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .add-task-header > span {
+    font-size: 28px;
+  }
+
+  .add-task-ctn {
+    padding: 0 8px; /* Weniger Abstand */
+  }
+
+  .submit-btn {
+    flex-direction: column; /* Buttons untereinander */
+    gap: 8px;
+    width: 100%;
+  }
+}
