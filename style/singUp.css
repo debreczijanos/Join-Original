@@ -20,7 +20,9 @@ body {
 }
 
 .sign-up {
-  width: 598px;
+  position: relative;
+  width: 100%;
+  max-width: 598px;
   height: 630px;
   display: flex;
   flex-direction: column;
@@ -37,6 +39,7 @@ body {
   gap: 16px;
   flex-direction: column;
 }
+
 .sign-up-header > span {
   font-size: 61px;
   font-weight: 700;
@@ -119,6 +122,8 @@ form {
 
 .sign-up-btn {
   display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 15px 24px;
   gap: 10px;
   background-color: #2a3647;
@@ -140,9 +145,9 @@ form {
 
 .arrow-left-line {
   cursor: pointer;
-  position: relative;
-  top: -230px;
-  left: 60px;
+  position: absolute;
+  top: 45px;
+  left: 10px;
   z-index: 1;
 }
 
@@ -179,5 +184,57 @@ form {
   100% {
     bottom: 50%; /* Mitte des Bildschirms */
     opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .logo > img {
+    width: 64px;
+    height: auto;
+  }
+
+  .sign-up {
+    height: auto;
+    width: 90%;
+    padding: 32px 5px;
+  }
+
+  form {
+    width: calc(326px - (700px - 100vw));
+  }
+
+  .input-ctn,
+  .costume-input {
+    width: calc(422px - (700px - 100vw));
+  }
+
+  .costume-input > input {
+    width: calc(380px - (700px - 100vw));
+  }
+
+  .sign-up-header > span {
+    font-size: 47px;
+    line-height: 56.4px;
+  }
+
+  .sign-up-header > hr {
+    width: 88px;
+  }
+
+  .sign-up-btn {
+    width: 180px;
+    height: 51px;
+    padding: 4px 4px;
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+}
+
+@media (max-width: 600px) {
+  .input-ctn,
+  .costume-input,
+  .costume-input > input,
+  form {
+    width: 100%;
   }
 }
