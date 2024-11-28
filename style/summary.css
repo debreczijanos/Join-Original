@@ -235,3 +235,165 @@
   color: #29abe2;
   margin-block: 0;
 }
+
+@media (max-width: 1360px) {
+  .summary-header,
+  .summary-ctn {
+    left: 250px;
+  }
+
+  .greating {
+    left: 840px;
+  }
+}
+
+@media (max-width: 1230px) {
+  .summary-header {
+    width: 223px;
+    height: 104px;
+    top: 128px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .summary-header > span {
+    font-size: 47px;
+    line-height: 56.4px;
+  }
+
+  .summary-header > p {
+    font-size: 20px;
+    line-height: 24px;
+    margin-block: 0;
+  }
+
+  .summary-header > hr {
+    width: 90px;
+    height: 3px;
+    position: absolute;
+    bottom: -14px;
+  }
+  .summary-ctn {
+    width: 396px;
+    height: 384px;
+  }
+
+  .summary-to-do-done,
+  .urgent-ctn,
+  .tasks-ctn {
+    width: 396px;
+    height: 110px;
+  }
+
+  .ctn-to-do {
+    width: 186px;
+    height: 110px;
+    padding: 38px 19px;
+  }
+
+  .pen-img > img,
+  .check-img > img,
+  .urgent-ctn-img > img {
+    width: 40px;
+    height: 40px;
+  }
+  .urgent-ctn-number,
+  .summary-number {
+    width: 40px;
+    height: 73px;
+  }
+
+  .urgent-ctn-number > span,
+  .summary-number > span {
+    font-size: 47px;
+    line-height: 56.4px;
+  }
+
+  .urgent-ctn-number > p,
+  .summary-number > p {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+
+  .urgent-ctn {
+    gap: 20px;
+  }
+
+  .urgent-ctn-img {
+    width: 108px;
+    height: 74px;
+    gap: 18px;
+  }
+
+  .urgent-ctn > hr {
+    height: 68px;
+  }
+
+  .date > span {
+    font-size: 16px;
+    line-height: 19.2px;
+  }
+
+  .date > p {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+
+  .tasks-ctn-board {
+    width: 116px;
+    height: 116px;
+  }
+
+  .tasks-ctn-board > span {
+    font-size: 47px;
+    line-height: 56.4px;
+  }
+
+  .tasks-ctn-board > p {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+
+  .greating > span {
+    font-size: 28px;
+    line-height: normal;
+  }
+
+  .greating > h1 {
+    font-size: 30px;
+    line-height: normal;
+  }
+
+  .greating {
+    left: 680px;
+    top: 470px;
+    width: 250px;
+    height: auto;
+  }
+}
+
+@media (max-width: 940px) {
+  .greating {
+    position: relative;
+    left: 18px;
+    top: 56px;
+    flex-direction: row;
+    width: auto;
+  }
+}
+
+@media (max-width: 750px) {
+  .greating {
+    display: none;
+  }
+
+  .summary-header {
+    left: 16px;
+  }
+
+  .summary-ctn {
+    position: static;
+  }
+}
