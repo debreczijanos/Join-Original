@@ -18,7 +18,6 @@ async function loadContacts() {
 function renderContacts(allContacts) {
     let contactCard = document.getElementById('contactId');
     contactCard.innerHTML = '';
-
     for (let i = 0; i < allContacts.length; i++) {
         const contact = allContacts[i];
 
@@ -36,8 +35,9 @@ function renderContacts(allContacts) {
     }
 }
 
+
 function showRenderedContactsMainData(index, contact) {
-    return /*html*/ `
+    return /*html*/`
     <div onclick="openContact(${index})">
       <div class="contact-name">
         <h3>${contact.name}</h3>
@@ -48,6 +48,7 @@ function showRenderedContactsMainData(index, contact) {
       </div>
     </div>`;
 }
+
 
 function appendContactToUI(contact) {
     const contactCard = document.getElementById('contactId');
