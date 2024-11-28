@@ -91,3 +91,63 @@
   text-decoration: none;
   color: #a8a8a8;
 }
+
+@media (max-width: 750px) {
+  .nav {
+    flex-direction: row;
+    height: 80px;
+    width: 100vw;
+    bottom: 0;
+    top: auto;
+    padding: 0 16px;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .menu {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .menu > button {
+    font-size: 14px;
+    line-height: 16.8px;
+  }
+
+  .summary,
+  .addTask,
+  .board,
+  .contacts {
+    flex-direction: column;
+    width: 80px;
+    height: 76px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+    border-radius: 8px;
+  }
+
+  .summaryMenu,
+  .addTaskMenu,
+  .boardMenu,
+  .contactsMenu {
+    flex-direction: column;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .addTaskMenu > img,
+  .summaryMenu > img,
+  .boardMenu > img,
+  .contactsMenu > img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ofice {
+    display: none;
+  }
+}
