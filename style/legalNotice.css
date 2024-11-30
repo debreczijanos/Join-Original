@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .fixed-header {
+    position: sticky;
+    top: 0;
+  }
+  .content-section {  
+    padding: 110px clamp(2.875rem, -1.4287rem + 6.7114vw, 6.625rem) 0
+      clamp(2.875rem, -1.4287rem + 6.7114vw, 6.625rem);
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .header img {
+    width: 21px;
+    height: 20px;
+  }
+  
+  button {
+    display: flex;
+    justify-content: center;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    align-items: center;
+    background-color: transparent;
+  
+  }
+  
+  button:hover {
+    transform: scale(1.09);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    padding: 8px;
+  }
+  
+  h1 {
+    font-size: 61px;
+    font-weight: 700;
+    margin: 0 !important;
+  }
+  
+  h2 {
+    font-size: 27px;
+    font-weight: 700;
+    margin: 30px 0 8px 0;
+  }
+  
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    padding-left: 28px;
+    margin-bottom: 20px;
+  }
+  
+  span {
+    color: #29abe2;
+  }
+  
+  .m-btm {
+    margin-bottom: 16px;
+  }
+  
+  ol {
+    padding-left: 30px;
+    font-size: 27px;
+    font-weight: 700;
+  }
+  
+  .space {
+    padding-left: 30px;
+  }
+  
+  .allTheText{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 40px;
+    padding-bottom: 80px;
+  }
+  @media (max-width: 1024px) {
+    .content-section {
+      padding: 48px clamp(0.625rem, 0.0568rem + 2.8409vw, 1.875rem) 128px
+        clamp(0.625rem, 0.0568rem + 2.8409vw, 1.875rem);
+    }
+  
+    h1 {
+      font-size: 47px !important;
+    }
+  }
+  
+  .responsiveH1 {
+    font-size: 3rem;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .responsiveH1 {
+      font-size: 2.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .responsiveH1 {
+      font-size: 2rem;
+    }
+  }
+  
+  .responsiveH1 {
+    font-size: calc(1.5rem + 2vw);
+  }
+  
