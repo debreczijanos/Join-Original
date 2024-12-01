@@ -36,9 +36,10 @@ button {
 
 .mein-content {
   display: flex;
+  flex-direction: column;
   height: 100vh;
   max-height: 1024px;
-  margin-left: 232px;
+  margin-left: 328px;
   padding-top: 96px;
   box-sizing: border-box;
 }
@@ -80,13 +81,22 @@ input[type="checkbox"]:checked::after {
   left: 8px;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1360px) {
   .mein-content {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+    margin-left: 268px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .mein-content {
+    padding: 20px 16px;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .mein-content {
+    padding: 20px 0px;
+    margin-left: 0;
   }
 }
