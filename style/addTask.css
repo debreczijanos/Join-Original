@@ -1,7 +1,8 @@
 .add-task-header {
-  position: absolute;
-  top: 206px;
-  left: 328px;
+  padding-left: 270px;
+    display: flex;
+    justify-content: start;
+    padding-top: 60px;
 }
 
 .add-task-header > span {
@@ -26,11 +27,7 @@
 }
 
 .add-task-ctn {
-  position: absolute;
-  top: 327px;
-  left: 328px;
   height: 376px;
-
   align-items: center;
   justify-content: space-around;
 }
@@ -249,15 +246,9 @@ p > span {
   border: 1px solid #d1d1d1;
   width: 0;
   height: 424px;
-  position: absolute;
-  top: 327px;
-  left: 816.25px;
 }
 
 .add-task-date {
-  position: absolute;
-  top: 327px;
-  left: 864.25px;
   height: 416px;
   justify-content: space-around;
 }
@@ -465,22 +456,19 @@ p > span {
 }
 
 .required {
-  position: absolute;
-  top: 926px;
-  left: 328px;
+  display: flex;
+  align-items: start;
 }
 
 .submit-btn {
-  position: absolute;
-  top: 889px;
-  left: 995.25px;
   display: flex;
   gap: 16px;
   width: 309px;
-  height: 56px;
+  height: 200px;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
+
 .clear-btn,
 .create-task-btn {
   display: flex;
@@ -648,6 +636,28 @@ p > span {
   .submit-btn {
     flex-direction: column; /* Buttons untereinander */
     gap: 8px;
+    width: 100%;
+  }
+}
+
+/*transformation ------------------------------------------------------------------------- */
+
+@media(max-widht: 1350px){
+  .mein-content{
+    width: 100%; 
+    max-width: 0;
+    padding-top: 75px;
+  }
+
+  .add-task-ctn{
+    width: 100%; 
+  }
+
+  .add-task-date{
+    width: 100%;
+  }
+
+  input{
     width: 100%;
   }
 }

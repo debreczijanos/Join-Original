@@ -90,3 +90,60 @@
   text-decoration: none;
   color: #a8a8a8;
 }
+
+
+/*responsive nav----------------------------------------------------------*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container für die Seite */
+.content {
+  flex: 1; /* Füllt den restlichen Raum */
+}
+
+/* Footer-Navbar */
+.footer-nav {
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(42,54,71);
+  border-top: 1px solid #ccc;
+  height: 60px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #ededed; 
+  font-size: 14px;
+}
+
+.nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 5px; /* Platz zwischen Icon und Text */
+}
+
+.nav-item.active {
+  color: #ededed; /* Farbe für aktives Element */
+}
+
+.nav-item:hover {
+  color: rgb(255, 255, 255); /* Orange Farbe beim Hover (wie im Bild) */
+}
+
+.nav-item:hover img {
+  transform: scale(1.2); /* Vergrößert das Icon leicht beim Hover */
+}
+

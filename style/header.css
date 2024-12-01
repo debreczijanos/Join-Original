@@ -100,3 +100,11 @@ header > p {
     height: 40px;
   }
 }
+
+/*respondive assests for "add Task" HTML----------------------------*/
+
+@media(max-width: 1350px){
+  header{
+    min-width: 100%;
+  }
+}
