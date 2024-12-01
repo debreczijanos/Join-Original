@@ -26,9 +26,9 @@
   gap: 30px;
   height: 73px;
   width: 625px;
-  position: absolute;
+  /* position: absolute;
   top: 206px;
-  left: 328px;
+  left: 328px; */
 }
 
 .summary-header > span {
@@ -50,10 +50,17 @@
   color: #2a3647;
 }
 
+.sumamry-ctn-grating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 70px;
+  height: 100vh;
+}
 .summary-ctn {
-  position: absolute;
+  /* position: absolute;
   top: 335px;
-  left: 328px;
+  left: 328px; */
   height: 562px;
   width: 560px;
   display: flex;
@@ -211,12 +218,13 @@
 .greating {
   height: 136px;
   width: 385px;
-  left: 968px;
+  /* left: 968px;
   top: 547.5px;
-  position: absolute;
+  position: absolute; */
   display: flex;
   flex-direction: column;
   gap: 3px;
+  padding-left: 32px;
 }
 
 .greating > span {
@@ -236,50 +244,46 @@
   margin-block: 0;
 }
 
-@media (max-width: 1360px) {
-  .summary-header,
-  .summary-ctn {
-    left: 250px;
-  }
-
-  .greating {
-    left: 840px;
-  }
-}
-
-@media (max-width: 1230px) {
+@media (max-width: 1250px) {
   .summary-header {
     width: 223px;
     height: 104px;
-    top: 128px;
     display: flex;
     flex-direction: column;
     gap: 16px;
     align-items: flex-start;
   }
-
   .summary-header > span {
     font-size: 47px;
     line-height: 56.4px;
   }
-
   .summary-header > p {
     font-size: 20px;
     line-height: 24px;
     margin-block: 0;
   }
-
   .summary-header > hr {
     width: 90px;
     height: 3px;
     position: absolute;
-    bottom: -14px;
+    top: 197px;
   }
+}
+@media (max-width: 990px) {
+  .greating {
+    display: none;
+  }
+
+  .sumamry-ctn-grating {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 670px) {
   .summary-ctn {
     width: 396px;
     height: 384px;
   }
-
   .summary-to-do-done,
   .urgent-ctn,
   .tasks-ctn {
@@ -355,45 +359,26 @@
     font-size: 14px;
     line-height: 16.8px;
   }
-
-  .greating > span {
-    font-size: 28px;
-    line-height: normal;
-  }
-
-  .greating > h1 {
-    font-size: 30px;
-    line-height: normal;
-  }
-
-  .greating {
-    left: 680px;
-    top: 470px;
-    width: 250px;
-    height: auto;
-  }
 }
 
-@media (max-width: 940px) {
-  .greating {
-    position: relative;
-    left: 18px;
-    top: 56px;
-    flex-direction: row;
+@media (max-width: 450px) {
+  .summary-header > hr {
+    top: 213px;
+  }
+  .summary-ctn {
     width: auto;
   }
-}
 
-@media (max-width: 750px) {
-  .greating {
-    display: none;
+  .summary-to-do-done,
+  .urgent-ctn,
+  .tasks-ctn {
+    width: 260px;
+    gap: 10px;
   }
-
-  .summary-header {
-    left: 16px;
+  .ctn-to-do {
+    width: 130px;
   }
-
-  .summary-ctn {
-    position: static;
+  .tasks-ctn-board {
+    width: 100px;
   }
 }

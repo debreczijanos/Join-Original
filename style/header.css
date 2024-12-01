@@ -81,8 +81,8 @@ header > p {
   background-color: #2a3d59;
 }
 
-@media (max-width: 750px) {
-  header > p {
+@media (max-width: 1250px) {
+  header > h2 {
     display: none;
   }
 
