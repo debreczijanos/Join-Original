@@ -1,7 +1,17 @@
-.add-task-header {
+/* .add-task-header {
   position: absolute;
   top: 206px;
   left: 328px;
+} */
+
+.add-task-ctn-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 70px;
+  height: 100vh;
+  padding-right: 18px;
 }
 
 .add-task-header > span {
@@ -26,9 +36,9 @@
 }
 
 .add-task-ctn {
-  position: absolute;
+  /* position: absolute;
   top: 327px;
-  left: 328px;
+  left: 328px; */
   height: 376px;
 
   align-items: center;
@@ -114,6 +124,7 @@ p > span {
 .add-subtasks {
   height: 80px;
   gap: 8px;
+  position: relative;
 }
 
 .dropdown,
@@ -249,15 +260,15 @@ p > span {
   border: 1px solid #d1d1d1;
   width: 0;
   height: 424px;
-  position: absolute;
+  /* position: absolute;
   top: 327px;
-  left: 816.25px;
+  left: 816.25px; */
 }
 
 .add-task-date {
-  position: absolute;
+  /* position: absolute;
   top: 327px;
-  left: 864.25px;
+  left: 864.25px; */
   height: 416px;
   justify-content: space-around;
 }
@@ -330,7 +341,7 @@ p > span {
 
 #customDropdownMenu {
   position: absolute;
-  top: 74.5%;
+  top: 101.5%;
   left: 0;
   width: 100%;
   background-color: white;
@@ -464,21 +475,21 @@ p > span {
   margin: 0 2px; /* Abstand zwischen den Icons und der Linie */
 }
 
-.required {
+/* .required {
   position: absolute;
   top: 926px;
   left: 328px;
-}
+} */
 
 .submit-btn {
-  position: absolute;
+  /* position: absolute;
   top: 889px;
-  left: 995.25px;
+  left: 995.25px; */
   display: flex;
   gap: 16px;
-  width: 309px;
+  width: 100%;
   height: 56px;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 .clear-btn,
@@ -599,55 +610,20 @@ p > span {
   }
 }
 
-/* Tablet (max-width: 1024px) */
 @media (max-width: 1024px) {
-  .mein-content {
-    flex-direction: column; /* Elemente untereinander */
-    gap: 20px;
-  }
-
-  .add-task-header > span {
-    font-size: 48px;
-  }
-
-  .add-task-ctn {
-    width: 100%; /* Passt die Breite an */
-  }
-}
-
-/* Mobile (max-width: 768px) */
-@media (max-width: 768px) {
-  .mein-content {
-    margin: 0;
-    padding: 0;
-  }
-
-  .add-task-header > span {
-    font-size: 36px; /* Kleinere Schriftgröße */
-  }
-
-  .add-task-ctn {
-    padding: 0 16px; /* Abstand für kleinere Bildschirme */
-  }
-
   .partition {
-    display: none; /* Trennlinie ausblenden */
-  }
-}
-
-/* Kleine Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-  .add-task-header > span {
-    font-size: 28px;
+    display: none;
   }
 
-  .add-task-ctn {
-    padding: 0 8px; /* Weniger Abstand */
-  }
-
-  .submit-btn {
-    flex-direction: column; /* Buttons untereinander */
-    gap: 8px;
-    width: 100%;
+  .add-task-ctn-date {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 100px;
+    height: 100%;
+    justify-content: start;
+    max-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0;
   }
 }
