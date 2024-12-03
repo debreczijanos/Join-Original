@@ -539,14 +539,14 @@ p > span {
 
 /* Spezifische Fehlermeldung für den Titel */
 .error-title {
-  position: absolute;
+  /* position: absolute; */
   top: 94px;
   margin-left: 10px;
 }
 
 /* Spezifische Fehlermeldung für das Fälligkeitsdatum */
 .error-due-date {
-  position: absolute;
+  /* position: absolute; */
   top: 91px;
   margin-left: 10px;
 }
@@ -554,7 +554,7 @@ p > span {
 /* Spezifische Fehlermeldung für die Kategorie */
 .error-category {
   position: absolute;
-  top: 74%;
+  top: 99%;
   left: 0;
   margin-left: 10px;
 }
@@ -618,12 +618,27 @@ p > span {
   .add-task-ctn-date {
     flex-direction: column;
     align-items: center;
-    padding-bottom: 100px;
+    padding-bottom: 130px;
     height: 100%;
     justify-content: start;
     max-height: 100vh;
-    overflow-y: auto;
-    overflow-x: hidden;
     padding-right: 0;
+    padding-top: 0;
+    overflow: auto;
+  }
+
+  .add-subtasks {
+    padding-top: 20px;
+  }
+  .error-category {
+    position: absolute;
+    top: 102%;
+  }
+  .add-task-date-prio {
+    padding-top: 12px;
+    height: auto;
+  }
+  .subtask-list {
+    top: 127%;
   }
 }
