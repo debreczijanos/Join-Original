@@ -1,191 +1,727 @@
+
+
+.blueBackground {
+  background-color: rgb(42, 54, 71);
+  color: white;
+}
+
+.displayNone {
+  display: none !important;
+}
+
+.layout-wrapper {
+  height: 100vh;
+ width: 100vh;
+  display: flex;
+  padding-bottom: 0px;
+  margin-bottom: -111px;
+  margin-left: 232px;
+}
+
+.addContactButtonResponsiv {
+  display: none;
+}
+
+.addContactButtonResponsiv {
+  display: none;
+}
+
+.saveButton:disabled {
+  background-color: grey;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.saveButton:not(:disabled):hover {
+  background-color: rgb(41, 171, 226);
+  transition: 150ms;
+  color: white;
+}
+
+.createButton:disabled {
+  background-color: grey;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.createButton:not(:disabled):hover {
+  background-color: rgb(41, 171, 226);
+  transition: 150ms;
+  color: white;
+}
+
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.content-section {
+  flex: 1;
+  height: 80vh;
+  padding: 15px 15px 0px 15px;
+}
+
+#mycontacts {
+  overflow-y: scroll;
+}
+
+#mycontacts::-webkit-scrollbar {
+  width: 8px;
+}
+
+#mycontacts::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+#mycontacts::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+#mycontacts::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#content-area {
+  overflow: hidden;
+}
+
+.h2Contacts {
+  margin: 0;
+  padding: 15px 15px 0px 15px;
+}
+
+.h2Contacts {
+  margin: 0;
+}
+
+.moreAboutContent {
+  width: 100%;
+  height: auto;
+  padding: 24px -1px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.addContact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0 12px 0;
+}
+
 .addContactButton {
-    background-color: rgb(9, 25, 49);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    height: 56px;
-    border-radius: 10px;
-    font-size: 21px;
-    font-weight: 700;
-    border: none;
-    width: 352px;
+  background-color: rgb(9, 25, 49);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 56px;
+  border-radius: 10px;
+  font-size: 21px;
+  font-weight: 700;
+  border: none;
+  width: 352px;
+}
+
+.addContactButtonResponsiv {
+  background-color: rgb(9, 25, 49);
+  color: white;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border-radius: 46px;
+  border: none;
+  width: 56px;
+  position: absolute;
+  bottom: 103px;
+  right: 16px;
+}
+
+.createButton {
+  background-color: rgb(9, 25, 49);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 56px;
+  justify-content: center;
+  gap: 16px;
+  height: 56px;
+  border-radius: 10px;
+  font-size: 21px;
+  font-weight: 700;
+  border: none;
+  width: 352px;
+}
+
+.createButton {
+  background-color: rgb(9, 25, 49);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  height: 56px;
+  border-radius: 12px;
+  font-size: 21px;
+  font-weight: 700;
+  border: none;
+  width: 214px;
+}
+
+.addContactButton img {
+  height: 32px;
+  width: 32px;
+}
+
+.addContactButtonResponsiv img {
+  height: 32px;
+  width: 32px;
+}
+
+.createButton img {
+  height: 32px;
+  width: 32px;
+}
+
+.addContactButton:hover {
+  cursor: pointer;
+}
+
+.createButton:hover {
+  cursor: pointer;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
   }
 
-  
-  .addContactButton:hover {
-    cursor: pointer;
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
   }
 
-
-  .addContactButton:hover {
-    background-color: rgb(41, 171, 226);
-    transition: 150ms;
-    color: white;
+  to {
+    transform: translateX(100%);
   }
+}
 
-/* slide fenster style*/
-  .popUp.slide-in {
-    animation: slideIn 0.5s forwards;
-    display: flex;
+.letter_For_PopUp {
+  margin-inline-start: 40px;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 48px;
+  background-color: orange;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.popUp.slide-in {
+  animation: slideIn 0.5s forwards;
+}
+
+.popUp.slide-out {
+  animation: slideOut 0.5s forwards;
+}
+
+.bg-popUp.show {
+  opacity: 1;
+}
+
+.bg-popUp.hide {
+  opacity: 0;
+}
+
+.bg-popUp {
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.list {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+
+.popUp {
+  height: 453px;
+  width: 1050px;
+  border-radius: 24px;
+  z-index: 998;
+  padding-left: 0%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.5s ease-in-out;
+}
+
+.popUp-logo {
+  background-color: rgb(9, 25, 49);
+  width: 467px;
+  height: 597px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+}
+
+
+
+.logo-box {
+  height: 88px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding: 0 12px 0 30px;
+}
+
+.saveButton {
+  width: 111px !important;
+}
+
+.edit-logo {
+  width: 361px;
+  height: 89px;
+  padding: 0 12px 12px 12px;
+}
+
+.edit-logo-box {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  padding: 1px 0 90px 20px;
+}
+
+.editResponsiv {
+  display: flex;
+  margin-top: 60px;
+}
+
+.popUp-content {
+  background-color: white;
+  height: 100%;
+  width: 745px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popUp-content2 {
+  background-color: white;
+  height: 100%;
+  width: 745px;
+  display: flex;
+  align-items: center;
+}
+
+.close-button {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.close-button img {
+  object-fit: cover;
+  height: 32px;
+  width: 32px;
+  position: fixed;
+  top: 34px;
+  right: 24px;
+}
+
+.close-button img:hover {
+  cursor: pointer;
+}
+
+.pic_inputs {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: space-between;
+  justify-content: space-around !important;
+  width: 100%;
+}
+
+.profile-pic {
+  padding-inline-start: 40px;
+  height: 120px;
+  width: 120px;
+}
+
+.contact_input {
+  width: 340px;
+  padding-inline-end: 20px;
+}
+
+.contact_input2 {
+  width: 340px;
+  padding-inline-end: 20px;
+}
+
+.center-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 84px;
+  padding-left: 0px;
+}
+.return-mobilePopUp {
+  display: flex;
+  justify-content: end;
+}
+
+.redOutline {
+  border: 1px solid red !important;
+}
+
+.return-mobilePopUp img {
+  filter: brightness(1000%) saturate(0%);
+  object-fit: cover;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 56px;
+  width: 340px;
+  object-fit: cover;
+}
+
+.form input {
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgb(203, 203, 203);
+  object-fit: cover;
+  padding-left: 10px;
+}
+
+.h2-span {
+  display: flex;
+  justify-content: space-between;
+}
+
+.addLogo {
+  height: 129px !important;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.text span {
+  font-size: 27px;
+}
+
+.contact_button {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0px 0 0 0;
+  gap: 24px;
+}
+
+.contact_button button {
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 12px;
+  gap: 4px;
+  font-size: larger;
+}
+
+.contact_button button:last-child {
+  border: none;
+}
+
+.addContactButton:hover {
+  background-color: rgb(41, 171, 226);
+  transition: 150ms;
+  color: white;
+}
+
+.addContactButtonResponsiv:hover {
+  background-color: rgb(41, 171, 226);
+  transition: 150ms;
+  color: white;
+  cursor: pointer;
+}
+
+.createButton:hover {
+  background-color: rgb(41, 171, 226);
+  transition: 150ms;
+  color: white;
+}
+
+.contact_button img {
+  object-fit: cover;
+  height: 24px;
+  width: 24px;
+}
+
+.cancel-Button {
+  background-color: white;
+}
+
+.cancel-Button:hover {
+  cursor: pointer;
+  border: 2.5px solid rgb(41, 171, 226);
+  color: rgb(41, 171, 226);
+}
+
+.cancel-Button:hover img {
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+}
+
+.letter {
+  border-bottom: 0.5px solid grey;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 12px 0px 12px 86px;
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+  border-radius: 12px;
+  width: 322px;
+  height: 78px;
+  padding-left: 30px;
+}
+
+.one_letter {
+  height: 42px;
+  width: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: larger;
+  text-transform: uppercase;
+}
+
+.one_letter:hover {
+  cursor: pointer;
+}
+
+.fullName-email {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fullName-email span {
+  font-size: 20px;
+}
+
+.email {
+  text-decoration: none;
+  color: rgb(0, 124, 238);
+  font-size: smaller;
+}
+
+.single-letter {
+  min-height: 120px;
+  min-width: 120px;
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 48px;
+  background-color: orange;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+h4 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.contactInformation {
+  font-size: 20px;
+  height: 74px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.contact-profile {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  padding: 24px 0 24px 0;
+}
+
+@media (max-width: 1200px) {
+  .contact-profile {
+    gap: 26px;
   }
+}
 
+.h4_edit-delete {
+  display: flex;
+  align-items: self-start;
+  flex-direction: column;
+}
 
-  .popUp-logo {
-    background-color: rgb(9, 25, 49);
-    width: 467px;
-    height: 597px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    justify-content: center;
-  }
+.edit-delete {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  padding: 12px 0 0 0;
+}
 
+.edit-delete :first-child:hover {
+  color: rgb(65, 157, 241);
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+  cursor: pointer;
+}
 
-  .return-mobilePopUp {
-    display: flex;
-    justify-content: end;
-  }
+.edit-delete :nth-child(2):hover {
+  color: rgb(65, 157, 241);
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+  cursor: pointer;
+}
 
+.edit-delete img {
+  height: 24px;
+  width: 24px;
+  object-fit: cover;
+}
 
-  .logo-box {
-    height: 88px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    padding: 0 12px 0 30px;
-  }
+.underline {
+  display: none;
+}
 
+.edit-delete img:hover {
+  cursor: pointer;
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+}
 
-  .logo-side-board {
-    object-fit: cover;
-    height: 66px;
-    width: 55px;
-  }
+.edit-delete span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
+.pers-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  .edit-logo-box {
-    width: 80%;
-    display: flex;
-    align-items: center;
-    padding: 1px 0 90px 20px;
-  }
+.pers-info a {
+  color: rgb(65, 157, 241);
+  text-decoration: none;
+}
 
+.closeMobile {
+  display: none;
+}
 
-  .edit-logo {
-    width: 361px;
-    height: 89px;
-    padding: 0 12px 12px 12px;
-  }
+#options_edit_delete {
+  object-fit: cover;
+  color: black;
+}
 
+.closeMobile {
+  cursor: pointer;
+}
 
-  .addLogo {
-    height: 129px !important;
-  }
+#editDeleteMenu {
+  display: none;
+  position: absolute;
+  bottom: 74px;
+  right: 0px;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding-right: 0px;
+  padding-bottom: 10px;
+  border-radius: 30%;
+}
 
+#editDeleteMenu a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 8px 16px;
+}
 
-  .popUp-content {
-    background-color: white;
-    height: 100%;
-    width: 745px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-
-  .close-button {
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-  }
-
-
-  .pic_inputs {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    justify-content: space-between;
-    justify-content: space-around !important;
-    width: 100%;
-  }
-
-  
-  .center-pic {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 84px;
-    padding-left: 0px;
-  }
-
-
-  .profile-pic {
-    padding-inline-start: 40px;
-    height: 120px;
-    width: 120px;
-  }
-
-  
-  .contact_input {
-    width: 340px;
-    padding-inline-end: 20px;
-  }
-
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding-bottom: 56px;
-    width: 340px;
-    object-fit: cover;
-  }
-
-
-  @media (max-width: 450px) {
-    .error-message {
-      width: 90%;
-      color: red;
-      font-size: 14px !important;
-      height: 14px !important;
-      padding-bottom: 3px;
-    }
-  }
-  
-  
-  .contact_button {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    padding: 0px 0 0 0;
-    gap: 24px;
-  }
-
-
-  .createButton {
-    background-color: rgb(9, 25, 49);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    height: 56px;
-    justify-content: center;
-    gap: 16px;
-    height: 56px;
-    border-radius: 10px;
-    font-size: 21px;
-    font-weight: 700;
-    border: none;
-    width: 352px;
-  }
-
-
-  .bg-popUp.show {
-    opacity: 1;
-  }
+.edit-window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 84px;
+  padding-left: 0px;
+}

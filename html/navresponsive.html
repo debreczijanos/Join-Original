@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottom Navbar</title>
+
+    <style>
+        /* Entfernt Standardabstände */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Container für die Seite */
+        .content {
+            flex: 1; /* Füllt den restlichen Raum */
+        }
+
+        /* Footer-Navbar */
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: rgb(42,54,71);
+            border-top: 1px solid #ccc;
+            height: 60px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ededed; 
+            font-size: 14px;
+        }
+
+        .nav-item img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px; /* Platz zwischen Icon und Text */
+        }
+
+        .nav-item.active {
+            color: #ededed; /* Farbe für aktives Element */
+        }
+
+        .nav-item:hover {
+            color: rgb(255, 255, 255); /* Orange Farbe beim Hover (wie im Bild) */
+        }
+
+        .nav-item:hover img {
+            transform: scale(1.2); /* Vergrößert das Icon leicht beim Hover */
+        }
+    </style>
+</head>
+<body>
+   
+    <!-- Footer-Navigation -->
+    <nav class="footer-nav">
+        <!-- Navigationselemente -->
+        <a href="#" class="nav-item active">
+            <img src="../img/summary.png" alt="Summary">
+            <span>Summary</span>
+        </a>
+        <a href="#" class="nav-item">
+            <img src="../img/board.png" alt="Board">
+            <span>Board</span>
+        </a>
+        <a href="#" class="nav-item">
+            <img src="../img/addTask.png" alt="Add Tasks">
+            <span>Add Tasks</span>
+        </a>
+        <a href="#" class="nav-item">
+            <img src="../img/contact.png" alt="Contacts">
+            <span>Contacts</span>
+        </a>
+    </nav>
+</body>
+</html>
