@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 232px;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   background-color: #2a3647;
   padding: 64px 0px;
   top: 0;

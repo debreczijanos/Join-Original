@@ -1,17 +1,10 @@
-/* .add-task-header {
-  position: absolute;
-  top: 206px;
-  left: 328px;
-} */
-
 .add-task-ctn-date {
   display: flex;
   align-items: center;
   justify-content: space-between;
   align-items: flex-start;
-  padding-top: 70px;
   height: 100vh;
-  padding-right: 18px;
+  padding: 70px 18px 90px 0px;
 }
 
 .add-task-header > span {
@@ -36,11 +29,7 @@
 }
 
 .add-task-ctn {
-  /* position: absolute;
-  top: 327px;
-  left: 328px; */
   height: 376px;
-
   align-items: center;
   justify-content: space-around;
 }
@@ -87,6 +76,7 @@ p > span {
   font-weight: 400;
   background-color: #ffffff;
 }
+
 #title {
   width: 440px;
   height: 48px;
@@ -182,7 +172,6 @@ p > span {
   padding: 0.01px;
   cursor: pointer;
 }
-/* muss noch gemacht werden  */
 
 .dropdown-menu {
   display: none;
@@ -254,21 +243,13 @@ p > span {
   font-size: 18px;
 }
 
-/*  ab hier erledigt  */
-
 .partition {
   border: 1px solid #d1d1d1;
   width: 0;
   height: 424px;
-  /* position: absolute;
-  top: 327px;
-  left: 816.25px; */
 }
 
 .add-task-date {
-  /* position: absolute;
-  top: 327px;
-  left: 864.25px; */
   height: 416px;
   justify-content: space-around;
 }
@@ -337,8 +318,6 @@ p > span {
   color: white;
 }
 
-/* Styling für den Custom Dropdown */
-
 #customDropdownMenu {
   position: absolute;
   top: 101.5%;
@@ -391,20 +370,17 @@ p > span {
   display: none;
 }
 
-/* Liste der Subtasks */
 .subtask-list {
   height: 90px;
   width: 440px;
-  overflow-y: auto; /* Vertikalen Scrollbalken anzeigen */
-  overflow-x: hidden; /* Horizontales Scrollen verhindern */
+  overflow-y: auto;
+  overflow-x: hidden;
   position: absolute;
   top: 98%;
 }
 
-/* Subtask-Item */
 .subtask-item {
   padding: 10px;
-
   background-color: transparent;
   border-radius: 10px;
   display: flex;
@@ -413,13 +389,11 @@ p > span {
   transition: background-color 0.3s ease;
 }
 
-/* Hover-Effekt für Subtask */
 .subtask-item:hover {
   background-color: #eeeeee;
   cursor: pointer;
 }
 
-/* Icons für Bearbeiten und Löschen */
 .subtask-actions {
   display: none;
 }
@@ -467,30 +441,48 @@ p > span {
   background: #2a3647; /* Farbe bei Hover */
 }
 
-/* Trennlinie */
 .divider {
-  width: 1px; /* Breite der Linie */
-  height: 20px; /* Höhe passend zu den Icons */
-  background-color: #d1d1d1; /* Farbe der Linie */
-  margin: 0 2px; /* Abstand zwischen den Icons und der Linie */
+  width: 1px;
+  height: 20px;
+  background-color: #d1d1d1;
+  margin: 0 2px;
 }
 
-/* .required {
-  position: absolute;
-  top: 926px;
-  left: 328px;
-} */
+/* Vertikaler Scrollbalken */
+.add-task-ctn-date::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.add-task-ctn-date::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.add-task-ctn-date::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.add-task-ctn-date::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.add-task-ctn-date::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
 
 .submit-btn {
-  /* position: absolute;
-  top: 889px;
-  left: 995.25px; */
   display: flex;
   gap: 16px;
   width: 100%;
   height: 56px;
   justify-content: flex-end;
   align-items: center;
+  padding-right: 4px;
 }
 .clear-btn,
 .create-task-btn {
@@ -531,27 +523,21 @@ p > span {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-/* Gemeinsamer Stil für alle Fehlermeldungen */
 .error-message {
   color: red;
   font-size: 14px;
 }
 
-/* Spezifische Fehlermeldung für den Titel */
 .error-title {
-  /* position: absolute; */
   top: 94px;
   margin-left: 10px;
 }
 
-/* Spezifische Fehlermeldung für das Fälligkeitsdatum */
 .error-due-date {
-  /* position: absolute; */
   top: 91px;
   margin-left: 10px;
 }
 
-/* Spezifische Fehlermeldung für die Kategorie */
 .error-category {
   position: absolute;
   top: 99%;
@@ -559,14 +545,13 @@ p > span {
   margin-left: 10px;
 }
 
-/* Overlay deckt die gesamte Seite ab */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Halbtransparentes Schwarz */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -615,6 +600,10 @@ p > span {
     display: none;
   }
 
+  .add-task-date {
+    padding-top: 50px;
+  }
+
   .add-task-ctn-date {
     flex-direction: column;
     align-items: center;
@@ -640,5 +629,75 @@ p > span {
   }
   .subtask-list {
     top: 127%;
+  }
+}
+
+@media (max-width: 500px) {
+  .add-task-header > span {
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56.4px;
+  }
+
+  .add-task-title > label,
+  .add-task-title > label > span,
+  .add-task-description > label,
+  .add-task-assigned > label,
+  .add-task-date-value > label,
+  .add-task-date-prio > label,
+  .add-task-date-category > label,
+  .add-subtasks > label,
+  .subtasks-wrapper > input,
+  .required,
+  .clear-btn,
+  .add-task-date-value > input,
+  #title,
+  #description,
+  .dropdown,
+  .custom-dropdown,
+  .add-task-date-value > input,
+  .prio-btn > button,
+  #dropdownInput,
+  #customDropdownInput {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+  }
+
+  .prio-btn > button {
+    height: 41px;
+    width: auto;
+  }
+  .prio-btn {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 10px;
+  }
+
+  .add-task-date-prio {
+    width: 100%;
+  }
+
+  .add-task-ctn,
+  .add-task-title,
+  .add-task-description,
+  .add-task-assigned,
+  .add-task-date,
+  .add-task-date-value,
+  .add-task-date-category,
+  .add-subtasks,
+  #title,
+  #description,
+  .dropdown,
+  .custom-dropdown,
+  .add-task-date-value > input,
+  .subtasks-wrapper,
+  .subtask-list {
+    width: 97%;
+  }
+  .required {
+    padding-left: 4px;
   }
 }
