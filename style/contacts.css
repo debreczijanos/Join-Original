@@ -22,9 +22,6 @@
   display: none;
 }
 
-.addContactButtonResponsiv {
-  display: none;
-}
 
 .saveButton:disabled {
   background-color: grey;
@@ -142,6 +139,11 @@
   font-weight: 700;
   border: none;
   width: 352px;
+}
+
+.addContactButtonResponsiv img {
+  height: 32px;
+  width: 32px;
 }
 
 .addContactButtonResponsiv {
@@ -314,7 +316,11 @@
   justify-content: center;
 }
 
-
+.logo-mobile {
+  object-fit: cover;
+  height: 66px;
+  width: 55px;
+}
 
 .logo-box {
   height: 88px;
@@ -395,7 +401,6 @@
 }
 
 .profile-pic {
-  padding-inline-start: 40px;
   height: 120px;
   width: 120px;
 }
@@ -429,6 +434,12 @@
 .return-mobilePopUp img {
   filter: brightness(1000%) saturate(0%);
   object-fit: cover;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  height: 15px;
 }
 
 .form {
@@ -724,4 +735,42 @@ h4 {
   align-items: center;
   padding-bottom: 84px;
   padding-left: 0px;
+}
+
+@media (max-width: 950px) {
+  .addContactButton {
+      display: none;
+  }
+}
+
+
+@media (max-width: 1025px) {
+  .addContactButton {
+      display: none;
+  }
+}
+
+@media (max-width: 1025px) {
+  .content-section {
+      display: none;
+  }
+}
+
+@media (max-width: 950px) {
+  .content-section {
+      display: none;
+  }
+}
+
+
+@media (max-width: 1025px) {
+  .addContactButtonResponsiv {
+      display: flex;
+  }
+}
+
+@media (max-width: 950px) {
+  .addContactButtonResponsiv {
+      display: flex;
+  }
 }
