@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+
+    <style>
+        .dragarea {
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border: 1px dashed black;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .todo {
+            border: 1px solid gray;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .drag-area-highlight {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+    <script>
+        const todos = [
+            { id: 0, title: 'Einkaufen', category: 'open' },
+            { id: 1, title: 'Putzen', category: 'open' },
+            { id: 2, title: 'Abwasch', category: 'closed' }
+        ];
+
+        let currentDraggedElement; 
+
+        function updateHTML() {
+            // Bereich für offene Todos
+            let open = todos.filter(t => t.category === 'open');
+            document.getElementById('open').innerHTML = '';
+            for (let index = 0; index < open.length; index++) {
+                const e = open[index];
+                document.getElementById('open').innerHTML += generateTodoHTML(e);
+            }
+
+            // Bereich für geschlossene Todos
+            let closed = todos.filter(t => t.category === 'closed');
+            document.getElementById('closed').innerHTML = '';
+            for (let index = 0; index < closed.length; index++) {
+                const e = closed[index];
+                document.getElementById('closed').innerHTML += generateTodoHTML(e);
+            }
+        }
+
+        function startDragging(id){
+            currentDraggedElement = id; 
+        }
+
+        function generateTodoHTML(e) {
+            return /*html*/`
+                <div draggable="true" class="todo" ondragstart="startDragging(${e.id})">${e.title}</div>
+            `;
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function moveTo(category){
+            todos[currentDraggedElement]['category'] = category; //z.B Todo mit id 1: Das Feld categoriy ändert sich zu open oder closed
+            updateHTML(); 
+        }
+
+        function highlight(id) {
+            document.getElementById(id).classList.add('drag-area-highlight');
+        }
+
+        function removeHighlight(id) {
+            document.getElementById(id).classList.remove('drag-area-highlight');
+        }
+
+    </script>
+</head>
+<body onload="updateHTML()">
+
+    <h2>Offene Aufgaben</h2>
+    <div id="open" class="dragarea" ondrop="moveTo('open')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')">
+        <!-- Offene Todos werden hier eingefügt -->
+    </div>
+
+    <h2>Abgeschlossene Aufgaben</h2>
+    <div id="closed" class="dragarea" ondrop="moveTo('closed')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('closed')">
+        <!-- Geschlossene Todos werden hier eingefügt -->
+    </div>
+    
+</body>
+</html>
