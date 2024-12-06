@@ -24,7 +24,7 @@ function renderContacts(allContacts) {
 
         const name = contact.name || "No Name";
         const email = contact.email || "No Email";
-        const phone = contact.phone || "No Phone;"
+        const phone = contact.phone || "No Phone";
 
         contactCard.innerHTML += showRenderedContactsMainData(i, {
             name,
