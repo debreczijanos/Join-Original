@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Card</title>
+    <link rel="stylesheet" href="../style/fonts.css">
 
     <style>
         body {
+        font-family: "Figtree", sans-serif;
         width: 100%;
         height: 100vh;
         display: flex;
@@ -17,7 +19,7 @@
     }
     
     .card-overview{
-        width: 30%;
+        width: 35%;
         height: 65%;
         background-color: rgba(255, 255, 255, 1);
         border-radius: 30px;
@@ -27,16 +29,97 @@
         z-index: 1;
         transition: all 300ms ease-in-out;
     }
+
+    .card-layout{
+        padding: 35px;
+    }
+
+    .title-and-close{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text-layout{
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .edit-and-delete{
+        display: flex;
+        flex-direction: row-reverse; 
+        align-items: center;
+        margin-top: 75px;
+    }
+
+    .d-none{
+        display: none;
+    }
     </style>
 
 
+
+    <script>
+
+        const URLData = 'https://www.fruityvice.com/api/fruit/2'; 
+        const MaxData = 10; 
+
+        function CloseTaskField() {
+            document.getElementById('great-div').classList.add('d-none');
+        }
+
+
+        async function loadData() {
+            let response = await fetch(`${URLData}`); 
+            let newResponse = await response.json();
+            sconsole.log(newResponse);
+        }
+          
+    </script>
+
+
+
 </head>
-<body>
+<body onload="loadData()">
 
 
 
-    <div class="card-overview">
+    <div class="card-overview" id="great-div">
+        <div class="card-layout">
+            <div class="title-and-close">
+                <h1 style="font-size: 30px; font-weight: 700;">
+                    Überschrift
+                </h1>
+                <img onclick="CloseTaskField()" src="../img/close.png" alt="" style="width: 35px; cursor: pointer;">
+            </div>
+            <div class="text-layout">
+                <div>
+                    <span>Beschreibung</span>
+                    <span></span>
+                <div>
+                    <span>Datum</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>Medium</span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>Assgined to: </span>
+                    <span></span>
+                </div>
+                <div>
+                    <span>Subtask</span>
+                    <span></span>
+                </div>
+            </div>
 
+            <div class="edit-and-delete">
+                <img style="width: 25px;"  src="../img/pencilbg.png" alt="">
+                <span style="width: 25px;">x</span>
+            </div>
+        </div>
     </div>
 
     
