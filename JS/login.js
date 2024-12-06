@@ -1,52 +1,89 @@
+function startAnimation() {
+  let background = document.getElementById("backgroundAnimation");
+
+  fadeOutBackground(background);
+  hideBackgroundWithDelay(background);
+}
+
+function fadeOutBackground(background) {
+  setTimeout(() => {
+    document.getElementById("logoAnimation").classList.add("end-position-logo");
+    background.style.opacity = 0;
+  }, 500);
+}
+
+function hideBackgroundWithDelay(background) {
+  setTimeout(() => {
+    background.classList.add("d-none");
+  }, 1500);
+}
+
 async function handleLogin(event) {
   event.preventDefault();
 
-  // Eingabewerte sammeln
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const { email, password } = getInputValues();
 
   try {
-    // Benutzerdaten aus Firebase abrufen
-    const response = await fetch(
-      "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json"
-    );
-    const usersData = await response.json();
-
-    // Überprüfen, ob Benutzer mit entsprechender E-Mail und Passwort existiert
-    let userFound = false;
-    let userName = ""; // Benutzername, falls Login erfolgreich ist
-
-    for (const userId in usersData) {
-      const user = usersData[userId];
-      if (user.email === email && user.password === password) {
-        userFound = true;
-        userName = user.name; // Benutzername speichern
-        break;
-      }
-    }
+    const usersData = await fetchUserData();
+    const { userFound, userName } = validateUser(usersData, email, password);
 
     if (userFound) {
-      // Benutzername in localStorage speichern
-      localStorage.setItem("userName", userName);
-
-      // Weiterleitung zur summary.html, wenn Login erfolgreich ist
-      window.location.href = "./html/summary.html";
+      loginUser(userName);
     } else {
-      // Fehlermeldung anzeigen, wenn Email oder Passwort nicht übereinstimmen
-      document.querySelector(".error").style.display = "block";
+      showError();
     }
   } catch (error) {
-    console.error("Fehler beim Abrufen der Benutzerdaten:", error);
-    alert("Ein Fehler ist aufgetreten. Bitte versuche es später erneut.");
+    handleLoginError(error);
   }
 }
 
-// Event-Listener für Login-Button
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".logInButton").addEventListener("click", handleLogin);
-});
+function getInputValues() {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  return { email, password };
+}
+
+async function fetchUserData() {
+  const response = await fetch(
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+  );
+  return response.json();
+}
+
+function validateUser(usersData, email, password) {
+  let userFound = false;
+  let userName = "";
+
+  for (const userId in usersData) {
+    const user = usersData[userId];
+    if (user.email === email && user.password === password) {
+      userFound = true;
+      userName = user.name;
+      break;
+    }
+  }
+  return { userFound, userName };
+}
+
+function loginUser(userName) {
+  localStorage.setItem("userName", userName);
+  window.location.href = "./html/summary.html";
+}
+
+function showError() {
+  document.querySelector(".error").style.display = "block";
+}
+
+function handleLoginError(error) {
+  console.error("Fehler beim Abrufen der Benutzerdaten:", error);
+  alert("Ein Fehler ist aufgetreten. Bitte versuche es später erneut.");
+}
 
 function handleGuestLogin() {
   localStorage.setItem("userName", "Guest");
   window.location.href = "./html/summary.html";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".logInButton").addEventListener("click", handleLogin);
+});
