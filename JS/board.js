@@ -1,5 +1,5 @@
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-const URLData = `${proxyUrl}https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks`;
+const URLData = `${proxyUrl}https://join-388-default-rtdb.europe-west1.firebasedatabase.app/`;
 const MaxData = 5;        
 let allTasksData = []; 
 
