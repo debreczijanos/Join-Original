@@ -1,3 +1,9 @@
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+const URLData = `${proxyUrl}https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks`;
+const MaxData = 5;        
+let allTasksData = []; 
+
+
 function openTaskField() {
     document.getElementById('show-hide-class').classList.remove('d-none');
 }
@@ -9,6 +15,51 @@ function closeTaskWindow() {
     clearFormFields(); // Felder leeren (auch bei Schließen)
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * This funktion loads the data from the firebase
+ */async function loadData() {
+    try {
+        for (let i = 0; i < MaxData; i++) {
+            let response = await fetch(`${URLData}/${i}.json`); // JSON-Endpunkt abrufen                     
+            if (!response.ok) throw new Error(`Fehler beim Abrufen von ID ${i}`);
+            let newResponse = await response.json();
+            allTasksData.push(newResponse); // Daten ins Array speichern                 
+        }
+        console.log(allTasksData);                 
+        renderLoadedData();            
+    } catch (error) {
+        console.error('Fehler beim Laden der Daten:', error);
+    }
+}
+
+function renderLoadedData() {
+    let dataCard = document.getElementById('miniCards');
+    dataCard.innerHTML = ''; // Vorherigen Inhalt löschen             
+    allTasksData.forEach((data, index) => {
+        let html = createTaskTemplate(data, index); // Template generieren                 
+        dataCard.innerHTML += html; // HTML in den Container einfügen            
+    });
+}
+
+function createTaskTemplate(data, index) {
+    // Rückgabe eines HTML-Templates basierend auf den Daten             
+    return `                 
+        <div onclick="openCard(${index})" class="mini-card">                 
+            <div>                         
+                <span>${data?.title || "Unbekannt"}</span> <!-- Nutze 'title' oder Standardwert -->                     
+            </div>                 
+        </div>`;
+    }
+
+
+function openCard(){
+    
+}
+
+
+//---------------------------------------------------------------------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
     const priorityButtons = document.querySelectorAll(".priority-button");
@@ -148,3 +199,8 @@ async function createTask() {
         console.error('Fehler bei der Anfrage:', error);
     }
 }
+
+
+// ----------------------------------------------------------------------------------------------------
+
+
