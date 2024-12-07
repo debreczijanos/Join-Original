@@ -51,11 +51,17 @@ function createTaskTemplate(data, index) {
                 <span>${data?.title || "Unbekannt"}</span> <!-- Nutze 'title' oder Standardwert -->                     
             </div>                 
         </div>`;
-    }
+}
 
 
-function openCard(){
-    
+function openCard(i){
+    <div class="task-modal-content">
+        <div class="task-info">
+            <p class="task-priority">Priority: ${priority}</p>
+            <h2 class="task-title">${title}</h2>
+            <p class="task-description">${description}</p>
+        </div>
+    </div>
 }
 
 
