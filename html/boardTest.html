@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/summary.css">
+    <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/nav.css">
+    <link rel="stylesheet" href="../style/fonts.css">
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/boardTest.css">
+
+    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/includeHTML.js"></script>
+    <!-- <script src="../JS/currentDate.js"></script> -->
+    <script src="../JS/boardTest.js" defer></script>
+
+    <title>Join</title>
+</head>
+
+<body>
+
+    <div class="gesamt">
+        <div id="include-container"></div>
+
+
+        <div class="mein-content">
+
+            <section id="kanban-board" class="kanban-board">
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
+                    <h3>Zu tun</h3>
+                    <div class="tasks"></div>
+                </div>
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'In Progress')">
+                    <h3>Im Gange</h3>
+                    <div class="tasks"></div>
+                </div>
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Await Feedback')">
+                    <h3>Warten auf Feedback</h3>
+                    <div class="tasks"></div>
+                </div>
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Done')">
+                    <h3>Erledigt</h3>
+                    <div class="tasks"></div>
+                </div>
+            </section>
+
+            <div id="task-details-overlay" class="overlay d-none">
+                <div class="overlay-content">
+                    <span class="close" onclick="closeTaskDetails()">×</span>
+                    <h3 id="overlay-category"></h3>
+                    <h1 id="overlay-title"></h1>
+                    <p id="overlay-description"></p>
+                    <p><strong>Due date:</strong> <span id="overlay-due-date"></span></p>
+                    <p><strong>Priority:</strong> <span id="overlay-priority"></span></p>
+                    <p><strong>Assigned To:</strong></p>
+                    <div id="overlay-assigned-to"></div>
+                    <p><strong>Subtasks:</strong></p>
+                    <ul id="overlay-subtasks"></ul>
+
+                    <!-- Bearbeiten und Löschen Buttons -->
+                    <div class="overlay-actions">
+                        <button onclick="editTask()" class="edit-button">Edit</button>
+                        <button onclick="deleteTask()" class="delete-button">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="edit-task-overlay" class="overlay d-none">
+                <div class="overlay-content">
+                    <span class="close" onclick="closeEditTask()">×</span>
+                    <h2>Bearbeiten der Aufgabe</h2>
+                    <form id="edit-task-form">
+                        <label for="edit-title">Titel</label>
+                        <input type="text" id="edit-title" required />
+
+                        <label for="edit-description">Beschreibung</label>
+                        <textarea id="edit-description"></textarea>
+
+                        <label for="edit-due-date">Fälligkeitsdatum</label>
+                        <input type="date" id="edit-due-date" required />
+
+                        <label for="edit-priority">Priorität</label>
+                        <select id="edit-priority">
+                            <option value="Urgent">Dringend</option>
+                            <option value="Medium">Mittel</option>
+                            <option value="Low">Niedrig</option>
+                        </select>
+
+                        <button type="button" onclick="saveEditedTask()">Speichern</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+            includeHTML('#include-container', './nav.html', function () {
+                // Header-Funktionalität initialisieren
+                initializeHeader();
+            });
+        </script>
+</body>
+
+</html>
