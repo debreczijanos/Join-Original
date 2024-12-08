@@ -30,6 +30,16 @@
 
         <div class="mein-content">
 
+            <section class="board-header">
+                <div class="title-board">
+                    <h2>Board</h2>
+                </div>
+                <div class="task-choice-nav">
+                    <input type="text" placeholder="Find Task" id="task-search">
+                    <button onclick="openTaskField()">Add task</button>
+                </div>
+            </section>
+
             <section id="kanban-board" class="kanban-board">
                 <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
                     <h3>Zu tun</h3>

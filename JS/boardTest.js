@@ -129,8 +129,9 @@ function formatSubtasks(subtasks) {
 // Drag-and-Drop-Logik
 let draggedTaskId = null;
 
-function dragStart(taskId) {
+function dragStart(event, taskId) {
   draggedTaskId = taskId;
+  console.log("Task wird gezogen:", taskId);
 }
 
 function allowDrop(event) {
@@ -145,7 +146,7 @@ function drop(event, newStatus) {
 }
 
 // Aufgabe visuell verschieben
-function moveTaskToNewContainer(event) {
+function moveTaskToNewContainer(event, newStatus) {
   const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
   if (taskElement) event.target.appendChild(taskElement);
 }
@@ -176,9 +177,10 @@ function sendStatusUpdate(taskId, newStatus) {
 }
 
 // Backend-Update-Response prüfen
-function handleUpdateResponse(response) {
+function handleUpdateResponse(response, newStatus) {
   if (!response.ok)
     throw new Error(`Fehler beim Aktualisieren des Status: ${response.status}`);
+  console.log("Status erfolgreich aktualisiert:", newStatus);
 }
 
 // Fehlerbehandlung
@@ -316,6 +318,7 @@ function editTask() {
     return;
   }
 
+  console.log("Task zum Bearbeiten:", task);
   populateEditForm(task);
   showEditTaskOverlay();
 }
@@ -399,6 +402,7 @@ function handleBackendResponse(response, taskId, updatedTask) {
     logError(`Fehler beim Aktualisieren der Aufgabe: ${response.status}`);
     return;
   }
+  console.log("Aufgabe erfolgreich aktualisiert:", taskId);
   updateFrontendTask(taskId, updatedTask);
   renderKanbanBoard();
   closeEditTask();
