@@ -6,6 +6,7 @@
 .kanban-column {
   width: 300px;
 }
+
 .overlay {
   position: fixed;
   top: 0;
@@ -39,3 +40,38 @@
 .d-none {
   display: none;
 }
+
+.overlay-add-tasks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-add-tasks.active {
+  display: flex;
+}
+
+.overlay-content-add-tasks {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  float: right;
+}
+
+/* 
+Overly CSS */

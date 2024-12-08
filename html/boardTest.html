@@ -14,10 +14,13 @@
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/boardTest.css">
 
+    <!-- <link rel="stylesheet" href="../style/board.css"> -->
+
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
     <!-- <script src="../JS/currentDate.js"></script> -->
     <script src="../JS/boardTest.js" defer></script>
+    <script src="../JS/overlayLoader.js" defer></script>
 
     <title>Join</title>
 </head>
@@ -36,9 +39,18 @@
                 </div>
                 <div class="task-choice-nav">
                     <input type="text" placeholder="Find Task" id="task-search">
-                    <button onclick="openTaskField()">Add task</button>
+                    <button onclick="openAddTaskOverlay()">Add task</button>
                 </div>
             </section>
+
+            <div id="add-task-overlay" class="overlay-add-tasks">
+                <div class="overlay-content-add-tasks">
+                    <span class="close-btn" onclick="closeAddTaskOverlay()">×</span>
+                    <div id="add-task-overlay-content">
+                        <!-- Dynamischer Inhalt wird hier geladen -->
+                    </div>
+                </div>
+            </div>
 
             <section id="kanban-board" class="kanban-board">
                 <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
