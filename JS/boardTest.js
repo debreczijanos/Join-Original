@@ -2,6 +2,16 @@
 const API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks";
 
+  function openTaskField() {
+    document.getElementById("show-hide-class").classList.remove("d-none");
+  }
+  
+  function closeTaskWindow() {
+    const taskWindow = document.getElementById("show-hide-class");
+    taskWindow.classList.add("d-none");
+    clearFormFields(); // Felder leeren (auch bei Schließen)
+  }
+
 // Globale Variable für alle Aufgaben
 let allTasksData = [];
 
@@ -424,3 +434,42 @@ function logError(message) {
 
 // Daten laden, wenn die Seite geladen wird
 document.addEventListener("DOMContentLoaded", loadTasks);
+
+/**
+ * Veröndert die Farbe und die Priorität der Buttons
+ */
+
+document.addEventListener("DOMContentLoaded", function () {
+  const priorityButtons = document.querySelectorAll(".priority-button");
+  priorityButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      priorityButtons.forEach((btn) => btn.classList.remove("selected"));
+      button.classList.add("selected");
+    });
+  });
+});
+
+function collectTaskData() {
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const dueDate = document.getElementById("due-date").value;
+  const assigned = document.getElementById("assigned").value;
+  const category = document.getElementById("category").value;
+
+  const priority =
+    document.querySelector(".priority-buttons .selected")?.textContent || "Low";
+
+  const subtasks = Array.from(
+    document.querySelectorAll("#subtask-list li .subtask-text")
+  ).map((item) => item.textContent);
+
+  return {
+    title,
+    description,
+    dueDate,
+    assigned,
+    priority,
+    category,
+    subtasks,
+  };
+}
