@@ -88,14 +88,31 @@ function appendTaskToContainer(taskElement, containers, status) {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
 // HTML für eine Aufgabe erstellen
 function createTaskElement(task) {
   const taskElement = document.createElement("div");
+
   taskElement.classList.add("task");
   taskElement.setAttribute("draggable", "true");
   taskElement.setAttribute("data-id", task.id);
+  
+  // Hinzufügen des ondragstart-Attributes mit Template-Literal
   taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
+  
+  // Setzen des HTML-Inhalts
   taskElement.innerHTML = getTaskHTML(task);
+
   return taskElement;
 }
 
@@ -103,9 +120,10 @@ function createTaskElement(task) {
 function getTaskHTML(task) {
   const assignedTo = formatAssignedTo(task.assignedTo);
   const subtasks = formatSubtasks(task.subtasks);
+
   return `
     <h4>${task.title || "Kein Titel"}</h4>
-    <p>${task.description || "Keine Beschreibung"}</p>
+    <p class="description">${task.description || "Keine Beschreibung"}</p>
     <p><strong>Fällig:</strong> ${task.dueDate || "Kein Datum"}</p>
     <p><strong>Kategorie:</strong> ${task.category || "Keine Kategorie"}</p>
     <p><strong>Priorität:</strong> ${task.prio || "Keine Priorität"}</p>
@@ -135,6 +153,24 @@ function formatSubtasks(subtasks) {
       .join("") || "<li>Keine Subtasks</li>"
   );
 }
+
+// Funktion für den Drag-Start (Beispielimplementierung)
+function dragStart(event, taskId) {
+  event.dataTransfer.setData("text/plain", taskId);
+  console.log(`Drag gestartet für Task ID: ${taskId}`);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Drag-and-Drop-Logik
 let draggedTaskId = null;
