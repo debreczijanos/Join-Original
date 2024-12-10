@@ -88,7 +88,6 @@ function appendTaskToContainer(taskElement, containers, status) {
   }
 }
 
-
 // HTML für eine Aufgabe erstellen
 function createTaskElement(task) {
   const taskElement = document.createElement("div");
@@ -221,7 +220,6 @@ function clearFormFields() {
   const priorityButtons = document.querySelectorAll(".priority-button");
   priorityButtons.forEach((btn) => btn.classList.remove("selected"));
 }
-
 
 // Drag-and-Drop-Logik ----------------------------------------------------------------------------------------------------------
 let draggedTaskId = null;
@@ -356,7 +354,6 @@ function createTaskElement(task) {
   taskElement.setAttribute("data-id", task.id);
   taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
   taskElement.onclick = () => openTaskDetails(task.id);
-
   taskElement.innerHTML = getTaskHTML(task);
   return taskElement;
 }
@@ -403,6 +400,7 @@ function removeTaskFromFrontend() {
   renderKanbanBoard();
   closeTaskDetails();
 }
+
 function editTask() {
   if (!draggedTaskId) {
     logError("Keine gültige Task-ID zum Bearbeiten gefunden");
@@ -536,7 +534,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-
 function saveTask() {
   const taskData = collectTaskData();
 
@@ -554,10 +551,6 @@ function saveTask() {
     })
     .catch((error) => console.error("Fehler beim Speichern der Aufgabe:", error));
 }
-
-
-
-
 
 async function createTask() {
   // Sammle die Daten aus dem Formular
