@@ -88,14 +88,21 @@ function appendTaskToContainer(taskElement, containers, status) {
   }
 }
 
+
 // HTML für eine Aufgabe erstellen
 function createTaskElement(task) {
   const taskElement = document.createElement("div");
+
   taskElement.classList.add("task");
   taskElement.setAttribute("draggable", "true");
   taskElement.setAttribute("data-id", task.id);
+  
+  // Hinzufügen des ondragstart-Attributes mit Template-Literal
   taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
+  
+  // Setzen des HTML-Inhalts
   taskElement.innerHTML = getTaskHTML(task);
+
   return taskElement;
 }
 
@@ -103,9 +110,10 @@ function createTaskElement(task) {
 function getTaskHTML(task) {
   const assignedTo = formatAssignedTo(task.assignedTo);
   const subtasks = formatSubtasks(task.subtasks);
+
   return `
     <h4>${task.title || "Kein Titel"}</h4>
-    <p>${task.description || "Keine Beschreibung"}</p>
+    <p class="description">${task.description || "Keine Beschreibung"}</p>
     <p><strong>Fällig:</strong> ${task.dueDate || "Kein Datum"}</p>
     <p><strong>Kategorie:</strong> ${task.category || "Keine Kategorie"}</p>
     <p><strong>Priorität:</strong> ${task.prio || "Keine Priorität"}</p>
@@ -136,7 +144,86 @@ function formatSubtasks(subtasks) {
   );
 }
 
-// Drag-and-Drop-Logik
+// Funktion für den Drag-Start (Beispielimplementierung)
+function dragStart(event, taskId) {
+  event.dataTransfer.setData("text/plain", taskId);
+  console.log(`Drag gestartet für Task ID: ${taskId}`);
+}
+
+
+function collectTaskData() {
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+  const dueDate = document.getElementById("due-date").value;
+  const assigned = document.getElementById("assigned").value;
+  const category = document.getElementById("category").value;
+
+  const priority =
+    document.querySelector(".priority-buttons .selected")?.textContent || "Low";
+
+  const subtasks = Array.from(
+    document.querySelectorAll("#subtask-list li .subtask-text")
+  ).map((item) => item.textContent);
+
+  return {
+    title,
+    description,
+    dueDate,
+    assigned,
+    priority,
+    category,
+    subtasks,
+  };
+}
+
+function addSubtask() {
+  const input = document.getElementById("subtask-input");
+  const subtaskList = document.getElementById("subtask-list");
+
+  if (input.value.trim() !== "") {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+            <span class="subtask-text">${input.value}</span>
+            <button class="edit-subtask" onclick="editSubtask(this)">Edit</button>
+            <button class="delete-subtask" onclick="deleteSubtask(this)">Delete</button>
+        `;
+
+    subtaskList.appendChild(li);
+    input.value = ""; // Leeren des Input-Felds nach Hinzufügen
+  }
+}
+
+function editSubtask(button) {
+  const subtaskText = button.parentElement.querySelector(".subtask-text");
+  const newText = prompt("Edit your subtask:", subtaskText.textContent);
+
+  if (newText !== null && newText.trim() !== "") {
+    subtaskText.textContent = newText.trim();
+  }
+}
+
+function deleteSubtask(button) {
+  const li = button.parentElement;
+  li.remove();
+}
+
+// Diese FUnktion entleert die Felder nach dem Abesnde
+
+function clearFormFields() {
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("due-date").value = "";
+  document.getElementById("assigned").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("subtask-list").innerHTML = "";
+
+  const priorityButtons = document.querySelectorAll(".priority-button");
+  priorityButtons.forEach((btn) => btn.classList.remove("selected"));
+}
+
+
+// Drag-and-Drop-Logik ----------------------------------------------------------------------------------------------------------
 let draggedTaskId = null;
 
 function dragStart(event, taskId) {
@@ -449,27 +536,22 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function collectTaskData() {
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const dueDate = document.getElementById("due-date").value;
-  const assigned = document.getElementById("assigned").value;
-  const category = document.getElementById("category").value;
 
-  const priority =
-    document.querySelector(".priority-buttons .selected")?.textContent || "Low";
+function saveTask() {
+  const taskData = collectTaskData();
 
-  const subtasks = Array.from(
-    document.querySelectorAll("#subtask-list li .subtask-text")
-  ).map((item) => item.textContent);
-
-  return {
-    title,
-    description,
-    dueDate,
-    assigned,
-    priority,
-    category,
-    subtasks,
-  };
+  // Task speichern im Backend
+  fetch(`${API_URL}.json`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(taskData),
+  })
+    .then((response) => {
+      if (!response.ok) throw new Error("Fehler beim Speichern der Aufgabe");
+      console.log("Aufgabe erfolgreich gespeichert");
+      clearFormFields(); // Felder nach dem Speichern leeren
+      loadTasks(); // Aufgaben neu laden
+    })
+    .catch((error) => console.error("Fehler beim Speichern der Aufgabe:", error));
 }
+

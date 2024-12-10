@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-around;
   padding-right: 40px;
+  gap: 18px;
 }
 
 .kanban-column {
@@ -103,8 +104,9 @@ Overly CSS */
   align-items: center;
   color: var(--dark-grey);
   font-weight: 700;
-  width: 85%;
+  width: 100%;
   padding-right: 16px;
+  margin-bottom: 6px;
 }
 
 .data-plus img {
@@ -746,4 +748,47 @@ input[type="text"]::placeholder {
   font-weight: 700;
   font-size: 18px;
   background-color: #5cb85c;
+}
+
+/*---------------------------------------------------------------*/
+
+.task {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task h4 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.task p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.task ul {
+  margin: 10px 0 0;
+  padding: 0 0 0 20px;
+}
+
+.task ul li {
+  color: #777;
+  font-size: 14px;
+}
+
+.description {
+  font-weight: 400;
+  color: rgb(103, 103, 103);
 }
