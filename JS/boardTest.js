@@ -555,3 +555,55 @@ function saveTask() {
     .catch((error) => console.error("Fehler beim Speichern der Aufgabe:", error));
 }
 
+
+
+
+
+async function createTask() {
+  // Sammle die Daten aus dem Formular
+  const taskData = collectTaskData();
+
+  // Überprüfe, ob die Pflichtfelder ausgefüllt sind
+  if (!taskData.title || !taskData.dueDate || !taskData.category) {
+      alert("Bitte fülle alle erforderlichen Felder aus (Titel, Fälligkeitsdatum und Kategorie).");
+      return;
+  }
+
+  try {
+      // Aufgabe an die API senden
+      const response = await fetch(`${API_URL}.json`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(taskData),
+      });
+
+      if (!response.ok) {
+          throw new Error(`Fehler beim Erstellen der Aufgabe: ${response.statusText}`);
+      }
+
+      const responseData = await response.json();
+      console.log("Aufgabe erfolgreich erstellt:", responseData);
+
+      // ID der neuen Aufgabe aus der API-Antwort extrahieren
+      const newTaskId = responseData.name;
+
+      // Die neue Aufgabe zum globalen Array hinzufügen
+      const newTask = { id: newTaskId, ...taskData };
+      allTasksData.push(newTask);
+
+      // Aufgabe in den Kanban-Container einfügen
+      const miniContainer = createTaskElement(newTask);
+      const toDoContainer = document.querySelector(".tasks"); // Zum Beispiel der erste Container
+      toDoContainer.appendChild(miniContainer);
+
+      // Formularfelder zurücksetzen und Fenster schließen
+      clearFormFields();
+      closeTaskWindow();
+
+      console.log("Mini-Container hinzugefügt:", miniContainer);
+  } catch (error) {
+      console.error("Fehler beim Erstellen der Aufgabe:", error);
+  }
+}
+
+
