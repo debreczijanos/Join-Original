@@ -55,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 70px 0;
+  padding: 70px 10px;
   height: 100vh;
 }
 .summary-ctn {
