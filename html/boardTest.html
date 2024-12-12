@@ -60,16 +60,24 @@
             </div>
 
             <section id="kanban-board" class="kanban-board">
-                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
+                <div class="test">
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
+                    
 
+                        <div class="data-plus">To do
+                            <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                        </div>
 
-                    <div class="data-plus">To do
-                        <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                        <div class="tasks"></div>
                     </div>
 
-                    <div class="tasks"></div>
-
                 </div>
+
+
+
+
+
+
                 <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'In Progress')">
 
                     <div class="data-plus">In Progress
@@ -151,19 +159,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="background-box d-none" id="show-hide-class">
             <div class="great-open-Task">

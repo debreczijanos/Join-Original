@@ -792,3 +792,9 @@ input[type="text"]::placeholder {
   font-weight: 400;
   color: rgb(103, 103, 103);
 }
+
+@media(max-width: 1250px){
+  .title-board{
+    margin-left: 34px;
+  }
+}
