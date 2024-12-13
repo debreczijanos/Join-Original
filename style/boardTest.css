@@ -5,9 +5,9 @@
   gap: 18px;
 }
 
-.kanban-column {
+/* .kanban-column {
   width: 300px;
-}
+} */
 
 .close-overlay {
   position: absolute;
@@ -126,17 +126,19 @@ Overly CSS */
   background-color: rgba(81, 81, 81, 0.9);
   display: flex;
   z-index: 1;
+  max-width: 1440px;
 }
 
 .great-open-Task {
-  transform: translateX(10%);
+  /* transform: translateX(10%); */
+  max-width: 1440px;
   position: relative;
   height: 530px;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 70%;
+  width: 80%;
   margin: auto;
 }
 
@@ -793,8 +795,68 @@ input[type="text"]::placeholder {
   color: rgb(103, 103, 103);
 }
 
-@media(max-width: 1250px){
-  .title-board{
+@media (max-width: 1250px) {
+  .title-board {
     margin-left: 34px;
+  }
+
+  .tasks {
+    display: flex;
+    width: auto;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .task {
+    width: 250px;
+    min-width: 250px;
+  }
+
+  .kanban-board {
+    margin-bottom: 50px;
+    margin-left: 0;
+    padding: 0 24px;
+  }
+
+  /* Vertikaler Scrollbalken */
+  .tasks::-webkit-scrollbar {
+    width: 4px; /* Breite des vertikalen Scrollbalkens */
+  }
+
+  /* Horizontaler Scrollbalken */
+  .tasks::-webkit-scrollbar {
+    height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  }
+
+  /* Hintergrund der Scrollbar-Spur */
+  .tasks::-webkit-scrollbar-track {
+    background: transparent; /* Hintergrundfarbe */
+  }
+
+  /* Scrollbalken selbst */
+  .tasks::-webkit-scrollbar-thumb {
+    background: #29abe2;
+    /* Farbe */
+    border-radius: 10px; /* Abgerundete Kanten */
+  }
+
+  /* Hover-Effekt */
+  .tasks::-webkit-scrollbar-thumb:hover {
+    background: #2a3647; /* Farbe bei Hover */
+  }
+}
+
+@media (max-width: 700px) {
+  .board-header {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    align-items: normal;
+  }
+  .board-header > .title-board > h2 {
+    margin: 0;
+    font-size: 47px;
+    font-weight: 700;
   }
 }

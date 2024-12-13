@@ -2,15 +2,24 @@
 const API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks";
 
-  function openTaskField() {
-    document.getElementById("show-hide-class").classList.remove("d-none");
+function openTaskField() {
+  if (window.innerWidth < 900) {
+    window.location.href = "../html/addTask.html";
+  } else {
+    const element = document.getElementById("show-hide-class");
+    if (element) {
+      element.classList.remove("d-none");
+    } else {
+      console.error("Element with ID 'show-hide-class' not found.");
+    }
   }
-  
-  function closeTaskWindow() {
-    const taskWindow = document.getElementById("show-hide-class");
-    taskWindow.classList.add("d-none");
-    clearFormFields(); // Felder leeren (auch bei Schließen)
-  }
+}
+
+function closeTaskWindow() {
+  const taskWindow = document.getElementById("show-hide-class");
+  taskWindow.classList.add("d-none");
+  clearFormFields(); // Felder leeren (auch bei Schließen)
+}
 
 // Globale Variable für alle Aufgaben
 let allTasksData = [];
@@ -95,10 +104,10 @@ function createTaskElement(task) {
   taskElement.classList.add("task");
   taskElement.setAttribute("draggable", "true");
   taskElement.setAttribute("data-id", task.id);
-  
+
   // Hinzufügen des ondragstart-Attributes mit Template-Literal
   taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
-  
+
   // Setzen des HTML-Inhalts
   taskElement.innerHTML = getTaskHTML(task);
 
@@ -148,7 +157,6 @@ function dragStart(event, taskId) {
   event.dataTransfer.setData("text/plain", taskId);
   console.log(`Drag gestartet für Task ID: ${taskId}`);
 }
-
 
 function collectTaskData() {
   const title = document.getElementById("title").value;
@@ -549,7 +557,9 @@ function saveTask() {
       clearFormFields(); // Felder nach dem Speichern leeren
       loadTasks(); // Aufgaben neu laden
     })
-    .catch((error) => console.error("Fehler beim Speichern der Aufgabe:", error));
+    .catch((error) =>
+      console.error("Fehler beim Speichern der Aufgabe:", error)
+    );
 }
 
 async function createTask() {
@@ -558,45 +568,47 @@ async function createTask() {
 
   // Überprüfe, ob die Pflichtfelder ausgefüllt sind
   if (!taskData.title || !taskData.dueDate || !taskData.category) {
-      alert("Bitte fülle alle erforderlichen Felder aus (Titel, Fälligkeitsdatum und Kategorie).");
-      return;
+    alert(
+      "Bitte fülle alle erforderlichen Felder aus (Titel, Fälligkeitsdatum und Kategorie)."
+    );
+    return;
   }
 
   try {
-      // Aufgabe an die API senden
-      const response = await fetch(`${API_URL}.json`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(taskData),
-      });
+    // Aufgabe an die API senden
+    const response = await fetch(`${API_URL}.json`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(taskData),
+    });
 
-      if (!response.ok) {
-          throw new Error(`Fehler beim Erstellen der Aufgabe: ${response.statusText}`);
-      }
+    if (!response.ok) {
+      throw new Error(
+        `Fehler beim Erstellen der Aufgabe: ${response.statusText}`
+      );
+    }
 
-      const responseData = await response.json();
-      console.log("Aufgabe erfolgreich erstellt:", responseData);
+    const responseData = await response.json();
+    console.log("Aufgabe erfolgreich erstellt:", responseData);
 
-      // ID der neuen Aufgabe aus der API-Antwort extrahieren
-      const newTaskId = responseData.name;
+    // ID der neuen Aufgabe aus der API-Antwort extrahieren
+    const newTaskId = responseData.name;
 
-      // Die neue Aufgabe zum globalen Array hinzufügen
-      const newTask = { id: newTaskId, ...taskData };
-      allTasksData.push(newTask);
+    // Die neue Aufgabe zum globalen Array hinzufügen
+    const newTask = { id: newTaskId, ...taskData };
+    allTasksData.push(newTask);
 
-      // Aufgabe in den Kanban-Container einfügen
-      const miniContainer = createTaskElement(newTask);
-      const toDoContainer = document.querySelector(".tasks"); // Zum Beispiel der erste Container
-      toDoContainer.appendChild(miniContainer);
+    // Aufgabe in den Kanban-Container einfügen
+    const miniContainer = createTaskElement(newTask);
+    const toDoContainer = document.querySelector(".tasks"); // Zum Beispiel der erste Container
+    toDoContainer.appendChild(miniContainer);
 
-      // Formularfelder zurücksetzen und Fenster schließen
-      clearFormFields();
-      closeTaskWindow();
+    // Formularfelder zurücksetzen und Fenster schließen
+    clearFormFields();
+    closeTaskWindow();
 
-      console.log("Mini-Container hinzugefügt:", miniContainer);
+    console.log("Mini-Container hinzugefügt:", miniContainer);
   } catch (error) {
-      console.error("Fehler beim Erstellen der Aufgabe:", error);
+    console.error("Fehler beim Erstellen der Aufgabe:", error);
   }
 }
-
-
