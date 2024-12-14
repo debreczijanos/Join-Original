@@ -778,3 +778,23 @@ h4 {
       display: flex;
   }
 }
+
+.h2Contacts {
+  margin: 0;
+  padding: 15px 15px 0px 15px;
+  border-right: solid 2px rgb(41, 171, 226);
+  font-size: 61px;
+  padding-right: 48px;
+}
+
+.mycontacts {
+  width: 456px;
+  height: calc(100vh - 111px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  overflow-y: auto;
+  background-color: #ffffff;
+}

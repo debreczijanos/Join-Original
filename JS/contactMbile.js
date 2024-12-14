@@ -1,3 +1,5 @@
+
+
 /**
  * Hides the content area and displays the contact list for mobile view.
  */

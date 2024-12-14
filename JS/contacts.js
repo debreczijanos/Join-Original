@@ -16,7 +16,7 @@ async function loadContacts() {
 }
 
 function renderContacts(allContacts) {
-    let contactCard = document.getElementById('contactId');
+    let contactCard = document.getElementById('contactsId');
     contactCard.innerHTML = '';
     for (let i = 0; i < allContacts.length; i++) {
         const contact = allContacts[i];
@@ -104,7 +104,8 @@ async function getUserData(email) {
 }   
 
 
-// slide fenster funktion//*css*/`
+
+
 /**
  * Stores the list of contacts.
  * @type {Array}
@@ -427,8 +428,8 @@ function contactInfoHtml(root, contactId) {
             <div class="h4_edit-delete">
                 <h4>${root['name']}</h4>
                 <div class="edit-delete">
-                    <span onclick="openClosePopUp('open', true)"><img src="imgs/icon_edit.png"/>Edit</span>
-                    <span onclick="removeContact('contact', '${contactId}')"><img src="imgs/icon_trash.png" />Delete</span>
+                    <span onclick="openClosePopUp('open', true)"><img src="../img/SubtasksEdit.png"/>Edit</span>
+                    <span onclick="removeContact('contact', '${contactId}')"><img src="../img/SubtasksDel.png" />Delete</span>
                 </div>
             </div>
         </div>

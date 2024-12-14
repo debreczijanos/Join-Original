@@ -29,38 +29,9 @@
     <script src="../JS/contactMbile.js"></script>
     
     <title>Join</title>
-
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-        }
-
-        .contacts-container {
-            height: 90vh;
-            width: 380px;
-        }
-
-        .white-box {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-        }
-
-        .contact-baloon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: rgb(122, 122, 209);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-
 </head>
 
-<body onload="loadContacts()">
+<body onload="loadContacts()" >
 
 
     <div>
@@ -68,7 +39,7 @@
 
       
     <div class="layout-wrapper" id="layout-wrapper">
-        <section id="mycontacts" class="">
+        <section id="mycontacts" class="mycontacts">
             <div class="addContact">
                 <button onclick="openClosePopUp('open', key = false)" class="addContactButton position-fixed ">Add new
                     Contact
@@ -196,6 +167,8 @@
                                     <button id="editSubmit" type="submit" class="createButton saveButton">
                                         Save <img class="check" src="./contact-assets/img/check.png" alt="">
                                     </button>
+                                    <img class="check" src="../img/SubtasksDel.png" alt="">
+                                    
                                 </div>
                             </form>
 
