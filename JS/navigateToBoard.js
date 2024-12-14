@@ -1,3 +1,3 @@
 function navigateToBoard() {
-    window.location.href = "./html/board.html";
+  window.location.href = "./html/boardTest.html";
 }

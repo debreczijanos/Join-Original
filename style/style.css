@@ -1,6 +1,10 @@
 body {
   background-color: #f6f7f8;
 }
+
+.d-none {
+  display: none;
+}
 .mein {
   max-width: 1440px;
   width: 100%;
@@ -189,12 +193,14 @@ button {
   font-size: 16px;
   background: #29abe2;
 }
+
 .checkboxResult {
   display: flex;
   align-items: center;
   gap: 8px;
   padding-left: 39px;
 }
+
 #checkbox {
   border-radius: 3px;
 }
@@ -286,93 +292,64 @@ footer {
   }
 }
 
-.screen-Logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  position: fixed;
+.start-logo-background {
+  position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
   left: 0;
   background-color: #f6f7f8;
-  animation: logoScreen 1.5s forwards;
-  animation-timing-function: ease;
-  animation-delay: 1s;
-  z-index: 1000;
+  z-index: 5;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
-.join-logo {
+.start-position-logo {
   position: absolute;
-  width: 274px;
-  height: 334px;
-  top: 33%;
-  left: 42%;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease;
-  animation: JoinlogoScreen 1.5s forwards;
-  animation-delay: 1s;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 1s ease;
 }
 
-@keyframes JoinlogoScreen {
-  from {
-    top: 50%;
-    left: 50%;
-    width: 274px;
-    height: 334px;
-  }
-  to {
-    top: 190px;
-    left: 150px;
-    width: 274px;
-    height: 334px;
-  }
-}
-
-@keyframes logoScreen {
-  0% {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    background-color: #f6f7f8;
-    z-index: 1000;
-  }
-  20% {
-    background-color: #f6f7f8;
-  }
-  25% {
-    background-color: transparent;
-  }
-  100% {
-    background: none;
-    transform: scale(0.5) translate(-50%, -50%);
-    opacity: 1;
-    z-index: -1;
-  }
+.end-position-logo {
+  position: absolute;
+  top: 80px;
+  left: 77px;
+  transform: translate(0%, 0%);
+  width: 100.03px;
+  height: 121.97px;
 }
 
 @media (max-width: 1350px) {
-  .identify {
-    padding-left: calc(1039px - (1350px - 100vw));
+  .start-logo-background {
+    background-color: #2a3647;
   }
 
-  @keyframes JoinlogoScreen {
-    from {
-      top: 50%;
-      left: 50%;
-      width: 274px;
-      height: 334px;
-    }
-    to {
-      top: 137px;
-      left: 138px;
-      width: 164px;
-      height: auto;
-    }
+  .start-position-logo {
+    width: 100.03px;
+    height: 121.97px;
+  }
+
+  .end-position-logo {
+    width: 64px;
+    height: 78.03px;
+    top: 37px;
+    left: 38px;
+  }
+
+  .start-position-logo .white-logo {
+    fill: white;
+    transition: fill 0.5s ease;
+  }
+
+  .end-position-logo .white-logo {
+    fill: #2a3647;
+  }
+
+  .identify {
+    padding-left: calc(1039px - (1350px - 100vw));
   }
 }
 
@@ -458,21 +435,6 @@ footer {
   .identify > button {
     height: 49px;
     width: 104px;
-  }
-
-  @keyframes JoinlogoScreen {
-    from {
-      top: 50%;
-      left: 50%;
-      width: 274px;
-      height: 334px;
-    }
-    to {
-      top: 37px;
-      left: 38px;
-      width: 64px;
-      height: 78px;
-    }
   }
 }
 

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/summary.css">
+    <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/nav.css">
+    <link rel="stylesheet" href="../style/fonts.css">
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/boardTest.css">
+
+    <!-- <link rel="stylesheet" href="../style/board.css"> -->
+
+    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/includeHTML.js"></script>
+    <!-- <script src="../JS/currentDate.js"></script> -->
+    <script src="../JS/boardTest.js" defer></script>
+    <script src="../JS/overlayLoader.js" defer></script>
+
+    <title>Join</title>
+
+    <style>
+        .d-none {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="gesamt">
+        <div id="include-container"></div>
+
+
+        <div class="mein-content">
+
+            <section class="board-header">
+                <div class="title-board">
+                    <h2>Board</h2>
+                </div>
+                <div class="task-choice-nav">
+                    <input type="text" placeholder="Find Task" id="task-search">
+                    <button onclick="openTaskField()">Add task</button>
+                </div>
+            </section>
+
+
+            <div id="add-task-overlay" class="overlay-add-tasks">
+                <div class="overlay-content-add-tasks">
+                    <span class="close-btn" onclick="closeAddTaskOverlay()">×</span>
+                    <div id="add-task-overlay-content">
+                        <!-- Dynamischer Inhalt wird hier geladen -->
+                    </div>
+                </div>
+            </div>
+
+            <section id="kanban-board" class="kanban-board">
+                <div class="test">
+                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
+                    
+
+                        <div class="data-plus">To do
+                            <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                        </div>
+
+                        <div class="tasks"></div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'In Progress')">
+
+                    <div class="data-plus">In Progress
+                        <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                    </div>
+
+                    <div class="tasks"></div>
+                </div>
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Await Feedback')">
+
+                    <div class="data-plus">Await Feedback
+                        <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                    </div>
+
+                    <div class="tasks"></div>
+                </div>
+                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Done')">
+
+                    <div class="data-plus">Done
+                        <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
+                    </div>
+
+                    <div class="tasks"></div>
+                </div>
+            </section>
+
+            <div id="task-details-overlay" class="overlay d-none">
+                <div class="overlay-content">
+                    <div class="overlay-category-close">
+                        <span class="close" onclick="closeTaskDetails()">×</span>
+                        <h3 id="overlay-category"></h3>
+                    </div>
+                    <h1 id="overlay-title"></h1>
+                    <p id="overlay-description"></p>
+                    <p class="date-off-description">Due date: <span id="overlay-due-date"></span></p>
+                    <p class="date-off-description">Priority: <span id="overlay-priority"></span></p>
+                    <p class="date-off-description">Assigned To:</p>
+                    <div id="overlay-assigned-to"></div>
+                    <p class="date-off-description">Subtasks:</p>
+                    <ul id="overlay-subtasks"></ul>
+
+                    <!-- Bearbeiten und Löschen Buttons -->
+                    <div class="overlay-actions">
+                        <button onclick="editTask()" class="edit-button"> <img src="../img/SubtasksEdit.png"
+                                alt="Edit">Edit </button>
+                        <div class="divid"></div>
+                        <button onclick="deleteTask()" class="delete-button"> <img src="../img/SubtasksDel.png"
+                                alt="Delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="edit-task-overlay" class="overlay d-none">
+                <div class="overlay-content">
+                    <div class="overlay-category-close">
+                        <span class="close" onclick="closeEditTask()">×</span>
+                        <h2>Bearbeiten der Aufgabe</h2>
+                    </div>
+                    <form id="edit-task-form">
+                        <label for="edit-title">Titel</label>
+                        <input type="text" id="edit-title" required />
+
+                        <label for="edit-description">Beschreibung</label>
+                        <textarea id="edit-description"></textarea>
+
+                        <label for="edit-due-date">Fälligkeitsdatum</label>
+                        <input type="date" id="edit-due-date" required />
+
+                        <label for="edit-priority">Priorität</label>
+                        <select id="edit-priority">
+                            <option value="Urgent">Dringend</option>
+                            <option value="Medium">Mittel</option>
+                            <option value="Low">Niedrig</option>
+                        </select>
+                        <div class="save-btn">
+                            <button type="button" onclick="saveEditedTask()">Speichern</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="background-box d-none" id="show-hide-class">
+            <div class="great-open-Task">
+                <div class="title-and-out">
+                    <h2>Add Task</h2>
+                    <span style="cursor: pointer;" onclick="closeTaskWindow()">X</span>
+                </div>
+
+                <div class="form-section">
+                    <div class="first-form form">
+                        <form>
+                            <label for="title">Title<span class="required">*</span></label>
+                            <input type="text" id="title" placeholder="Enter a title" required>
+                            <div id="title-error" class="error-message d-none">This field is required</div>
+
+                            <label for="description">Description</label>
+                            <textarea id="description" class="description" placeholder="Enter a description"
+                                style="resize: none;"></textarea>
+
+                            <label for="assigned">Assigned to</label>
+                            <select id="assigned">
+                                <option value="" disabled selected>Select contacts to assign</option>
+                                <option value="John Doe">John Doe</option>
+                                <option value="Jane Smith">Jane Smith</option>
+                                <option value="Team A">Team A</option>
+                            </select>
+                        </form>
+                    </div>
+
+                    <div class="division-line"></div>
+
+                    <div class="second-form">
+                        <form>
+                            <label for="due-date">Due date<span class="required">*</span></label>
+                            <div class="date-input">
+                                <input type="date" id="due-date" class="description" placeholder="dd/mm/yyyy" required>
+                                <div id="due-date-error" class="error-message d-none">This field is required</div>
+                                <span class="calendar-icon"></span>
+                            </div>
+
+                            <label for="priority">Priority</label>
+                            <div class="priority-buttons">
+                                <button type="button" class="priority-button urgent">
+                                    Urgent
+                                    <img src="../img/Priorityhigh.png" alt="arrows upwards">
+                                </button>
+                                <button type="button" class="priority-button medium">
+                                    Medium
+                                    <img src="../img/Prioritymiddel.png" alt="priority middle">
+                                </button>
+                                <button type="button" class="priority-button low">
+                                    Low
+                                    <img src="../img/Prioritylow.png" alt="priority low">
+                                </button>
+                            </div>
+
+                            <label for="category">Category<span class="required">*</span></label>
+                            <select id="category" required>
+                                <option value="" disabled selected>Select task category</option>
+                                <option value="Work">Work</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Development">Development</option>
+                                <option value="Testing">Testing</option>
+                            </select>
+                            <div id="category-error" class="error-message d-none">This field is required</div>
+
+                            <label for="subtasks">Subtask</label>
+                            <div class="subtasks">
+                                <div class="input-container">
+                                    <input type="text" id="subtask-input" placeholder="Add new subtask">
+                                    <button type="button" class="add-subtask-button" onclick="addSubtask()">+</button>
+                                </div>
+                                <!-- Subtask-Liste -->
+                                <div class="subtask-list-container" style="margin-left: 20px;">
+                                    <ul id="subtask-list"></ul>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button class="cancel-button" onclick="closeTaskWindow()">Cancel</button>
+                    <button type="button" class="create-task-button" onclick="createTask()">Create Task</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+            includeHTML('#include-container', './nav.html', function () {
+                // Header-Funktionalität initialisieren
+                initializeHeader();
+            });
+        </script>
+</body>
+
+</html>

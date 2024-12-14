@@ -183,6 +183,7 @@ header div{
 /*-----------------------------------------------------------------------------------------------------------------------------------*/
 
 .great-open-Task {
+transform: translateX(10%);
 position: relative; 
 height: 530px;
 padding: 20px;
@@ -583,4 +584,28 @@ margin-bottom: 10px;
 }
 
 
+/*mini card------------------------------------------------------------------------------------------------*/
+
+body {             
+  font-family: "Figtree", sans-serif;             
+  width: 100%;             
+  height: 100vh;             
+  display: flex;             
+  justify-content: center;             
+  align-items: center;             
+  background-color: rgba(0, 0, 0, 0.3);             
+  overflow: hidden; /* Verhindert Scrollbalken */ 
+}              
+.mini-card {             
+  width: 150px;             
+  height: 150px;             
+  background-color: red;             
+  margin: 10px;             
+  display: flex;             
+  justify-content: center;            
+  align-items: center;             
+  color: white;             
+  font-weight: bold;             
+  border-radius: 10px;         
+}     
 

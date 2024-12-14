@@ -16,6 +16,8 @@
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/currentDate.js"></script>
+    <script src="../JS/summary.js" defer></script>
+
     <title>Join</title>
 
 </head>
@@ -28,40 +30,41 @@
         <div class="mein-content">
             <div class="summary-header">
                 <span>Join 360</span>
-                <hr>
+                <hr class="hr-center">
                 <p>Key Metrics at a Glance</p>
+                <hr class="hr-bottom">
             </div>
             <div class="sumamry-ctn-grating">
                 <div class="summary-ctn">
                     <div class="summary-to-do-done">
-                        <div class="ctn-to-do">
+                        <div class="ctn-to-do" onclick="navigateToBoard()">
                             <div class="pen-img">
                                 <img src="../img/pencilbg.png" alt="pen img ">
                             </div>
                             <div class="summary-number">
-                                <span> 0 </span>
+                                <span class="summary-to-do"> 0 </span>
                                 <p>To-do</p>
                             </div>
                         </div>
 
-                        <div class="ctn-done">
+                        <div class="ctn-done" onclick="navigateToBoard()">
                             <div class="ctn-to-do">
                                 <div class="check-img">
                                     <img src="../img/checkbg.png" alt="pen img ">
                                 </div>
                                 <div class="summary-number">
-                                    <span> 0 </span>
+                                    <span class="summary-done"> 0 </span>
                                     <p>Done</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="urgent-ctn">
+                    <div class="urgent-ctn" onclick="navigateToBoard()">
                         <div class="urgent-ctn-img">
                             <img src="../img/urgent.png" alt="urgent img">
                             <div class="urgent-ctn-number">
-                                <span>1 </span>
+                                <span class="urgent-number">1 </span>
                                 <p>Urgent</p>
                             </div>
 
@@ -74,16 +77,16 @@
                     </div>
 
                     <div class="tasks-ctn">
-                        <div class="tasks-ctn-board">
-                            <span> 5 </span>
+                        <div class="tasks-ctn-board" onclick="navigateToBoard()">
+                            <span class="all-tasks-board"> 5 </span>
                             <p>tasks in Board</p>
                         </div>
-                        <div class="tasks-ctn-board">
-                            <span>2</span>
+                        <div class="tasks-ctn-board" onclick="navigateToBoard()">
+                            <span class="tasks-in-progress">2</span>
                             <p>Tasks in Progress</p>
                         </div>
-                        <div class="tasks-ctn-board">
-                            <span>2</span>
+                        <div class="tasks-ctn-board" onclick="navigateToBoard()">
+                            <span class="awaiting-feedback">2</span>
                             <p>Awaiting Feedback</p>
                         </div>
 

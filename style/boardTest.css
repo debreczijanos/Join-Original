@@ -1,0 +1,862 @@
+.kanban-board {
+  display: flex;
+  justify-content: space-around;
+  padding-right: 40px;
+  gap: 18px;
+}
+
+/* .kanban-column {
+  width: 300px;
+} */
+
+.close-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.d-none {
+  display: none;
+}
+
+.overlay-add-tasks {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-add-tasks.active {
+  display: flex;
+}
+
+.overlay-content-add-tasks {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  float: right;
+}
+
+/* 
+Overly CSS */
+
+.board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  padding: 10px 0;
+  gap: 250px;
+}
+
+.title-board h2 {
+  font-size: 40px;
+  color: #333;
+}
+
+#task-search:focus {
+  outline: none;
+  border: 2px solid #29abe2;
+}
+
+.task-choice-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.task-choice-nav input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.task-choice-nav button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 100px;
+  height: 34px;
+}
+
+.data-plus {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--dark-grey);
+  font-weight: 700;
+  width: 100%;
+  padding-right: 16px;
+  margin-bottom: 6px;
+}
+
+.data-plus img {
+  height: 24px;
+  cursor: pointer;
+}
+
+.background-box {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(81, 81, 81, 0.9);
+  display: flex;
+  z-index: 1;
+  max-width: 1440px;
+}
+
+.great-open-Task {
+  /* transform: translateX(10%); */
+  max-width: 1440px;
+  position: relative;
+  height: 530px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: auto;
+}
+
+.title-and-out {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title-and-out h2 {
+  font-size: 40px;
+}
+
+/*-Input and Labels-----------------------------------------------------------------------------------------------------------*/
+
+.form-section {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.description::placeholder {
+  font-family: "Figtree", sans-serif;
+}
+
+.first-form {
+  height: 74%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input[type="text"]::placeholder,
+textarea::placeholder {
+  color: #bbb;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+.division-line {
+  width: 1px;
+  height: 70%;
+  background-color: rgb(216, 216, 216);
+}
+
+.second-form {
+  height: 89%;
+  width: 50%;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.required {
+  color: red;
+  margin-left: 2px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input[type="text"]::placeholder {
+  color: #bbb;
+}
+
+.date-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.date-input input {
+  flex: 1;
+}
+
+.calendar-icon {
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  color: #aaa;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.priority-buttons {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.priority-button {
+  flex: 1;
+  padding: 3px 0;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.3s;
+}
+
+.priority-button.urgent {
+  color: #d9534f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.priority-button.urgent:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.priority-button.medium {
+  background-color: #f0ad4e;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.medium img {
+  filter: brightness(0) invert(1); /* Turns the image white */
+}
+
+.priority-button.medium:hover {
+  background-color: rgb(191, 103, 103);
+}
+
+.priority-button.low {
+  color: #5cb85c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+}
+
+.priority-button.low:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.input-container {
+  position: relative;
+  width: 100%; /* Ensures the input and button align properly */
+}
+
+.input-container input {
+  width: 100%; /* Full width */
+  padding: 8px 40px 8px 8px; /* Add padding on the right for the button */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.subtasks input {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.subtasks {
+  display: flex;
+}
+
+.input-container {
+  position: relative;
+  width: 100%; /* Ensures the input and button align properly */
+}
+
+.input-container input {
+  width: 100%; /* Full width */
+  padding: 8px 40px 8px 8px; /* Add padding on the right for the button */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.add-subtask-button {
+  position: absolute;
+  right: 4px;
+  top: 36%;
+  transform: translateY(-50%);
+  padding: 4px 8px;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 18px;
+}
+
+.add-subtask-button:hover {
+  background-color: #e0e0e0;
+}
+
+.required-field-message {
+  color: #000; /* Schwarzer Text */
+  font-size: 12px; /* Kleine Schriftgröße */
+  margin-top: 10px;
+  text-align: left; /* Linksbündig */
+  padding: 5px 20px; /* Abstand zum Rand */
+  position: relative; /* Innerhalb des Containers positioniert */
+}
+
+.button-container {
+  position: absolute; /* Buttons innerhalb von 'great-open-Task' */
+  bottom: 20px; /* Abstand vom unteren Rand */
+  right: 20px; /* Abstand vom rechten Rand */
+  display: flex;
+  gap: 10px; /* Abstand zwischen den Buttons */
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #e2e6ea;
+}
+
+.create-task-button {
+  display: flex;
+  gap: 3px;
+  padding: 10px 20px;
+  background-color: rgb(42, 53, 71);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.create-task-button img {
+  width: 18px;
+}
+
+.create-task-button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.edit-subtask,
+.delete-subtask {
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Figtree", sans-serif;
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.priority-button {
+  flex: 1;
+  padding: 3px 0;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.priority-button.urgent {
+  color: #d9534f;
+  background-color: white;
+}
+
+.priority-button.urgent:hover {
+  background-color: #f2b5b4; /* Hellerer Rotton beim Hover */
+}
+
+.priority-button.selected.urgent {
+  background-color: #b52b27; /* Dunklerer Rotton beim Klicken */
+  color: white;
+  border-color: #8f1f1c;
+}
+
+.priority-button.medium {
+  background-color: #f0ad4e;
+  color: white;
+  border: 1px solid #d98429;
+}
+
+.priority-button.medium:hover {
+  background-color: #f7d3a6;
+}
+
+.priority-button.selected.medium {
+  background-color: #e38b28;
+  border-color: #d98429;
+}
+
+.priority-button.low {
+  color: #5cb85c;
+  background-color: white;
+}
+
+.priority-button.low:hover {
+  background-color: #cbe5cb;
+}
+
+.priority-button.selected.low {
+  background-color: #4cae4c;
+  color: white;
+  border-color: #3d8f3d;
+}
+
+/* overlay board */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-category-close > h3 {
+  margin: 0;
+}
+
+.overlay-content {
+  background: white;
+  padding: 48px 40px;
+  border-radius: 30px;
+  width: 525px;
+  height: 605px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.16);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Vertikaler Scrollbalken */
+.overlay-content::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.overlay-content::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.overlay-content::-webkit-scrollbar-track {
+  background: transparent; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.overlay-content::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 10px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.overlay-content::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
+.overlay-category-close {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.overlay-category-close > span {
+  width: 32px;
+  height: 32px;
+  border-radius: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.overlay-category-close > span:hover {
+  background-color: #d1d1d1;
+  border-radius: 50%;
+  padding: 0.01px;
+}
+
+#overlay-category {
+  padding: 4px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 23px;
+  line-height: 27.6px;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #0038ff;
+}
+
+#overlay-title {
+  font-size: 61px;
+  line-height: 73.2px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0;
+}
+
+#overlay-description {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000000;
+}
+
+.date-off-description {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #2a3647;
+}
+
+#overlay-due-date,
+#overlay-priority {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #000000;
+}
+
+#overlay-subtasks {
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 400;
+  color: #000000;
+}
+
+.edit-button > img,
+.delete-button > img {
+  width: 24px;
+  height: 24px;
+}
+
+.edit-button,
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 19.2px;
+  color: #2a3647;
+  font-weight: 400;
+  border: none;
+  gap: 8px;
+  background-color: transparent;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.divid {
+  width: 1px;
+  height: 20px;
+  background-color: #d1d1d1;
+  margin: 0 2px;
+}
+
+.overlay-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+#edit-task-form > label {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #2a3647;
+}
+
+#edit-task-form > input,
+#edit-task-form > textarea,
+#edit-task-form > select {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #000000;
+}
+
+#edit-title:focus,
+#edit-description:focus,
+#edit-due-date:focus {
+  outline: none;
+  border: 2px solid #29abe2;
+}
+
+.save-btn > button {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  background-color: #2a3647;
+  color: white;
+  border-radius: 10px;
+  height: 56px;
+  gap: 4px;
+  padding: 16px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+
+.save-btn > button:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.save-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#overlay-assigned-to > span {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  background-color: #5cb85c;
+}
+
+/*---------------------------------------------------------------*/
+
+.task {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task h4 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.task p {
+  margin: 5px 0;
+  color: #555;
+}
+
+.task ul {
+  margin: 10px 0 0;
+  padding: 0 0 0 20px;
+}
+
+.task ul li {
+  color: #777;
+  font-size: 14px;
+}
+
+.description {
+  font-weight: 400;
+  color: rgb(103, 103, 103);
+}
+
+@media (max-width: 1250px) {
+  .title-board {
+    margin-left: 34px;
+  }
+
+  .tasks {
+    display: flex;
+    width: auto;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .task {
+    width: 250px;
+    min-width: 250px;
+  }
+
+  .kanban-board {
+    margin-bottom: 50px;
+    margin-left: 0;
+    padding: 0 24px;
+  }
+
+  /* Vertikaler Scrollbalken */
+  .tasks::-webkit-scrollbar {
+    width: 4px; /* Breite des vertikalen Scrollbalkens */
+  }
+
+  /* Horizontaler Scrollbalken */
+  .tasks::-webkit-scrollbar {
+    height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  }
+
+  /* Hintergrund der Scrollbar-Spur */
+  .tasks::-webkit-scrollbar-track {
+    background: transparent; /* Hintergrundfarbe */
+  }
+
+  /* Scrollbalken selbst */
+  .tasks::-webkit-scrollbar-thumb {
+    background: #29abe2;
+    /* Farbe */
+    border-radius: 10px; /* Abgerundete Kanten */
+  }
+
+  /* Hover-Effekt */
+  .tasks::-webkit-scrollbar-thumb:hover {
+    background: #2a3647; /* Farbe bei Hover */
+  }
+}
+
+@media (max-width: 700px) {
+  .board-header {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    align-items: normal;
+  }
+  .board-header > .title-board > h2 {
+    margin: 0;
+    font-size: 47px;
+    font-weight: 700;
+  }
+}
