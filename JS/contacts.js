@@ -439,8 +439,8 @@ function contactInfoHtml(root, contactId) {
 
         <div id="editDeleteMenu">
       
-        <a href="#" onclick="openClosePopUp('open', true)"><img src="imgs/icon_edit.png"/>Edit</a>
-        <a href="#" onclick="removeContact('contact', '${contactId}')"><img src="imgs/icon_trash.png" />Delete</a>
+        <a href="#" onclick="openClosePopUp('open', true)"><img src="../img/SubtasksEdit.png">Edit</a>
+        <a href="#" onclick="removeContact('contact', '${contactId}')"><img src="../img/SubtasksDel.png" >Delete</a>
     </div>
 
     `;

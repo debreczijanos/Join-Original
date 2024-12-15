@@ -1,516 +1,505 @@
-h2 {
-    /* border-right: solid 2px rgb(41, 171, 226); */
-    /* font-size: 61px; */
-    /* padding-right: 48px; */
+.fixed-header {
+  position: sticky;
+  top: 0;
+}
+
+.blueBackground {
+  background-color: rgb(42, 54, 71);
+  color: white;
+}
+
+@media (max-width: 450px) {
+  .logo-box img,
+  .edit-logo-box img {
+    width: 200px;
+    height: auto;
   }
-  
-  .fixed-header {
-    position: sticky;
-    top: 0;
+}
+
+@media (max-width: 950px) {
+  .backArrow {
+    margin-top: 16px;
   }
-  
-  .blueBackground {
-    background-color: rgb(42, 54, 71);
-    color: white;
+
+  .edit-delete {
+    display: none;
   }
-  
-  @media (max-width: 450px) {
-    .logo-box img,
-    .edit-logo-box img {
-      width: 200px;
-      height: auto;
-    }
+
+  .single-letter {
+    min-width: 80px;
+    min-height: 80px;
+    height: 80px;
+    width: 80px;
   }
-  
-  @media (max-width: 950px) {
-    .backArrow {
-      margin-top: 16px;
-    }
-  
-    .edit-delete {
-      display: none;
-    }
-  
-    .single-letter {
-      min-width: 80px;
-      min-height: 80px;
-      height: 80px;
-      width: 80px;
-    }
-  
-    .editMenu {
-      height: 56px;
-      width: 56px;
-      position: absolute;
-      bottom: 103px;
-      right: 16px;
-    }
-  
-    .closeMobile {
-      display: block;
-    }
-  
-    .d-Block {
-      display: block !important;
-    }
-  
-    .content-section {
-      display: none;
-    }
-  
-    .addContactButtonResponsiv {
-      display: flex;
-    }
-  
-    .addContactButton {
-      /* display: none; */
-    }
-  
-    .logo-box {
-      display: none;
-    }
-  
-    .edit-logo {
-      object-fit: cover;
-      padding-left: 16px;
-      width: 282px;
-      height: auto !important;
-    }
-    section#mycontacts {
-      padding-bottom: 100px;
-    }
-    .popUp {
-      max-width: 396px;
-      max-height: 100vh;
-      width: 100vw;
-      height: auto;
-      flex-direction: column;
-      padding: 0px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-  
-    .popUp-logo {
-      background-color: rgb(9, 25, 49);
-      width: 396px;
-      height: 351px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      justify-content: center;
-    }
-  
-    .popUp-content {
-      width: 396px;
-      height: 409px;
-    }
-  
-    .popUp-content2 {
-      width: 396px;
-      height: 409px;
-    }
-  
-    .edit-logo-box {
-      display: flex;
-      align-items: center;
-      padding: 0px;
-      position: fixed;
-      left: 15px;
-    }
-  
-    .close-button img {
-      filter: brightness(1000%) saturate(0%);
-      position: unset;
-    }
-  
-    .close-button {
-      position: fixed;
-      top: 0px;
-      right: 10px;
-      display: flex;
-      justify-content: flex-end;
-      padding: 8px 0;
-    }
-  
-    .pic_inputs {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
-    }
-  
-    .profile-pic {
-      top: 285px;
-      position: fixed;
-      height: 138px;
-      width: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      padding: 0;
-    }
-  
-    .form input {
-      width: 90% !important;
-      height: 41px;
-      font-size: 14px;
-      padding: 0px;
-      padding-left: 10px;
-    }
-    .form {
-      align-items: center;
-      width: 100% !important;
-      padding: 0 !important;
-      gap: 0;
-    }
-  
-    .contact_input {
-      width: 100%;
-      padding: 0;
-    }
-  
-    .contact_input2 {
-      width: 100%;
-      padding: 0;
-    }
-  
-    .contact_button {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 16px 0;
-    }
-  
-    .createButton {
-      width: 202px;
-      height: 51px !important;
-      font-size: 21px !important;
-      border-radius: 10px !important;
-    }
-  
-    .text {
-      /* display: block; */
-    }
-  
-    h2 {
-      /* border-right: unset; */
-    }
-  
-    .underline {
-      display: block;
-      height: 0px;
-      width: 90px;
-      border: 1px solid rgb(41, 171, 226);
-    }
+
+  .editMenu {
+    height: 56px;
+    width: 56px;
+    position: absolute;
+    bottom: 103px;
+    right: 16px;
   }
-  
-  @media (max-width: 450px) {
-    .error-message {
-      width: 90%;
-      color: red;
-      font-size: 14px !important;
-      height: 14px !important;
-      padding-bottom: 3px;
-    }
-  
-    .popUp-content {
-      width: 100%;
-    }
-  
-    .popUp-content2 {
-      width: 100%;
-    }
+
+  .closeMobile {
+    display: block;
   }
-  
-  @media (max-width: 1024px) {
-    .profile-pic {
-      padding: 0;
-    }
+
+  .d-Block {
+    display: block !important;
   }
-  
-  @media (max-width: 1170px) {
-    .text {
-      /* gap: 10px; */
-    }
-  
-    .h2Contacts {
-      padding-right: 10px;
-    }
+
+  .content-section {
+    display: none;
   }
-  
-  @media (max-width: 1024px) {
-    .edit-window {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 0px;
-      padding-left: 0px;
-    }
-    .edit-window {
-      position: relative;
-  
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .popUp {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .letter_For_PopUp {
-      margin-inline-start: 0px;
-      height: 120px;
-      width: 120px;
-    }
-  
-    .center-pic {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-bottom: 100px;
-      padding-left: 0px;
-    }
+
+  .addContactButtonResponsiv {
+    display: flex;
   }
-  
-  @media (max-width: 1025px) {
-    .backArrow {
-      margin-top: 16px;
-    }
-  
-    .edit-delete {
-      display: none;
-    }
-  
-    .single-letter {
-      height: 80px;
-      width: 80px;
-    }
-  
-    .editMenu {
-      height: 56px;
-      width: 56px;
-      position: absolute;
-      bottom: 112px;
-      right: 16px;
-    }
-  
-    .closeMobile {
-      display: block;
-    }
-  
-    .d-Block {
-      display: block !important;
-    }
-  
-    .content-section {
-      display: none;
-    }
-  
-    .addContactButtonResponsiv {
-      display: flex;
-    }
-  
-    .addContactButton {
-      display: none;
-    }
-  
-    .logo-box {
-      display: none;
-    }
-  
-    .edit-logo {
-      object-fit: cover;
-      padding-left: 16px;
-      width: 282px;
-      height: auto !important;
-    }
-    section#mycontacts {
-      padding-bottom: 100px;
-    }
-    .popUp {
-      max-width: 396px;
-      max-height: 100vh;
-      width: 100vw;
-      height: auto;
-      flex-direction: column;
-      padding: 0px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-  
-    .popUp-logo {
-      background-color: rgb(9, 25, 49);
-      width: 396px;
-      height: 351px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      justify-content: center;
-    }
-  
-    .editResponsiv {
-      flex-direction: column;
-      margin-top: 0px;
-    }
-  
-    .popUp-content {
-      width: 396px;
-      height: 409px;
-    }
-  
-    .popUp-content2 {
-      width: 396px;
-      height: 409px;
-      flex-direction: column;
-    }
-  
-    .edit-logo-box {
-      display: flex;
-      align-items: center;
-      padding: 0px;
-      position: fixed;
-      left: 15px;
-    }
-  
-    .close-button img {
-      filter: brightness(1000%) saturate(0%);
-      position: unset;
-    }
-  
-    .close-button {
-      position: fixed;
-      top: 0px;
-      right: 10px;
-      display: flex;
-      justify-content: flex-end;
-      padding: 8px 0;
-    }
-  
-    .pic_inputs {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      gap: 10px;
-      padding-bottom: 0px;
-      margin-top: -70px;
-    }
-  
-    .profile-pic {
-      top: -10px;
-      position: relative;
-      height: 138px;
-      width: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      padding: 0;
-    }
-  
-    .form input {
-      width: 90% !important;
-      height: 41px;
-      font-size: 14px;
-      padding: 0px;
-      padding-left: 10px;
-    }
-    .form {
-      align-items: center;
-      width: 100% !important;
-      padding: 0 !important;
-      gap: 0;
-    }
-  
-    .contact_input {
-      width: 100%;
-      padding: 0;
-      padding-top: 20px;
-      margin-top: -120px;
-    }
-  
-    .contact_input2 {
-      width: 100%;
-      padding: 0;
-      padding-top: 20px;
-    }
-  
-    .contact_button {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 16px 0;
-    }
-  
-    .createButton {
-      width: 202px;
-      height: 51px !important;
-      font-size: 21px !important;
-      border-radius: 10px !important;
-    }
-  
-    .text {
-      /* display: block; */
-    }
-  
-    h2 {
-      border-right: unset;
-    }
-  
-    .underline {
-      display: block;
-      height: 0px;
-      width: 90px;
-      border: 1px solid rgb(41, 171, 226);
-    }
+
+  .addContactButton {
+    /* display: none; */
   }
-  
-  @media (max-width: 380px) {
-    .error-message {
-      color: red;
-      font-size: 14px !important;
-      height: 14px !important;
-    }
-  
-    .popUp-content {
-      width: 100%;
-    }
-  
-    .profile-pic {
-      padding: 0;
-    }
-  
-    .popUp-content2 {
-      width: 100%;
-    }
-  
-    .profile-pic {
-      padding: 0;
-    }
+
+  .logo-box {
+    display: none;
   }
-  
-  @media (max-width: 400px) {
-    .contactInformation {
-      font-size: 18px;
-      height: 66px;
-    }
-  
-    .contact-profile {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 0 0px 0;
-    }
-    .h2Contacts {
-      padding: 0px 0px 10px 0px;
-      font-size: 40px;
-    }
-    .moreAboutContent {
-      gap: 10px;
-    }
-    .text span {
-      font-size: 20px;
-    }
+
+  .edit-logo {
+    object-fit: cover;
+    padding-left: 16px;
+    width: 282px;
+    height: auto !important;
   }
-  
+  section#mycontacts {
+    padding-bottom: 100px;
+  }
+  .popUp {
+    max-width: 396px;
+    max-height: 100vh;
+    width: 100vw;
+    height: auto;
+    flex-direction: column;
+    padding: 0px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .popUp-logo {
+    background-color: rgb(9, 25, 49);
+    width: 396px;
+    height: 351px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .popUp-content {
+    width: 396px;
+    height: 409px;
+  }
+
+  .popUp-content2 {
+    width: 396px;
+    height: 409px;
+  }
+
+  .edit-logo-box {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    position: fixed;
+    left: 15px;
+  }
+
+  .close-button img {
+    filter: brightness(1000%) saturate(0%);
+    position: unset;
+  }
+
+  .close-button {
+    position: fixed;
+    top: 0px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 0;
+  }
+
+  .pic_inputs {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .profile-pic {
+    top: 285px;
+    position: fixed;
+    height: 138px;
+    width: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 0;
+  }
+
+  .form input {
+    width: 90% !important;
+    height: 41px;
+    font-size: 14px;
+    padding: 0px;
+    padding-left: 10px;
+  }
+  .form {
+    align-items: center;
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 0;
+  }
+
+  .contact_input {
+    width: 100%;
+    padding: 0;
+  }
+
+  .contact_input2 {
+    width: 100%;
+    padding: 0;
+  }
+
+  .contact_button {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 0;
+  }
+
+  .createButton {
+    width: 202px;
+    height: 51px !important;
+    font-size: 21px !important;
+    border-radius: 10px !important;
+  }
+
+  .underline {
+    display: block;
+    height: 0px;
+    width: 90px;
+    border: 1px solid rgb(41, 171, 226);
+  }
+}
+
+@media (max-width: 450px) {
+  .error-message {
+    width: 90%;
+    color: red;
+    font-size: 14px !important;
+    height: 14px !important;
+    padding-bottom: 3px;
+  }
+
+  .popUp-content {
+    width: 100%;
+  }
+
+  .popUp-content2 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-pic {
+    padding: 0;
+  }
+}
+
+@media (max-width: 1170px) {
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .h2Contacts {
+    padding: 0;
+    border-right: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .edit-window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0px;
+    padding-left: 0px;
+  }
+  .edit-window {
+    position: relative;
+
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .popUp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .letter_For_PopUp {
+    margin-inline-start: 0px;
+    height: 120px;
+    width: 120px;
+  }
+
+  .center-pic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 100px;
+    padding-left: 0px;
+  }
+}
+
+@media (max-width: 1025px) {
+  .backArrow {
+    margin-top: 16px;
+  }
+
+  .edit-delete {
+    display: none;
+  }
+
+  .single-letter {
+    height: 80px;
+    width: 80px;
+  }
+
+  .editMenu {
+    height: 56px;
+    width: 56px;
+    position: absolute;
+    bottom: 112px;
+    right: 16px;
+  }
+
+  .closeMobile {
+    display: block;
+  }
+
+  .d-Block {
+    display: block !important;
+  }
+
+  .content-section {
+    display: none;
+  }
+
+  .addContactButtonResponsiv {
+    display: flex;
+  }
+
+  .addContactButton {
+    display: none;
+  }
+
+  .logo-box {
+    display: none;
+  }
+
+  .edit-logo {
+    object-fit: cover;
+    padding-left: 16px;
+    width: 282px;
+    height: auto !important;
+  }
+  section#mycontacts {
+    padding-bottom: 100px;
+  }
+  .popUp {
+    max-width: 396px;
+    max-height: 100vh;
+    width: 100vw;
+    height: auto;
+    flex-direction: column;
+    padding: 0px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .popUp-logo {
+    background-color: rgb(9, 25, 49);
+    width: 396px;
+    height: 351px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .editResponsiv {
+    flex-direction: column;
+    margin-top: 0px;
+  }
+
+  .popUp-content {
+    width: 396px;
+    height: 409px;
+  }
+
+  .popUp-content2 {
+    width: 396px;
+    height: 409px;
+    flex-direction: column;
+  }
+
+  .edit-logo-box {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+    position: fixed;
+    left: 15px;
+  }
+
+  .close-button img {
+    filter: brightness(1000%) saturate(0%);
+    position: unset;
+  }
+
+  .close-button {
+    position: fixed;
+    top: 0px;
+    right: 10px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 0;
+  }
+
+  .pic_inputs {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding-bottom: 0px;
+    margin-top: -70px;
+  }
+
+  .profile-pic {
+    top: -10px;
+    position: relative;
+    height: 138px;
+    width: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 0;
+  }
+
+  .form input {
+    width: 90% !important;
+    height: 41px;
+    font-size: 14px;
+    padding: 0px;
+    padding-left: 10px;
+  }
+  .form {
+    align-items: center;
+    width: 100% !important;
+    padding: 0 !important;
+    gap: 0;
+  }
+
+  .contact_input {
+    width: 100%;
+    padding: 0;
+    padding-top: 20px;
+    margin-top: -120px;
+  }
+
+  .contact_input2 {
+    width: 100%;
+    padding: 0;
+    padding-top: 20px;
+  }
+
+  .contact_button {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 0;
+  }
+
+  .createButton {
+    width: 202px;
+    height: 51px !important;
+    font-size: 21px !important;
+    border-radius: 10px !important;
+  }
+
+  .text {
+    /* display: block; */
+  }
+
+  h2 {
+    border-right: unset;
+  }
+
+  .underline {
+    display: block;
+    height: 0px;
+    width: 90px;
+    border: 1px solid rgb(41, 171, 226);
+  }
+}
+
+@media (max-width: 380px) {
+  .error-message {
+    color: red;
+    font-size: 14px !important;
+    height: 14px !important;
+  }
+
+  .popUp-content {
+    width: 100%;
+  }
+
+  .profile-pic {
+    padding: 0;
+  }
+
+  .popUp-content2 {
+    width: 100%;
+  }
+
+  .profile-pic {
+    padding: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .contactInformation {
+    font-size: 18px;
+    height: 66px;
+  }
+
+  .contact-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0 0px 0;
+  }
+  .h2Contacts {
+    padding: 0px 0px 10px 0px;
+    font-size: 40px;
+  }
+  .moreAboutContent {
+    gap: 10px;
+  }
+  .text span {
+    font-size: 20px;
+  }
+}

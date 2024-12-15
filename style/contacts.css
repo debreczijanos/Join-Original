@@ -1,5 +1,3 @@
-
-
 .blueBackground {
   background-color: rgb(42, 54, 71);
   color: white;
@@ -12,16 +10,16 @@
 .layout-wrapper {
   height: 100vh;
   width: 100%;
+  max-width: 1440px;
   display: flex;
   padding-bottom: 0px;
   margin-bottom: -111px;
-  margin-left: 232px;
+  padding-left: 232px;
 }
 
 .addContactButtonResponsiv {
   display: none;
 }
-
 
 .saveButton:disabled {
   background-color: grey;
@@ -52,7 +50,6 @@
   transition: 150ms;
   color: white;
 }
-
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -290,9 +287,9 @@
 
 .list {
   display: flex;
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .popUp {
@@ -330,9 +327,28 @@
   height: 88px;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: start;
   padding: 0 12px 0 30px;
+  flex-direction: column;
+}
+
+.logo-box > .logo {
+  width: 54px;
+}
+
+.logo-box > span {
+  color: #ffffff;
+  font-size: 61px;
+  font-weight: 700;
+}
+
+.logo-box > hr {
+  color: #29abe2;
+  width: 90px;
+  border-radius: 10px;
+  border: solid 3px;
+  margin: 0;
 }
 
 .saveButton {
@@ -741,41 +757,48 @@ h4 {
   padding-left: 0px;
 }
 
-@media (max-width: 950px) {
-  .addContactButton {
-      display: none;
+@media (max-width: 1250px) {
+  .layout-wrapper {
+    padding-left: 0;
   }
 }
 
+@media (max-width: 950px) {
+  .addContactButton {
+    display: none;
+  }
+}
 
 @media (max-width: 1025px) {
   .addContactButton {
-      display: none;
+    display: none;
+  }
+  #mycontacts {
+    width: 100%;
   }
 }
 
 @media (max-width: 1025px) {
   .content-section {
-      display: none;
+    display: none;
   }
 }
 
 @media (max-width: 950px) {
   .content-section {
-      display: none;
+    display: none;
   }
 }
 
-
 @media (max-width: 1025px) {
   .addContactButtonResponsiv {
-      display: flex;
+    display: flex;
   }
 }
 
 @media (max-width: 950px) {
   .addContactButtonResponsiv {
-      display: flex;
+    display: flex;
   }
 }
 

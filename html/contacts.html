@@ -20,7 +20,7 @@
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/contacts.js"></script>
-    <script src="../JS/firebase.js"></script>£
+    <script src="../JS/firebase.js"></script>
     <!-- <script src="../JS/signUpSubmit.js"></script> -->
     <!-- <script src="../JS/currentDate.js"></script> -->
     <script src="../JS/contactvalidateform.js"></script>
@@ -31,7 +31,7 @@
 </head>
 
 <body onload="loadContacts()">
-    <div>
+    <div class="gesamt">
         <div id="include-container"></div>
 
 
@@ -59,9 +59,10 @@
                         <div class="underline"></div>
                     </div>
                     <div id="responsiveContactBackButton" class="returnToContacts displayNone">
-                        <img class="closeMobile backArrow" onclick="showContactMobile()" src="assets/img/icon_back.svg">
+                        <img class="closeMobile backArrow" onclick="showContactMobile()"
+                            src="../img/arrow-left-line.png">
                         <img class="closeMobile editMenu" id="options_edit_delete" onclick="showEditandDelete()"
-                            src="imgs/option_Btn.png">
+                            src="../img/MenuContact.png">
                     </div>
                 </div>
                 <div id="content" class="moreAboutContent"></div>
@@ -129,8 +130,12 @@
                 <div onclick="openClosePopUp(event)" class="popUp">
                     <div class="popUp-logo">
 
-                        <div class="logo-box"><img class="logo" src="../img/logoDark.png" alt=""></div>
-                        <div class="edit-logo-box"><img class="edit-logo" src="../img/SubtasksEdit.png" alt=""></div>
+                        <div class="logo-box"><img class="logo" src="../img/Capa2.png" alt="">
+                            <span>Edit Contact</span>
+                            <hr>
+                        </div>
+                        <div class="edit-logo-box" style="display: none;"><img class="edit-logo"
+                                src="../img/SubtasksEdit.png" alt=""></div>
                     </div>
 
                     <div class="popUp-content">
