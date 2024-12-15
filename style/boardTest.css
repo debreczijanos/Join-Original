@@ -84,6 +84,7 @@ Overly CSS */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin-right: 5px;
 }
 
 .task-choice-nav button {
@@ -798,6 +799,8 @@ input[type="text"]::placeholder {
 
 .responsive-button{
   display: none;
+  justify-content: center;
+  align-items: center;
   background-color: #007bff;
   font-size: 30px;
   color: white;
@@ -806,10 +809,7 @@ input[type="text"]::placeholder {
   cursor: pointer;
   white-space: nowrap;
   width: 45px;
-  height: 45px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 45px; 
 }
 
 @media (max-width: 1250px) {
