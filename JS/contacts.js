@@ -152,7 +152,7 @@ function displayContacts(contactData) {
     createContactGroup(container, letter, sortedGroups[letter]);
   });
   applyNewContactHighlight();
-  highlightContactList();
+  //   highlightContactList();
 }
 
 /**
@@ -404,9 +404,9 @@ function getRandomHexColor() {
  * Highlights the contact list element by applying a CSS class.
  */
 
-function highlightContactList() {
-  document.getElementById("link-contact").classList.add("bg-focus");
-}
+// function highlightContactList() {
+//   document.getElementById("link-contact").classList.add("bg-focus");
+// }
 
 /**
  * Generates HTML for displaying contact information.
