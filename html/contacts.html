@@ -20,9 +20,9 @@
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/contacts.js"></script>
-    <script src="../JS/firebase.js"></script>
-    <script src="../JS/signUpSubmit.js"></script>
-    <script src="../JS/currentDate.js"></script>
+    <script src="../JS/firebase.js"></script>£
+    <!-- <script src="../JS/signUpSubmit.js"></script> -->
+    <!-- <script src="../JS/currentDate.js"></script> -->
     <script src="../JS/contactvalidateform.js"></script>
     <script src="../JS/dropDownMenuAndGOBack.js"></script>
     <script src="../JS/contactMbile.js"></script>
@@ -131,14 +131,13 @@
                 <div onclick="openClosePopUp(event)" class="popUp">
                     <div class="popUp-logo">
 
-                        <div class="logo-box"><img class="logo" src="./contact-assets/img/logo.png" alt=""></div>
-                        <div class="edit-logo-box"><img class="edit-logo" src="./contact-assets/img/edit-contact.png"
-                                alt=""></div>
+                        <div class="logo-box"><img class="logo" src="../img/logoDark.png" alt=""></div>
+                        <div class="edit-logo-box"><img class="edit-logo" src="../img/SubtasksEdit.png" alt=""></div>
                     </div>
 
                     <div class="popUp-content">
                         <div class="close-button"><img onclick="openClosePopUp('close', key = true)"
-                                src="./contact-assets/img/close.png" alt="">
+                                src="../img/close.png" alt="">
                         </div>
 
                         <div class="pic_inputs">
@@ -164,10 +163,10 @@
                                     <div class="contact_button">
                                         <button onclick="removeContact('contact', keyForEdit)" type="button"
                                             class="cancel-Button">
-                                            Delete <img src="./contact-assets/img/close.png" alt="">
+                                            Delete <img src="../img/close.png" alt="">
                                         </button>
                                         <button id="editSubmit" type="submit" class="createButton saveButton">
-                                            Save <img class="check" src="./contact-assets/img/check.png" alt="">
+                                            Save <img class="check" src="../img/check.svg" alt="">
                                         </button>
                                         <img class="check" src="../img/SubtasksDel.png" alt="">
 
@@ -189,43 +188,43 @@
             initializeHeader();
         });
 
-        document.getElementById('userForm').addEventListener('submit', async function (event) {
-            event.preventDefault(); // Verhindert die Standardaktion des Formulars
+        // document.getElementById('userForm').addEventListener('submit', async function (event) {
+        //     event.preventDefault(); // Verhindert die Standardaktion des Formulars
 
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
+        //     const name = document.getElementById('name').value.trim();
+        //     const email = document.getElementById('email').value.trim();
+        //     const phone = document.getElementById('phone').value.trim();
 
-            try {
-                await saveUserData(name, email, phone); // Speichert die Daten in Firebase
-                alert('Benutzer erfolgreich erstellt!');
-                loadContacts(); // Aktualisiert die Kontaktliste
-            } catch (error) {
-                console.error('Fehler beim Speichern der Benutzerdaten:', error);
-                document.querySelector('.error').style.display = 'block';
-            }
-        });
+        //     try {
+        //         await saveUserData(name, email, phone); // Speichert die Daten in Firebase
+        //         alert('Benutzer erfolgreich erstellt!');
+        //         loadContacts(); // Aktualisiert die Kontaktliste
+        //     } catch (error) {
+        //         console.error('Fehler beim Speichern der Benutzerdaten:', error);
+        //         document.querySelector('.error').style.display = 'block';
+        //     }
+        // });
 
-        const user = JSON.parse(localStorage.getItem('user'));
+        // const user = JSON.parse(localStorage.getItem('user'));
 
-        if (!user) {
-            window.location.href = './index.html';
-        }
+        // if (!user) {
+        //     window.location.href = './index.html';
+        // }
 
-        function getInitials(name) {
-            const nameParts = name.trim().split(' ');
-            if (nameParts.length === 1) {
-                return nameParts[0].charAt(0).toUpperCase();
-            }
-            return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
-        }
+        // function getInitials(name) {
+        //     const nameParts = name.trim().split(' ');
+        //     if (nameParts.length === 1) {
+        //         return nameParts[0].charAt(0).toUpperCase();
+        //     }
+        //     return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
+        // }
 
-        const initials = getInitials(user.name || 'G');
+        // const initials = getInitials(user.name || 'G');
 
-        const userInitialsDiv = document.getElementById('userInitials');
-        if (userInitialsDiv) {
-            userInitialsDiv.querySelector('div').textContent = initials;
-        }
+        // const userInitialsDiv = document.getElementById('userInitials');
+        // if (userInitialsDiv) {
+        //     userInitialsDiv.querySelector('div').textContent = initials;
+        // }
 
 
     </script>
