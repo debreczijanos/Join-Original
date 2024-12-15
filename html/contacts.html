@@ -19,7 +19,6 @@
 
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
-    <script src="../JS/currentDate.js"></script>
     <script src="../JS/contacts.js"></script>
     <script src="../JS/firebase.js"></script>
     <script src="../JS/signUpSubmit.js"></script>
@@ -31,37 +30,15 @@
     <title>Join</title>
 </head>
 
-<body onload="loadContacts()" >
+<body onload="loadContacts()">
 
 
     <div>
         <div id="include-container"></div>
 
-<<<<<<< HEAD
-      
-    <div class="layout-wrapper" id="layout-wrapper">
-        <section id="mycontacts" class="mycontacts">
-            <div class="addContact">
-                <button onclick="openClosePopUp('open', key = false)" class="addContactButton position-fixed ">Add new
-                    Contact
-                    <img src="../img/addPersonmitplus.png" alt=""></button>
-                <button onclick="openClosePopUp('open', key = false)" class="addContactButtonResponsiv position-fixed">
-                    <img src="../img/addPersonmitplus.png" alt=""></button>
-            </div>
-            <div class="list" id="contactsId">
-               
-            </div>
-        </section>
-        <section id="content-area" class="content-section dNone">
-            <div class="h2-span">
-                <div class="text">
-                    <h2 class="h2Contacts">Contacts</h2>
-                    <span>Better with a team</span>
-                    <div class="underline"></div>
-=======
 
         <div class="layout-wrapper" id="layout-wrapper">
-            <section id="mycontacts" class="">
+            <section id="mycontacts" class="mycontacts">
                 <div class="addContact">
                     <button onclick="openClosePopUp('open', key = false)" class="addContactButton position-fixed ">Add
                         new
@@ -70,12 +47,12 @@
                     <button onclick="openClosePopUp('open', key = false)"
                         class="addContactButtonResponsiv position-fixed">
                         <img src="../img/addPersonmitplus.png" alt=""></button>
->>>>>>> 9a28e197bc0b22f88414590882755abf48b7ee2e
                 </div>
                 <div class="list" id="contactsId">
 
                 </div>
             </section>
+
             <section id="content-area" class="content-section dNone">
                 <div class="h2-span">
                     <div class="text">
@@ -184,20 +161,6 @@
                                         onblur="validateEditField('editTel')" oninput="checkFormFields()">
                                     <div id="editTelError" class="error-message"></div>
 
-<<<<<<< HEAD
-                                <div class="contact_button">
-                                    <button onclick="removeContact('contact', keyForEdit)" type="button"
-                                        class="cancel-Button">
-                                        Delete <img src="./contact-assets/img/close.png" alt="">
-                                    </button>
-                                    <button id="editSubmit" type="submit" class="createButton saveButton">
-                                        Save <img class="check" src="./contact-assets/img/check.png" alt="">
-                                    </button>
-                                    <img class="check" src="../img/SubtasksDel.png" alt="">
-                                    
-                                </div>
-                            </form>
-=======
                                     <div class="contact_button">
                                         <button onclick="removeContact('contact', keyForEdit)" type="button"
                                             class="cancel-Button">
@@ -206,9 +169,10 @@
                                         <button id="editSubmit" type="submit" class="createButton saveButton">
                                             Save <img class="check" src="./contact-assets/img/check.png" alt="">
                                         </button>
+                                        <img class="check" src="../img/SubtasksDel.png" alt="">
+
                                     </div>
-                                </form>
->>>>>>> 9a28e197bc0b22f88414590882755abf48b7ee2e
+
 
                             </div>
                         </div>
