@@ -104,9 +104,10 @@ Overly CSS */
   align-items: center;
   color: var(--dark-grey);
   font-weight: 700;
-  width: 100%;
+  width: 250px;
   padding-right: 16px;
   margin-bottom: 6px;
+  margin-left: 9px;
 }
 
 .data-plus img {
@@ -795,6 +796,18 @@ input[type="text"]::placeholder {
   color: rgb(103, 103, 103);
 }
 
+.responsive-button{
+  display: none;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 45px;
+  height: 45px;
+}
+
 @media (max-width: 1250px) {
   .title-board {
     margin-left: 34px;
@@ -859,4 +872,21 @@ input[type="text"]::placeholder {
     font-size: 47px;
     font-weight: 700;
   }
+}
+
+@media(max-width: 500px){
+    .responsive-button{
+      display: flex;
+    }
+
+    .task-choice-nav-button{
+      display: none;
+    }
+
+    .title-board{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 34px;
+    }
 }
