@@ -36,8 +36,8 @@ function renderContacts(allContacts) {
 }
 
 function showRenderedContactsMainData(index, contact) {
-  return /*html*/ `
-    <div onclick="openContact(${index})">
+  return `
+    <div class="contact-entry" id="contact-${index}">
       <div class="contact-name">
         <h3>${contact.name}</h3>
       </div>
@@ -45,6 +45,7 @@ function showRenderedContactsMainData(index, contact) {
         <span>Email: ${contact.email}</span>
         <span>Phone: ${contact.phone}</span>
       </div>
+      <button onclick="removeContact('contacts', '${contact.id}')">Delete</button>
     </div>`;
 }
 
