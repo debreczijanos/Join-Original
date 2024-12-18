@@ -27,9 +27,10 @@ function resetDateInput() {
 }
 
 function resetPrioButtons() {
-  document
-    .querySelectorAll(".prio-btn button")
-    .forEach((button) => button.classList.remove("active"));
+  const buttons = document.querySelectorAll(".prio-btn button");
+  clearActiveStates(buttons);
+  const defaultActiveIndex = 1;
+  activateButton(buttons[defaultActiveIndex]);
 }
 
 function resetCategoryDropdown() {
@@ -150,6 +151,7 @@ function sendTaskToAPI(task) {
         setTimeout(() => {
           overlay.style.display = "none";
           clearForm(); // Formular leeren
+          window.location.href = "../html/boardTest.html";
         }, 3000);
       } else {
         console.error("Error creating task.");

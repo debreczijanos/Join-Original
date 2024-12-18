@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="../style/singUp.css">
     <link rel="stylesheet" href="../style/style.css">
 
-    <script src="../JS/navigateToIndex.js"></script>
-    <script src="../JS/signUpSubmit.js"></script>
+    <script src="../JS/signUpSubmit.js" defer></script>
 
     <title>Join</title>
 </head>
@@ -22,10 +21,8 @@
     <div class="mein-singUp">
         <div class="logo">
             <img src="../img/logoDark.png" alt="Logo">
-
         </div>
         <div class="center">
-
             <div class="sign-up">
                 <div class="sign-up-header">
                     <img class="arrow-left-line" src="../img/arrow-left-line.png" alt="arrow left"
@@ -34,32 +31,32 @@
                     <hr>
                 </div>
 
-
                 <form class="sign-up-daten" id="signUpForm">
                     <div class="input-ctn">
                         <div class="costume-input">
                             <input type="text" id="nameInput" required placeholder="Name ">
                             <img src="../img/person.png" alt="person">
                         </div>
-                        <div class="costume-input">
-                            <input type="email" id="emailInput" required placeholder="Email ">
+                        <label for="emailInput" class="costume-input">
+                            <input type="email" id="emailInput" required placeholder="Email " pattern=".+@example\.com">
                             <img src="../img/mail.png" alt="mail">
-                        </div>
-                        <div class="costume-input">
+                        </label>
+                        <label for="password" class="costume-input">
                             <input type="password" id="passwordInput" required placeholder="Password ">
                             <img src="../img/lock.png" alt="lock">
-                        </div>
-                        <div class="costume-input">
+                        </label>
+                        <label for="password" class="costume-input">
                             <input type="password" id="confirmPasswordInput" required placeholder="Confirm Password ">
                             <img src="../img/lock.png" alt="lock">
-                        </div>
+                        </label>
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" id="acceptTerms">
                         <span>I accept the <a href="../html/privacyPolicy.html"> Privacy policy </a> </span>
                     </div>
 
-                    <button disabled class="sign-up-btn" id="submitButton">Sign up</button>
+                    <button disabled class="sign-up-btn" id="submitButton" onclick="handleSubmit(event)">Sign
+                        up</button>
                 </form>
             </div>
         </div>
@@ -69,8 +66,6 @@
             <a href="../html/legalNotice.html"> Legal notice</a>
         </footer>
     </div>
-
-
 
 </body>
 

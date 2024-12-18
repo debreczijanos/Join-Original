@@ -54,16 +54,17 @@
                 <form class="logInDate">
 
                     <div class="logInPersonal">
-                        <div class="inputEmail">
-                            <input type="email" name="email" id="email" placeholder="Email" required>
+                        <label for="email" class="inputEmail">
+                            <input type="email" name="email" id="email" placeholder="Email" required
+                                pattern=".+@example\.com">
                             <img src="./img/mail.png" alt="mail Logo">
-                        </div>
+                        </label>
 
-                        <div class="inputPasword">
+                        <label for="password" class="inputPasword">
                             <input type="password" name="password" id="password" placeholder="Password" required>
                             <img src="./img/lock.png" alt="Lock">
 
-                        </div>
+                        </label>
                         <p class="error">Check your email and pasword. Plase try again</p>
                     </div>
 
@@ -77,7 +78,7 @@
 
                 </form>
                 <div class="allLogInBtn">
-                    <button class="logInButton" id="loginButton">Log In</button>
+                    <button class="logInButton" id="loginButton" onclick="handleLogin(event)">Log In</button>
                     <button class="logInButtonGuest" onclick="handleGuestLogin()">Guest Log in </button>
                 </div>
             </div>

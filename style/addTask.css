@@ -230,7 +230,8 @@ p > span {
   left: 0px;
 }
 
-.selected-contacts button {
+.selected-contacts button,
+.extra-count-button {
   width: 42px;
   height: 42px;
   border-radius: 100%;
@@ -241,6 +242,7 @@ p > span {
   color: white;
   font-weight: 700;
   font-size: 18px;
+  background-color: #29abe2;
 }
 
 .partition {
@@ -324,8 +326,9 @@ p > span {
   left: 0;
   width: 100%;
   background-color: white;
+  border: solid 1px #d1d1d1;
   z-index: 1000;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 10px;
 }
 
 #customDropdownMenu.open {

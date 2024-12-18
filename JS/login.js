@@ -18,23 +18,28 @@ function hideBackgroundWithDelay(background) {
   }, 1500);
 }
 
-async function handleLogin(event) {
+function handleLogin(event) {
   event.preventDefault();
 
   const { email, password } = getInputValues();
+  const rememberMe = document.getElementById("checkbox").checked;
 
-  try {
-    const usersData = await fetchUserData();
-    const { userFound, userName } = validateUser(usersData, email, password);
+  fetchUserData()
+    .then((usersData) => {
+      const { userFound, userName } = validateUser(usersData, email, password);
 
-    if (userFound) {
-      loginUser(userName);
-    } else {
-      showError();
-    }
-  } catch (error) {
-    handleLoginError(error);
-  }
+      if (userFound) {
+        if (rememberMe) {
+          saveCredentialsToLocalStorage(email, password);
+        } else {
+          clearCredentialsFromLocalStorage();
+        }
+        loginUser(userName);
+      } else {
+        showError();
+      }
+    })
+    .catch(handleLoginError);
 }
 
 function getInputValues() {
@@ -84,6 +89,32 @@ function handleGuestLogin() {
   window.location.href = "./html/summary.html";
 }
 
+function saveCredentialsToLocalStorage(email, password) {
+  localStorage.setItem("savedEmail", email);
+  localStorage.setItem("savedPassword", password);
+}
+
+function clearCredentialsFromLocalStorage() {
+  localStorage.removeItem("savedEmail");
+  localStorage.removeItem("savedPassword");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".logInButton").addEventListener("click", handleLogin);
+  const savedEmail = localStorage.getItem("savedEmail");
+  const savedPassword = localStorage.getItem("savedPassword");
+  const rememberMeCheckbox = document.getElementById("checkbox");
+
+  if (savedEmail && savedPassword) {
+    document.getElementById("email").value = savedEmail;
+    document.getElementById("password").value = savedPassword;
+    rememberMeCheckbox.checked = true; // Checkbox aktivieren
+  }
+
+  const form = document.querySelector(".logInDate");
+  form.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleLogin(event);
+    }
+  });
 });

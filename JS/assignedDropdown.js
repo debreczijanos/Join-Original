@@ -2,13 +2,21 @@
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
-//Dropdown-Management
 // Dropdown umschalten
 function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
 
   if (!dropdownMenu) return;
 
+  // Schließt Dropdowns, wenn sie offen sind
+  const allDropdowns = document.querySelectorAll(".dropdown-menu");
+  allDropdowns.forEach((menu) => {
+    if (menu !== dropdownMenu) {
+      menu.classList.remove("open");
+    }
+  });
+
+  // Öffnet oder schließt das aktuelle Dropdown
   dropdownMenu.classList.toggle("open");
 }
 
@@ -73,7 +81,7 @@ function setDropdownValueOnClick(menuId, inputId) {
       const input = document.getElementById(inputId);
       if (input) {
         input.value = event.target.textContent.trim(); // Setzt den Text als Wert
-        menu.style.display = "none"; // Schließt das Dropdown
+        menu.classList.remove("open"); // Schließt das Dropdown
       }
     }
   });
@@ -147,12 +155,14 @@ function createContactElement(contact) {
   const checkbox = createCheckbox(contact.name);
   const button = createContactButton(contact.name);
 
-  // Event-Listener für Checkbox
+  const checkboxId = `checkbox-${contact.name}`;
+  checkbox.id = checkboxId;
+  label.htmlFor = checkboxId;
+
   checkbox.onchange = () => {
     updateSelectedContacts(contact.name, button, checkbox.checked);
   };
 
-  // Elemente in das Label einfügen
   label.appendChild(button);
   label.appendChild(document.createTextNode(contact.name));
   label.appendChild(checkbox);
@@ -185,16 +195,26 @@ function updateSelectedContacts(contactName, button, isChecked) {
   } else {
     removeSelectedContact(contactName, selectedContactsContainer);
   }
+
+  renderSelectedContacts(selectedContactsContainer);
 }
 
 // Kontakt hinzufügen
 function addSelectedContact(button, contactName, container) {
+  // Prüfen, ob der Kontakt schon existiert
+  const exists = Array.from(container.children).some(
+    (child) => child.dataset.contactName === contactName
+  );
+  if (exists) return;
+
   const clonedButton = button.cloneNode(true);
+  clonedButton.dataset.contactName = contactName;
 
   // Event-Listener zum Entfernen
   clonedButton.onclick = () => {
     deselectContact(contactName);
     clonedButton.remove();
+    renderSelectedContacts(container);
   };
 
   container.appendChild(clonedButton);
@@ -204,10 +224,33 @@ function addSelectedContact(button, contactName, container) {
 function removeSelectedContact(contactName, container) {
   const buttons = container.querySelectorAll("button");
   buttons.forEach((btn) => {
-    if (btn.textContent === contactName.charAt(0).toUpperCase()) {
+    if (btn.dataset.contactName === contactName) {
       btn.remove();
     }
   });
+  renderSelectedContacts(container);
+}
+
+function renderSelectedContacts(container) {
+  const buttons = Array.from(container.querySelectorAll("button"));
+  const maxVisible = 3;
+
+  // Alle Buttons entfernen
+  container.innerHTML = "";
+
+  // Sichtbare Buttons hinzufügen
+  buttons.slice(0, maxVisible).forEach((button) => {
+    container.appendChild(button);
+  });
+
+  // Restliche Kontakte zählen
+  const extraCount = buttons.length - maxVisible;
+  if (extraCount > 0) {
+    const extraButton = document.createElement("div");
+    extraButton.textContent = `+${extraCount}`;
+    extraButton.classList.add("extra-count-button");
+    container.appendChild(extraButton);
+  }
 }
 
 function deselectContact(contactName) {
@@ -217,6 +260,9 @@ function deselectContact(contactName) {
       checkbox.checked = false;
     }
   });
+
+  const selectedContactsContainer = document.getElementById("selectedContacts");
+  renderSelectedContacts(selectedContactsContainer);
 }
 
 //Farbgenerierung

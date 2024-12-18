@@ -117,15 +117,17 @@ function resetSubtaskInput() {
 //Subtask bearbeiten
 function editSubtask(subtaskItem, subtaskTextElement) {
   const editInput = createEditInput(subtaskTextElement.textContent);
-
   subtaskTextElement.replaceWith(editInput);
+  let hasSaved = false;
+  const saveHandler = () => {
+    if (!hasSaved) {
+      hasSaved = true;
+      saveSubtaskEdit(editInput, subtaskTextElement);
+    }
+  };
 
-  editInput.addEventListener("keypress", (e) =>
-    handleEditSave(e, editInput, subtaskTextElement)
-  );
-  editInput.addEventListener("blur", () =>
-    saveSubtaskEdit(editInput, subtaskTextElement)
-  );
+  editInput.addEventListener("keypress", (e) => handleEditSave(e, saveHandler));
+  editInput.addEventListener("blur", saveHandler);
 
   editInput.focus();
 }
@@ -138,9 +140,9 @@ function createEditInput(value) {
   return input;
 }
 
-function handleEditSave(event, editInput, subtaskTextElement) {
+function handleEditSave(event, saveHandler) {
   if (event.key === "Enter") {
-    saveSubtaskEdit(editInput, subtaskTextElement);
+    saveHandler();
   }
 }
 

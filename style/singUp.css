@@ -126,7 +126,7 @@ form {
   align-items: center;
   padding: 15px 24px;
   gap: 10px;
-  background-color: #2a3647;
+  background-color: #d1d1d1;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -138,7 +138,7 @@ form {
 }
 
 .sign-up-btn:hover:enabled {
-  background-color: #29abe2;
+  background-color: #29abe2 !important;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }

@@ -1,82 +1,156 @@
 function checkInputs() {
-  const inputs = document.querySelectorAll(
+  const inputs = getAllInputs();
+  const allFilled = validateInputs(inputs);
+
+  updateSubmitButton(allFilled);
+}
+
+function getAllInputs() {
+  return document.querySelectorAll(
     '.sign-up-daten input[type="text"], .sign-up-daten input[type="email"], .sign-up-daten input[type="password"], .sign-up-daten input[type="checkbox"]'
   );
+}
+
+function validateInputs(inputs) {
   let allFilled = true;
 
   inputs.forEach((input) => {
-    if (
-      (input.type !== "checkbox" && input.value.trim() === "") ||
-      (input.type === "checkbox" && !input.checked)
-    ) {
+    if (isInputEmpty(input)) {
       allFilled = false;
     }
   });
 
-  document.getElementById("submitButton").disabled = !allFilled;
+  return allFilled;
+}
+
+function isInputEmpty(input) {
+  return (
+    (input.type !== "checkbox" && input.value.trim() === "") ||
+    (input.type === "checkbox" && !input.checked)
+  );
+}
+
+function updateSubmitButton(allFilled) {
+  const submitButton = document.getElementById("submitButton");
+  submitButton.disabled = !allFilled;
+  submitButton.style.backgroundColor = allFilled ? "#2a3647" : "#d1d1d1";
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 async function handleSubmit(event) {
   event.preventDefault();
 
-  // Eingabewerte sammeln
-  const name = document.getElementById("nameInput").value.trim();
-  const email = document.getElementById("emailInput").value.trim();
-  const password = document.getElementById("passwordInput").value.trim();
-  const confirmPassword = document
-    .getElementById("confirmPasswordInput")
-    .value.trim();
-  const acceptTerms = document.getElementById("acceptTerms").checked;
+  const formData = collectFormData();
+  if (!validateFormData(formData)) return;
 
-  // Überprüfen, ob das Passwort bestätigt wurde
+  const response = await sendDataToServer(formData);
+  handleServerResponse(response);
+}
+
+function collectFormData() {
+  return {
+    name: document.getElementById("nameInput").value.trim(),
+    email: document.getElementById("emailInput").value.trim(),
+    password: document.getElementById("passwordInput").value.trim(),
+    confirmPassword: document
+      .getElementById("confirmPasswordInput")
+      .value.trim(),
+    acceptTerms: document.getElementById("acceptTerms").checked,
+  };
+}
+
+function validateFormData({ email, password, confirmPassword }) {
   if (password !== confirmPassword) {
     alert("Passwörter stimmen nicht überein!");
-    return;
+    return false;
   }
 
-  // Daten, die wir speichern möchten
-  const data = {
-    name,
-    email,
-    password,
-    acceptTerms,
-  };
+  if (!isValidEmail(email)) {
+    alert("Bitte gib eine gültige E-Mail-Adresse ein!");
+    return false;
+  }
+
+  return true;
+}
+
+async function sendDataToServer({ name, email, password, acceptTerms }) {
+  const url =
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   try {
-    // POST-Anfrage an die Firebase API
-    const response = await fetch(
-      "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const usersData = await fetchExistingUsers(url);
 
-    if (response.ok) {
-      // Erfolgsmeldung anzeigen und Animation starten
-      document.querySelector(".center").style.display = "none";
-      const successMessage = document.getElementById("successMessage");
-      successMessage.style.display = "flex";
-      successMessage.style.animation = "slideUp 1s ease-out forwards";
-
-      // Nach 3 Sekunden zur index.html weiterleiten
-      setTimeout(() => {
-        window.location.href = "../index.html";
-      }, 3000);
-    } else {
-      // Fehler bei der Speicherung
-      alert("Fehler beim Speichern der Daten.");
+    if (isEmailAlreadyRegistered(usersData, email)) {
+      return { ok: false, reason: "email_exists" };
     }
+
+    const response = await saveNewUser(url, {
+      name,
+      email,
+      password,
+      acceptTerms,
+    });
+    return response;
   } catch (error) {
-    console.error("Fehler beim Senden der Anfrage:", error);
-    alert("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.");
+    return handleServerError(error);
   }
 }
 
-// Event-Listener hinzufügen
+async function fetchExistingUsers(url) {
+  const response = await fetch(url);
+  return response.json();
+}
+
+function isEmailAlreadyRegistered(usersData, email) {
+  return usersData
+    ? Object.values(usersData).some((user) => user.email === email)
+    : false;
+}
+
+async function saveNewUser(url, userData) {
+  return await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  });
+}
+
+function handleServerError(error) {
+  console.error("Fehler beim Senden der Anfrage:", error);
+  return { ok: false, reason: "server_error" };
+}
+
+function handleServerResponse(response) {
+  if (response && response.ok) {
+    displaySuccessMessage();
+  } else if (response.reason === "email_exists") {
+    alert("Diese E-Mail-Adresse ist bereits registriert!");
+  } else if (response.reason === "server_error") {
+    alert("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.");
+  } else {
+    alert("Unbekannter Fehler beim Speichern der Daten.");
+  }
+}
+
+function displaySuccessMessage() {
+  document.querySelector(".center").style.display = "none";
+  const successMessage = document.getElementById("successMessage");
+
+  successMessage.style.display = "flex";
+  successMessage.style.animation = "slideUp 1s ease-out forwards";
+
+  setTimeout(() => (window.location.href = "../index.html"), 3000);
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const inputs = document.querySelectorAll(
     '.sign-up-daten input[type="text"], .sign-up-daten input[type="email"], .sign-up-daten input[type="password"], .sign-up-daten input[type="checkbox"]'
@@ -85,10 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
     input.addEventListener("input", checkInputs);
     input.addEventListener("change", checkInputs); // Für Checkbox
   });
-
-  document
-    .getElementById("submitButton")
-    .addEventListener("click", handleSubmit);
 });
 
 function navigateToIndex() {

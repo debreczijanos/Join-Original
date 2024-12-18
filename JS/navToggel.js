@@ -21,7 +21,7 @@ function activateLogoutButton() {
   const logoutButton = document.querySelector(".nav-toggel button:last-child");
   if (logoutButton) {
     logoutButton.addEventListener("click", function () {
-      localStorage.clear(); // Benutzerdaten löschen
+      localStorage.removeItem("userName"); // Benutzerdaten löschen
       window.location.href = "../index.html"; // Weiterleitung zur Login-Seite
     });
   }
@@ -46,4 +46,12 @@ function navigateToAddTask() {
 
 function navigateToContacts() {
   window.location.href = "../html/contacts.html";
+}
+
+function navigateToLegalNotice() {
+  window.location.href = "../html/legalNotice.html";
+}
+
+function navigateToprivacyPolicy() {
+  window.location.href = "../html/privacyPolicy.html";
 }

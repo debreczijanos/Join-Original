@@ -24,6 +24,7 @@ includeHTML("#include-container", "./nav.html", function () {
 });
 
 // Button-Management (Prio-Buttons)
+// Button-Management (Prio-Buttons)
 function clearActiveStates(buttons) {
   buttons.forEach((btn) => {
     btn.classList.remove("active");
@@ -38,14 +39,25 @@ function activateButton(button) {
   if (img) img.classList.add("filter-color-to-white");
 }
 
-function setupButtonListeners(buttons) {
-  buttons.forEach((button) => {
+function setupButtonListeners(buttons, defaultActiveIndex = 1) {
+  buttons.forEach((button, index) => {
     button.addEventListener("click", () => {
       clearActiveStates(buttons);
       activateButton(button);
     });
+
+    // Setze Standard-Button als aktiv
+    if (index === defaultActiveIndex) {
+      activateButton(button);
+    }
   });
 }
+
+// Beispiel: Initialisierung der Buttons
+document.addEventListener("DOMContentLoaded", () => {
+  const prioButtons = document.querySelectorAll(".prio-button");
+  setupButtonListeners(prioButtons, 1); // Standardmäßig Index 1 (Medium) aktivieren
+});
 
 function addInputListeners() {
   const fieldsToValidate = getRequiredFields();
