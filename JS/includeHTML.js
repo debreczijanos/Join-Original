@@ -11,7 +11,7 @@ function includeHTML(selector, file, callback) {
       .then((data) => {
         element.innerHTML = data;
         if (typeof callback === "function") {
-          callback(); // Führe die Callback-Funktion aus
+          callback();
         }
       })
       .catch((error) => console.error("Error loading HTML:", error));

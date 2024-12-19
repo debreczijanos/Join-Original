@@ -16,13 +16,14 @@
 
     <!-- <link rel="stylesheet" href="../style/board.css"> -->
 
-    <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
+    <script src="../JS/navToggel.js" defer></script>
+
     <!-- <script src="../JS/currentDate.js"></script> -->
     <script src="../JS/boardTest.js" defer></script>
     <script src="../JS/overlayLoader.js" defer></script>
 
-    <title>Join</title>
+    <title>Join Board</title>
 
     <style>
         .d-none {
@@ -63,7 +64,7 @@
             <section id="kanban-board" class="kanban-board">
                 <div class="test">
                     <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
-                    
+
 
                         <div class="data-plus">To do
                             <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
@@ -161,6 +162,7 @@
             </div>
         </div>
 
+        <!-- Add Task Overlay  -->
         <div class="background-box d-none" id="show-hide-class">
             <div class="great-open-Task">
                 <div class="title-and-out">

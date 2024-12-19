@@ -1,4 +1,3 @@
-//  HTML-Include
 function includeHTML(selector, file, callback) {
   const element = document.querySelector(selector);
   if (element) {
@@ -19,11 +18,9 @@ function includeHTML(selector, file, callback) {
   }
 }
 includeHTML("#include-container", "./nav.html", function () {
-  // Header-Funktionalität initialisieren
   initializeHeader();
 });
 
-// Button-Management (Prio-Buttons)
 // Button-Management (Prio-Buttons)
 function clearActiveStates(buttons) {
   buttons.forEach((btn) => {

@@ -144,9 +144,9 @@
     display: none;
   }
 
-  .kanban-board{
+  .kanban-board {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-left: 34px;
   }
 }
@@ -154,5 +154,13 @@
 @media (max-width: 450px) {
   .menu {
     gap: 0;
+  }
+}
+
+@media (max-width: 350px) {
+  .menu {
+    button {
+      font-size: small;
+    }
   }
 }

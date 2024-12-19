@@ -2,6 +2,8 @@
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
+let selectedContacts = []; // Speichert die vollständigen Namen
+
 // Dropdown umschalten
 function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
@@ -128,7 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setDropdownValueOnClick(categoryMenuId, categoryInputId);
 });
 
-//Filter-Management
 //Kontakte laden
 async function loadContacts(apiURL, dropdownId) {
   try {
@@ -185,7 +186,6 @@ function createContactButton(name) {
   return button;
 }
 
-//Auswahl-Management
 //Ausgewählte Kontakte aktualisieren
 function updateSelectedContacts(contactName, button, isChecked) {
   const selectedContactsContainer = document.getElementById("selectedContacts");
@@ -201,50 +201,66 @@ function updateSelectedContacts(contactName, button, isChecked) {
 
 // Kontakt hinzufügen
 function addSelectedContact(button, contactName, container) {
-  // Prüfen, ob der Kontakt schon existiert
-  const exists = Array.from(container.children).some(
-    (child) => child.dataset.contactName === contactName
-  );
-  if (exists) return;
+  // Prüfen, ob der Kontakt schon in der Liste ist
+  if (selectedContacts.includes(contactName)) return;
 
+  // Zum Array hinzufügen
+  selectedContacts.push(contactName);
+
+  // DOM-Element erstellen
   const clonedButton = button.cloneNode(true);
   clonedButton.dataset.contactName = contactName;
 
   // Event-Listener zum Entfernen
   clonedButton.onclick = () => {
     deselectContact(contactName);
-    clonedButton.remove();
     renderSelectedContacts(container);
   };
 
   container.appendChild(clonedButton);
+  renderSelectedContacts(container); // UI aktualisieren
 }
 
-//Kontakt entfernen
 function removeSelectedContact(contactName, container) {
+  // Aus der Liste entfernen
+  selectedContacts = selectedContacts.filter((name) => name !== contactName);
+
+  // Aus dem DOM entfernen
   const buttons = container.querySelectorAll("button");
   buttons.forEach((btn) => {
     if (btn.dataset.contactName === contactName) {
       btn.remove();
     }
   });
-  renderSelectedContacts(container);
+  renderSelectedContacts(container); // UI aktualisieren
 }
 
 function renderSelectedContacts(container) {
-  const buttons = Array.from(container.querySelectorAll("button"));
   const maxVisible = 3;
 
   // Alle Buttons entfernen
   container.innerHTML = "";
 
   // Sichtbare Buttons hinzufügen
-  buttons.slice(0, maxVisible).forEach((button) => {
+  selectedContacts.slice(0, maxVisible).forEach((contactName) => {
+    const button = document.createElement("button");
+    button.textContent = contactName.charAt(0).toUpperCase();
+    button.dataset.contactName = contactName;
+    button.style.marginRight = "10px";
+    button.style.backgroundColor = generateColorFromLetter(
+      contactName.charAt(0)
+    );
+
+    button.onclick = () => {
+      deselectContact(contactName);
+      renderSelectedContacts(container);
+    };
+
     container.appendChild(button);
   });
 
   // Restliche Kontakte zählen
-  const extraCount = buttons.length - maxVisible;
+  const extraCount = selectedContacts.length - maxVisible;
   if (extraCount > 0) {
     const extraButton = document.createElement("div");
     extraButton.textContent = `+${extraCount}`;
@@ -263,6 +279,22 @@ function deselectContact(contactName) {
 
   const selectedContactsContainer = document.getElementById("selectedContacts");
   renderSelectedContacts(selectedContactsContainer);
+}
+
+function getSelectedContacts() {
+  return selectedContacts; // Gibt die vollständige Liste der Namen zurück
+}
+
+function buildTaskObject() {
+  return {
+    title: document.getElementById("title").value.trim(),
+    description: document.getElementById("description").value.trim(),
+    assignedTo: getSelectedContacts(), // Vollständige Namen
+    dueDate: document.querySelector("input[type='date']").value,
+    prio: getActivePrio(),
+    category: document.getElementById("customDropdownInput").value.trim(),
+    subtasks: getSubtasks(),
+  };
 }
 
 //Farbgenerierung

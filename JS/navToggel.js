@@ -1,5 +1,5 @@
 function navToggel() {
-  var x = document.getElementById("myLinks");
+  const x = document.getElementById("myLinks");
   if (x.style.display === "flex") {
     x.style.display = "none";
   } else {
@@ -30,6 +30,23 @@ function activateLogoutButton() {
 function initializeHeader() {
   setUserInitial();
   activateLogoutButton();
+  setupOverlayClose(); // Overlay schließen, wenn außerhalb geklickt wird
+}
+
+// Funktion: Schließt das Overlay, wenn außerhalb geklickt wird
+function setupOverlayClose() {
+  const overlay = document.getElementById("myLinks");
+
+  document.addEventListener("click", (event) => {
+    // Überprüfen, ob der Klick außerhalb des Overlays und des Toggles erfolgt ist
+    if (
+      overlay.style.display === "flex" &&
+      !overlay.contains(event.target) &&
+      event.target.id !== "user-init"
+    ) {
+      overlay.style.display = "none"; // Overlay schließen
+    }
+  });
 }
 
 function navigateToBoard() {

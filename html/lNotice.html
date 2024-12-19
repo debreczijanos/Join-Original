@@ -12,22 +12,13 @@
     <link rel="stylesheet" href="../style/legalNotice.css">
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/assets.css">
-    <link rel="stylesheet" href="../style/nav.css">
-    <link rel="stylesheet" href="../style/header.css">
-
-    <script src="../JS/navToggel.js"></script>
-    <script src="../JS/includeHTML.js"></script>
-    <script src="../JS/currentDate.js"></script>
 
     <title>Legal Notice</title>
 </head>
 
 <body>
-
-    <div id="include-container"></div>
-
     <main>
-        <div class="mein-content">
+        <div class="mein-content" style="margin-left: 0px !important;">
 
             <section class="contacts-container">
                 <div id="contactId"></div>
@@ -36,7 +27,7 @@
             <section>
                 <div class="header header-legal">
                     <h1 class="responsiceH1">Legal Notice</h1>
-                    <button onclick="goToLastPage()">
+                    <button onclick="navigateToIndex()">
                         <img src="../img/arrow-left-line.png" alt="">
                     </button>
                 </div>
@@ -132,10 +123,9 @@
     </main>
 
     <script>
-        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-        includeHTML('#include-container', './nav.html');
-        // Header-Funktionalität initialisieren
-        initializeHeader();
+        function navigateToIndex() {
+            window.location.href = "../index.html";
+        }
     </script>
 
 </body>
