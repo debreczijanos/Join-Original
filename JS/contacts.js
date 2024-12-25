@@ -13,7 +13,7 @@ async function loadContacts() {
 
     renderContacts(Object.values(data));
   } catch (error) {}
-
+  
   submitContact("contact");
 }
 

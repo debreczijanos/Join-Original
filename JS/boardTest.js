@@ -115,7 +115,7 @@ function createTaskElement(task) {
 }
 
 // HTML-Inhalt einer Aufgabe
-function getTaskHTML(task) {
+function getTaskHTML(task) {     
   const assignedTo = formatAssignedTo(task.assignedTo);
   const subtasks = formatSubtasks(task.subtasks);
 
@@ -309,7 +309,7 @@ function openTaskDetails(taskId) {
 }
 
 function getTaskById(taskId) {
-  return allTasksData.find((task) => task.id === taskId);
+  return allTasksData.find((task) => task.id === taskId);  
 }
 
 function populateTaskDetailsOverlay(task) {

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../style/assets.css">
     <link rel="stylesheet" href="../style/contacts.css">
     <link rel="stylesheet" href="../style/contactsResponsive.css">
-
+ 
 
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
@@ -97,7 +97,7 @@
                             </div>
 
                             <div class="contact_input">
-                                <form class="form" id="addContactForm" onsubmit="createNewContact(event)">
+                                <form class="form" id="addContactForm" onsubmit="createNewContact(event); validateRealTimeEmailInput()">
 
                                     <input id="name" placeholder="Name" type="text" onblur="validateEditField('name')"
                                         oninput="checkFormFields2()">
@@ -109,7 +109,7 @@
                                     <div id="emailError" class="error-message"></div>
 
                                     <input type="tel" id="tel" placeholder="Phone" onblur="validateEditField('tel')"
-                                        oninput="checkFormFields2()">
+                                        oninput="checkFormFields2(); validateRealTimeTelInput()">
                                     <div id="telError" class="error-message"></div>
                                     <div class="contact_button">
                                         <button type="button" onclick="openClosePopUp('close')"

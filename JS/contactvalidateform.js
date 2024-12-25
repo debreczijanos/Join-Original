@@ -7,20 +7,19 @@
  */
 function validateInput(variable, value) {
     if (variable === "name" || variable === "editName") {
-        const namePattern = /^[A-Za-zÄÖÜäöüß]+(?: [A-Za-zÄÖÜäöüß]+)*$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
         return value.length >= 2 && namePattern.test(value);
     }
     if (variable === "email" || variable === "editEmail") {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
         return emailPattern.test(value);
     }
     if (variable === "tel" || variable === "editTel") {
-        const phonePattern = /^\+[0-9]+$/;
+        const phonePattern = /^\+[1-9][0-9]{1,14}$/;
         return phonePattern.test(value);
     }
     return false;
 }
-
 
 /**
  * Modifies an existing contact, validates form inputs.
@@ -74,18 +73,41 @@ function validateEditField(fieldID) {
     // updateeditSubmitButtonState();  
 }
 
+function validateRealTimeTelInput() {
+    let telInput = document.getElementById("tel");
+    telInput.value = telInput.value.replace(/[^0-9+]/g, ''); // Entfernt alles außer Zahlen und Plus
+    if (!telInput.value.startsWith('+')) {
+        telInput.value = '+' + telInput.value.replace(/\+/g, ''); // Stellt sicher, dass "+" nur am Anfang ist
+    }
+}
+
+function validateRealTimeEmailInput() {
+    let emailInput = document.getElementById("email");  
+    let emailValue = emailInput.value;
+    
+    // Highlight invalid parts or provide live feedback
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
+    if (!emailPattern.test(emailValue)) {
+        showErrorMessage("emailError", "Invalid email format.");
+    } else {
+        hideErrorMessage("emailError");
+    }
+}
+
+
 /**
  * This function check wich Error massage to use.
  * 
  * @param {string} fieldID - The ID from the input field.
  * @returns 
  */
-function checkErrorText(fieldID){
-    if (fieldID == "editName" || fieldID === "name"){
-        return "Please enter a valid name."
+function checkErrorText(fieldID) {
+    if (fieldID == "editName" || fieldID === "name") {
+        return "Please enter a valid name.";
     } else if (fieldID == "editEmail" || fieldID === "email") {
-        return "Please select a valid e-mail address (beispiel@domain.com)."
+        return "Please enter a valid email address (e.g., example@domain.de, user@domain.co.uk).";
     } else if (fieldID == "editTel" || fieldID === "tel") {
-        return "Please enter a valid telephone number (starting with +)."
+        return "Please enter a valid telephone number (starting with +).";
     }
 }
+

@@ -204,6 +204,10 @@ function pushCreateNewContact(name, email, tel, isValid) {
     submitContact("contact");
     openClosePopUp("close");
   }
+
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("tel").value = "";
 }
 
 /**
