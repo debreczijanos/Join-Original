@@ -7,7 +7,7 @@
  */
 function validateInput(variable, value) {
     if (variable === "name" || variable === "editName") {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
+        const namePattern = /^[^\s@]+@[^\s@]+\.[a-z]{2,3}(\.[a-z]{2})?$/;
         return value.length >= 2 && namePattern.test(value);
     }
     if (variable === "email" || variable === "editEmail") {
@@ -110,4 +110,7 @@ function checkErrorText(fieldID) {
         return "Please enter a valid telephone number (starting with +).";
     }
 }
+
+
+
 
