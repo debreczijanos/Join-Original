@@ -9,8 +9,6 @@ function openTaskField() {
     const element = document.getElementById("show-hide-class");
     if (element) {
       element.classList.remove("d-none");
-    } else {
-      console.error("Element with ID 'show-hide-class' not found.");
     }
   }
 }
@@ -18,7 +16,7 @@ function openTaskField() {
 function closeTaskWindow() {
   const taskWindow = document.getElementById("show-hide-class");
   taskWindow.classList.add("d-none");
-  clearFormFields(); // Felder leeren (auch bei Schließen)
+  clearFormFields();
 }
 
 // Globale Variable für alle Aufgaben
@@ -34,7 +32,7 @@ async function loadTasks() {
     prepareTasksData(tasks);
     renderKanbanBoard();
   } catch (error) {
-    console.error("Fehler beim Laden der Aufgaben:", error);
+    handleError("Fehler beim Laden der Aufgaben");
   }
 }
 
@@ -43,7 +41,19 @@ function prepareTasksData(tasks) {
   allTasksData = Object.entries(tasks).map(([id, task]) => ({
     id,
     ...task,
+    subtasks: transformSubtasks(task.subtasks || {}),
   }));
+}
+
+function transformSubtasks(subtasks) {
+  return Object.entries(subtasks).map(([key, value]) => {
+    if (typeof value === "string") {
+      return { name: value, completed: false };
+    } else if (typeof value === "object") {
+      return value;
+    }
+    return { name: "Unbekannt", completed: false }; // Fallback
+  });
 }
 
 // Kanban-Board rendern
@@ -62,7 +72,6 @@ function getTaskContainers() {
     done: document.querySelectorAll(".tasks")[3],
   };
 }
-
 // Leere alle Container
 function clearTaskContainers(containers) {
   Object.values(containers).forEach((container) => (container.innerHTML = ""));
@@ -91,44 +100,7 @@ function appendTaskToContainer(taskElement, containers, status) {
     case "Done":
       containers.done.appendChild(taskElement);
       break;
-    default:
-      console.warn("Unbekannter Status:", status);
-      containers.toDo.appendChild(taskElement);
   }
-}
-
-// HTML für eine Aufgabe erstellen
-function createTaskElement(task) {
-  const taskElement = document.createElement("div");
-
-  taskElement.classList.add("task");
-  taskElement.setAttribute("draggable", "true");
-  taskElement.setAttribute("data-id", task.id);
-
-  // Hinzufügen des ondragstart-Attributes mit Template-Literal
-  taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
-
-  // Setzen des HTML-Inhalts
-  taskElement.innerHTML = getTaskHTML(task);
-
-  return taskElement;
-}
-
-// HTML-Inhalt einer Aufgabe
-function getTaskHTML(task) {     
-  const assignedTo = formatAssignedTo(task.assignedTo);
-  const subtasks = formatSubtasks(task.subtasks);
-
-  return `
-    <h4>${task.title || "Kein Titel"}</h4>
-    <p class="description">${task.description || "Keine Beschreibung"}</p>
-    <p><strong>Fällig:</strong> ${task.dueDate || "Kein Datum"}</p>
-    <p><strong>Kategorie:</strong> ${task.category || "Keine Kategorie"}</p>
-    <p><strong>Priorität:</strong> ${task.prio || "Keine Priorität"}</p>
-    <p><strong>Zugeteilt an:</strong> ${assignedTo}</p>
-    <p><strong>Subtasks:</strong></p>
-    <ul>${subtasks}</ul>
-  `;
 }
 
 // Teilnehmer formatieren
@@ -147,17 +119,16 @@ function formatAssignedTo(assignedTo) {
 function formatSubtasks(subtasks) {
   return (
     subtasks
-      ?.map((subtask, index) => `<li>${index + 1}. ${subtask}</li>`)
+      ?.map((subtask, index) => `<li>${index + 1}. ${subtask.name}</li>`)
       .join("") || "<li>Keine Subtasks</li>"
   );
 }
-
-// Funktion für den Drag-Start (Beispielimplementierung)
+// Funktion für den Drag-Start
 function dragStart(event, taskId) {
   event.dataTransfer.setData("text/plain", taskId);
-  console.log(`Drag gestartet für Task ID: ${taskId}`);
 }
 
+// Funktion zum Sammeln von Task-Daten aus dem Formular
 function collectTaskData() {
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
@@ -170,7 +141,10 @@ function collectTaskData() {
 
   const subtasks = Array.from(
     document.querySelectorAll("#subtask-list li .subtask-text")
-  ).map((item) => item.textContent);
+  ).map((item) => ({
+    name: item.textContent,
+    completed: false, // Subtasks sind standardmäßig nicht abgeschlossen
+  }));
 
   return {
     title,
@@ -183,6 +157,7 @@ function collectTaskData() {
   };
 }
 
+// Subtask hinzufügen
 function addSubtask() {
   const input = document.getElementById("subtask-input");
   const subtaskList = document.getElementById("subtask-list");
@@ -191,32 +166,33 @@ function addSubtask() {
     const li = document.createElement("li");
 
     li.innerHTML = `
-            <span class="subtask-text">${input.value}</span>
-            <button class="edit-subtask" onclick="editSubtask(this)">Edit</button>
-            <button class="delete-subtask" onclick="deleteSubtask(this)">Delete</button>
-        `;
+      <span class="subtask-text">${input.value}</span>
+      <button class="edit-subtask" onclick="editSubtask(this)">Edit</button>
+      <button class="delete-subtask" onclick="deleteSubtask(this)">Delete</button>
+    `;
 
     subtaskList.appendChild(li);
     input.value = ""; // Leeren des Input-Felds nach Hinzufügen
   }
 }
 
+// Subtask bearbeiten
 function editSubtask(button) {
   const subtaskText = button.parentElement.querySelector(".subtask-text");
   const newText = prompt("Edit your subtask:", subtaskText.textContent);
 
-  if (newText !== null && newText.trim() !== "") {
+  if (newText?.trim()) {
     subtaskText.textContent = newText.trim();
   }
 }
 
+// Subtask löschen
 function deleteSubtask(button) {
   const li = button.parentElement;
   li.remove();
 }
 
-// Diese FUnktion entleert die Felder nach dem Abesnde
-
+// Formularfelder leeren
 function clearFormFields() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
@@ -234,7 +210,6 @@ let draggedTaskId = null;
 
 function dragStart(event, taskId) {
   draggedTaskId = taskId;
-  console.log("Task wird gezogen:", taskId);
 }
 
 function allowDrop(event) {
@@ -283,7 +258,6 @@ function sendStatusUpdate(taskId, newStatus) {
 function handleUpdateResponse(response, newStatus) {
   if (!response.ok)
     throw new Error(`Fehler beim Aktualisieren des Status: ${response.status}`);
-  console.log("Status erfolgreich aktualisiert:", newStatus);
 }
 
 // Fehlerbehandlung
@@ -301,15 +275,15 @@ function openTaskDetails(taskId) {
     return;
   }
 
+  // Task-Daten ins Overlay laden
   populateTaskDetailsOverlay(task);
   populateAssignedTo(task.assignedTo);
-  populateSubtasks(task.subtasks);
+  populateSubtasks(task.subtasks || []); // Hier sicherstellen, dass subtasks existieren
 
-  showTaskDetailsOverlay();
+  showTaskDetailsOverlay(); // Overlay anzeigen
 }
-
 function getTaskById(taskId) {
-  return allTasksData.find((task) => task.id === taskId);  
+  return allTasksData.find((task) => task.id === taskId);
 }
 
 function populateTaskDetailsOverlay(task) {
@@ -338,21 +312,92 @@ function populateAssignedTo(assignedTo) {
 
 function populateSubtasks(subtasks) {
   const container = document.getElementById("overlay-subtasks");
-  container.innerHTML = "";
+  container.innerHTML = ""; // Alte Inhalte löschen
 
-  (subtasks || []).forEach((subtask, index) => {
+  subtasks.forEach((subtask, index) => {
     const li = document.createElement("li");
-    li.innerText = `${index + 1}. ${subtask}`;
+    li.innerHTML = `
+      <label>
+        <input type="checkbox" ${
+          subtask.completed ? "checked" : ""
+        } onchange="toggleSubtaskCompletion(${index})">
+        ${subtask.name}
+      </label>
+    `;
     container.appendChild(li);
   });
+
+  // Fortschrittsanzeige aktualisieren
+  updateOverlayProgressBar(subtasks);
+}
+
+function toggleSubtaskCompletion(index) {
+  const task = getTaskById(draggedTaskId);
+  if (!task || !task.subtasks || index >= task.subtasks.length) {
+    console.error(`Subtask mit Index ${index} nicht gefunden.`);
+    return;
+  }
+
+  // Status des Subtasks umschalten
+  task.subtasks[index].completed = !task.subtasks[index].completed;
+
+  // Fortschrittsanzeige aktualisieren
+  updateTaskProgress(draggedTaskId);
+
+  // Änderungen im Backend speichern
+  saveSubtaskStatusToBackend(draggedTaskId, task.subtasks);
+}
+
+function saveSubtaskStatusToBackend(taskId, subtasks) {
+  const updateUrl = `${API_URL}/${taskId}.json`;
+
+  fetch(updateUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ subtasks }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Fehler beim Speichern der Subtasks.`);
+      }
+    })
+    .catch((error) =>
+      console.error("Fehler beim Speichern der Subtasks:", error)
+    );
+}
+
+function updateOverlayProgressBar(subtasks) {
+  const totalSubtasks = subtasks.length;
+  const completedSubtasks = subtasks.filter(
+    (subtask) => subtask.completed
+  ).length;
+  const progressPercentage =
+    totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+
+  // Progress-Bar im Overlay aktualisieren
+  const progressBar = document.getElementById("overlay-progress");
+  const progressText = document.getElementById("overlay-progress-text");
+
+  if (progressBar && progressText) {
+    progressBar.value = progressPercentage;
+    progressText.innerText = `${completedSubtasks} von ${totalSubtasks} Subtasks erledigt (${progressPercentage.toFixed(
+      0
+    )}%)`;
+  }
 }
 
 function showTaskDetailsOverlay() {
-  document.getElementById("task-details-overlay").classList.remove("d-none");
+  const overlay = document.getElementById("task-details-overlay");
+  if (overlay) {
+    overlay.classList.remove("d-none");
+  }
 }
 
 function closeTaskDetails() {
-  document.getElementById("task-details-overlay").classList.add("d-none");
+  const overlay = document.getElementById("task-details-overlay");
+  if (overlay) {
+    overlay.classList.add("d-none");
+  }
 }
 
 function createTaskElement(task) {
@@ -362,23 +407,81 @@ function createTaskElement(task) {
   taskElement.setAttribute("data-id", task.id);
   taskElement.setAttribute("ondragstart", `dragStart(event, '${task.id}')`);
   taskElement.onclick = () => openTaskDetails(task.id);
+
   taskElement.innerHTML = getTaskHTML(task);
   return taskElement;
 }
 
 function getTaskHTML(task) {
   const assignedTo = formatAssignedTo(task.assignedTo);
-  const subtasks = formatSubtasks(task.subtasks);
+
+  // Fortschritt basierend auf Subtasks berechnen
+  const totalSubtasks = task.subtasks?.length || 0;
+  const completedSubtasks =
+    task.subtasks?.filter((subtask) => subtask.completed).length || 0;
+  const progressPercentage =
+    totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+
   return `
-        <h4>${task.title || "Kein Titel"}</h4>
-        <p>${task.description || "Keine Beschreibung"}</p>
-        <p><strong>Fällig:</strong> ${task.dueDate || "Kein Datum"}</p>
-        <p><strong>Kategorie:</strong> ${task.category || "Keine Kategorie"}</p>
-        <p><strong>Priorität:</strong> ${task.prio || "Keine Priorität"}</p>
-        <p><strong>Zugeteilt an:</strong> ${assignedTo}</p>
-        <p><strong>Subtasks:</strong></p>
-        <ul>${subtasks}</ul>
-    `;
+    <!-- Kategorie oben -->
+    <h3>${task.category || "Keine Kategorie"}</h3>
+
+    <!-- Titel -->
+    <h4>${task.title || "Kein Titel"}</h4>
+
+    <!-- Beschreibung -->
+    <p>${task.description || "Keine Beschreibung"}</p>
+
+    <!-- Fortschrittsanzeige -->
+    <div class="progress-container">
+      <progress id="overlay-progress" value="${progressPercentage}" max="100"></progress>
+      <p>${progressPercentage.toFixed(0)}% der Subtasks abgeschlossen</p>
+    </div>
+
+    <!-- Zuweisung -->
+    <p><strong>Zugeteilt an:</strong> ${assignedTo}</p>
+  `;
+}
+
+function formatSubtasksWithCheckboxes(subtasks) {
+  return (
+    subtasks
+      ?.map(
+        (subtask, index) => `
+          <li>
+            <label>
+              <input type="checkbox" ${subtask.completed ? "checked" : ""}>
+              ${subtask}
+            </label>
+          </li>`
+      )
+      .join("") || "<li>Keine Subtasks</li>"
+  );
+}
+
+function updateTaskProgress(taskId) {
+  const task = getTaskById(taskId);
+  if (!task) {
+    console.error("Task nicht gefunden:", taskId);
+    return;
+  }
+
+  const totalSubtasks = task.subtasks?.length || 0;
+  const completedSubtasks =
+    task.subtasks?.filter((subtask) => subtask.completed).length || 0;
+  const progressPercentage =
+    totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
+
+  // Progress-Bar im Kanban-Board aktualisieren
+  const taskElement = document.querySelector(`.task[data-id="${taskId}"]`);
+  if (taskElement) {
+    taskElement.querySelector("progress").value = progressPercentage;
+    taskElement.querySelector(
+      ".progress-container p"
+    ).innerText = `${progressPercentage.toFixed(
+      0
+    )}% der Subtasks abgeschlossen`;
+  }
 }
 
 function deleteTask() {
@@ -399,7 +502,6 @@ function deleteTaskFromBackend(url) {
 
 function handleDeleteResponse(response) {
   if (!response.ok) throw new Error("Fehler beim Löschen der Aufgabe");
-  console.log("Aufgabe gelöscht:", draggedTaskId);
   removeTaskFromFrontend();
 }
 
@@ -420,8 +522,6 @@ function editTask() {
     logError(`Task nicht gefunden: ${draggedTaskId}`);
     return;
   }
-
-  console.log("Task zum Bearbeiten:", task);
   populateEditForm(task);
   showEditTaskOverlay();
 }
@@ -505,7 +605,7 @@ function handleBackendResponse(response, taskId, updatedTask) {
     logError(`Fehler beim Aktualisieren der Aufgabe: ${response.status}`);
     return;
   }
-  console.log("Aufgabe erfolgreich aktualisiert:", taskId);
+
   updateFrontendTask(taskId, updatedTask);
   renderKanbanBoard();
   closeEditTask();
@@ -515,7 +615,6 @@ function updateFrontendTask(taskId, updatedTask) {
   const taskIndex = allTasksData.findIndex((task) => task.id === taskId);
   if (taskIndex !== -1) {
     allTasksData[taskIndex] = { ...allTasksData[taskIndex], ...updatedTask };
-    console.log("Frontend-Daten aktualisiert:", allTasksData[taskIndex]);
   } else {
     logError(`Task im Frontend nicht gefunden: ${taskId}`);
   }
