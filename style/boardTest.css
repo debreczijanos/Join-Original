@@ -812,6 +812,12 @@ input[type="text"]::placeholder {
   height: 45px; 
 }
 
+.fetched-contacts {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+}
+
 @media (max-width: 1250px) {
   .title-board {
     margin-left: 34px;

@@ -73,7 +73,7 @@ window.onclick = function(event) {
 * @param {HTMLElement} PopUpBgElement - The background element for the modal.
 * @param {HTMLElement} show - The content element to display.
 * @param {HTMLElement} header - The header element to animate.
-*/
+*/w
 function showModal(PopUpBgElement, show, header) {
   PopUpBgElement.classList.remove("displayNone", "hide");
   PopUpBgElement.classList.add("show");

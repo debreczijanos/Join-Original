@@ -2,6 +2,8 @@
 const API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks";
 
+const API_CONTACTS = "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json"; 
+
 function openTaskField() {
   if (window.innerWidth < 900) {
     window.location.href = "../html/addTask.html";
@@ -711,6 +713,30 @@ async function createTask() {
     console.error("Fehler beim Erstellen der Aufgabe:", error);
   }
 }
+
+async function loadContacts() {
+  const selectElement = document.getElementById('assigned');
+
+  try {
+      const response = await fetch(API_CONTACTS);
+      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+
+      const contacts = await response.json();
+
+      selectElement.innerHTML = '<option value="" disabled selected>Select a contact</option>';
+
+      Object.values(contacts).forEach(contact => {
+          selectElement.innerHTML += `<option value="${contact.id}">${contact.name}</option>`;
+      });
+  } catch (error) {
+      console.error('Error loading contacts:', error);
+      selectElement.innerHTML = '<option value="" disabled>Error loading contacts</option>';
+  }
+}
+
+window.onload = loadContacts;
+
+
 
 
 
