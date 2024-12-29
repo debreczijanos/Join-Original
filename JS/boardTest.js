@@ -2,7 +2,8 @@
 const API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks";
 
-const API_CONTACTS = "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json"; 
+const API_CONTACTS =
+  "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 function openTaskField() {
   if (window.innerWidth < 900) {
@@ -63,6 +64,9 @@ function renderKanbanBoard() {
   const containers = getTaskContainers();
   clearTaskContainers(containers);
   distributeTasks(containers);
+
+  // Überprüfe leere Spalten und zeige die Nachricht
+  checkEmptyColumns();
 }
 
 // Hol die Container für die Kanban-Spalten
@@ -107,14 +111,36 @@ function appendTaskToContainer(taskElement, containers, status) {
 
 // Teilnehmer formatieren
 function formatAssignedTo(assignedTo) {
-  return (
-    assignedTo
-      ?.map(
-        (person) =>
-          `<span class="participant">${person[0].toUpperCase()}</span>`
-      )
-      .join(", ") || "Nicht zugewiesen"
-  );
+  if (!assignedTo || assignedTo.length === 0) {
+    return "Nicht zugewiesen";
+  }
+
+  // Nur die ersten zwei Namen für die Anzeige
+  const visibleParticipants = assignedTo.slice(0, 2);
+  const remainingCount = assignedTo.length - visibleParticipants.length;
+
+  const formattedParticipants = visibleParticipants.map((person) => {
+    const initials = person
+      .split(" ")
+      .map((namePart) => namePart[0].toUpperCase())
+      .join("");
+
+    const randomColor = getRandomColor(); // Dynamische Hintergrundfarbe
+    return `
+      <span class="participant" style="background-color: ${randomColor};">
+        ${initials}
+      </span>
+    `;
+  });
+
+  if (remainingCount > 0) {
+    // "+x" für weitere Personen
+    formattedParticipants.push(
+      `<span class="participant extra-count">+${remainingCount}</span>`
+    );
+  }
+
+  return formattedParticipants.join(" ");
 }
 
 // Subtasks formatieren
@@ -212,30 +238,86 @@ let draggedTaskId = null;
 
 function dragStart(event, taskId) {
   draggedTaskId = taskId;
+  event.dataTransfer.effectAllowed = "move";
 }
 
 function allowDrop(event) {
   event.preventDefault();
+
+  // Finde die nächste gültige Zielspalte
+  const target = event.target.closest(".kanban-column");
+
+  // Alle Spalten zurücksetzen, um visuelle Verwirrung zu vermeiden
+  document.querySelectorAll(".kanban-column").forEach((column) => {
+    column.style.backgroundColor = ""; // Zurücksetzen der Hintergrundfarbe
+  });
+
+  // Wenn eine gültige Spalte gefunden wurde, ändere die Hintergrundfarbe
+  if (target) {
+    target.style.backgroundColor = "#E7E7E7"; // Hintergrund abdunkeln
+  }
 }
 
 function drop(event, newStatus) {
   event.preventDefault();
-  moveTaskToNewContainer(event, newStatus);
-  updateTaskStatus(draggedTaskId, newStatus);
+
+  // Finde die Zielspalte basierend auf `data-status`
+  const targetColumn = event.target.closest(".kanban-column");
+  if (!targetColumn) {
+    console.error("Ungültiges Drop-Ziel: Kanban-Column nicht gefunden");
+    return;
+  }
+
+  // Entferne die Hintergrundfarbe von allen Spalten
+  document.querySelectorAll(".kanban-column").forEach((column) => {
+    column.style.backgroundColor = ""; // Hintergrundfarbe zurücksetzen
+  });
+
+  const targetStatus = targetColumn.getAttribute("data-status");
+  if (targetStatus !== newStatus.toLowerCase().replace(/\s+/g, "-")) {
+    console.error(
+      `Ungültiges Drop-Ziel oder Status stimmt nicht überein: erwartet "${newStatus}", gefunden "${targetStatus}"`
+    );
+    return;
+  }
+
+  // Verschiebe das Task-Element in die Zielspalte
+  const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
+  if (taskElement) {
+    targetColumn.querySelector(".tasks").appendChild(taskElement);
+    updateTaskStatus(draggedTaskId, newStatus);
+  } else {
+    console.error("Task-Element nicht gefunden:", draggedTaskId);
+  }
+
   draggedTaskId = null;
+  checkEmptyColumns();
 }
 
 // Aufgabe visuell verschieben
-function moveTaskToNewContainer(event, newStatus) {
+function moveTaskToNewContainer(targetColumn, newStatus) {
   const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
-  if (taskElement) event.target.appendChild(taskElement);
+  if (taskElement) {
+    const tasksContainer = targetColumn.querySelector(".tasks");
+    if (tasksContainer) {
+      tasksContainer.appendChild(taskElement); // Aufgabe in die neue Spalte verschieben
+    } else {
+      console.error("Tasks-Container nicht gefunden im Ziel-Column");
+    }
+  } else {
+    console.error("Task-Element nicht gefunden für ID:", draggedTaskId);
+  }
 }
 
 // Status im Backend aktualisieren
 function updateTaskStatus(taskId, newStatus) {
   const task = findTaskById(taskId);
-  if (task) sendStatusUpdate(taskId, newStatus);
-  else console.error("Task mit der ID nicht gefunden:", taskId);
+  if (task) {
+    task.status = newStatus;
+    sendStatusUpdate(taskId, newStatus);
+  } else {
+    console.error("Task mit der ID nicht gefunden:", taskId);
+  }
 }
 
 // Aufgabe anhand der ID suchen
@@ -252,8 +334,60 @@ function sendStatusUpdate(taskId, newStatus) {
     headers: { "Content-Type": "application/json" },
     body,
   })
-    .then((response) => handleUpdateResponse(response, newStatus))
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Fehler beim Aktualisieren des Status: ${response.status}`
+        );
+      }
+    })
     .catch((error) => console.error("Backend-Update fehlgeschlagen:", error));
+}
+
+// Aufgabe anhand der ID suchen
+function findTaskById(taskId) {
+  return allTasksData.find((task) => task.id === taskId);
+}
+
+// Status-Update an das Backend senden
+function sendStatusUpdate(taskId, newStatus) {
+  const updateUrl = `${API_URL}/${taskId}.json`;
+  const body = JSON.stringify({ status: newStatus });
+
+  fetch(updateUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          `Fehler beim Aktualisieren des Status: ${response.status}`
+        );
+      }
+    })
+    .catch((error) => console.error("Backend-Update fehlgeschlagen:", error));
+}
+
+function checkEmptyColumns() {
+  const columns = document.querySelectorAll(".kanban-column");
+
+  columns.forEach((column) => {
+    const tasksContainer = column.querySelector(".tasks");
+    const status = column.getAttribute("data-status");
+
+    // Entferne vorhandene "No tasks"-Meldungen
+    const existingMessage = column.querySelector(".no-tasks-message");
+    if (existingMessage) existingMessage.remove();
+
+    // Wenn die Spalte leer ist, füge die Nachricht ein
+    if (tasksContainer && tasksContainer.children.length === 0) {
+      const noTasksMessage = document.createElement("div");
+      noTasksMessage.classList.add("no-tasks-message");
+      noTasksMessage.textContent = `No tasks ${status.replace("-", " ")}`;
+      tasksContainer.appendChild(noTasksMessage);
+    }
+  });
 }
 
 // Backend-Update-Response prüfen
@@ -305,11 +439,47 @@ function populateAssignedTo(assignedTo) {
   container.innerHTML = "";
 
   (assignedTo || []).forEach((person) => {
+    // Initialen extrahieren
+    const initials = person
+      .split(" ")
+      .map((word) => word[0]?.toUpperCase())
+      .join("");
+
+    // Zufällige Hintergrundfarbe generieren
+    const backgroundColor = getRandomColor();
+
+    // Teilnehmer-Container erstellen
+    const participantContainer = document.createElement("div");
+    participantContainer.classList.add("participant-container");
+
+    // Initialen in ein <p>-Element einfügen
+    const initialsElement = document.createElement("p");
+    initialsElement.classList.add("participant-initials");
+    initialsElement.innerText = initials;
+    initialsElement.style.backgroundColor = backgroundColor;
+
+    // Name in ein <span>-Element einfügen
     const participant = document.createElement("span");
     participant.classList.add("participant");
     participant.innerText = person;
-    container.appendChild(participant);
+
+    // <p> und <span> zum Container hinzufügen
+    participantContainer.appendChild(initialsElement);
+    participantContainer.appendChild(participant);
+
+    // Den Container in das Haupt-Container einfügen
+    container.appendChild(participantContainer);
   });
+}
+
+// Funktion zur Generierung einer zufälligen Farbe
+function getRandomColor() {
+  const letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
 
 function populateSubtasks(subtasks) {
@@ -424,9 +594,19 @@ function getTaskHTML(task) {
   const progressPercentage =
     totalSubtasks > 0 ? (completedSubtasks / totalSubtasks) * 100 : 0;
 
+  // Hintergrundfarbe basierend auf Kategorie
+  const categoryStyle =
+    task.category === "User Story"
+      ? "background-color: #0038FF; color: #FFF;" // Gelb mit schwarzem Text
+      : task.category === "Technical Task"
+      ? "background-color: #4CAF50; color: #FFF;" // Grün mit weißem Text
+      : "";
+
   return `
     <!-- Kategorie oben -->
-    <h3>${task.category || "Keine Kategorie"}</h3>
+    <h3 class= "task-category" style="${categoryStyle}"> ${
+    task.category || "Keine Kategorie"
+  }</h3>
 
     <!-- Titel -->
     <h4>${task.title || "Kein Titel"}</h4>
@@ -441,7 +621,7 @@ function getTaskHTML(task) {
     </div>
 
     <!-- Zuweisung -->
-    <p><strong>Zugeteilt an:</strong> ${assignedTo}</p>
+    <p class="initialien"><strong>Zugeteilt an:</strong> ${assignedTo}</p>
   `;
 }
 
@@ -715,28 +895,25 @@ async function createTask() {
 }
 
 async function loadContacts() {
-  const selectElement = document.getElementById('assigned');
+  const selectElement = document.getElementById("assigned");
 
   try {
-      const response = await fetch(API_CONTACTS);
-      if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const response = await fetch(API_CONTACTS);
+    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
 
-      const contacts = await response.json();
+    const contacts = await response.json();
 
-      selectElement.innerHTML = '<option value="" disabled selected>Select a contact</option>';
+    selectElement.innerHTML =
+      '<option value="" disabled selected>Select a contact</option>';
 
-      Object.values(contacts).forEach(contact => {
-          selectElement.innerHTML += `<option value="${contact.id}">${contact.name}</option>`;
-      });
+    Object.values(contacts).forEach((contact) => {
+      selectElement.innerHTML += `<option value="${contact.id}">${contact.name}</option>`;
+    });
   } catch (error) {
-      console.error('Error loading contacts:', error);
-      selectElement.innerHTML = '<option value="" disabled>Error loading contacts</option>';
+    console.error("Error loading contacts:", error);
+    selectElement.innerHTML =
+      '<option value="" disabled>Error loading contacts</option>';
   }
 }
 
 window.onload = loadContacts;
-
-
-
-
-

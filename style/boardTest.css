@@ -740,7 +740,44 @@ input[type="text"]::placeholder {
   justify-content: flex-end;
 }
 
-#overlay-assigned-to > span {
+.initialien {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 2px;
+}
+
+.task-category {
+  padding: 4px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 23px;
+  line-height: 27.6px;
+  font-weight: 400;
+}
+
+.participant-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+p > .participant,
+p > .extra-count {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  background-color: #bbb;
+}
+
+#overlay-assigned-to > .participant-container > p {
   width: 42px;
   height: 42px;
   border-radius: 100%;
@@ -752,6 +789,16 @@ input[type="text"]::placeholder {
   font-weight: 700;
   font-size: 18px;
   background-color: #5cb85c;
+}
+
+#overlay-assigned-to > .participant-container > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 /*---------------------------------------------------------------*/
@@ -797,7 +844,13 @@ input[type="text"]::placeholder {
   color: rgb(103, 103, 103);
 }
 
-.responsive-button{
+label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.responsive-button {
   display: none;
   justify-content: center;
   align-items: center;
@@ -809,7 +862,7 @@ input[type="text"]::placeholder {
   cursor: pointer;
   white-space: nowrap;
   width: 45px;
-  height: 45px; 
+  height: 45px;
 }
 
 .fetched-contacts {
@@ -818,7 +871,24 @@ input[type="text"]::placeholder {
   font-size: 1rem;
 }
 
+.kanban-column {
+  height: 100vh;
+}
+
+.no-tasks-message {
+  color: #6c757d;
+  text-align: center;
+  padding: 10px;
+  border: 1px dashed #cccccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+}
+
 @media (max-width: 1250px) {
+  .kanban-column {
+    height: auto;
+  }
+
   .title-board {
     margin-left: 34px;
   }
@@ -884,21 +954,19 @@ input[type="text"]::placeholder {
   }
 }
 
-@media(max-width: 500px){
-    .responsive-button{
-      display: flex;
-    }
+@media (max-width: 500px) {
+  .responsive-button {
+    display: flex;
+  }
 
-    .task-choice-nav-button{
-      display: none;
-    }
+  .task-choice-nav-button {
+    display: none;
+  }
 
-    .title-board{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-right: 34px;
-    }
+  .title-board {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 34px;
+  }
 }
-
-

@@ -28,7 +28,7 @@
 
     <style>
         .d-none {
-            display: none;  
+            display: none;
         }
     </style>
 </head>
@@ -63,17 +63,16 @@
             </div>
 
             <section id="kanban-board" class="kanban-board">
-                <div class="test">
-                    <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'To Do')">
+
+                <div class="kanban-column" data-status="to-do" ondragover="allowDrop(event)"
+                    ondrop="drop(event, 'To Do')">
 
 
-                        <div class="data-plus">To do
-                            <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
-                        </div>
-
-                        <div class="tasks"></div>
+                    <div class="data-plus">To do
+                        <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
                     </div>
 
+                    <div class="tasks"></div>
                 </div>
 
 
@@ -81,7 +80,10 @@
 
 
 
-                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'In Progress')">
+
+
+                <div class="kanban-column" data-status="in-progress" ondragover="allowDrop(event)"
+                    ondrop="drop(event, 'In Progress')">
 
                     <div class="data-plus">In Progress
                         <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
@@ -89,7 +91,8 @@
 
                     <div class="tasks"></div>
                 </div>
-                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Await Feedback')">
+                <div class="kanban-column" data-status="await-feedback" ondragover="allowDrop(event)"
+                    ondrop="drop(event, 'Await Feedback')">
 
                     <div class="data-plus">Await Feedback
                         <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
@@ -97,7 +100,8 @@
 
                     <div class="tasks"></div>
                 </div>
-                <div class="kanban-column" ondragover="allowDrop(event)" ondrop="drop(event, 'Done')">
+                <div class="kanban-column" data-status="done" ondragover="allowDrop(event)"
+                    ondrop="drop(event, 'Done')">
 
                     <div class="data-plus">Done
                         <img onclick="openTaskField()" src="../img/plus-button.svg" alt="plus_button">
@@ -151,10 +155,11 @@
 
                         <label for="edit-priority">Priorität</label>
                         <select id="edit-priority">
-                            <option value="Urgent">Dringend</option>
-                            <option value="Medium">Mittel</option>
-                            <option value="Low">Niedrig</option>
+                            <option value="Urgent">Urgent</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
                         </select>
+
                         <div class="save-btn">
                             <button type="button" onclick="saveEditedTask()">Speichern</button>
                         </div>
@@ -182,10 +187,10 @@
                             <textarea id="description" class="description" placeholder="Enter a description"
                                 style="resize: none;"></textarea>
 
-                                <!--experimen change-->
+                            <!--experimen change-->
 
                             <label for="assigned">Assigned to</label>
-                            <select id="assigned" class="fetched-contacts " >
+                            <select id="assigned" class="fetched-contacts ">
                                 <option style="width: 100%;" value="" disabled selected>Loading contacts...</option>
                             </select>
                         </form>
