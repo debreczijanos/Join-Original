@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="../style/boardTest.css">
     <link rel="stylesheet" href="../style/addTask.css">
 
-    <!-- <link rel="stylesheet" href="../style/board.css"> -->
-
     <script src="../JS/includeHTML.js"></script>
-    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/navToggel.js"></script>
 
-    <!-- <script src="../JS/currentDate.js"></script> -->
     <script src="../JS/boardTest.js" defer></script>
     <script src="../JS/overlayLoader.js" defer></script>
+    <script src="../JS/boardSearch.js" defer></script>
+    <script src="../JS/boardOverlayEdit.js" defer></script>
+    <script src="../JS/boardDragAndDrop.js" defer></script>
+    <script src="../JS/boardAddTask.js" defer></script>
 
     <title>Join Board</title>
 
@@ -47,7 +48,7 @@
                     <button onclick="openTaskField()" class="responsive-button">+</button>
                 </div>
                 <div class="task-choice-nav">
-                    <input type="text" placeholder="Find Task" id="task-search">
+                    <input type="text" placeholder="Find Task" id="task-search" oninput="filterTasks()">
                     <button onclick="openTaskField()" class="task-choice-nav-button">Add task</button>
                 </div>
             </section>
