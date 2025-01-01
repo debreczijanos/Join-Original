@@ -2,6 +2,9 @@
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
+const API_CONTACTS =
+  "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
+
 let selectedContacts = []; // Speichert die vollständigen Namen
 
 // Dropdown umschalten
@@ -131,23 +134,57 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Kontakte laden
+// Kontakte laden
+// Kontakte laden und ins Dropdown einfügen
 async function loadContacts(apiURL, dropdownId) {
   try {
-    const response = await fetch(apiURL);
-    const data = await response.json();
+    const dropdownMenu = getDropdownMenu(dropdownId);
+    const uniqueContacts = new Set();
 
-    const dropdownMenu = document.getElementById(dropdownId);
-    if (dropdownMenu) {
-      dropdownMenu.innerHTML = "";
-
-      Object.values(data).forEach((contact) => {
-        const contactElement = createContactElement(contact);
-        dropdownMenu.appendChild(contactElement);
-      });
-    }
+    const allContacts = await fetchAllContacts(apiURL);
+    addContactsToDropdown(allContacts, uniqueContacts, dropdownMenu);
   } catch (error) {
     console.error("Fehler beim Laden der Kontakte:", error);
   }
+}
+
+// Dropdown-Element abrufen
+function getDropdownMenu(dropdownId) {
+  const dropdownMenu = document.getElementById(dropdownId);
+  if (!dropdownMenu) {
+    throw new Error("Dropdown-Menü nicht gefunden!");
+  }
+  dropdownMenu.innerHTML = ""; // Vorherigen Inhalt löschen
+  return dropdownMenu;
+}
+
+// Alle Kontakte aus beiden APIs abrufen
+async function fetchAllContacts(apiURL) {
+  const contactsFromMainAPI = await fetchContactsFromAPI(apiURL);
+  const contactsFromSecondaryAPI = await fetchContactsFromAPI(API_CONTACTS);
+  return [...contactsFromMainAPI, ...contactsFromSecondaryAPI];
+}
+
+// Kontakte aus einer API abrufen
+async function fetchContactsFromAPI(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.error(`Fehler beim Abrufen der Daten von ${url}`);
+    return [];
+  }
+  const data = await response.json();
+  return Object.values(data);
+}
+
+// Kontakte ins Dropdown einfügen
+function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
+  contacts.forEach((contact) => {
+    if (!uniqueContacts.has(contact.name)) {
+      uniqueContacts.add(contact.name);
+      const contactElement = createContactElement(contact);
+      dropdownMenu.appendChild(contactElement);
+    }
+  });
 }
 
 //Kontakt-Element erstellen
