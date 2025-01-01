@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../style/assets.css">
     <link rel="stylesheet" href="../style/contacts.css">
     <link rel="stylesheet" href="../style/contactsResponsive.css">
- 
+
 
     <script src="../JS/navToggel.js" defer></script>
     <script src="../JS/includeHTML.js"></script>
@@ -97,7 +97,8 @@
                             </div>
 
                             <div class="contact_input">
-                                <form class="form" id="addContactForm" onsubmit="createNewContact(event); validateRealTimeEmailInput()">
+                                <form class="form" id="addContactForm"
+                                    onsubmit="createNewContact(event); validateRealTimeEmailInput()">
 
                                     <input id="name" placeholder="Name" type="text" onblur="validateEditField('name')"
                                         oninput="checkFormFields2()">
@@ -188,46 +189,6 @@
             // Header-Funktionalität initialisieren
             initializeHeader();
         });
-
-        // document.getElementById('userForm').addEventListener('submit', async function (event) {
-        //     event.preventDefault(); // Verhindert die Standardaktion des Formulars
-
-        //     const name = document.getElementById('name').value.trim();
-        //     const email = document.getElementById('email').value.trim();
-        //     const phone = document.getElementById('phone').value.trim();
-
-        //     try {
-        //         await saveUserData(name, email, phone); // Speichert die Daten in Firebase
-        //         alert('Benutzer erfolgreich erstellt!');
-        //         loadContacts(); // Aktualisiert die Kontaktliste
-        //     } catch (error) {
-        //         console.error('Fehler beim Speichern der Benutzerdaten:', error);
-        //         document.querySelector('.error').style.display = 'block';
-        //     }
-        // });
-
-        // const user = JSON.parse(localStorage.getItem('user'));
-
-        // if (!user) {
-        //     window.location.href = './index.html';
-        // }
-
-        // function getInitials(name) {
-        //     const nameParts = name.trim().split(' ');
-        //     if (nameParts.length === 1) {
-        //         return nameParts[0].charAt(0).toUpperCase();
-        //     }
-        //     return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
-        // }
-
-        // const initials = getInitials(user.name || 'G');
-
-        // const userInitialsDiv = document.getElementById('userInitials');
-        // if (userInitialsDiv) {
-        //     userInitialsDiv.querySelector('div').textContent = initials;
-        // }
-
-
     </script>
     </div>
     </div>

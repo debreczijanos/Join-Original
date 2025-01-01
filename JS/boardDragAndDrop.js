@@ -1,10 +1,21 @@
 let draggedTaskId = null;
 
+/**
+ * Startet den Drag-Vorgang für einen Task.
+ *
+ * @param {DragEvent} event - Das Drag-Event.
+ * @param {string} taskId - Die ID des zu ziehenden Tasks.
+ */
 function dragStart(event, taskId) {
   draggedTaskId = taskId;
   event.dataTransfer.effectAllowed = "move";
 }
 
+/**
+ * Erlaubt das Ablegen eines Tasks in einer Kanban-Spalte.
+ *
+ * @param {DragEvent} event - Das Drag-Over-Event.
+ */
 function allowDrop(event) {
   event.preventDefault();
 
@@ -19,6 +30,12 @@ function allowDrop(event) {
   }
 }
 
+/**
+ * Behandelt das Ablegen eines Tasks in einer neuen Spalte.
+ *
+ * @param {DragEvent} event - Das Drop-Event.
+ * @param {string} newStatus - Der neue Status, in den der Task verschoben wird.
+ */
 function drop(event, newStatus) {
   event.preventDefault();
 
@@ -52,6 +69,12 @@ function drop(event, newStatus) {
   checkEmptyColumns();
 }
 
+/**
+ * Verschiebt einen Task in einen neuen Container.
+ *
+ * @param {HTMLElement} targetColumn - Die Zielspalte, in die der Task verschoben werden soll.
+ * @param {string} newStatus - Der neue Status des Tasks.
+ */
 function moveTaskToNewContainer(targetColumn, newStatus) {
   const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
   if (taskElement) {
@@ -62,6 +85,12 @@ function moveTaskToNewContainer(targetColumn, newStatus) {
   }
 }
 
+/**
+ * Aktualisiert den Status eines Tasks.
+ *
+ * @param {string} taskId - Die ID des Tasks.
+ * @param {string} newStatus - Der neue Status des Tasks.
+ */
 function updateTaskStatus(taskId, newStatus) {
   const task = findTaskById(taskId);
   if (task) {
@@ -70,10 +99,22 @@ function updateTaskStatus(taskId, newStatus) {
   }
 }
 
+/**
+ * Findet einen Task anhand seiner ID.
+ *
+ * @param {string} taskId - Die ID des Tasks.
+ * @returns {Object|null} Der gefundene Task oder null, falls nicht vorhanden.
+ */
 function findTaskById(taskId) {
   return allTasksData.find((task) => task.id === taskId);
 }
 
+/**
+ * Sendet eine Anfrage, um den Status eines Tasks zu aktualisieren.
+ *
+ * @param {string} taskId - Die ID des Tasks.
+ * @param {string} newStatus - Der neue Status des Tasks.
+ */
 function sendStatusUpdate(taskId, newStatus) {
   const updateUrl = `${API_URL}/${taskId}.json`;
   const body = JSON.stringify({ status: newStatus });
@@ -115,6 +156,9 @@ function sendStatusUpdate(taskId, newStatus) {
     .catch((error) => {});
 }
 
+/**
+ * Überprüft, ob Spalten leer sind, und zeigt eine Nachricht an.
+ */
 function checkEmptyColumns() {
   const columns = document.querySelectorAll(".kanban-column");
 
@@ -133,11 +177,23 @@ function checkEmptyColumns() {
   });
 }
 
+/**
+ * Behandelt die Antwort auf eine Status-Aktualisierungsanfrage.
+ *
+ * @param {Response} response - Die Antwort des Fetch-Requests.
+ * @param {string} newStatus - Der neue Status des Tasks.
+ * @throws {Error} Wenn die Anfrage fehlschlägt.
+ */
 function handleUpdateResponse(response, newStatus) {
   if (!response.ok)
     throw new Error(`Fehler beim Aktualisieren des Status: ${response.status}`);
 }
 
+/**
+ * Behandelt Fehler, indem eine Nachricht angezeigt wird.
+ *
+ * @param {string} message - Die Fehlermeldung.
+ */
 function handleError(message) {
   alert(message);
 }

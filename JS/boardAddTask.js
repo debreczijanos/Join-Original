@@ -1,3 +1,8 @@
+/**
+ * Sammelt die Daten eines neuen Tasks aus dem Formular.
+ *
+ * @returns {Object} Die gesammelten Task-Daten.
+ */
 function collectTaskData() {
   const title = document.getElementById("title").value;
   const description = document.getElementById("description").value;
@@ -26,6 +31,9 @@ function collectTaskData() {
   };
 }
 
+/**
+ * Fügt eine neue Subtask zur Liste hinzu.
+ */
 function addSubtask() {
   const input = document.getElementById("subtask-input");
   const subtaskList = document.getElementById("subtask-list");
@@ -44,6 +52,11 @@ function addSubtask() {
   }
 }
 
+/**
+ * Bearbeitet den Text einer Subtask.
+ *
+ * @param {HTMLElement} button - Der Button, der die Edit-Funktion auslöst.
+ */
 function editSubtask(button) {
   const subtaskText = button.parentElement.querySelector(".subtask-text");
   const newText = prompt("Edit your subtask:", subtaskText.textContent);
@@ -53,6 +66,9 @@ function editSubtask(button) {
   }
 }
 
+/**
+ * Löscht die Felder des Formulars und setzt sie zurück.
+ */
 function clearFormFields() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
@@ -65,6 +81,11 @@ function clearFormFields() {
   priorityButtons.forEach((btn) => btn.classList.remove("selected"));
 }
 
+/**
+ * Öffnet die Details eines Tasks in einem Overlay.
+ *
+ * @param {string} taskId - Die ID des anzuzeigenden Tasks.
+ */
 function openTaskDetails(taskId) {
   draggedTaskId = taskId;
   const task = getTaskById(taskId);
@@ -80,10 +101,21 @@ function openTaskDetails(taskId) {
   showTaskDetailsOverlay();
 }
 
+/**
+ * Sucht einen Task anhand seiner ID.
+ *
+ * @param {string} taskId - Die ID des zu suchenden Tasks.
+ * @returns {Object|null} Der gefundene Task oder null, falls nicht vorhanden.
+ */
 function getTaskById(taskId) {
   return allTasksData.find((task) => task.id === taskId);
 }
 
+/**
+ * Füllt das Overlay mit den Task-Details.
+ *
+ * @param {Object} task - Die Daten des anzuzeigenden Tasks.
+ */
 function populateTaskDetailsOverlay(task) {
   document.getElementById("overlay-category").innerText =
     task.category || "No Category";
@@ -96,6 +128,11 @@ function populateTaskDetailsOverlay(task) {
     task.prio || "No Priority";
 }
 
+/**
+ * Füllt die Teilnehmer-Daten (Assigned To) im Overlay.
+ *
+ * @param {Array<string>} assignedTo - Eine Liste der zugewiesenen Personen.
+ */
 function populateAssignedTo(assignedTo) {
   const container = document.getElementById("overlay-assigned-to");
   container.innerHTML = "";

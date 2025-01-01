@@ -1,3 +1,6 @@
+/**
+ * Leert das Formular und setzt alle Felder auf die Standardwerte zurück.
+ */
 function clearForm() {
   resetTextInputs([
     "title",
@@ -13,19 +16,35 @@ function clearForm() {
   uncheckCheckboxes(".dropdown-menu input[type='checkbox']");
 }
 
+/**
+ * Setzt die Werte von Texteingabefeldern zurück.
+ *
+ * @param {Array<string>} inputIds - Die IDs der Texteingabefelder.
+ */
 function resetTextInputs(inputIds) {
   inputIds.forEach((id) => (document.getElementById(id).value = ""));
 }
 
+/**
+ * Löscht den inneren HTML-Inhalt von Elementen.
+ *
+ * @param {Array<string>} elementIds - Die IDs der Elemente.
+ */
 function clearInnerHTML(elementIds) {
   elementIds.forEach((id) => (document.getElementById(id).innerHTML = ""));
 }
 
+/**
+ * Setzt das Datumsfeld zurück.
+ */
 function resetDateInput() {
   const dateInput = document.querySelector("input[type='date']");
   if (dateInput) dateInput.value = "";
 }
 
+/**
+ * Setzt die Prioritäts-Buttons zurück und aktiviert den Standardwert.
+ */
 function resetPrioButtons() {
   const buttons = document.querySelectorAll(".prio-btn button");
   clearActiveStates(buttons);
@@ -33,18 +52,28 @@ function resetPrioButtons() {
   activateButton(buttons[defaultActiveIndex]);
 }
 
+/**
+ * Setzt das Kategoriemenü zurück.
+ */
 function resetCategoryDropdown() {
   const categoryDropdown = document.getElementById("customDropdownMenu");
   if (categoryDropdown) categoryDropdown.style.display = "none";
 }
 
+/**
+ * Entfernt die Markierung von Checkboxen.
+ *
+ * @param {string} selector - Der CSS-Selektor für die Checkboxen.
+ */
 function uncheckCheckboxes(selector) {
   document
     .querySelectorAll(selector)
     .forEach((checkbox) => (checkbox.checked = false));
 }
 
-// Funktion: Aufgabe erstellen und an die API senden
+/**
+ * Erstellt eine neue Aufgabe und sendet sie an die API.
+ */
 function createTask() {
   const requiredFields = getRequiredFields();
   removeErrorMessages(requiredFields);
@@ -55,6 +84,11 @@ function createTask() {
   sendTaskToAPI(task);
 }
 
+/**
+ * Liefert die erforderlichen Formularfelder und ihre Validierungsinformationen.
+ *
+ * @returns {Array<Object>} Eine Liste der erforderlichen Felder.
+ */
 function getRequiredFields() {
   return [
     {
@@ -75,11 +109,22 @@ function getRequiredFields() {
   ];
 }
 
+/**
+ * Entfernt alle Fehlermeldungen aus dem Formular.
+ *
+ * @param {Array<Object>} fields - Die Felder mit Fehlern.
+ */
 function removeErrorMessages(fields) {
   document.querySelectorAll(".error-message").forEach((el) => el.remove());
   fields.forEach(({ input }) => input.classList.remove("error"));
 }
 
+/**
+ * Validiert die angegebenen Felder.
+ *
+ * @param {Array<Object>} fields - Die Felder, die validiert werden sollen.
+ * @returns {boolean} Gibt true zurück, wenn Fehler gefunden wurden.
+ */
 function validateFields(fields) {
   let hasErrors = false;
 
@@ -93,6 +138,13 @@ function validateFields(fields) {
   return hasErrors;
 }
 
+/**
+ * Zeigt eine Fehlermeldung für ein bestimmtes Feld an.
+ *
+ * @param {HTMLElement} input - Das Eingabefeld mit einem Fehler.
+ * @param {string} errorMessage - Die anzuzeigende Fehlermeldung.
+ * @param {string} errorClass - Die CSS-Klasse für die Fehlermeldung.
+ */
 function displayError(input, errorMessage, errorClass) {
   input.classList.add("error");
   if (!document.querySelector(`.${errorClass}`)) {
@@ -103,6 +155,11 @@ function displayError(input, errorMessage, errorClass) {
   }
 }
 
+/**
+ * Erstellt ein Task-Objekt aus den Formularfeldern.
+ *
+ * @returns {Object} Das erstellte Task-Objekt.
+ */
 function buildTaskObject() {
   return {
     title: document.getElementById("title").value.trim(),
@@ -115,23 +172,43 @@ function buildTaskObject() {
   };
 }
 
+/**
+ * Holt die ausgewählten Kontakte aus dem Formular.
+ *
+ * @returns {Array<string>} Eine Liste der Namen der ausgewählten Kontakte.
+ */
 function getSelectedContacts() {
   return Array.from(document.getElementById("selectedContacts").children).map(
     (button) => button.textContent.trim()
   );
 }
 
+/**
+ * Holt die aktive Prioritätsstufe aus den Buttons.
+ *
+ * @returns {string|null} Die aktive Priorität oder null, wenn keine aktiv ist.
+ */
 function getActivePrio() {
   const activeButton = document.querySelector(".prio-btn button.active");
   return activeButton ? activeButton.textContent.trim() : null;
 }
 
+/**
+ * Holt die Subtasks aus der Liste.
+ *
+ * @returns {Array<string>} Eine Liste der Subtasks.
+ */
 function getSubtasks() {
   return Array.from(
     document.querySelectorAll("#subtaskList .subtask-item li")
   ).map((li) => li.textContent.trim());
 }
 
+/**
+ * Sendet eine Aufgabe an die API und zeigt das Ergebnis in der UI an.
+ *
+ * @param {Object} task - Das zu sendende Task-Objekt.
+ */
 function sendTaskToAPI(task) {
   fetch(
     "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
@@ -143,11 +220,9 @@ function sendTaskToAPI(task) {
   )
     .then((response) => {
       if (response.ok) {
-        // Overlay und Erfolgsmeldung anzeigen
         const overlay = document.getElementById("overlay");
         overlay.style.display = "flex";
 
-        // Nach 3 Sekunden das Overlay ausblenden und Formular zurücksetzen
         setTimeout(() => {
           overlay.style.display = "none";
           clearForm(); // Formular leeren
@@ -160,7 +235,9 @@ function sendTaskToAPI(task) {
     .catch((error) => console.error("API Error:", error));
 }
 
-// Funktion: Fehlernachrichten beim Eingeben oder Ändern entfernen
+/**
+ * Fügt Event-Listener hinzu, um Fehlernachrichten bei Eingabeänderungen zu entfernen.
+ */
 function addInputListeners() {
   const fieldsToValidate = getRequiredFields();
 
@@ -171,6 +248,12 @@ function addInputListeners() {
   handleCategoryDropdown();
 }
 
+/**
+ * Fügt Event-Listener zu einem Eingabefeld hinzu, um Fehler zu entfernen.
+ *
+ * @param {HTMLElement} input - Das Eingabefeld.
+ * @param {string} errorClass - Die CSS-Klasse des Fehlertexts.
+ */
 function addErrorRemovalListeners(input, errorClass) {
   input.addEventListener("input", () => removeError(input, errorClass));
   if (input.type === "date") {
@@ -178,6 +261,9 @@ function addErrorRemovalListeners(input, errorClass) {
   }
 }
 
+/**
+ * Behandelt die Interaktion mit dem Kategorie-Dropdown und entfernt Fehlernachrichten.
+ */
 function handleCategoryDropdown() {
   const categoryInput = document.getElementById("customDropdownInput");
   const dropdownMenu = document.getElementById("customDropdownMenu");
@@ -195,6 +281,12 @@ function handleCategoryDropdown() {
   });
 }
 
+/**
+ * Entfernt die Fehleranzeige eines Eingabefelds, wenn es gültige Eingaben enthält.
+ *
+ * @param {HTMLElement} input - Das Eingabefeld.
+ * @param {string} errorClass - Die CSS-Klasse des Fehlertexts.
+ */
 function removeError(input, errorClass) {
   if (input.value.trim()) {
     input.classList.remove("error");
@@ -203,12 +295,16 @@ function removeError(input, errorClass) {
   }
 }
 
-// Event-Listener beim Laden der Seite hinzufügen
+/**
+ * Event-Listener beim Laden der Seite hinzufügen
+ */
 window.onload = () => {
   addInputListeners();
 };
 
-// Event-Listener für die Buttons hinzufügen
+/**
+ * Event-Listener für die Buttons hinzufügen
+ */
 document.querySelector(".clear-btn").addEventListener("click", clearForm);
 document
   .querySelector(".create-task-btn")

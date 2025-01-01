@@ -1,8 +1,15 @@
-// Firebase-Datenbank-URL (ersetze dies mit deiner eigenen URL)
+/**
+ * URL der Firebase-Datenbank (ersetze mit deiner eigenen URL).
+ */
 const databaseURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
-// Hauptfunktion zum Laden der Tasks und Aktualisieren der UI
+/**
+ * Hauptfunktion zum Laden der Tasks und Aktualisieren der UI.
+ *
+ * Diese Funktion ruft die Tasks aus der Datenbank ab, berechnet die Task-Zähler
+ * und aktualisiert die Benutzeroberfläche.
+ */
 async function loadSummaryData() {
   try {
     const tasks = await fetchTasksFromDatabase();
@@ -15,7 +22,11 @@ async function loadSummaryData() {
   }
 }
 
-// Funktion zum Abrufen der Daten aus Firebase
+/**
+ * Ruft die Task-Daten aus der Firebase-Datenbank ab.
+ *
+ * @returns {Object|null} Die abgerufenen Tasks oder null, wenn keine Daten gefunden wurden.
+ */
 async function fetchTasksFromDatabase() {
   const response = await fetch(databaseURL);
   const tasks = await response.json();
@@ -23,7 +34,12 @@ async function fetchTasksFromDatabase() {
   return tasks;
 }
 
-// Funktion zur Berechnung der Zählerstände
+/**
+ * Berechnet die Zählerstände basierend auf den Task-Daten.
+ *
+ * @param {Object} tasks - Die Task-Daten aus der Datenbank.
+ * @returns {Object} Ein Objekt mit den Zählerständen für verschiedene Kategorien.
+ */
 function calculateTaskCounts(tasks) {
   let toDoCount = 0,
     doneCount = 0,
@@ -55,7 +71,11 @@ function calculateTaskCounts(tasks) {
   };
 }
 
-// Funktion zum Aktualisieren der UI
+/**
+ * Aktualisiert die Benutzeroberfläche mit den berechneten Zählerständen.
+ *
+ * @param {Object} counts - Ein Objekt mit den Zählerständen.
+ */
 function updateUI(counts) {
   document.querySelector(".summary-to-do").textContent = counts.toDoCount;
   document.querySelector(".summary-done").textContent = counts.doneCount;
@@ -67,5 +87,7 @@ function updateUI(counts) {
     counts.awaitingFeedbackCount;
 }
 
-// Daten laden, wenn die Seite fertig geladen ist
+/**
+ * Daten laden, wenn die Seite fertig geladen ist
+ */
 document.addEventListener("DOMContentLoaded", loadSummaryData);

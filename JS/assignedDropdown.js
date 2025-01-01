@@ -1,19 +1,26 @@
-//Konstante für die API-URL
+/**
+ * API-URLs
+ */
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-
 const API_CONTACTS =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
 
-let selectedContacts = []; // Speichert die vollständigen Namen
+/**
+ * Liste der ausgewählten Kontakte
+ */
+let selectedContacts = [];
 
-// Dropdown umschalten
+/**
+ * Schaltet das Dropdown-Menü um.
+ *
+ * @param {string} dropdownId - Die ID des Dropdown-Menüs.
+ */
 function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
 
   if (!dropdownMenu) return;
 
-  // Schließt Dropdowns, wenn sie offen sind
   const allDropdowns = document.querySelectorAll(".dropdown-menu");
   allDropdowns.forEach((menu) => {
     if (menu !== dropdownMenu) {
@@ -21,11 +28,15 @@ function toggleDropdown(dropdownId) {
     }
   });
 
-  // Öffnet oder schließt das aktuelle Dropdown
   dropdownMenu.classList.toggle("open");
 }
 
-// Schließen des Dropdowns bei Klick außerhalb
+/**
+ * Schließt ein Dropdown, wenn außerhalb geklickt wird.
+ *
+ * @param {string} inputId - Die ID des Eingabefelds.
+ * @param {string} menuId - Die ID des Dropdown-Menüs.
+ */
 function closeDropdownOnOutsideClick(inputId, menuId) {
   document.addEventListener("click", (event) => {
     const input = document.getElementById(inputId);
@@ -34,22 +45,26 @@ function closeDropdownOnOutsideClick(inputId, menuId) {
     if (
       input &&
       dropdownMenu &&
-      event.target !== input && // Klick ist nicht auf das Input-Feld
-      !dropdownMenu.contains(event.target) // Klick ist nicht innerhalb des Dropdown-Menüs
+      event.target !== input &&
+      !dropdownMenu.contains(event.target)
     ) {
       dropdownMenu.classList.remove("open");
     }
   });
 }
 
-// Gemeinsame Initialisierungsfunktion für Dropdowns
+/**
+ * Initialisiert ein Dropdown-Menü mit zugehörigen Event-Listenern.
+ *
+ * @param {string} inputId - Die ID des Eingabefelds.
+ * @param {string} menuId - Die ID des Dropdown-Menüs.
+ */
 function initializeDropdown(inputId, menuId) {
   const input = document.getElementById(inputId);
   const menu = document.getElementById(menuId);
 
   if (!input || !menu) return;
 
-  // Verhindere doppelte Listener
   if (input.dataset.listenerAdded) return;
   input.dataset.listenerAdded = true;
 
@@ -62,7 +77,12 @@ function initializeDropdown(inputId, menuId) {
   setDropdownValueOnClick(menuId, inputId);
 }
 
-// Dropdown filtern
+/**
+ * Filtert die Einträge in einem Dropdown-Menü basierend auf der Eingabe.
+ *
+ * @param {string} inputId - Die ID des Eingabefelds.
+ * @param {string} menuSelector - Der CSS-Selektor der Dropdown-Einträge.
+ */
 function filterDropdown(inputId, menuSelector) {
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -76,7 +96,12 @@ function filterDropdown(inputId, menuSelector) {
   });
 }
 
-// Dropdown-Wert setzen
+/**
+ * Setzt den Wert eines Dropdowns, wenn ein Eintrag angeklickt wird.
+ *
+ * @param {string} menuId - Die ID des Dropdown-Menüs.
+ * @param {string} inputId - Die ID des Eingabefelds.
+ */
 function setDropdownValueOnClick(menuId, inputId) {
   const menu = document.getElementById(menuId);
   if (!menu) return;
@@ -85,14 +110,16 @@ function setDropdownValueOnClick(menuId, inputId) {
     if (event.target.classList.contains("custom-dropdown-item")) {
       const input = document.getElementById(inputId);
       if (input) {
-        input.value = event.target.textContent.trim(); // Setzt den Text als Wert
-        menu.classList.remove("open"); // Schließt das Dropdown
+        input.value = event.target.textContent.trim();
+        menu.classList.remove("open");
       }
     }
   });
 }
 
-// Initialisierung der Dropdowns
+/**
+ * Initialisierung der Dropdowns
+ */
 document.addEventListener("DOMContentLoaded", () => {
   initializeDropdown("dropdownInput", "dropdownMenu");
   initializeDropdown("customDropdownInput", "customDropdownMenu");
@@ -133,9 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
   setDropdownValueOnClick(categoryMenuId, categoryInputId);
 });
 
-//Kontakte laden
-// Kontakte laden
-// Kontakte laden und ins Dropdown einfügen
+/**
+ * Lädt Kontakte von APIs und fügt sie dem Dropdown hinzu.
+ *
+ * @param {string} apiURL - Die URL der API.
+ * @param {string} dropdownId - Die ID des Dropdown-Menüs.
+ */
 async function loadContacts(apiURL, dropdownId) {
   try {
     const dropdownMenu = getDropdownMenu(dropdownId);
@@ -148,7 +178,12 @@ async function loadContacts(apiURL, dropdownId) {
   }
 }
 
-// Dropdown-Element abrufen
+/**
+ * Holt ein Dropdown-Menü-Element.
+ *
+ * @param {string} dropdownId - Die ID des Dropdown-Menüs.
+ * @returns {HTMLElement} Das Dropdown-Menü-Element.
+ */
 function getDropdownMenu(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
   if (!dropdownMenu) {
@@ -158,14 +193,24 @@ function getDropdownMenu(dropdownId) {
   return dropdownMenu;
 }
 
-// Alle Kontakte aus beiden APIs abrufen
+/**
+ * Ruft Kontakte aus zwei APIs ab und kombiniert sie.
+ *
+ * @param {string} apiURL - Die URL der ersten API.
+ * @returns {Array} Eine Liste aller Kontakte.
+ */
 async function fetchAllContacts(apiURL) {
   const contactsFromMainAPI = await fetchContactsFromAPI(apiURL);
   const contactsFromSecondaryAPI = await fetchContactsFromAPI(API_CONTACTS);
   return [...contactsFromMainAPI, ...contactsFromSecondaryAPI];
 }
 
-// Kontakte aus einer API abrufen
+/**
+ * Ruft Kontakte aus einer API ab.
+ *
+ * @param {string} url - Die API-URL.
+ * @returns {Array} Eine Liste der Kontakte.
+ */
 async function fetchContactsFromAPI(url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -176,7 +221,13 @@ async function fetchContactsFromAPI(url) {
   return Object.values(data);
 }
 
-// Kontakte ins Dropdown einfügen
+/**
+ * Fügt Kontakte zum Dropdown hinzu.
+ *
+ * @param {Array} contacts - Die Liste der Kontakte.
+ * @param {Set} uniqueContacts - Eine Menge zur Vermeidung von Duplikaten.
+ * @param {HTMLElement} dropdownMenu - Das Dropdown-Menü-Element.
+ */
 function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
   contacts.forEach((contact) => {
     if (!uniqueContacts.has(contact.name)) {
@@ -187,7 +238,12 @@ function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
   });
 }
 
-//Kontakt-Element erstellen
+/**
+ * Erstellt ein Element für einen Kontakt.
+ *
+ * @param {Object} contact - Der Kontakt.
+ * @returns {HTMLElement} Das erstellte Kontakt-Element.
+ */
 function createContactElement(contact) {
   const label = document.createElement("label");
   const checkbox = createCheckbox(contact.name);
@@ -208,6 +264,12 @@ function createContactElement(contact) {
   return label;
 }
 
+/**
+ * Erstellt ein Checkbox-Element.
+ *
+ * @param {string} name - Der Name des Kontakts.
+ * @returns {HTMLElement} Das Checkbox-Element.
+ */
 function createCheckbox(name) {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
@@ -215,6 +277,12 @@ function createCheckbox(name) {
   return checkbox;
 }
 
+/**
+ * Erstellt einen Button für einen Kontakt.
+ *
+ * @param {string} name - Der Name des Kontakts.
+ * @returns {HTMLElement} Der erstellte Button.
+ */
 function createContactButton(name) {
   const button = document.createElement("button");
   button.textContent = name.charAt(0).toUpperCase();
@@ -223,7 +291,9 @@ function createContactButton(name) {
   return button;
 }
 
-//Ausgewählte Kontakte aktualisieren
+/**
+ * Ausgewählte Kontakte aktualisiere
+ */
 function updateSelectedContacts(contactName, button, isChecked) {
   const selectedContactsContainer = document.getElementById("selectedContacts");
 
@@ -236,49 +306,41 @@ function updateSelectedContacts(contactName, button, isChecked) {
   renderSelectedContacts(selectedContactsContainer);
 }
 
-// Kontakt hinzufügen
+/**
+ * Kontakt hinzufügen
+ */
 function addSelectedContact(button, contactName, container) {
-  // Prüfen, ob der Kontakt schon in der Liste ist
   if (selectedContacts.includes(contactName)) return;
-
-  // Zum Array hinzufügen
   selectedContacts.push(contactName);
-
-  // DOM-Element erstellen
   const clonedButton = button.cloneNode(true);
   clonedButton.dataset.contactName = contactName;
-
-  // Event-Listener zum Entfernen
   clonedButton.onclick = () => {
     deselectContact(contactName);
     renderSelectedContacts(container);
   };
 
   container.appendChild(clonedButton);
-  renderSelectedContacts(container); // UI aktualisieren
+  renderSelectedContacts(container);
 }
 
+/**
+ * ausgewälte kontakt entfernen
+ */
 function removeSelectedContact(contactName, container) {
-  // Aus der Liste entfernen
   selectedContacts = selectedContacts.filter((name) => name !== contactName);
 
-  // Aus dem DOM entfernen
   const buttons = container.querySelectorAll("button");
   buttons.forEach((btn) => {
     if (btn.dataset.contactName === contactName) {
       btn.remove();
     }
   });
-  renderSelectedContacts(container); // UI aktualisieren
+  renderSelectedContacts(container);
 }
 
 function renderSelectedContacts(container) {
   const maxVisible = 3;
-
-  // Alle Buttons entfernen
   container.innerHTML = "";
-
-  // Sichtbare Buttons hinzufügen
   selectedContacts.slice(0, maxVisible).forEach((contactName) => {
     const button = document.createElement("button");
     button.textContent = contactName.charAt(0).toUpperCase();
@@ -296,7 +358,6 @@ function renderSelectedContacts(container) {
     container.appendChild(button);
   });
 
-  // Restliche Kontakte zählen
   const extraCount = selectedContacts.length - maxVisible;
   if (extraCount > 0) {
     const extraButton = document.createElement("div");
@@ -319,14 +380,14 @@ function deselectContact(contactName) {
 }
 
 function getSelectedContacts() {
-  return selectedContacts; // Gibt die vollständige Liste der Namen zurück
+  return selectedContacts;
 }
 
 function buildTaskObject() {
   return {
     title: document.getElementById("title").value.trim(),
     description: document.getElementById("description").value.trim(),
-    assignedTo: getSelectedContacts(), // Vollständige Namen
+    assignedTo: getSelectedContacts(),
     dueDate: document.querySelector("input[type='date']").value,
     prio: getActivePrio(),
     category: document.getElementById("customDropdownInput").value.trim(),
@@ -334,7 +395,12 @@ function buildTaskObject() {
   };
 }
 
-//Farbgenerierung
+/**
+ * Generiert eine Farbe basierend auf dem ersten Buchstaben eines Namens.
+ *
+ * @param {string} letter - Der erste Buchstabe des Namens.
+ * @returns {string} Die generierte Farbe.
+ */
 function generateColorFromLetter(letter) {
   const charCode = letter.toUpperCase().charCodeAt(0);
   const hue = (charCode - 65) * 15;

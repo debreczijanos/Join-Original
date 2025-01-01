@@ -1,3 +1,9 @@
+/**
+ * Formatiert Subtasks mit Checkboxen und gibt die HTML-Struktur zurück.
+ *
+ * @param {Array} subtasks - Eine Liste von Subtasks mit `name` und `completed`.
+ * @returns {string} Die HTML-Struktur der formatierten Subtasks.
+ */
 function formatSubtasksWithCheckboxes(subtasks) {
   return (
     subtasks
@@ -14,6 +20,9 @@ function formatSubtasksWithCheckboxes(subtasks) {
   );
 }
 
+/**
+ * Löscht eine Task basierend auf der `draggedTaskId`.
+ */
 function deleteTask() {
   if (!draggedTaskId) {
     console.error("Keine gültige Task-ID gefunden");
@@ -24,23 +33,39 @@ function deleteTask() {
   deleteTaskFromBackend(updateUrl);
 }
 
+/**
+ * Löscht eine Task aus dem Backend.
+ *
+ * @param {string} url - Die API-URL der zu löschenden Task.
+ */
 function deleteTaskFromBackend(url) {
   fetch(url, { method: "DELETE" })
     .then((response) => handleDeleteResponse(response))
     .catch((error) => handleError(`Fehler beim Löschen: ${error.message}`));
 }
 
+/**
+ * Behandelt die Antwort des Backends nach dem Löschen einer Task.
+ *
+ * @param {Response} response - Die Fetch-Antwort.
+ */
 function handleDeleteResponse(response) {
   if (!response.ok) throw new Error("Fehler beim Löschen der Aufgabe");
   removeTaskFromFrontend();
 }
 
+/**
+ * Entfernt eine Task aus der UI und aktualisiert die Kanban-Tafel.
+ */
 function removeTaskFromFrontend() {
   allTasksData = allTasksData.filter((task) => task.id !== draggedTaskId);
   renderKanbanBoard();
   closeTaskDetails();
 }
 
+/**
+ * Öffnet das Formular zur Bearbeitung einer Task.
+ */
 function editTask() {
   if (!draggedTaskId) {
     handleError("Keine gültige Task-ID zum Bearbeiten gefunden");
@@ -57,6 +82,11 @@ function editTask() {
   showEditTaskOverlay();
 }
 
+/**
+ * Füllt das Bearbeitungsformular mit den Daten einer Task.
+ *
+ * @param {Object} task - Die Task-Daten.
+ */
 function populateEditForm(task) {
   setInputValue("edit-title", task.title || "");
   setInputValue("edit-description", task.description || "");
@@ -64,6 +94,12 @@ function populateEditForm(task) {
   setInputValue("edit-priority", task.prio || "Low");
 }
 
+/**
+ * Setzt den Wert eines Formularfelds.
+ *
+ * @param {string} elementId - Die ID des Formularfelds.
+ * @param {string} value - Der zu setzende Wert.
+ */
 function setInputValue(elementId, value) {
   const element = document.getElementById(elementId);
   if (element) {
@@ -73,14 +109,26 @@ function setInputValue(elementId, value) {
   }
 }
 
+/**
+ * Zeigt das Overlay zum Bearbeiten einer Task an.
+ */
 function showEditTaskOverlay() {
   toggleOverlay("edit-task-overlay", false);
 }
 
+/**
+ * Schließt das Overlay zum Bearbeiten einer Task.
+ */
 function closeEditTask() {
   toggleOverlay("edit-task-overlay", true);
 }
 
+/**
+ * Blendet ein Overlay ein oder aus.
+ *
+ * @param {string} overlayId - Die ID des Overlays.
+ * @param {boolean} isHidden - Ob das Overlay versteckt werden soll.
+ */
 function toggleOverlay(overlayId, isHidden) {
   const overlay = document.getElementById(overlayId);
   if (overlay) {
@@ -90,6 +138,9 @@ function toggleOverlay(overlayId, isHidden) {
   }
 }
 
+/**
+ * Speichert die bearbeitete Task.
+ */
 function saveEditedTask() {
   const updatedTask = getUpdatedTaskFromForm();
   if (!validateTaskData(updatedTask)) return;
@@ -97,6 +148,11 @@ function saveEditedTask() {
   updateTaskInBackend(draggedTaskId, updatedTask);
 }
 
+/**
+ * Holt die aktualisierten Task-Daten aus dem Bearbeitungsformular.
+ *
+ * @returns {Object} Die aktualisierten Task-Daten.
+ */
 function getUpdatedTaskFromForm() {
   return {
     title: getInputValue("edit-title"),
@@ -111,6 +167,12 @@ function getInputValue(elementId) {
   return element ? element.value : "";
 }
 
+/**
+ * Validiert die Daten einer Task.
+ *
+ * @param {Object} task - Die Task-Daten.
+ * @returns {boolean} True, wenn die Daten gültig sind, sonst false.
+ */
 function validateTaskData(task) {
   if (!task.title || !task.dueDate) {
     alert("Titel und Fälligkeitsdatum sind erforderlich!");
@@ -119,6 +181,12 @@ function validateTaskData(task) {
   return true;
 }
 
+/**
+ * Aktualisiert eine Task im Backend.
+ *
+ * @param {string} taskId - Die ID der zu aktualisierenden Task.
+ * @param {Object} updatedTask - Die neuen Task-Daten.
+ */
 function updateTaskInBackend(taskId, updatedTask) {
   const updateUrl = `${API_URL}/${taskId}.json`;
 
@@ -131,6 +199,13 @@ function updateTaskInBackend(taskId, updatedTask) {
     .catch((error) => logError(`Fehler beim Speichern der Aufgabe: ${error}`));
 }
 
+/**
+ * Behandelt die Antwort des Backends nach einer Aktualisierung.
+ *
+ * @param {Response} response - Die Fetch-Antwort.
+ * @param {string} taskId - Die ID der Task.
+ * @param {Object} updatedTask - Die neuen Task-Daten.
+ */
 function handleBackendResponse(response, taskId, updatedTask) {
   if (!response.ok) {
     logError(`Fehler beim Aktualisieren der Aufgabe: ${response.status}`);
@@ -142,6 +217,12 @@ function handleBackendResponse(response, taskId, updatedTask) {
   closeEditTask();
 }
 
+/**
+ * Aktualisiert die Task-Daten im Frontend.
+ *
+ * @param {string} taskId - Die ID der Task.
+ * @param {Object} updatedTask - Die neuen Task-Daten.
+ */
 function updateFrontendTask(taskId, updatedTask) {
   const taskIndex = allTasksData.findIndex((task) => task.id === taskId);
   if (taskIndex !== -1) {
@@ -151,6 +232,11 @@ function updateFrontendTask(taskId, updatedTask) {
   }
 }
 
+/**
+ * Protokolliert einen Fehler in der Konsole.
+ *
+ * @param {string} message - Die Fehlermeldung.
+ */
 function logError(message) {
   console.error(message);
 }
@@ -167,6 +253,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/**
+ * Speichert eine neue Aufgabe im Backend und aktualisiert die Oberfläche.
+ */
 function saveTask() {
   const taskData = collectTaskData();
 
@@ -186,6 +275,9 @@ function saveTask() {
     );
 }
 
+/**
+ * Erstellt eine neue Aufgabe, prüft auf erforderliche Felder und fügt sie hinzu.
+ */
 async function createTask() {
   const taskData = collectTaskData();
 
@@ -227,6 +319,9 @@ async function createTask() {
   }
 }
 
+/**
+ * Lädt Kontakte aus der API und füllt das "Assigned"-Dropdown-Menü.
+ */
 async function loadContacts() {
   const selectElement = document.getElementById("assigned");
 
@@ -249,6 +344,12 @@ async function loadContacts() {
   }
 }
 
+/**
+ * Formatiert Subtasks als HTML-Liste.
+ *
+ * @param {Array} subtasks - Eine Liste der Subtasks mit `name`.
+ * @returns {string} Eine HTML-Liste der Subtasks.
+ */
 function formatSubtasks(subtasks) {
   return (
     subtasks
@@ -257,9 +358,17 @@ function formatSubtasks(subtasks) {
   );
 }
 
+/**
+ * Löscht eine Subtask aus der Liste.
+ *
+ * @param {HTMLElement} button - Der Button, der die Subtask löschen soll.
+ */
 function deleteSubtask(button) {
   const li = button.parentElement;
   li.remove();
 }
 
+/**
+ * Lädt Kontakte, wenn die Seite geladen wird.
+ */
 window.onload = loadContacts;

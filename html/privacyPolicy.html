@@ -16,7 +16,7 @@
 
   <script src="../JS/navToggel.js"></script>
   <script src="../JS/includeHTML.js"></script>
-  <script src="../JS/currentDate.js"></script>
+  <!-- <script src="../JS/currentDate.js"></script> -->
 
   <title>Privacy Police</title>
 </head>
@@ -531,9 +531,10 @@
 
   <script>
     // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-    includeHTML('#include-container', './nav.html');
-    // Header-Funktionalität initialisieren
-    initializeHeader();
+    includeHTML('#include-container', './nav.html', function () {
+      // Header-Funktionalität initialisieren
+      initializeHeader();
+    });
   </script>
 
 </body>

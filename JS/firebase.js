@@ -1,9 +1,9 @@
-const BASE_URL = 'https://join-388-default-rtdb.europe-west1.firebasedatabase.app/';
-
+const BASE_URL =
+  "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * This function load the data from Firebase database.
- * 
+ *
  * @param {string} path - The path of the firebase.
  */
 async function getData(path = "") {
@@ -13,7 +13,7 @@ async function getData(path = "") {
 
 /**
  *  This function save the data in Firebase database.
- * 
+ *
  * @param {string} path - The path of the firebase.
  * @param {string} data - The data to save in firebase.
  */
@@ -30,7 +30,7 @@ async function postData(path = "", data = {}) {
 
 /**
  * This function update the firebase database.
- * 
+ *
  * @param {string} path - The path of the firebase.
  * @param {string} data - The data to save in firebase.
  */
@@ -47,8 +47,8 @@ async function putData(path = "", data = {}) {
 
 /**
  * This function delete entries in firebase.
- * 
- * @param {string} path - Path from the entrie. 
+ *
+ * @param {string} path - Path from the entrie.
  */
 async function deleteDate(path = "") {
   let response = await fetch(BASE_URL + path + ".json", {
