@@ -1,5 +1,9 @@
+html {
+  overflow: hidden;
+}
+
 .blueBackground {
-  background-color: rgb(42, 54, 71);
+  background-color: rgb(42, 54, 71) !important;
   color: white;
 }
 
@@ -99,7 +103,7 @@
 }
 
 #content-area {
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .h2Contacts {
@@ -581,6 +585,11 @@
   padding-left: 30px;
 }
 
+.contactCard:hover {
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
 .one_letter {
   height: 42px;
   width: 42px;
@@ -775,6 +784,7 @@ h4 {
   }
   #mycontacts {
     width: 100%;
+    margin-bottom: 0px;
   }
 }
 
@@ -812,7 +822,8 @@ h4 {
 
 .mycontacts {
   width: 456px;
-  height: calc(100vh - 111px);
+  margin-bottom: 163px;
+  /* height: calc(100vh - 111px); */
   overflow-y: auto;
   display: flex;
   flex-direction: column;

@@ -14,6 +14,16 @@
     <script src="../JS/signUpSubmit.js" defer></script>
 
     <title>Join</title>
+
+    <style>
+        #error {
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            color: red;
+            transition: opacity 0.3s ease;
+        }
+    </style>
 </head>
 
 <body>
@@ -50,6 +60,7 @@
                             <img src="../img/lock.png" alt="lock">
                         </label>
                     </div>
+                    <div id="error"></div>
                     <div class="checkbox">
                         <input type="checkbox" id="acceptTerms">
                         <span>I accept the <a href="../html/privacyPolicy.html"> Privacy policy </a> </span>

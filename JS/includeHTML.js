@@ -18,9 +18,19 @@ function includeHTML(selector, file, callback) {
       .then((data) => {
         element.innerHTML = data;
         if (typeof callback === "function") {
-          callback();
+          setTimeout(callback, 0);
         }
       })
       .catch((error) => console.error("Error loading HTML:", error));
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  includeHTML("#include-container", "./nav.html", function () {
+    if (typeof initializeHeader === "function") {
+      initializeHeader();
+    } else {
+      console.error("initializeHeader is not defined");
+    }
+  });
+});

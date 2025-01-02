@@ -222,14 +222,18 @@ async function fetchContactsFromAPI(url) {
 }
 
 /**
- * Fügt Kontakte zum Dropdown hinzu.
+ * Fügt Kontakte zum Dropdown hinzu und sortiert sie alphabetisch.
  *
  * @param {Array} contacts - Die Liste der Kontakte.
  * @param {Set} uniqueContacts - Eine Menge zur Vermeidung von Duplikaten.
  * @param {HTMLElement} dropdownMenu - Das Dropdown-Menü-Element.
  */
 function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
-  contacts.forEach((contact) => {
+  const sortedContacts = contacts.sort((a, b) =>
+    a.name.localeCompare(b.name, "de", { sensitivity: "base" })
+  );
+
+  sortedContacts.forEach((contact) => {
     if (!uniqueContacts.has(contact.name)) {
       uniqueContacts.add(contact.name);
       const contactElement = createContactElement(contact);

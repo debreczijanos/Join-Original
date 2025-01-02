@@ -50,13 +50,13 @@ function calculateTaskCounts(tasks) {
 
   Object.values(tasks).forEach((task) => {
     const status = task.status?.trim();
-    const priority = task.priority?.trim();
+    const prio = task.prio?.trim();
 
     if (status === "To Do") toDoCount++;
     if (status === "Done") doneCount++;
     if (status === "In Progress") inProgressCount++;
     if (status === "Await Feedback") awaitingFeedbackCount++;
-    if (priority === "Urgent") urgentCount++;
+    if (prio === "Urgent") urgentCount++;
 
     allTasksCount++;
   });

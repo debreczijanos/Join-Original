@@ -74,6 +74,21 @@ function isValidEmail(email) {
 }
 
 /**
+ * Fügt Event-Listener zu allen relevanten Eingabefeldern hinzu,
+ * um Fehlermeldungen dynamisch zu entfernen.
+ */
+function addInputListeners() {
+  const inputs = document.querySelectorAll(".costume-input input");
+  const errorElement = document.getElementById("error");
+
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      errorElement.textContent = ""; // Fehlermeldung entfernen
+    });
+  });
+}
+
+/**
  * Behandelt das Absenden des Formulars, validiert die Daten und sendet sie an den Server.
  *
  * @param {Event} event - Das Submit-Event.
@@ -81,11 +96,25 @@ function isValidEmail(email) {
 async function handleSubmit(event) {
   event.preventDefault();
 
+  const errorElement = document.getElementById("error");
   const formData = collectFormData();
-  if (!validateFormData(formData)) return;
 
-  const response = await sendDataToServer(formData);
-  handleServerResponse(response);
+  // Validierung der Daten
+  if (!validateFormData(formData)) {
+    errorElement.textContent = "Die Passwörter stimmen nicht überein.";
+    errorElement.style.color = "red";
+    return;
+  }
+
+  // Daten an den Server senden
+  try {
+    const response = await sendDataToServer(formData);
+    handleServerResponse(response);
+  } catch (error) {
+    errorElement.textContent =
+      "Netzwerkfehler: Bitte überprüfen Sie Ihre Verbindung.";
+    errorElement.style.color = "red";
+  }
 }
 
 /**
@@ -106,19 +135,29 @@ function collectFormData() {
 }
 
 /**
- * Validiert die Formulardaten, einschließlich E-Mail-Format und Passwortbestätigung.
+ * Validiert die Formulardaten.
  *
  * @param {Object} formData - Die zu validierenden Formulardaten.
- * @returns {boolean} True, wenn die Daten gültig sind, sonst false.
+ * @returns {boolean} Ob die Formulardaten gültig sind.
  */
-function validateFormData({ email, password, confirmPassword }) {
-  if (password !== confirmPassword) {
-    alert("Passwörter stimmen nicht überein!");
+function validateFormData(formData) {
+  const errorElement = document.getElementById("error");
+
+  if (
+    !formData.name ||
+    !formData.email ||
+    !formData.password ||
+    !formData.confirmPassword ||
+    !formData.acceptTerms
+  ) {
+    errorElement.textContent = "Bitte füllen Sie alle Felder korrekt aus.";
+    errorElement.style.color = "red";
     return false;
   }
 
-  if (!isValidEmail(email)) {
-    alert("Bitte gib eine gültige E-Mail-Adresse ein!");
+  if (formData.password !== formData.confirmPassword) {
+    errorElement.textContent = "Die Passwörter stimmen nicht überein.";
+    errorElement.style.color = "red";
     return false;
   }
 
@@ -210,14 +249,20 @@ function handleServerError(error) {
  * @param {Response|Object} response - Die Antwort des Servers.
  */
 function handleServerResponse(response) {
+  const errorElement = document.getElementById("error");
+
   if (response && response.ok) {
     displaySuccessMessage();
   } else if (response.reason === "email_exists") {
-    alert("Diese E-Mail-Adresse ist bereits registriert!");
+    errorElement.textContent = "Diese E-Mail-Adresse ist bereits registriert!";
+    errorElement.style.color = "red";
   } else if (response.reason === "server_error") {
-    alert("Es ist ein Fehler aufgetreten. Bitte versuche es später erneut.");
+    errorElement.textContent =
+      "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+    errorElement.style.color = "red";
   } else {
-    alert("Unbekannter Fehler beim Speichern der Daten.");
+    errorElement.textContent = "Ein unbekannter Fehler ist aufgetreten.";
+    errorElement.style.color = "red";
   }
 }
 
@@ -246,9 +291,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const inputs = document.querySelectorAll(
     '.sign-up-daten input[type="text"], .sign-up-daten input[type="email"], .sign-up-daten input[type="password"], .sign-up-daten input[type="checkbox"]'
   );
+  const errorElement = document.getElementById("error");
+
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      errorElement.textContent = "";
+    });
+
+    input.addEventListener("change", () => {
+      errorElement.textContent = "";
+    });
+  });
+
   inputs.forEach((input) => {
     input.addEventListener("input", checkInputs);
-    input.addEventListener("change", checkInputs); // Für Checkbox
+    input.addEventListener("change", checkInputs);
   });
 });
 
