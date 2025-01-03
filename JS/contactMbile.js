@@ -121,6 +121,7 @@ function showErrorMessage(errorElementId, message) {
 function hideErrorMessage(errorElementId) {
   const errorElement = document.getElementById(errorElementId);
   errorElement.innerText = "";
+  errorElement.style.display = "none"; // Versteckt die Fehlermeldung
 }
 
 /**
@@ -132,6 +133,38 @@ function resetErrorMessages() {
     element.innerText = "";
     element.style.display = "none";
   });
+}
+
+function checkFormFields(formType = "add") {
+  const nameField = document
+    .getElementById(`${formType === "edit" ? "editName" : "name"}`)
+    .value.trim();
+  const emailField = document
+    .getElementById(`${formType === "edit" ? "editEmail" : "email"}`)
+    .value.trim();
+  const telField = document
+    .getElementById(`${formType === "edit" ? "editTel" : "tel"}`)
+    .value.trim();
+  const submitButton = document.getElementById(
+    `${formType === "edit" ? "editSubmit" : "createSubmit"}`
+  );
+
+  // Dynamisch Fehlermeldungen prüfen
+  const nameError = document
+    .getElementById(`${formType === "edit" ? "editNameError" : "nameError"}`)
+    .innerText.trim();
+  const emailError = document
+    .getElementById(`${formType === "edit" ? "editEmailError" : "emailError"}`)
+    .innerText.trim();
+  const telError = document
+    .getElementById(`${formType === "edit" ? "editTelError" : "telError"}`)
+    .innerText.trim();
+
+  submitButton.disabled =
+    !(nameField && emailField && telField) ||
+    nameError ||
+    emailError ||
+    telError;
 }
 
 /**
@@ -152,19 +185,28 @@ function checkFormFields2() {
   const field1 = document.getElementById("name").value.trim();
   const field2 = document.getElementById("email").value.trim();
   const field3 = document.getElementById("tel").value.trim();
+
+  // Überprüfe, ob alle Fehlermeldungen leer sind
+  const nameError = document.getElementById("nameError").innerText.trim();
+  const emailError = document.getElementById("emailError").innerText.trim();
+  const telError = document.getElementById("telError").innerText.trim();
+
   const submitButton = document.getElementById("createSubmit");
-  submitButton.disabled = !(field1 && field2 && field3);
+
+  // Button aktivieren, wenn alle Felder gefüllt sind und keine Fehlermeldungen vorhanden sind
+  submitButton.disabled =
+    !(field1 && field2 && field3) || nameError || emailError || telError;
 }
 
 /**
  * Resets all displayed error messages for edit form fields.
  */
-function resetEditErrorMessages() {
-  const errorElements = document.querySelectorAll(".error-message");
-  errorElements.forEach((element) => {
-    element.innerText = "";
-  });
-}
+// function resetEditErrorMessages() {
+//   const errorElements = document.querySelectorAll(".error-message");
+//   errorElements.forEach((element) => {
+//     element.innerText = "";
+//   });
+// }
 
 /**
  * Creates a new contact.
@@ -208,12 +250,142 @@ function preventFormSubmit(key) {
     });
 }
 
-function isEmailOrPhoneRegistered(usersData, email, tel) {
-  return usersData
-    ? Object.values(usersData).some(
-        (user) => user.email === email || user.telefonnummer === tel
-      )
-    : false;
+function validateEditField(fieldId) {
+  const value = document.getElementById(fieldId).value.trim();
+  let errorElementId;
+  let errorMessage = "";
+
+  // Dynamisch zugehörige Fehlermeldung-ID ermitteln
+  if (fieldId.startsWith("edit")) {
+    errorElementId = fieldId.replace("edit", "edit") + "Error"; // Beispiel: editName → editNameError
+  } else {
+    errorElementId = fieldId + "Error"; // Beispiel: name → nameError
+  }
+
+  switch (fieldId) {
+    case "name":
+    case "editName":
+      if (/[^a-zA-Z\s]/.test(value)) {
+        errorMessage = "Name darf keine Zahlen oder Sonderzeichen enthalten.";
+      }
+      break;
+
+    case "email":
+    case "editEmail":
+      if (!/\S+@\S+\.\S+/.test(value)) {
+        errorMessage = "Bitte eine gültige E-Mail-Adresse eingeben.";
+      } else if (value === lastInvalidEmail) {
+        errorMessage = "Diese E-Mail-Adresse ist bereits registriert.";
+      }
+      break;
+
+    case "tel":
+    case "editTel":
+      if (!/^\+?[0-9]*$/.test(value)) {
+        errorMessage =
+          "Telefonnummer darf nur Zahlen enthalten und optional ein '+' am Anfang.";
+      }
+      break;
+
+    default:
+      console.warn(`Unbekanntes Feld: "${fieldId}"`);
+      return false;
+  }
+
+  if (errorMessage) {
+    displayErrorMessage(errorElementId, errorMessage);
+    return false; // Eingabe ist ungültig
+  } else {
+    hideErrorMessage(errorElementId);
+    return true; // Eingabe ist gültig
+  }
+}
+
+/**
+ * Zeigt eine Fehlermeldung für ein spezifisches Element an.
+ *
+ * @param {string} errorElementId - Die ID des Fehlermeldungselements.
+ * @param {string} errorMessage - Die anzuzeigende Fehlermeldung.
+ */
+function displayErrorMessage(errorElementId, errorMessage) {
+  const errorElement = document.getElementById(errorElementId);
+  errorElement.innerText = errorMessage;
+  errorElement.style.display = "block"; // Zeigt die Fehlermeldung an
+}
+let lastInvalidEmail = ""; // Speichert die letzte ungültige oder existierende E-Mail
+
+async function validateRealTimeEmailInput() {
+  const emailInput = document.getElementById("email");
+  const email = emailInput.value.trim();
+  const emailError = document.getElementById("emailError");
+
+  // Überprüfe die Struktur der E-Mail
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    displayErrorMessage(
+      "emailError",
+      "Bitte eine gültige E-Mail-Adresse eingeben."
+    );
+    lastInvalidEmail = email; // Speichere die ungültige E-Mail
+    return;
+  }
+
+  const API_CONTACTS =
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
+  const API_USERS =
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
+  try {
+    const duplicate = await checkForDuplicateContact(
+      API_CONTACTS,
+      API_USERS,
+      email,
+      ""
+    );
+    if (duplicate) {
+      displayErrorMessage(
+        "emailError",
+        "Diese E-Mail-Adresse ist bereits registriert."
+      );
+      lastInvalidEmail = email; // Speichere die bereits existierende E-Mail
+    } else {
+      hideErrorMessage("emailError");
+      lastInvalidEmail = ""; // Zurücksetzen, wenn keine Duplikate gefunden wurden
+    }
+  } catch (error) {
+    console.error("Fehler beim Überprüfen der E-Mail:", error);
+  }
+}
+
+async function validateRealTimeTelInput() {
+  const tel = document.getElementById("tel").value.trim();
+  const telError = document.getElementById("telError");
+
+  if (!/^\+?[0-9]*$/.test(tel)) {
+    displayErrorMessage(
+      "telError",
+      "Telefonnummer darf nur Zahlen enthalten und optional ein '+' am Anfang."
+    );
+    return;
+  }
+
+  hideErrorMessage("telError");
+}
+
+// function isEmailOrPhoneRegistered(usersData, email, tel) {
+//   return usersData
+//     ? Object.values(usersData).some(
+//         (user) => user.email === email || user.telefonnummer === tel
+//       )
+//     : false;
+// }
+
+function isEmailOrPhoneRegistered(data, email, tel) {
+  if (!data) return false;
+
+  // Iteriere durch alle Einträge und überprüfe auf Duplikate
+  return Object.values(data).some(
+    (item) => item.email === email || item.telefonnummer === tel
+  );
 }
 
 // Hilfsfunktion: Holt bestehende Nutzer/Kontakte von der Datenbank
@@ -228,26 +400,44 @@ async function fetchExistingUsers(url) {
 async function pushCreateNewContact(name, email, tel, isValid) {
   if (!isValid) return;
 
-  const url = "https://example.com/contacts.json"; // Ersetze mit deinem echten API-Endpunkt
+  const API_CONTACTS =
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
+  const API_USERS =
+    "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   try {
-    const duplicate = await checkForDuplicateContact(url, email, tel);
+    // Überprüfe die Duplikate
+    const duplicate = await checkForDuplicateContact(
+      API_CONTACTS,
+      API_USERS,
+      email,
+      tel
+    );
     if (duplicate) {
       alert("Die E-Mail-Adresse oder Telefonnummer ist bereits registriert!");
       return;
     }
+
+    // Speichere neuen Kontakt, falls keine Duplikate gefunden wurden
     saveNewContact(name, email, tel);
   } catch (error) {
-    console.error("Fehler erstellen der Kontakte:", error);
-    alert(
-      "Diese angegebene E-Mail Adresse oder Telefonnummer werden bereits verwendet."
-    );
+    console.error("Fehler beim Erstellen des Kontakts:", error);
+    alert("Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.");
   }
 }
 
-async function checkForDuplicateContact(url, email, tel) {
-  const existingContacts = await fetchExistingUsers(url);
-  return isEmailOrPhoneRegistered(existingContacts, email, tel);
+async function checkForDuplicateContact(API_CONTACTS, API_USERS, email, tel) {
+  // Daten von beiden APIs abrufen
+  const [contacts, users] = await Promise.all([
+    fetchExistingUsers(API_CONTACTS),
+    fetchExistingUsers(API_USERS),
+  ]);
+
+  // Überprüfe auf E-Mail oder Telefonnummer in beiden Datenquellen
+  const isDuplicate =
+    isEmailOrPhoneRegistered(contacts, email, tel) ||
+    isEmailOrPhoneRegistered(users, email, tel);
+  return isDuplicate;
 }
 
 function saveNewContact(name, email, tel) {
@@ -300,21 +490,32 @@ async function fetchData() {
  * @param {string} [path='contact'] - The endpoint path for deleting the contact.
  * @param {string} id - The ID of the contact to remove.
  */
+let keyForEdit;
 async function removeContact(path = "contact", id) {
+  if (!id) {
+    console.error("Keine gültige ID für den Kontakt angegeben.");
+    return;
+  }
+
+  const url = `${BASE_URL}${path}/${encodeURIComponent(id)}.json`;
+
   try {
-    const url = `${BASE_URL}${path}/${id}.json`;
     let response = await fetch(url, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
       },
     });
+
     if (!response.ok) {
       throw new Error("Löschfehler des Kontakts");
     }
+
     await fetchData();
     clearDetailedView();
     currentEditKey = null;
+
+    console.log(`Kontakt mit ID ${id} wurde erfolgreich gelöscht.`);
   } catch (error) {
     console.error("Löschfehler des Kontakts:", error.message);
   }
@@ -369,11 +570,27 @@ function openClosePopUp(param, key) {
   let bgPopUp = document.getElementById(target);
   let popUp = bgPopUp.querySelector(".popUp");
   let header = document.getElementById("header");
+
   if (param === "open") {
     showModal(bgPopUp, popUp, header);
   } else if (param === "close") {
     hideModal(bgPopUp, popUp, header);
+
+    // Leere die Eingabefelder beim Schließen
+    clearInputFields();
   } else {
     param.stopPropagation();
   }
+}
+
+/**
+ * Leert alle Eingabefelder im Formular.
+ */
+function clearInputFields() {
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("tel").value = "";
+
+  // Setze eventuelle Fehlermeldungen zurück
+  resetErrorMessages();
 }

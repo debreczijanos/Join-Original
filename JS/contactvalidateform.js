@@ -28,22 +28,34 @@ function validateInput(variable, value) {
  */
 async function modifyContact(event) {
   event.preventDefault();
-  resetEditErrorMessages();
+  resetEditErrorMessages(); // Setzt vorherige Fehlermeldungen zurück
+
   let isValid = true;
-  if (validateEditField("editName")) {
+
+  // Validierung der Eingabefelder
+  if (!validateEditField("editName")) {
     isValid = false;
   }
-  if (validateEditField("editEmail")) {
+  if (!validateEditField("editEmail")) {
     isValid = false;
   }
-  if (validateEditField("editTel")) {
+  if (!validateEditField("editTel")) {
     isValid = false;
   }
+
+  // Wenn alle Felder gültig sind, bearbeite den Kontakt
   if (isValid) {
     editContact();
   }
 }
 
+function resetEditErrorMessages() {
+  const errorElements = document.querySelectorAll(".error-message");
+  errorElements.forEach((element) => {
+    element.innerText = ""; // Entfernt den Text der Fehlermeldung
+    element.style.display = "none"; // Versteckt die Fehlermeldung
+  });
+}
 /**
  * This function updates contact information.
  *

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../style/contactsResponsive.css">
 
 
-    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/contacts.js"></script>
     <script src="../JS/firebase.js"></script>
@@ -102,16 +102,16 @@
 
                                     <input id="name" placeholder="Name" type="text" onblur="validateEditField('name')"
                                         oninput="checkFormFields2()">
-                                    <div id="nameError" class="error-message"></div>
-
+                                    <div id="nameError" class="error-message" style="display: none;"></div>
 
                                     <input id="email" placeholder="Email" type="email"
-                                        onblur="validateEditField('email')" oninput="checkFormFields2()">
-                                    <div id="emailError" class="error-message"></div>
+                                        onblur="validateEditField('email')"
+                                        oninput="checkFormFields2(); validateRealTimeEmailInput()">
+                                    <div id="emailError" class="error-message" style="display: none;"></div>
 
                                     <input type="tel" id="tel" placeholder="Phone" onblur="validateEditField('tel')"
                                         oninput="checkFormFields2(); validateRealTimeTelInput()">
-                                    <div id="telError" class="error-message"></div>
+                                    <div id="telError" class="error-message" style="display: none;"></div>
                                     <div class="contact_button">
                                         <button type="button" onclick="openClosePopUp('close')"
                                             class="cancel-Button">Cancel</button>
@@ -151,19 +151,19 @@
 
                                 <form class="form" id="editContactForm" onsubmit="modifyContact(event)">
                                     <input id="editName" placeholder="Name" type="text"
-                                        onblur="validateEditField('editName')" oninput="checkFormFields()">
+                                        onblur="validateEditField('editName')" oninput="checkFormFields('edit')">
                                     <div id="editNameError" class="error-message"></div>
 
                                     <input id="editEmail" placeholder="Email" type="email"
-                                        onblur="validateEditField('editEmail')" oninput="checkFormFields()">
+                                        onblur="validateEditField('editEmail')" oninput="checkFormFields('edit')">
                                     <div id="editEmailError" class="error-message"></div>
 
                                     <input id="editTel" placeholder="Phone" type="tel"
-                                        onblur="validateEditField('editTel')" oninput="checkFormFields()">
+                                        onblur="validateEditField('editTel')" oninput="checkFormFields('edit')">
                                     <div id="editTelError" class="error-message"></div>
 
                                     <div class="contact_button">
-                                        <button onclick="removeContact('contact', keyForEdit)" type="button"
+                                        <button onclick="removeContact('contact','${contact.id}')" type="button"
                                             class="cancel-Button">
                                             Delete <img src="../img/close.png" alt="">
                                         </button>

@@ -13,7 +13,7 @@ async function loadContacts() {
 
     renderContacts(Object.values(data));
   } catch (error) {}
-  
+
   submitContact("contact");
 }
 
@@ -447,6 +447,34 @@ function contactInfoHtml(root, contactId) {
     `;
 }
 
+function renderEditContactForm(contact) {
+  const form = `
+    <form class="form" id="editContactForm" onsubmit="modifyContact(event)">
+      <input id="editName" placeholder="Name" type="text" value="${contact.name}" 
+             onblur="validateEditField('editName')" oninput="checkFormFields('edit')">
+      <div id="editNameError" class="error-message"></div>
+
+      <input id="editEmail" placeholder="Email" type="email" value="${contact.email}" 
+             onblur="validateEditField('editEmail')" oninput="checkFormFields('edit')">
+      <div id="editEmailError" class="error-message"></div>
+
+      <input id="editTel" placeholder="Phone" type="tel" value="${contact.telefonnummer}" 
+             onblur="validateEditField('editTel')" oninput="checkFormFields('edit')">
+      <div id="editTelError" class="error-message"></div>
+
+      <div class="contact_button">
+        <button onclick="removeContact('contact', '${contact.id}')" type="button" class="cancel-Button">
+            Delete <img src="../img/close.png" alt="">
+        </button>
+        <button id="editSubmit" type="submit" class="createButton saveButton">
+            Save <img class="check" src="../img/check.svg" alt="">
+        </button>
+        <img class="check" src="../img/SubtasksDel.png" alt="" style="display: none;">
+      </div>
+    </form>
+  `;
+  document.getElementById("editContactContainer").innerHTML = form;
+}
 /**
  * Calculates the brightness of a hex color.
  *

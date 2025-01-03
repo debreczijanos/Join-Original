@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/header.css">
 
-    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/navToggel.js"></script>
     <script src="../JS/includeHTML.js"></script>
-    <script src="../JS/currentDate.js"></script>
+    <script src="../JS/currentDate.js" defer></script>
     <script src="../JS/summary.js" defer></script>
 
     <title>Join</title>
@@ -104,6 +104,12 @@
                 // Header-Funktionalität initialisieren
                 initializeHeader();
             });
+
+            function initializeHeader() {
+                setUserInitial();
+                activateLogoutButton();
+                setupOverlayClose();
+            }
         </script>
 </body>
 
