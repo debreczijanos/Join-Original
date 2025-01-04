@@ -812,6 +812,20 @@ h4 {
   }
 }
 
+@media (min-width: 1250px) {
+.mycontacts {
+  
+  height: calc(100vh - 111px);
+}
+}
+
+@media (max-width: 1025px) {
+  .mycontacts {
+    
+    height: calc(100vh - 111px);
+  }
+  }
+
 .h2Contacts {
   margin: 0;
   padding: 15px 15px 0px 15px;
