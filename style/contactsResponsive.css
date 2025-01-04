@@ -8,14 +8,6 @@
   color: white;
 }
 
-@media (max-width: 450px) {
-  .logo-box img,
-  .edit-logo-box img {
-    width: 200px;
-    height: auto;
-  }
-}
-
 @media (max-width: 950px) {
   .backArrow {
     margin-top: 16px;
