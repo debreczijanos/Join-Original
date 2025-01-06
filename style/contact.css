@@ -108,6 +108,7 @@
   border: solid 3px #29abe2;
   width: 90px;
   display: flex;
+  margin: 0;
 }
 
 .overlay-image {
@@ -209,7 +210,7 @@
   cursor: pointer;
   font-size: 24px;
   font-weight: 400;
-  color: white;
+  color: rgba(0, 0, 0, 0.419);
 }
 
 .form-buttons {
@@ -418,8 +419,20 @@
   padding: 12px 0px 12px 86px;
 }
 
-@media(max-width: 1025px){
-  .overlay-content{
+@media (max-width: 1025px) {
+  .close-overlay-btn {
+    color: white;
+  }
+
+  /* .cancel-btn {
+    display: none;
+  } */
+
+  .contact-item {
+    max-width: 100%;
+  }
+
+  .overlay-content {
     max-width: 396px;
     max-height: 100vh;
     width: 100vw;
@@ -430,27 +443,47 @@
     overflow-y: auto;
   }
 
-  .overlay-image{
+  .overlay-image {
     display: none;
   }
 
-  .overlay-header{
-    background-color: rgb(9, 25, 49);
+  .overlay-header {
+    background-color: #2a3647;
     width: 396px;
     height: 351px;
     display: flex;
     flex-direction: column;
     gap: 24px;
     justify-content: center;
+    border-radius: 20px 0px 0px 0px;
   }
 
-  .header-style-responsive{
+  .overlay-header > h2 {
+    margin-block: 0;
+    font-size: 47px;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .overlay-header > span {
+    margin-block: 0;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+  }
+
+  .overlay-header > hr {
+    border: solid 3px #29abe2;
+    width: 90px;
+    display: flex;
+  }
+  .header-style-responsive {
     display: flex;
     align-items: center;
     margin-right: 15px;
   }
 
-  .overlay-placeholder{
+  .overlay-placeholder {
     top: -10px;
     position: relative;
     height: 80px;
@@ -460,32 +493,48 @@
     padding: 0;
   }
 
-  .placeholder-image{
-    position: absolute; 
+  .placeholder-image {
+    position: absolute;
     left: 140px;
     top: -43px;
   }
 
-  .overlay-form{
+  .overlay-placeholder p {
+    position: absolute;
+    left: 140px;
+    top: -93px;
+  }
+
+  .overlay-form {
     width: 100%;
     padding: 0;
     padding-top: 20px;
   }
 
-  #contactForm{
+  #contactForm {
     padding-right: 10px;
     padding-left: 10px;
   }
 
-  .input-container{
+  .input-container {
     margin-bottom: 0;
   }
 
-  .form-buttons{
+  .form-buttons {
     display: flex;
     justify-content: center;
     gap: 30px;
     width: 100%;
     padding: 16px 0;
+  }
+
+  .list {
+    width: 100%;
+    padding: 3px;
+  }
+
+  .contact-item {
+    width: 100%;
+    max-width: 100%;
   }
 }

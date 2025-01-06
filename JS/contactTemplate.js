@@ -140,14 +140,14 @@ function getContactOverlayTemplate(contactData, isEditMode) {
     ? `<p style="background-color: ${getRandomColor()};">${name[0].toUpperCase()}</p>`
     : `<img src="../img/personLogo.png" alt="Logo" class="placeholder-image">`;
 
-  return /*html*/`
+  return /*html*/ `
     <div class="overlay-content">
       <!-- Platzhalter für Bild und Text -->
       <div class="overlay-header">
-        <div class="header-style-responsive">
-          <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
-          <img class="edit-logo addLogo" src="../img/add-contact.png" alt="Add Contact">
-        </div>
+      <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
+      <h2>${isEditMode ? "Edit Contact" : "Add Contact"}</h2>
+      <span>${isEditMode ? "" : "Tasks are better with a team!"}</span>
+      <hr>
       </div>
   
       <!-- Erster Buchstabe oder Bild als Platzhalter -->
@@ -181,13 +181,36 @@ function getContactOverlayTemplate(contactData, isEditMode) {
             ${
               isEditMode
                 ? `<button type="button" class="delete-btn" onclick="deleteContact('${contactData.id}', '${contactData.name}')">Löschen</button>
-                   <button type="button" class="save-btn" disabled onclick="saveEditedContact('${contactData.id}')">Speichern</button>`
-                : `<button type="button" class="cancel-btn" onclick="closeAddContactOverlay()">Cancel</button>
-                   <button type="button" class="create-btn" id="createContactButton" disabled onclick="createContact()">Create contact</button>`
+                   <button type="button" class="save-btn" disabled onclick="saveEditedContact('${contactData.id}')">Speichern <img src="../img/check.svg" alt="Check"></button>`
+                : `<button type="button" class="cancel-btn" onclick="closeAddContactOverlay()">Cancel <span> X </span></button>
+                   <button type="button" class="create-btn" id="createContactButton" disabled onclick="createContact()">Create contact <img src="../img/check.svg" alt="Check"></button>`
             }
           </div>
         </form>
       </div>
     </div>
   `;
+}
+
+/**
+ * Erstellt ein Bestätigungsdialog für das Löschen eines Kontakts.
+ *
+ * @function createConfirmationBox
+ * @param {string} contactName - Der Name des Kontakts, der gelöscht werden soll.
+ * @returns {HTMLElement} Das HTML-Element der Bestätigungsbox.
+ */
+function createConfirmationBox(contactName) {
+  const confirmationBox = document.createElement("div");
+  confirmationBox.classList.add("confirmation-box");
+
+  confirmationBox.innerHTML = `
+      <div class="confirmation-content">
+        <p>Sind Sie sicher, dass Sie den Kontakt <strong>${contactName}</strong> löschen möchten?</p>
+        <div class="confirmation-buttons">
+          <button class="confirm-btn">Ja</button>
+          <button class="cancel-btn">Nein</button>
+        </div>
+      </div>
+    `;
+  return confirmationBox;
 }
