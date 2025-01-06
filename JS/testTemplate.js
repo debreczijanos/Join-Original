@@ -140,7 +140,7 @@ function getContactOverlayTemplate(contactData, isEditMode) {
     ? `<p style="background-color: ${getRandomColor()};">${name[0].toUpperCase()}</p>`
     : `<img src="../img/personLogo.png" alt="Logo" class="placeholder-image">`;
 
-  return `
+  return /*html*/`
     <div class="overlay-content">
       <!-- Platzhalter für Bild und Text -->
       <div class="overlay-header">
