@@ -1,0 +1,417 @@
+.confirmation-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirmation-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-content p {
+  margin-bottom: 20px;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.confirmation-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmation-buttons .confirm-btn {
+  background-color: #d9534f;
+  color: white;
+}
+
+.confirmation-buttons .cancel-btn {
+  background-color: #5bc0de;
+  color: white;
+}
+
+.confirmation-buttons button:hover {
+  opacity: 0.9;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background-color: white;
+  padding: 0px;
+  position: relative;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  width: 1212px;
+  height: 592px;
+  border-radius: 30px;
+}
+
+.overlay-header {
+  text-align: center;
+  background-color: #2a3647;
+  height: 594px;
+  width: 467px;
+  padding: 66px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  border-radius: 20px 0px 0px 20px;
+}
+
+.overlay-header > h2 {
+  margin-block: 0;
+  font-size: 61px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.overlay-header > span {
+  margin-block: 0;
+  font-size: 27px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.overlay-header > hr {
+  border: solid 3px #29abe2;
+  width: 90px;
+  display: flex;
+}
+
+.overlay-image {
+  object-fit: cover;
+  height: 66px;
+  width: 55px;
+}
+
+.overlay-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-placeholder > img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+}
+.overlay-placeholder > p {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 47px;
+  color: white;
+  font-weight: 500;
+}
+
+.overlay-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  width: 422px;
+}
+
+#contactForm {
+  width: 422px;
+  display: flex;
+  flex-direction: column;
+  padding-right: 40px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 5px 10px;
+  height: 40px;
+  width: 100%; /* Passe die Breite entsprechend an */
+  box-shadow: 0 0 2px #dcdcdc;
+  margin-bottom: 10px; /* Abstand zwischen den Feldern */
+}
+
+.input-container input {
+  flex: 1; /* Nimmt den verbleibenden Platz ein */
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 10px;
+  height: 100%;
+}
+
+.input-container .input-icon {
+  width: 20px; /* Passe die Icon-Größe an */
+  height: 20px;
+  margin-left: 10px;
+}
+
+.input-container input::placeholder {
+  color: #ccc; /* Platzhalterfarbe */
+}
+
+.input-container:hover,
+.input-container:focus-within {
+  border-color: #29abe2; /* Farbe für Hover oder Fokus */
+  box-shadow: 0 0 4px #29abe2; /* Lila Schimmer */
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.close-overlay-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.create-btn,
+.delete-btn,
+.save-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 56px;
+  gap: 4px;
+  padding: 16px;
+}
+
+.cancel-btn {
+  border: solid 1px #2a3647;
+  color: #2a3647;
+  /* width: 110px; */
+  background-color: #f6f7f8;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.delete-btn {
+  border: solid 1px #2a3647;
+  color: #2a3647;
+  background-color: #f6f7f8;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.save-btn:enabled {
+  border: none;
+  color: white;
+  background-color: #2a3647;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+.save-btn:disabled {
+  background-color: grey;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+.create-btn:enabled {
+  border: none;
+  color: white;
+  background-color: #2a3647;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+.create-btn:disabled {
+  background-color: grey;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.5;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+}
+
+.cancel-btn:hover {
+  color: #29abe2;
+  border: solid 1px #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.delete-btn:hover {
+  color: #29abe2;
+  border: solid 1px #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.create-btn:not(:disabled):hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.save-btn:not(:disabled):hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+#contactDate {
+  padding-top: 24px;
+}
+
+.contact-name {
+  display: flex;
+  gap: 54px;
+}
+
+.contact-name-actions > h2 {
+  margin-block: 0;
+  font-size: 47px;
+  font-weight: 500;
+  color: black;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 15px;
+}
+.edit-btn,
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  border: none;
+  background: none;
+}
+
+.edit-btn img:hover,
+.delete-button img:hover {
+  cursor: pointer;
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+}
+
+.edit-btn:hover,
+.delete-button:hover {
+  cursor: pointer;
+  filter: invert(33%) sepia(100%) saturate(5000%) hue-rotate(190deg)
+    brightness(100%) contrast(100%);
+}
+
+.contact-email,
+.contact-telefonnummer {
+  font-size: 16px;
+  padding-top: 16px;
+}
+
+.contact-email > a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: #007cee;
+}
+.contact-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 36px;
+  width: 322px;
+  height: 78px;
+  padding-left: 10px;
+}
+
+.contact-item:hover {
+  cursor: pointer;
+  background-color: #f8f8f8;
+}
+
+.contact-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+}
+
+.contact-details > h3 {
+  margin-block: 0;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.contact-details > a {
+  margin-block: 0;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: #007cee;
+}
+
+.letter-header {
+  border-bottom: 0.5px solid grey;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 12px 0px 12px 86px;
+}

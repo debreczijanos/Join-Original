@@ -217,9 +217,9 @@ html {
   cursor: pointer;
 }
 
-.createButton:hover {
+/* .createButton:hover {
   cursor: pointer;
-}
+} */
 
 @keyframes slideIn {
   from {
@@ -538,10 +538,11 @@ html {
   cursor: pointer;
 }
 
-.createButton:hover {
+.createButton:active:hover {
   background-color: rgb(41, 171, 226);
   transition: 150ms;
   color: white;
+  cursor: pointer;
 }
 
 .contact_button img {
@@ -813,18 +814,16 @@ h4 {
 }
 
 @media (min-width: 1250px) {
-.mycontacts {
-  
-  height: calc(100vh - 111px);
-}
+  .mycontacts {
+    height: calc(100vh - 111px);
+  }
 }
 
 @media (max-width: 1025px) {
   .mycontacts {
-    
     height: calc(100vh - 111px);
   }
-  }
+}
 
 .h2Contacts {
   margin: 0;

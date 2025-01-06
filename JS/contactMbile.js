@@ -440,22 +440,34 @@ async function checkForDuplicateContact(API_CONTACTS, API_USERS, email, tel) {
   return isDuplicate;
 }
 
-function saveNewContact(name, email, tel) {
+async function saveNewContact(name, email, tel) {
   const button = document.getElementById("createSubmit");
+  if (button.disabled) return; // Abbrechen, falls bereits deaktiviert
   button.disabled = true;
-  const nextColor = selectNextColor();
-  contactList.push({
-    name,
-    email,
-    telefonnummer: tel,
-    color: nextColor,
-  });
-  submitContact("contact");
+
+  // Überprüfen, ob Kontakt bereits existiert
+  if (
+    !contactList.some(
+      (contact) => contact.email === email && contact.name === name
+    )
+  ) {
+    const nextColor = selectNextColor();
+    contactList.push({
+      name,
+      email,
+      telefonnummer: tel,
+      color: nextColor,
+    });
+    await submitContact("contact");
+  }
+
   openClosePopUp("close");
 
   document.getElementById("name").value = "";
   document.getElementById("email").value = "";
   document.getElementById("tel").value = "";
+
+  button.disabled = false;
 }
 
 /**
@@ -511,7 +523,11 @@ async function removeContact(path = "contact", id) {
       throw new Error("Löschfehler des Kontakts");
     }
 
-    await fetchData();
+    // Entfernen Sie den Kontakt aus der lokalen Liste
+    contactList = contactList.filter((contact) => contact.id !== id);
+    storedData = storedData.filter((contact) => contact.id !== id);
+
+    await fetchData(); // Daten vom Server neu laden
     clearDetailedView();
     currentEditKey = null;
 
@@ -528,21 +544,35 @@ async function removeContact(path = "contact", id) {
  * @param {string} path - The server endpoint path for submission.
  */
 async function submitContact(path) {
+  // Entferne Duplikate aus der Liste
+  contactList = contactList.filter(
+    (contact, index, self) =>
+      index ===
+      self.findIndex(
+        (c) => c.email === contact.email && c.name === contact.name
+      )
+  );
+
   for (const element of contactList) {
-    selectedContact = element;
-    saveHighlight();
-    const response = await fetch(`${BASE_URL}${path}.json`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(element),
-    });
-    response.ok
-      ? updateColorCounter()
-      : console.error("Failed to save contact");
+    if (
+      !storedData.some(
+        (contact) =>
+          contact.email === element.email && contact.name === element.name
+      )
+    ) {
+      const response = await fetch(`${BASE_URL}${path}.json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(element),
+      });
+      response.ok
+        ? console.log(`Kontakt ${element.name} gespeichert.`)
+        : console.error("Fehler beim Speichern des Kontakts");
+    }
   }
-  fetchData();
+  await fetchData();
 }
 
 /**
