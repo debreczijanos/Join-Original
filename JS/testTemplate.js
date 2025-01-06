@@ -144,10 +144,10 @@ function getContactOverlayTemplate(contactData, isEditMode) {
     <div class="overlay-content">
       <!-- Platzhalter für Bild und Text -->
       <div class="overlay-header">
-        <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
-        <h2>${isEditMode ? "Bearbeiten Sie den Kontakt" : "Add Contact"}</h2>
-        <span>${isEditMode ? "" : "Tasks are better with a team!"}</span>
-        <hr>
+        <div class="header-style-responsive">
+          <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
+          <img class="edit-logo addLogo" src="../img/add-contact.png" alt="Add Contact">
+        </div>
       </div>
   
       <!-- Erster Buchstabe oder Bild als Platzhalter -->
@@ -182,8 +182,8 @@ function getContactOverlayTemplate(contactData, isEditMode) {
               isEditMode
                 ? `<button type="button" class="delete-btn" onclick="deleteContact('${contactData.id}', '${contactData.name}')">Löschen</button>
                    <button type="button" class="save-btn" disabled onclick="saveEditedContact('${contactData.id}')">Speichern</button>`
-                : `<button type="button" class="cancel-btn" onclick="closeAddContactOverlay()">Cancel X</button>
-                   <button type="button" class="create-btn" id="createContactButton" disabled onclick="createContact()">Create contact <img src="../img/check.svg" alt="Check"> </button>`
+                : `<button type="button" class="cancel-btn" onclick="closeAddContactOverlay()">Cancel</button>
+                   <button type="button" class="create-btn" id="createContactButton" disabled onclick="createContact()">Create contact</button>`
             }
           </div>
         </form>
