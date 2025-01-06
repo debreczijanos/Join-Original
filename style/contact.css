@@ -538,3 +538,17 @@
     max-width: 100%;
   }
 }
+
+@media (max-width: 350px) {
+  .overlay-header {
+    padding-left: 10px;
+  }
+
+  .overlay-placeholder p {
+    left: 100px;
+  }
+
+  .placeholder-image {
+    left: 100px;
+  }
+}
