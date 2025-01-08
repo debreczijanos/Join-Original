@@ -558,12 +558,13 @@ input[type="text"]::placeholder {
 
 /* Hintergrund der Scrollbar-Spur */
 .overlay-content::-webkit-scrollbar-track {
-  background: transparent; /* Hintergrundfarbe */
+  background: transparent;
+   /* Hintergrundfarbe */
 }
 
 /* Scrollbalken selbst */
 .overlay-content::-webkit-scrollbar-thumb {
-  background: #29abe2;
+  background: #29abe2; 
   /* Farbe */
   border-radius: 10px; /* Abgerundete Kanten */
 }
@@ -571,6 +572,16 @@ input[type="text"]::placeholder {
 /* Hover-Effekt */
 .overlay-content::-webkit-scrollbar-thumb:hover {
   background: #2a3647; /* Farbe bei Hover */
+}
+
+.overlay-content::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 20px; 
+}
+
+.overlay-content::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 20px;
 }
 
 .overlay-category-close {
