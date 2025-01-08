@@ -161,6 +161,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
+ * Verhindere Texteingabe, erlaube aber z.B. Zahlen
+ */
+const input = document.getElementById("customDropdownInput");
+input.addEventListener("keypress", (event) => {
+  if (isNaN(event.key)) {
+    event.preventDefault();
+  }
+});
+
+/**
  * Lädt Kontakte von APIs und fügt sie dem Dropdown hinzu.
  *
  * @param {string} apiURL - Die URL der API.

@@ -815,13 +815,13 @@ h4 {
 
 @media (min-width: 1250px) {
   .mycontacts {
-    height: calc(100vh - 111px);
+    height: calc(100vh - 97px);
   }
 }
 
 @media (max-width: 1025px) {
   .mycontacts {
-    height: calc(100vh - 111px);
+    height: calc(100vh - 97px);
   }
 }
 
@@ -836,7 +836,7 @@ h4 {
 .mycontacts {
   width: 456px;
   margin-bottom: 163px;
-  /* height: calc(100vh - 111px); */
+  height: calc(100vh - 97px);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
