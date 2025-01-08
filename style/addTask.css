@@ -664,7 +664,6 @@ p > span {
   .add-subtasks > label,
   .subtasks-wrapper > input,
   .required,
-  .clear-btn,
   .add-task-date-value > input,
   #title,
   #description,
@@ -678,13 +677,18 @@ p > span {
     font-weight: 400;
     line-height: 19.2px;
     display: flex;
-    width: 97%;
+    width: 100%;
+  }
+
+  .clear-btn {
+    font-size: 16px;
   }
 
   .prio-btn > button {
     height: 41px;
-    width: auto;
+    width: 100px;
   }
+
   .prio-btn {
     width: 100%;
     justify-content: center;
@@ -694,7 +698,7 @@ p > span {
   }
 
   .add-task-date-prio {
-    width: 97%;
+    width: 100%;
   }
 
   .add-task-ctn,
@@ -712,11 +716,27 @@ p > span {
   .add-task-date-value > input,
   .subtasks-wrapper,
   .subtask-list {
-    width: 97%;
+    width: 100%;
     align-items: center;
   }
 
   .required {
     padding-left: 4px;
+  }
+
+  .submit-btn {
+    justify-content: center;
+  }
+
+  .error-message {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+@media (max-width: 350px) {
+  .prio-btn > button {
+    width: 90px;
   }
 }

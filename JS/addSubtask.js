@@ -224,7 +224,16 @@ function handleEditSave(event, saveHandler) {
  * @param {HTMLElement} subtaskTextElement - Das Text-Element des Subtasks.
  */
 function saveSubtaskEdit(editInput, subtaskTextElement) {
-  subtaskTextElement.textContent = editInput.value.trim();
+  const newValue = editInput.value.trim();
+
+  if (newValue === "") {
+    // Wenn das Feld leer ist, kehre zum vorherigen Wert zurück
+    editInput.replaceWith(subtaskTextElement); // Eingabefeld durch ursprünglichen Text ersetzen
+    return;
+  }
+
+  // Wenn ein gültiger Wert eingegeben wurde, speichere ihn
+  subtaskTextElement.textContent = newValue;
   editInput.replaceWith(subtaskTextElement);
 }
 

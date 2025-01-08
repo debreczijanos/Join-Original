@@ -127,11 +127,22 @@ function removeErrorMessages(fields) {
  */
 function validateFields(fields) {
   let hasErrors = false;
+  const today = new Date().toISOString().split("T")[0]; // Heutiges Datum im Format YYYY-MM-DD
 
   fields.forEach(({ input, errorMessage, errorClass }) => {
     if (!input.value.trim()) {
       hasErrors = true;
       displayError(input, errorMessage, errorClass);
+    }
+
+    // Zusätzliche Validierung für das Datum
+    if (input.type === "date" && input.value < today) {
+      hasErrors = true;
+      displayError(
+        input,
+        "Das Datum darf nicht vor heute liegen!",
+        "error-due-date"
+      );
     }
   });
 
@@ -243,6 +254,22 @@ function addInputListeners() {
 
   fieldsToValidate.forEach(({ input, errorClass }) => {
     addErrorRemovalListeners(input, errorClass);
+
+    // Zusätzliche Validierung für Datumseingaben
+    if (input.type === "date") {
+      input.addEventListener("change", () => {
+        const today = new Date().toISOString().split("T")[0];
+        if (input.value < today) {
+          displayError(
+            input,
+            "Das Datum darf nicht vor heute liegen!",
+            "error-due-date"
+          );
+        } else {
+          removeError(input, "error-due-date");
+        }
+      });
+    }
   });
 
   handleCategoryDropdown();
@@ -295,11 +322,21 @@ function removeError(input, errorClass) {
   }
 }
 
+function setMinDateForDateInput() {
+  const dateInput = document.querySelector("input[type='date']");
+  if (dateInput) {
+    // Heutiges Datum im Format YYYY-MM-DD
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.setAttribute("min", today);
+  }
+}
+
 /**
  * Event-Listener beim Laden der Seite hinzufügen
  */
 window.onload = () => {
   addInputListeners();
+  setMinDateForDateInput();
 };
 
 /**
