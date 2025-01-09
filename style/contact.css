@@ -167,7 +167,6 @@
   height: 40px;
   width: 100%; /* Passe die Breite entsprechend an */
   box-shadow: 0 0 2px #dcdcdc;
-  margin-bottom: 10px; /* Abstand zwischen den Feldern */
 }
 
 .input-container input {
@@ -198,7 +197,7 @@
 .error-message {
   color: red;
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 .close-overlay-btn {
