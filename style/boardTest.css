@@ -128,7 +128,7 @@ Overly CSS */
   background-color: rgba(81, 81, 81, 0.9);
   display: flex;
   z-index: 1;
-  max-width: 1440px;
+  /*max-width: 1440px;*/
 }
 
 .great-open-Task {
@@ -520,14 +520,15 @@ input[type="text"]::placeholder {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  max-width: 1440px;
+  /* width: 100%; */
+  /* max-width: 1440px; */
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  width: 100vw;
 }
 
 .overlay-category-close > h3 {
