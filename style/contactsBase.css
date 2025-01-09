@@ -85,7 +85,7 @@ html {
 }
 
 #mycontacts::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 #mycontacts::-webkit-scrollbar-track {
@@ -94,12 +94,12 @@ html {
 }
 
 #mycontacts::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #29abe2;
   border-radius: 10px;
 }
 
 #mycontacts::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #2a3647;
 }
 
 #content-area {

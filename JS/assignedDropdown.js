@@ -267,13 +267,29 @@ function createContactElement(contact) {
   checkbox.id = checkboxId;
   label.htmlFor = checkboxId;
 
+  // Standardstil für das Label setzen
+  label.style.backgroundColor = "#f9f9f9"; // Standardhintergrund
+  label.style.padding = "10px"; // Optional, für bessere Sichtbarkeit
+  label.style.display = "flex"; // Optional, wenn du Flex-Layout verwendest
+  label.style.alignItems = "center";
+
+  // Ändere den Hintergrund beim Ändern des Checkbox-Zustands
   checkbox.onchange = () => {
+    if (checkbox.checked) {
+      label.style.backgroundColor = "#2A3647"; // Grünlicher Hintergrund
+      label.style.color = "#ffffff"; // Textfarbe weiß
+    } else {
+      label.style.backgroundColor = "#f9f9f9"; // Standardhintergrund
+      label.style.color = "#000000"; // Textfarbe schwarz
+    }
+
     updateSelectedContacts(contact.name, button, checkbox.checked);
   };
 
+  // Füge die Checkbox, den Button und den Namen dem Label hinzu
+  label.appendChild(checkbox);
   label.appendChild(button);
   label.appendChild(document.createTextNode(contact.name));
-  label.appendChild(checkbox);
 
   return label;
 }
@@ -404,6 +420,7 @@ function buildTaskObject() {
     assignedTo: getSelectedContacts(),
     dueDate: document.querySelector("input[type='date']").value,
     prio: getActivePrio(),
+    status: "To Do",
     category: document.getElementById("customDropdownInput").value.trim(),
     subtasks: getSubtasks(),
   };

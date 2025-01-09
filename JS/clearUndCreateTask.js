@@ -164,6 +164,7 @@ function displayError(input, errorMessage, errorClass) {
     errorText.textContent = errorMessage;
     input.parentElement.appendChild(errorText);
   }
+  toggleButtonState();
 }
 
 /**
@@ -171,17 +172,18 @@ function displayError(input, errorMessage, errorClass) {
  *
  * @returns {Object} Das erstellte Task-Objekt.
  */
-function buildTaskObject() {
-  return {
-    title: document.getElementById("title").value.trim(),
-    description: document.getElementById("description").value.trim(),
-    assignedTo: getSelectedContacts(),
-    dueDate: document.querySelector("input[type='date']").value,
-    prio: getActivePrio(),
-    category: document.getElementById("customDropdownInput").value.trim(),
-    subtasks: getSubtasks(),
-  };
-}
+// function buildTaskObject() {
+//   return {
+//     title: document.getElementById("title").value.trim(),
+//     description: document.getElementById("description").value.trim(),
+//     assignedTo: getSelectedContacts(),
+//     dueDate: document.querySelector("input[type='date']").value,
+//     prio: getActivePrio(),
+//     status: "To Do",
+//     category: document.getElementById("customDropdownInput").value.trim(),
+//     subtasks: getSubtasks(),
+//   };
+// }
 
 /**
  * Holt die ausgewählten Kontakte aus dem Formular.
@@ -220,7 +222,12 @@ function getSubtasks() {
  *
  * @param {Object} task - Das zu sendende Task-Objekt.
  */
+let isRequestInProgress = false;
+
 function sendTaskToAPI(task) {
+  if (isRequestInProgress) return;
+
+  isRequestInProgress = true;
   fetch(
     "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks.json",
     {
@@ -243,7 +250,10 @@ function sendTaskToAPI(task) {
         console.error("Error creating task.");
       }
     })
-    .catch((error) => console.error("API Error:", error));
+    .catch((error) => console.error("API Error:", error))
+    .finally(() => {
+      isRequestInProgress = false;
+    });
 }
 
 /**
@@ -319,6 +329,8 @@ function removeError(input, errorClass) {
     input.classList.remove("error");
     const errorText = document.querySelector(`.${errorClass}`);
     if (errorText) errorText.remove();
+
+    toggleButtonState();
   }
 }
 
@@ -331,12 +343,41 @@ function setMinDateForDateInput() {
   }
 }
 
+function toggleButtonState() {
+  const createTaskButton = document.querySelector(".create-task-btn");
+  const errorMessages = document.querySelectorAll(".error-message");
+
+  const requiredFields = getRequiredFields();
+  const hasEmptyFields = requiredFields.some(
+    ({ input }) => !input.value.trim()
+  );
+
+  if (errorMessages.length === 0 && !hasEmptyFields) {
+    createTaskButton.classList.add("active");
+    createTaskButton.classList.remove("inactive");
+  } else {
+    createTaskButton.classList.add("inactive");
+    createTaskButton.classList.remove("active");
+  }
+}
+
+document.querySelector(".create-task-btn").addEventListener("click", (e) => {
+  const createTaskButton = e.target;
+
+  if (!createTaskButton.classList.contains("active")) {
+    return;
+  }
+
+  createTask();
+});
+
 /**
  * Event-Listener beim Laden der Seite hinzufügen
  */
 window.onload = () => {
   addInputListeners();
   setMinDateForDateInput();
+  toggleButtonState();
 };
 
 /**

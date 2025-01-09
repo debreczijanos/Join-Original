@@ -1,3 +1,33 @@
+#dropdownMenu input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none; /* Für Safari */
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#dropdownMenu input[type="checkbox"]:checked {
+  background-color: #2a3647;
+  border: 2px solid white;
+}
+
+#dropdownMenu input[type="checkbox"]:checked::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 18px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: relative;
+  top: -6px;
+  left: 8px;
+}
+
 .add-task-ctn-date {
   display: flex;
   align-items: center;
@@ -58,6 +88,10 @@
 
 label {
   color: #2a3647;
+}
+
+#dropdownMenu > label {
+  margin-bottom: 1px;
 }
 
 label > span,
@@ -187,6 +221,33 @@ p > span {
   z-index: 1;
 }
 
+/* Vertikaler Scrollbalken */
+.dropdown-menu::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.dropdown-menu::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
 .dropdown-menu.open {
   display: block !important;
 }
@@ -196,6 +257,7 @@ p > span {
   align-items: center;
   padding: 10px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .dropdown-menu label:hover {
@@ -505,7 +567,7 @@ p > span {
   background-color: #f6f7f8;
 }
 
-.create-task-btn {
+.create-task-btn.active {
   border: none;
   color: white;
   background-color: #2a3647;
@@ -513,6 +575,18 @@ p > span {
   font-size: 21px;
   font-weight: 700;
   line-height: 25.2px;
+  cursor: pointer;
+}
+
+.create-task-btn.inactive {
+  border: none;
+  color: white;
+  background-color: grey;
+  width: 183px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+  cursor: not-allowed;
 }
 
 .clear-btn:hover {
@@ -521,7 +595,7 @@ p > span {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
 
-.create-task-btn:hover {
+.create-task-btn.active:hover {
   background-color: #29abe2;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
 }
@@ -732,6 +806,12 @@ p > span {
     display: flex;
     justify-content: flex-start;
     width: 100%;
+  }
+
+  .error-message,
+  .error-title,
+  .error-due-date {
+    margin-left: 0px;
   }
 }
 

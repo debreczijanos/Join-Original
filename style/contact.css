@@ -538,6 +538,11 @@
     max-width: 100%;
   }
 }
+@media (max-width: 450px) {
+  .error-message {
+    margin-bottom: 24px;
+  }
+}
 
 @media (max-width: 350px) {
   .overlay-header {

@@ -144,8 +144,8 @@ function toggleOverlay(overlayId, isHidden) {
 function saveEditedTask() {
   const updatedTask = getUpdatedTaskFromForm();
   if (!validateTaskData(updatedTask)) return;
-
   updateTaskInBackend(draggedTaskId, updatedTask);
+  closeTaskDetails();
 }
 
 /**
