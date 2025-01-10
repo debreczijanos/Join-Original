@@ -60,7 +60,6 @@ button {
   box-sizing: border-box;
   overflow: auto;
   overflow-x: hidden;
-
 }
 
 .filter-color-to-white {
@@ -108,7 +107,6 @@ input[type="checkbox"]:checked::after {
 /* Horizontaler Scrollbalken */
 .add-task-ctn-date::-webkit-scrollbar {
   height: 4px; /* Höhe des horizontalen Scrollbalkens */
-  
 }
 
 /* Hintergrund der Scrollbar-Spur */
