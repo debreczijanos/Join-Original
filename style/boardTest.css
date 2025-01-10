@@ -1,10 +1,10 @@
 .mein-content {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  max-height: 1024px;
+  height: 100%;
+  max-height: 100%;
   margin-left: 232px;
-  padding-top: 96px;
+  padding-top: 0px;
   box-sizing: border-box;
   overflow: auto;
   overflow-x: hidden;
@@ -15,6 +15,7 @@
   justify-content: space-around;
   padding: 0px 2px;
   gap: 18px;
+  height: 100vh;
 }
 
 /* .kanban-column {

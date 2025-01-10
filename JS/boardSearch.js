@@ -14,11 +14,21 @@ function filterTasks() {
   const tasks = document.querySelectorAll(".task");
 
   tasks.forEach((task) => {
-    const taskTitle = task.querySelector("h4").innerText.toLowerCase(); // Titel in Kleinbuchstaben
-    if (taskTitle.includes(searchInput)) {
-      task.style.display = "block";
+    // Hole den Textinhalt von h4, h3 und p innerhalb der Aufgabe
+    const taskTitleH4 = task.querySelector("h4")?.innerText.toLowerCase() || "";
+    const taskTitleH3 = task.querySelector("h3")?.innerText.toLowerCase() || "";
+    const taskParagraph =
+      task.querySelector("p")?.innerText.toLowerCase() || "";
+
+    // Prüfe, ob einer der Texte die Suchanfrage enthält
+    if (
+      taskTitleH4.includes(searchInput) ||
+      taskTitleH3.includes(searchInput) ||
+      taskParagraph.includes(searchInput)
+    ) {
+      task.style.display = "block"; // Zeige die Aufgabe an
     } else {
-      task.style.display = "none";
+      task.style.display = "none"; // Verberge die Aufgabe
     }
   });
 }

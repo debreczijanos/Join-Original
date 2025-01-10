@@ -165,9 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 const input = document.getElementById("customDropdownInput");
 input.addEventListener("keypress", (event) => {
-  if (isNaN(event.key)) {
-    event.preventDefault();
-  }
+  event.preventDefault();
+});
+
+input.addEventListener("input", (event) => {
+  input.value = "";
 });
 
 /**
