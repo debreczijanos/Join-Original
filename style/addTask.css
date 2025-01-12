@@ -769,6 +769,7 @@ p > span {
     align-items: center;
     height: auto;
     gap: 10px;
+    margin-bottom: 5px;
   }
 
   .add-task-date-prio {
