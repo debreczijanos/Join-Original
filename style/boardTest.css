@@ -118,7 +118,7 @@ Overly CSS */
   align-items: center;
   color: var(--dark-grey);
   font-weight: 700;
-  width: 95%; 
+  width: 95%;
   padding-right: 16px;
   margin-bottom: 6px;
   margin-left: 9px;
@@ -146,7 +146,7 @@ Overly CSS */
 
 .great-open-Task {
   /* transform: translateX(10%); */
-  width: 65%;  
+  width: 65%;
   position: relative;
   height: 530px;
   padding: 20px;
@@ -320,16 +320,17 @@ input[type="text"]::placeholder {
 }
 
 .priority-button.medium {
- background-color: #f0ad4e;
-  color: #fff;
+  /* background-color: #f0ad4e; */
+  /* color: #fff; */
+  color: #000000;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3px;
 }
 
-.medium img {
-  filter: brightness(0) invert(1); /* Turns the image white */
+.priority-button.selected > img {
+  filter: brightness(0) invert(1); /* Macht das Bild weiß */
 }
 
 .priority-button.medium:hover {
@@ -489,7 +490,7 @@ input[type="text"]::placeholder {
 }
 
 .priority-button.urgent {
-  color: black; 
+  color: black;
   background-color: white;
 }
 
@@ -503,11 +504,11 @@ input[type="text"]::placeholder {
   border-color: #8f1f1c;
 }
 
-.priority-button.medium {
+/* .priority-button.medium {
   background-color: #f0ad4e;
   color: white;
   border: 1px solid #d98429;
-}
+} */
 
 .priority-button.medium:hover {
   background-color: #f7d3a6;
@@ -516,6 +517,7 @@ input[type="text"]::placeholder {
 .priority-button.selected.medium {
   background-color: #e38b28;
   border-color: #d98429;
+  color: white;
 }
 
 .priority-button.low {
@@ -900,7 +902,7 @@ label {
   width: 100%;
   padding: 8px;
   font-size: 1rem;
-  border-radius: 6px !important; 
+  border-radius: 6px !important;
 }
 
 .kanban-column {
