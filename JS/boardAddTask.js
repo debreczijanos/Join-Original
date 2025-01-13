@@ -70,8 +70,8 @@ function editSubtask(button) {
  * Löscht die Felder des Formulars und setzt sie zurück.
  */
 function clearFormFields() {
-  document.getElementById("title").value = "";
-  document.getElementById("description").value = "";
+  document.getElementById("titlel").value = "";
+  document.getElementById("descriptions").value = "";
   document.getElementById("due-date").value = "";
   document.getElementById("assigned").value = "";
   document.getElementById("category").value = "";
