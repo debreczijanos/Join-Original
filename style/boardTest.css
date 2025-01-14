@@ -739,9 +739,23 @@ input[type="text"]::placeholder {
 
 #edit-title:focus,
 #edit-description:focus,
-#edit-due-date:focus {
+#edit-due-date:focus,
+#edit-priority:focus {
   outline: none;
   border: 2px solid #29abe2;
+}
+
+#edit-task-form > input:focus-within {
+  outline: none;
+  border: 2px solid #29abe2;
+}
+
+#edit-task-form > input {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  padding: 8px;
 }
 
 .save-btn > button {
