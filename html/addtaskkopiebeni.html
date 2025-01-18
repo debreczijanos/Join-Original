@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/addTask.css">
+    <link rel="stylesheet" href="../style/nav.css">
+    <link rel="stylesheet" href="../style/fonts.css">
+    <link rel="stylesheet" href="../style/header.css">
+
+
+    <script src="../JS/navToggel.js" defer></script>
+    <script src="../JS/init.js" defer></script>
+    <script src="../JS/addTask.js" defer></script>
+    <script src="../JS/addSubtask.js" defer></script>
+    <script src="../JS/clearUndCreateTask.js" defer></script>
+    <script src="../JS/assignedDropdown.js" defer></script>
+
+
+    <title>Join</title>
+</head>
+
+<body>
+    <div class="gesamt">
+        <div id="include-container"></div>
+
+        <div class="mein-content">
+
+            <div class="add-task-header">
+                <span>Add Task</span>
+            </div>
+
+            <div class="add-task-ctn-date">
+                <div class="add-task-ctn">
+                    <div class="add-task-title">
+                        <label for="title">Title<span>*</span> </label>
+                        <input type="text" name="title" id="title" placeholder="Enter a title" required>
+                    </div>
+
+                    <div class="add-task-description">
+                        <label for="desctiption">Description</label>
+                        <textarea name="desctiption" id="description" placeholder="Enter a Description"></textarea>
+                    </div>
+
+                    <div class="add-task-assigned">
+                        <label for="assigned">Assigned to</label>
+
+
+                        <div class="dropdown">
+                            <input type="text" id="dropdownInput" placeholder="Select contacts to assign"
+                                onclick="toggleDropdown('dropdownMenu')">
+                            <img class="dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
+                            <div id="dropdownMenu" class="dropdown-menu">
+                            </div>
+
+
+                            
+                            <!-- Neuer Container für die ausgewählten Namen -->
+                            <div id="selectedContacts" class="selected-contacts"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="partition"></div>
+
+                <div class="add-task-date">
+
+                    <div class="add-task-date-value">
+                        <label for="Datum">Due date<span>*</span></label>
+                        <input type="date" id="Datum" name="Datum" required>
+                    </div>
+
+                    <div class="add-task-date-prio">
+                        <label for="Prio">Prio</label>
+                        <div class="prio-btn">
+                            <button class="urgent">Urgent <img src="../img/Priorityhigh.png" alt="high"></button>
+                            <button class="medium">Medium <img src="../img/Prioritymiddel.png" alt="middel"></button>
+                            <button class="low">Low <img src="../img/Prioritylow.png" alt="low"> </button>
+                        </div>
+                    </div>
+
+                    <div class="add-task-date-category">
+                        <label for="category"> Category <span>*</span></label>
+                        <div class="custom-dropdown">
+                            <input type="text" name="category" id="customDropdownInput"
+                                onclick="toggleDropdown('customDropdownMenu')" placeholder="Select task category"
+                                required>
+                            <img class="dropdown-arrow dropdown-arrow-img" src="../img/arrow_drop_down.png "
+                                alt="dropdown">
+
+                            <div id="customDropdownMenu" class="dropdown-menu"
+                                style=" max-height: 100px; overflow-y: auto;">
+                                <div class="custom-dropdown-item">Technical Task</div>
+                                <div class="custom-dropdown-item">User Story</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-subtasks">
+                        <label for="subtasks">Subtasks</label>
+                        <div class="subtasks-wrapper" onclick="focusInput()">
+                            <input type="text" name="subtasks" id="subtaskInput" placeholder="Add new subtask">
+                            <img class="subtask-icon" id="iconAdd" src="../img/subTaskIcon.svg" alt="Add subtask">
+                            <img class="subtask-icon hidden" id="iconCancel" src="../img/subTaskCancel.svg" alt="Cancel"
+                                onclick="clearInput(event)">
+                            <img class="subtask-icon hidden" id="iconConfirm" src="../img/subTaskEnter.svg"
+                                alt="Confirm" onclick="addSubtask(event)">
+                        </div>
+
+                        <div class="subtask-list" id="subtaskList">
+                            <!-- Subtasks werden hier dynamisch eingefügt -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="submit-btn">
+                <button class="clear-btn">Clear X</button>
+                <button class="create-task-btn inactive">Create Task <img src="../img/check.svg" alt="Check"></button>
+            </div>
+
+            <div class="required">
+                <p><span>*</span>This filed is required</p>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="overlay" style="display: none;">
+        <div id="successMessage">
+            Task added to board <img src="../img/board.png" alt="board img ">
+        </div>
+    </div>
+</body>
+
+</html>
