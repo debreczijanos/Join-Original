@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../style/nav.css">
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/addTask.css">
     <link rel="stylesheet" href="../style/boardTest.css">
     <link rel="stylesheet" href="../style/addTask.css">
 
@@ -24,6 +25,8 @@
     <script src="../JS/boardOverlayEdit.js" defer></script>
     <script src="../JS/boardDragAndDrop.js" defer></script>
     <script src="../JS/boardAddTask.js" defer></script>
+    <script src="../JS/boardOverlayAssigned.js" defer></script>
+    <script src="../JS/boardShared.js" defer></script>
 
     <title>Join Board</title>     
 
@@ -147,7 +150,18 @@
                         <label for="edit-due-date">Fälligkeitsdatum</label>
                         <input type="date" id="edit-due-date" required />
 
-                        <label for="edit-priority">Priorität</label>
+                        <div class="add-task-assigned">
+                            <label for="assigned">Assigned to</label>
+                            <div class="dropdown">
+                                <input type="text" id="dropdownInput" placeholder="Select contacts to assign"
+                                    onclick="toggleDropdown()" />
+                                <div id="dropdownMenu" class="dropdown-menu d-none"></div>
+                            </div>
+                            <div id="selectedContacts" class="selected-contacts">
+
+                            </div>
+                        </div>
+                        <label for="edit-priority" class="edit-priority-label">Priorität</label>
                         <select id="edit-priority">
                             <option value="Urgent">Urgent</option>
                             <option value="Medium">Medium</option>
