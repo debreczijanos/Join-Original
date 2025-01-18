@@ -87,11 +87,41 @@ function editTask() {
  *
  * @param {Object} task - Die Task-Daten.
  */
-function populateEditForm(task) {
+async function populateEditForm(task) {
   setInputValue("edit-title", task.title || "");
   setInputValue("edit-description", task.description || "");
   setInputValue("edit-due-date", task.dueDate || "");
   setInputValue("edit-priority", task.prio || "Low");
+
+  // Kontakte laden und Dropdown synchronisieren
+  await loadContactsForEditForm(task.assignedTo || []);
+
+  populateEditTaskForm(task);
+}
+
+/**
+ * Lädt Kontakte und markiert die zugewiesenen im Bearbeitungsformular.
+ * @param {Array<string>} assignedContacts - Die Liste der zugewiesenen Kontakte.
+ */
+async function loadContactsForEditForm(assignedContacts = []) {
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  dropdownMenu.innerHTML = "Loading...";
+  try {
+    const [usersResponse, contactsResponse] = await Promise.all([
+      fetch(USERS_API_URL),
+      fetch(CONTACTS_API_URL),
+    ]);
+    if (!usersResponse.ok || !contactsResponse.ok) {
+      throw new Error("Failed to fetch contacts from APIs");
+    }
+    const users = await usersResponse.json();
+    const contacts = await contactsResponse.json();
+    const allContacts = [...Object.values(users), ...Object.values(contacts)];
+    renderContactsDropdown(allContacts, dropdownMenu, assignedContacts);
+  } catch (error) {
+    dropdownMenu.innerHTML = "Error loading contacts";
+    console.error("Error:", error);
+  }
 }
 
 /**
@@ -154,11 +184,16 @@ function saveEditedTask() {
  * @returns {Object} Die aktualisierten Task-Daten.
  */
 function getUpdatedTaskFromForm() {
+  const assignedContacts = Array.from(
+    document.querySelectorAll("#dropdownMenu input[type='checkbox']:checked")
+  ).map((checkbox) => checkbox.value);
+
   return {
     title: getInputValue("edit-title"),
     description: getInputValue("edit-description"),
     dueDate: getInputValue("edit-due-date"),
     prio: getInputValue("edit-priority"),
+    assignedTo: assignedContacts, // Hinzugefügte Kontakte
   };
 }
 
@@ -320,27 +355,30 @@ async function createTask() {
 }
 
 /**
- * Lädt Kontakte aus der API und füllt das "Assigned"-Dropdown-Menü.
+ * Lädt Kontakte aus beiden APIs und kombiniert sie.
  */
 async function loadContacts() {
-  const selectElement = document.getElementById("assigned");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  dropdownMenu.innerHTML = "Loading...";
 
   try {
-    const response = await fetch(API_CONTACTS);
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    const [usersResponse, contactsResponse] = await Promise.all([
+      fetch(USERS_API_URL),
+      fetch(API_CONTACTS),
+    ]);
 
-    const contacts = await response.json();
+    if (!usersResponse.ok || !contactsResponse.ok) {
+      throw new Error("Fehler beim Laden der Kontakte von den APIs.");
+    }
 
-    selectElement.innerHTML =
-      '<option value="" disabled selected>Select a contact</option>';
+    const users = await usersResponse.json();
+    const contacts = await contactsResponse.json();
 
-    Object.values(contacts).forEach((contact) => {
-      selectElement.innerHTML += `<option value="${contact.id}">${contact.name}</option>`;
-    });
+    const allContacts = [...Object.values(users), ...Object.values(contacts)];
+    renderContactsDropdown(allContacts, dropdownMenu);
   } catch (error) {
-    console.error("Error loading contacts:", error);
-    selectElement.innerHTML =
-      '<option value="" disabled>Error loading contacts</option>';
+    dropdownMenu.innerHTML = "Fehler beim Laden der Kontakte.";
+    console.error("Fehler:", error);
   }
 }
 

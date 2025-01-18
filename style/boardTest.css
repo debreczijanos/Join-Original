@@ -203,7 +203,7 @@ textarea,
 select {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
@@ -252,7 +252,7 @@ input[type="text"],
 select {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
@@ -728,6 +728,11 @@ input[type="text"]::placeholder {
   color: #2a3647;
 }
 
+.edit-priority-label {
+  position: relative;
+  margin-top: 54px;
+}
+
 #edit-task-form > input,
 #edit-task-form > textarea,
 #edit-task-form > select {
@@ -735,6 +740,13 @@ input[type="text"]::placeholder {
   line-height: 24px;
   font-weight: 400;
   color: #000000;
+}
+
+#edit-priority option {
+  background-color: #ffffff; /* Hintergrundfarbe der Optionen */
+  color: #333; /* Schriftfarbe */
+  padding: 8px; /* Abstand im Inneren */
+  font-size: 14px; /* Schriftgröße */
 }
 
 #edit-title:focus,
@@ -785,6 +797,7 @@ input[type="text"]::placeholder {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 16px;
 }
 
 .initialien {
@@ -811,6 +824,12 @@ input[type="text"]::placeholder {
   align-items: center;
 }
 
+#selectedContacts {
+  gap: 4px;
+}
+
+.selected-contacts > .participant,
+.selected-contacts > .extra-count,
 p > .participant,
 p > .extra-count {
   width: 42px;
@@ -846,6 +865,10 @@ p > .extra-count {
   color: #000000;
   font-weight: 500;
   font-size: 18px;
+}
+
+.add-task-assigned {
+  margin-bottom: 15px;
 }
 
 /*---------------------------------------------------------------*/
