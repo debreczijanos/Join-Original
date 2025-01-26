@@ -21,12 +21,16 @@ function allowDrop(event) {
 
   const target = event.target.closest(".kanban-column");
 
+  // Alle Spalten auf Standardstil zurücksetzen
   document.querySelectorAll(".kanban-column").forEach((column) => {
     column.style.backgroundColor = "";
+    column.style.borderRadius = "";
   });
 
+  // Falls ein gültiges Ziel existiert, wende den Stil an
   if (target) {
-    target.style.backgroundColor = "#E7E7E7";
+    target.style.backgroundColor = "#E7E7E7"; // Hintergrundfarbe
+    target.style.borderRadius = "16px"; // Abgerundete Ecken
   }
 }
 

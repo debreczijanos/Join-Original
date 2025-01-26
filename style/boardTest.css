@@ -12,9 +12,9 @@
 
 .kanban-board {
   display: flex;
-  justify-content: space-around;
-  padding: 0px 2px;
-  gap: 18px;
+  justify-content: space-evenly;
+  padding: 0px 10px;
+  gap: 10px;
   height: 100%;
 }
 
@@ -882,6 +882,7 @@ p > .extra-count {
   padding: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
+  width: 240px;
 }
 
 .task:hover {
@@ -899,6 +900,12 @@ p > .extra-count {
 .task p {
   margin: 5px 0;
   color: #555;
+}
+
+.task-description {
+  max-height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task ul {
@@ -1014,6 +1021,9 @@ label {
     height: auto;
   }
 
+  .kanban-column[data-status="done"] .tasks {
+    margin-bottom: 24px;
+  }
   .title-board {
     margin-left: 34px;
   }

@@ -427,7 +427,7 @@ function getTaskHTML(task) {
     <h4>${task.title || "Kein Titel"}</h4>
 
     <!-- Beschreibung -->
-    <p>${task.description || "Keine Beschreibung"}</p>
+    <p class= "task-description">${task.description || "Keine Beschreibung"}</p>
 
     <!-- Fortschrittsanzeige -->
     <div class="progress-container">
