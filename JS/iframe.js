@@ -48,8 +48,6 @@ function closeAddTask() {
  */
 window.addEventListener("message", function (event) {
   if (event.data && event.data.action === "closeOverlay") {
-    console.log("Schließen-Nachricht empfangen.");
-
     // Schließe das Overlay und setze das iFrame zurück
     const overlay = document.getElementById("iframeOverlay");
     if (overlay) {

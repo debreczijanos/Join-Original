@@ -51,6 +51,7 @@ window.addEventListener("resize", function () {
     closeAddTask();
     window.location.href = "../html/addTask.html";
   }
+  // showDropdownOnMobile();
 });
 
 /**
@@ -407,9 +408,20 @@ function getTaskHTML(task) {
 
   return `
     <!-- Kategorie oben -->
+    <div class= "category-dropdown">
     <h3 class= "task-category" style="${categoryStyle}"> ${
     task.category || "Keine Kategorie"
   }</h3>
+  <img id="dropdown-arrow" class="display-none dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
+  
+ <div class="task-mobile-move display-none">
+            <button class="to-do-move">To Do</button>
+            <button class="in-progress-move">In Progress</button>
+            <button class="await-feedback-move">Await Feedback</button>
+            <button class="done-move">Done</button>
+        </div>
+  
+  </div>
 
     <!-- Titel -->
     <h4>${task.title || "Kein Titel"}</h4>
