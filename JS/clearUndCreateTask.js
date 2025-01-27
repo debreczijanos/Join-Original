@@ -81,6 +81,12 @@ function createTask() {
   if (validateFields(requiredFields)) return;
 
   const task = buildTaskObject();
+  // Subtasks erhalten automatisch completed: false, falls nicht vorhanden
+  task.subtasks = getSubtasks().map((subtask) => ({
+    name: subtask,
+    completed: false, // Sicherstellen, dass das completed-Feld gesetzt wird
+  }));
+
   sendTaskToAPI(task);
 }
 
@@ -166,24 +172,6 @@ function displayError(input, errorMessage, errorClass) {
   }
   toggleButtonState();
 }
-
-/**
- * Erstellt ein Task-Objekt aus den Formularfeldern.
- *
- * @returns {Object} Das erstellte Task-Objekt.
- */
-// function buildTaskObject() {
-//   return {
-//     title: document.getElementById("title").value.trim(),
-//     description: document.getElementById("description").value.trim(),
-//     assignedTo: getSelectedContacts(),
-//     dueDate: document.querySelector("input[type='date']").value,
-//     prio: getActivePrio(),
-//     status: "To Do",
-//     category: document.getElementById("customDropdownInput").value.trim(),
-//     subtasks: getSubtasks(),
-//   };
-// }
 
 /**
  * Holt die ausgewählten Kontakte aus dem Formular.
