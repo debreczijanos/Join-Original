@@ -264,50 +264,31 @@ function editSubtask(subtaskItem, subtaskTextElement) {
  */
 async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
   const newValue = input.value.trim();
-  if (!newValue) {
-    alert("Das Subtask-Feld darf nicht leer sein.");
-    input.focus();
-    return;
-  }
+  if (!newValue) return alert("Das Subtask-Feld darf nicht leer sein.");
 
   const taskId = currentSubtaskTaskId;
-  if (!taskId) {
-    console.error("Task ID fehlt, Subtask kann nicht aktualisiert werden.");
-    return;
-  }
+  if (!taskId) return;
 
   try {
-    // Hole die aktuellen Subtasks
     const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
     const subtasks = await response.json();
-
-    // Finde den entsprechenden Subtask
     const subtaskKey = Object.keys(subtasks).find(
       (key) => subtasks[key].name === subtaskTextElement.textContent.trim()
     );
 
-    if (subtaskKey) {
-      await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newValue }),
-      });
+    if (!subtaskKey) return;
 
-      console.log("Subtask erfolgreich aktualisiert:", newValue);
+    await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newValue }),
+    });
 
-      // Überprüfen, ob subtaskTextElement noch im subtaskItem vorhanden ist
-      if (subtaskItem.contains(input)) {
-        subtaskTextElement.textContent = newValue;
-        subtaskItem.replaceChild(subtaskTextElement, input);
-      } else {
-        console.error("Das ursprüngliche Element ist nicht mehr vorhanden.");
-      }
-    } else {
-      console.error("Subtask nicht gefunden.");
+    if (subtaskItem.contains(input)) {
+      subtaskTextElement.textContent = newValue;
+      subtaskItem.replaceChild(subtaskTextElement, input);
     }
-  } catch (error) {
-    console.error("Fehler beim Speichern des Subtasks:", error);
-  }
+  } catch (error) {}
 }
 
 /**
@@ -315,11 +296,8 @@ async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
  * @param {HTMLElement} subtaskItem - Das zu löschende Subtask-Element.
  */
 async function deleteSubtask(subtaskItem) {
-  if (!confirm("Möchtest du diesen Subtask wirklich löschen?")) return;
-
   const taskId = currentSubtaskTaskId;
   if (!taskId) {
-    console.error("Task ID fehlt, Subtask kann nicht gelöscht werden.");
     return;
   }
 
@@ -339,12 +317,8 @@ async function deleteSubtask(subtaskItem) {
         method: "DELETE",
       });
 
-      console.log("Subtask erfolgreich gelöscht:", subtaskItem.textContent);
       subtaskItem.remove();
     } else {
-      console.error("Subtask zum Löschen nicht gefunden.");
     }
-  } catch (error) {
-    console.error("Fehler beim Löschen des Subtasks:", error);
-  }
+  } catch (error) {}
 }

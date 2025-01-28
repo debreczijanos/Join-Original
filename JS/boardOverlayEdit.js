@@ -80,11 +80,10 @@ function editTask() {
 
   // Task-ID für Subtasks speichern
   currentSubtaskTaskId = draggedTaskId;
-  console.log("Current Subtask Task ID set to:", currentSubtaskTaskId);
-
   populateEditForm(task);
   loadExistingSubtasks(currentSubtaskTaskId); // Vorhandene Subtasks laden
   showEditTaskOverlay();
+  closeTaskDetails();
 }
 
 /**

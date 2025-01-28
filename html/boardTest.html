@@ -211,7 +211,8 @@
                             <label for="subtasks">Subtasks</label>
                             <div class="subtasks-wrapper" onclick="focusInput()">
                                 <input type="text" name="subtasks" id="subtaskInput" placeholder="Add new subtask">
-                                <img class="subtask-icon" id="iconAdd" src="../img/subTaskIcon.svg" alt="Add subtask">
+                                <img class="subtask-icon" id="iconAdd" onclick="addSubtask(event)"
+                                    src="../img/subTaskIcon.svg" alt="Add subtask">
                                 <img class="subtask-icon hidden" id="iconCancel" src="../img/subTaskCancel.svg"
                                     alt="Cancel" onclick="clearInput(event)">
                                 <img class="subtask-icon hidden" id="iconConfirm" src="../img/subTaskEnter.svg"
