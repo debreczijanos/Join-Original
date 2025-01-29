@@ -93,64 +93,91 @@ function openEditTaskOverlay(taskId) {
  * @param {string} taskId - Die ID des Tasks.
  */
 async function loadExistingSubtasks(taskId) {
-  if (!taskId) return console.error("Task ID missing");
+  if (!taskId) {
+    console.error("Task ID fehlt.");
+    return;
+  }
 
-  subtaskList.innerHTML = "";
+  subtaskList.innerHTML = ""; // Vorherigen Inhalt leeren
+
   try {
     const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
-    if (!response.ok) throw new Error("Failed to fetch subtasks");
+    if (!response.ok) throw new Error("Fehler beim Abrufen der Subtasks");
 
     const subtasks = await response.json();
-    if (!subtasks) return;
 
-    subtaskList.innerHTML = "";
-    Object.values(subtasks).forEach((subtask) =>
-      subtaskList.appendChild(createSubtaskElement(subtask.name))
-    );
+    // Falls subtasks `null` oder leer sind, abbrechen
+    if (!subtasks || typeof subtasks !== "object") {
+      console.warn("Keine Subtasks vorhanden oder Daten ungültig.");
+      return;
+    }
+
+    const subtaskArray = Object.values(subtasks);
+
+    if (subtaskArray.length === 0) {
+      console.warn("Keine Subtasks gefunden.");
+      return;
+    }
+
+    // Subtasks rendern
+    subtaskArray.forEach((subtask) => {
+      if (!subtask || !subtask.name) {
+        console.warn("Ungültige Subtask-Daten", subtask);
+        return;
+      }
+      subtaskList.appendChild(createSubtaskElement(subtask.name));
+    });
   } catch (error) {
-    console.error("Error loading subtasks:", error);
+    console.error("Fehler beim Laden der Subtasks:", error);
+    alert("Fehler beim Laden der Subtasks.");
   }
 }
 
 /**
  * Fügt einen neuen Subtask hinzu.
- * @param {Event} event - Das Event-Objekt.
  */
 async function addSubtask(event) {
   if (isAddingSubtask) return;
   isAddingSubtask = true;
   event.stopPropagation();
-  iconConfirm.disabled = true;
 
   const subtaskText = subtaskInput.value.trim();
   if (!currentSubtaskTaskId || !subtaskText) return resetState();
 
   try {
-    const response = await fetch(
-      `${API_URL}/${currentSubtaskTaskId}/subtasks.json`
-    );
-    const subtasks = (await response.json()) || [];
-
-    const newIndex = Object.keys(subtasks).length;
-    const newSubtask = { name: subtaskText, completed: false };
-
-    await fetch(
-      `${API_URL}/${currentSubtaskTaskId}/subtasks/${newIndex}.json`,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newSubtask),
-      }
-    );
-
-    subtaskList.appendChild(createSubtaskElement(subtaskText));
-    subtaskInput.value = "";
-    subtaskInput.focus();
+    await saveNewSubtask(subtaskText);
+    updateUIAfterAdd(subtaskText);
   } catch (error) {
-    console.error("Error adding subtask:", error);
+    alert("Subtask konnte nicht hinzugefügt werden");
   } finally {
     resetState();
   }
+}
+
+/**
+ * Speichert einen neuen Subtask in der Datenbank.
+ */
+async function saveNewSubtask(subtaskText) {
+  const response = await fetch(
+    `${API_URL}/${currentSubtaskTaskId}/subtasks.json`
+  );
+  const subtasks = (await response.json()) || [];
+  const newIndex = Object.keys(subtasks).length;
+
+  await fetch(`${API_URL}/${currentSubtaskTaskId}/subtasks/${newIndex}.json`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name: subtaskText, completed: false }),
+  });
+}
+
+/**
+ * Aktualisiert die UI nach Hinzufügen eines Subtasks.
+ */
+function updateUIAfterAdd(subtaskText) {
+  subtaskList.appendChild(createSubtaskElement(subtaskText));
+  subtaskInput.value = "";
+  subtaskInput.focus();
 }
 
 /**
@@ -231,29 +258,52 @@ function createIcon(src, alt, clickHandler) {
 }
 
 /**
- * Bearbeitet einen Subtask, indem ein Eingabefeld angezeigt wird.
- * @param {HTMLElement} subtaskItem - Das Subtask-Element.
- * @param {HTMLElement} subtaskTextElement - Der Subtask-Text.
+ * Bearbeitet einen Subtask.
  */
 function editSubtask(subtaskItem, subtaskTextElement) {
+  // Prüfen ob bereits im Bearbeitungsmodus
+  if (subtaskItem.querySelector(".edit-input")) {
+    return;
+  }
+
+  const input = createEditInput(subtaskTextElement);
+  setupEditListeners(input, subtaskItem, subtaskTextElement);
+  replaceTextWithInput(subtaskItem, input, subtaskTextElement);
+}
+
+/**
+ * Erstellt Input-Element für die Bearbeitung.
+ */
+function createEditInput(textElement) {
   const input = document.createElement("input");
   input.type = "text";
-  input.value = subtaskTextElement.textContent.trim();
+  input.value = textElement.textContent.trim();
   input.classList.add("edit-input");
+  return input;
+}
 
-  subtaskItem.replaceChild(input, subtaskTextElement);
-  input.focus();
-
+/**
+ * Richtet Event-Listener für die Bearbeitung ein.
+ */
+function setupEditListeners(input, subtaskItem, textElement) {
   input.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
-      e.preventDefault(); // Verhindert das Schließen des Overlays
-      saveSubtaskEdit(input, subtaskTextElement, subtaskItem);
+      e.preventDefault();
+      saveSubtaskEdit(input, textElement, subtaskItem);
     }
   });
 
   input.addEventListener("blur", () => {
-    saveSubtaskEdit(input, subtaskTextElement, subtaskItem);
+    saveSubtaskEdit(input, textElement, subtaskItem);
   });
+}
+
+/**
+ * Ersetzt Text-Element mit Input-Element.
+ */
+function replaceTextWithInput(subtaskItem, input, textElement) {
+  subtaskItem.replaceChild(input, textElement);
+  input.focus();
 }
 
 /**
@@ -264,40 +314,16 @@ function editSubtask(subtaskItem, subtaskTextElement) {
  */
 async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
   const newValue = input.value.trim();
-  if (!newValue) return alert("Das Subtask-Feld darf nicht leer sein.");
+  if (!newValue) {
+    alert("Das Subtask-Feld darf nicht leer sein.");
+    // Wenn leer, zurück zum ursprünglichen Text
+    subtaskItem.replaceChild(subtaskTextElement, input);
+    return;
+  }
 
-  const taskId = currentSubtaskTaskId;
-  if (!taskId) return;
-
-  try {
-    const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
-    const subtasks = await response.json();
-    const subtaskKey = Object.keys(subtasks).find(
-      (key) => subtasks[key].name === subtaskTextElement.textContent.trim()
-    );
-
-    if (!subtaskKey) return;
-
-    await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newValue }),
-    });
-
-    if (subtaskItem.contains(input)) {
-      subtaskTextElement.textContent = newValue;
-      subtaskItem.replaceChild(subtaskTextElement, input);
-    }
-  } catch (error) {}
-}
-
-/**
- * Löscht einen Subtask aus der UI und dem Backend.
- * @param {HTMLElement} subtaskItem - Das zu löschende Subtask-Element.
- */
-async function deleteSubtask(subtaskItem) {
   const taskId = currentSubtaskTaskId;
   if (!taskId) {
+    subtaskItem.replaceChild(subtaskTextElement, input);
     return;
   }
 
@@ -305,20 +331,102 @@ async function deleteSubtask(subtaskItem) {
     const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
     const subtasks = await response.json();
 
-    // Subtask anhand des Textes identifizieren
+    if (!subtasks) {
+      subtaskItem.replaceChild(subtaskTextElement, input);
+      return;
+    }
+
     const subtaskKey = Object.keys(subtasks).find(
-      (key) =>
-        subtasks[key].name ===
-        subtaskItem.querySelector("li").textContent.trim()
+      (key) => subtasks[key]?.name === subtaskTextElement.textContent.trim()
     );
 
-    if (subtaskKey) {
-      await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
-        method: "DELETE",
-      });
-
-      subtaskItem.remove();
-    } else {
+    if (!subtaskKey) {
+      subtaskItem.replaceChild(subtaskTextElement, input);
+      return;
     }
-  } catch (error) {}
+
+    await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newValue }),
+    });
+
+    subtaskTextElement.textContent = newValue;
+    subtaskItem.replaceChild(subtaskTextElement, input);
+  } catch (error) {
+    alert("Fehler beim Speichern");
+    subtaskItem.replaceChild(subtaskTextElement, input);
+  }
+}
+
+/**
+ * Löscht einen Subtask.
+ */
+async function deleteSubtask(subtaskItem) {
+  if (!currentSubtaskTaskId) return;
+
+  try {
+    const subtasks = await fetchSubtasks();
+    if (!subtasks) {
+      subtaskItem.remove();
+      return;
+    }
+
+    await deleteSubtaskFromDB(subtasks, subtaskItem);
+    await reindexSubtasks(subtasks, subtaskItem);
+    subtaskItem.remove();
+  } catch (error) {
+    alert("Subtask konnte nicht gelöscht werden");
+  }
+}
+
+/**
+ * Holt Subtasks von der Datenbank.
+ */
+async function fetchSubtasks() {
+  const response = await fetch(
+    `${API_URL}/${currentSubtaskTaskId}/subtasks.json`
+  );
+  return await response.json();
+}
+
+/**
+ * Löscht Subtask aus der Datenbank.
+ */
+async function deleteSubtaskFromDB(subtasks, subtaskItem) {
+  const subtaskText = subtaskItem.querySelector("li")?.textContent.trim();
+  const subtaskKey = Object.keys(subtasks).find(
+    (key) => subtasks[key]?.name === subtaskText
+  );
+
+  if (subtaskKey) {
+    await fetch(
+      `${API_URL}/${currentSubtaskTaskId}/subtasks/${subtaskKey}.json`,
+      {
+        method: "DELETE",
+      }
+    );
+  }
+}
+
+/**
+ * Reindexiert die verbleibenden Subtasks.
+ */
+async function reindexSubtasks(subtasks, deletedItem) {
+  const remainingSubtasks = {};
+  let newIndex = 0;
+  const deletedText = deletedItem.querySelector("li")?.textContent.trim();
+
+  for (const key in subtasks) {
+    if (subtasks[key]?.name !== deletedText) {
+      remainingSubtasks[newIndex] = subtasks[key];
+      newIndex++;
+    }
+  }
+
+  await fetch(`${API_URL}/${currentSubtaskTaskId}/subtasks.json`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(remainingSubtasks),
+  });
 }

@@ -155,6 +155,8 @@ function showEditTaskOverlay() {
  */
 function closeEditTask() {
   toggleOverlay("edit-task-overlay", true);
+  document.removeEventListener("mousedown", handleOutsideClick);
+  loadTasks();
 }
 
 /**
@@ -163,12 +165,48 @@ function closeEditTask() {
  * @param {string} overlayId - Die ID des Overlays.
  * @param {boolean} isHidden - Ob das Overlay versteckt werden soll.
  */
+
 function toggleOverlay(overlayId, isHidden) {
   const overlay = document.getElementById(overlayId);
+
   if (overlay) {
     overlay.classList.toggle("d-none", isHidden);
-  } else {
-    logError(`Overlay mit ID ${overlayId} nicht gefunden.`);
+
+    if (!isHidden) {
+      // Event-Listener hinzufügen wenn Overlay geöffnet wird
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      // Event-Listener entfernen wenn Overlay geschlossen wird
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+  }
+}
+
+/**
+ * Behandelt Klicks außerhalb des Overlays
+ *
+ * @param {Event} event - Das Klick-Event
+ */
+function handleOutsideClick(event) {
+  const editOverlay = document.getElementById("edit-task-overlay");
+  const detailsOverlay = document.getElementById("task-details-overlay");
+
+  // Prüfe welches Overlay aktiv ist und handle entsprechend
+  if (editOverlay && !editOverlay.classList.contains("d-none")) {
+    const editContent = editOverlay.querySelector(".overlay-content");
+    if (
+      !editContent.contains(event.target) &&
+      event.target !== document.querySelector(".edit-button")
+    ) {
+      closeEditTask();
+    }
+  }
+
+  if (detailsOverlay && !detailsOverlay.classList.contains("d-none")) {
+    const detailsContent = detailsOverlay.querySelector(".overlay-content");
+    if (!detailsContent.contains(event.target)) {
+      closeTaskDetails();
+    }
   }
 }
 
@@ -180,6 +218,7 @@ function saveEditedTask() {
   if (!validateTaskData(updatedTask)) return;
   updateTaskInBackend(draggedTaskId, updatedTask);
   closeTaskDetails();
+  loadTasks();
 }
 
 /**
