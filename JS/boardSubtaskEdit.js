@@ -107,9 +107,12 @@ async function loadExistingSubtasks(taskId) {
     const subtasks = await response.json();
 
     // Falls subtasks `null` oder leer sind, abbrechen
-    if (!subtasks || typeof subtasks !== "object") {
-      console.warn("Keine Subtasks vorhanden oder Daten ungültig.");
-      return;
+    if (
+      !subtasks ||
+      typeof subtasks !== "object" ||
+      Object.keys(subtasks).length === 0
+    ) {
+      return; // Macht einfach nichts
     }
 
     const subtaskArray = Object.values(subtasks);
