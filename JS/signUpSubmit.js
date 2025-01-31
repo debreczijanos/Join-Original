@@ -1,89 +1,41 @@
 /**
- * Überprüft, ob alle erforderlichen Eingabefelder ausgefüllt sind,
- * und aktualisiert den Status des Submit-Buttons.
- */
-function checkInputs() {
-  const inputs = getAllInputs();
-  const allFilled = validateInputs(inputs);
-
-  updateSubmitButton(allFilled);
-}
-
-/**
- * Holt alle relevanten Eingabefelder aus dem Formular.
- *
- * @returns {NodeList} Eine Liste der Eingabefelder.
- */
-function getAllInputs() {
-  return document.querySelectorAll(
-    '.sign-up-daten input[type="text"], .sign-up-daten input[type="email"], .sign-up-daten input[type="password"], .sign-up-daten input[type="checkbox"]'
-  );
-}
-
-/**
- * Validiert, ob alle Eingabefelder ausgefüllt sind.
- *
- * @param {NodeList} inputs - Eine Liste der Eingabefelder.
- * @returns {boolean} True, wenn alle Felder ausgefüllt sind, sonst false.
- */
-function validateInputs(inputs) {
-  let allFilled = true;
-
-  inputs.forEach((input) => {
-    if (isInputEmpty(input)) {
-      allFilled = false;
-    }
-  });
-
-  return allFilled;
-}
-
-/**
- * Überprüft, ob ein Eingabefeld leer ist.
- *
- * @param {HTMLElement} input - Das zu prüfende Eingabefeld.
- * @returns {boolean} True, wenn das Feld leer ist, sonst false.
- */
-function isInputEmpty(input) {
-  return (
-    (input.type !== "checkbox" && input.value.trim() === "") ||
-    (input.type === "checkbox" && !input.checked)
-  );
-}
-
-/**
- * Aktiviert oder deaktiviert den Submit-Button basierend auf dem Status der Eingabefelder.
- *
- * @param {boolean} allFilled - Gibt an, ob alle Felder ausgefüllt sind.
+ * Aktiviert oder deaktiviert den Submit-Button basierend auf den Eingabefeldern und der Checkbox.
  */
 function updateSubmitButton(allFilled) {
   const submitButton = document.getElementById("submitButton");
-  submitButton.disabled = !allFilled;
-  submitButton.style.backgroundColor = allFilled ? "#2a3647" : "#d1d1d1";
-}
+  const passwordInput = document.getElementById("passwordInput");
+  const confirmPasswordInput = document.getElementById("confirmPasswordInput");
+  const acceptTerms = document.getElementById("acceptTerms");
 
-/**
- * Überprüft, ob eine E-Mail-Adresse gültig ist.
- *
- * @param {string} email - Die zu prüfende E-Mail-Adresse.
- * @returns {boolean} True, wenn die E-Mail-Adresse gültig ist, sonst false.
- */
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
+  // Button aktivieren NUR wenn alle Felder ausgefüllt sind, Passwörter stimmen UND Checkbox aktiviert ist
+  const passwordsMatch =
+    passwordInput.value === confirmPasswordInput.value &&
+    passwordInput.value.length >= 6;
 
+  const isCheckboxChecked = acceptTerms.checked;
+
+  submitButton.disabled = !allFilled || !passwordsMatch || !isCheckboxChecked;
+  submitButton.style.backgroundColor = !submitButton.disabled
+    ? "#2a3647"
+    : "#d1d1d1";
+}
 /**
  * Fügt Event-Listener zu allen relevanten Eingabefeldern hinzu,
- * um Fehlermeldungen dynamisch zu entfernen.
+ * um Fehler direkt zu entfernen und dynamisch zu validieren.
  */
 function addInputListeners() {
   const inputs = document.querySelectorAll(".costume-input input");
   const errorElement = document.getElementById("error");
 
   inputs.forEach((input) => {
+    // Entferne Fehler, wenn der Benutzer zu tippen beginnt
     input.addEventListener("input", () => {
-      errorElement.textContent = ""; // Fehlermeldung entfernen
+      errorElement.textContent = "";
+    });
+
+    // Validierung beim Verlassen des Feldes
+    input.addEventListener("blur", () => {
+      checkInputs();
     });
   });
 }
@@ -99,10 +51,12 @@ async function handleSubmit(event) {
   const errorElement = document.getElementById("error");
   const formData = collectFormData();
 
+  // Fehler-Reset
+  errorElement.textContent = "";
+  errorElement.style.color = "red";
+
   // Validierung der Daten
   if (!validateFormData(formData)) {
-    errorElement.textContent = "Die Passwörter stimmen nicht überein.";
-    errorElement.style.color = "red";
     return;
   }
 
@@ -113,7 +67,6 @@ async function handleSubmit(event) {
   } catch (error) {
     errorElement.textContent =
       "Netzwerkfehler: Bitte überprüfen Sie Ihre Verbindung.";
-    errorElement.style.color = "red";
   }
 }
 
@@ -135,36 +88,6 @@ function collectFormData() {
 }
 
 /**
- * Validiert die Formulardaten.
- *
- * @param {Object} formData - Die zu validierenden Formulardaten.
- * @returns {boolean} Ob die Formulardaten gültig sind.
- */
-function validateFormData(formData) {
-  const errorElement = document.getElementById("error");
-
-  if (
-    !formData.name ||
-    !formData.email ||
-    !formData.password ||
-    !formData.confirmPassword ||
-    !formData.acceptTerms
-  ) {
-    errorElement.textContent = "Bitte füllen Sie alle Felder korrekt aus.";
-    errorElement.style.color = "red";
-    return false;
-  }
-
-  if (formData.password !== formData.confirmPassword) {
-    errorElement.textContent = "Die Passwörter stimmen nicht überein.";
-    errorElement.style.color = "red";
-    return false;
-  }
-
-  return true;
-}
-
-/**
  * Sendet die Formulardaten an den Server.
  *
  * @param {Object} formData - Die zu sendenden Daten.
@@ -173,23 +96,24 @@ function validateFormData(formData) {
 async function sendDataToServer({ name, email, password, acceptTerms }) {
   const url =
     "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  const errorElement = document.getElementById("error");
 
   try {
     const usersData = await fetchExistingUsers(url);
 
     if (isEmailAlreadyRegistered(usersData, email)) {
+      errorElement.textContent =
+        "Diese E-Mail-Adresse ist bereits registriert!";
+      errorElement.style.color = "red";
       return { ok: false, reason: "email_exists" };
     }
 
-    const response = await saveNewUser(url, {
-      name,
-      email,
-      password,
-      acceptTerms,
-    });
-    return response;
+    return await saveNewUser(url, { name, email, password, acceptTerms });
   } catch (error) {
-    return handleServerError(error);
+    errorElement.textContent =
+      "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+    errorElement.style.color = "red";
+    return { ok: false, reason: "server_error" };
   }
 }
 
@@ -202,19 +126,6 @@ async function sendDataToServer({ name, email, password, acceptTerms }) {
 async function fetchExistingUsers(url) {
   const response = await fetch(url);
   return response.json();
-}
-
-/**
- * Überprüft, ob eine E-Mail-Adresse bereits registriert ist.
- *
- * @param {Object} usersData - Die bestehenden Benutzerdaten.
- * @param {string} email - Die zu prüfende E-Mail-Adresse.
- * @returns {boolean} True, wenn die E-Mail-Adresse registriert ist, sonst false.
- */
-function isEmailAlreadyRegistered(usersData, email) {
-  return usersData
-    ? Object.values(usersData).some((user) => user.email === email)
-    : false;
 }
 
 /**
@@ -279,39 +190,15 @@ function displaySuccessMessage() {
   setTimeout(() => (window.location.href = "../index.html"), 3000);
 }
 
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Event-Listener beim Laden der Seite hinzufügen
- */
-document.addEventListener("DOMContentLoaded", () => {
-  const inputs = document.querySelectorAll(
-    '.sign-up-daten input[type="text"], .sign-up-daten input[type="email"], .sign-up-daten input[type="password"], .sign-up-daten input[type="checkbox"]'
-  );
-  const errorElement = document.getElementById("error");
-
-  inputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      errorElement.textContent = "";
-    });
-
-    input.addEventListener("change", () => {
-      errorElement.textContent = "";
-    });
-  });
-
-  inputs.forEach((input) => {
-    input.addEventListener("input", checkInputs);
-    input.addEventListener("change", checkInputs);
-  });
-});
-
 /**
  * Navigiert zur Indexseite.
  */
 function navigateToIndex() {
   window.location.href = "../index.html";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("acceptTerms").addEventListener("change", () => {
+    checkInputs(); // Überprüft erneut alle Eingaben und aktualisiert den Button-Status
+  });
+});

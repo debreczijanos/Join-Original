@@ -78,6 +78,7 @@ input[type="checkbox"] {
   border-radius: 4px; /* Leicht gerundete Ecken */
   cursor: pointer;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 
 /* Styling für die Checkbox, wenn sie aktiv ist */
