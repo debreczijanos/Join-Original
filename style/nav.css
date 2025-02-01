@@ -93,6 +93,31 @@
   color: #a8a8a8;
 }
 
+.summary.active,
+.addTask.active,
+.board.active,
+.contacts.active {
+  background-color: #091931 !important; /* Blaue Hervorhebung */
+  color: white !important;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.summary.active *,
+.addTask.active *,
+.board.active *,
+.contacts.active * {
+  background-color: #091931 !important;
+  color: white !important;
+}
+
+.summary.active img,
+.addTask.active img,
+.board.active img,
+.contacts.active img {
+  filter: brightness(1) !important;
+}
+
 @media (max-width: 1250px) {
   .nav {
     flex-direction: row;
