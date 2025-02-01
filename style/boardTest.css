@@ -1040,6 +1040,7 @@ label {
   .kanban-column[data-status="done"] .tasks {
     margin-bottom: 24px;
   }
+
   .title-board {
     margin-left: 34px;
   }
@@ -1088,6 +1089,12 @@ label {
   /* Hover-Effekt */
   .tasks::-webkit-scrollbar-thumb:hover {
     background: #2a3647; /* Farbe bei Hover */
+  }
+}
+
+@media (max-width: 1024px) {
+  .save-btn {
+    margin-top: 125px;
   }
 }
 
