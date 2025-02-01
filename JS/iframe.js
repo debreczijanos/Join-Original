@@ -56,3 +56,25 @@ window.addEventListener("message", function (event) {
     }
   }
 });
+
+/**
+ * Schließt das Overlay, wenn außerhalb des iFrames geklickt wird.
+ * @param {MouseEvent} event - Das Klick-Ereignis.
+ */
+function closeOverlayOnClick(event) {
+  const overlay = document.getElementById("iframeOverlay");
+  const overlayContent = document.querySelector(".iframe-overlay-content");
+
+  // Prüft, ob der Klick außerhalb des Overlay-Inhalts war
+  if (event.target === overlay) {
+    closeAddTask();
+  }
+}
+
+// Fügt den Event-Listener beim Laden der Seite hinzu
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("iframeOverlay");
+  if (overlay) {
+    overlay.addEventListener("click", closeOverlayOnClick);
+  }
+});

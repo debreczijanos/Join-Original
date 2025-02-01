@@ -361,6 +361,28 @@ function closeTaskDetails() {
 }
 
 /**
+ * Schließt das Task-Details-Overlay, wenn außerhalb des Inhaltsbereichs geklickt wird.
+ * @param {MouseEvent} event - Das Klick-Ereignis.
+ */
+function closeTaskDetailsOnClick(event) {
+  const overlay = document.getElementById("task-details-overlay");
+  const overlayContent = overlay.querySelector(".overlay-content");
+
+  // Prüft, ob der Klick außerhalb des Overlay-Inhalts war
+  if (event.target === overlay) {
+    closeTaskDetails();
+  }
+}
+
+// Event-Listener für das Overlay hinzufügen
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("task-details-overlay");
+  if (overlay) {
+    overlay.addEventListener("click", closeTaskDetailsOnClick);
+  }
+});
+
+/**
  * Erstellt ein HTML-Element für eine Aufgabe.
  *
  * - Fügt Klassen, Attribute und Event-Handler hinzu.
