@@ -73,7 +73,8 @@
 .summary,
 .addTask,
 .board,
-.contacts {
+.contacts,
+.log-in {
   display: flex;
   gap: 20px;
 }
@@ -81,7 +82,8 @@
 .summaryMenu,
 .addTaskMenu,
 .boardMenu,
-.contactsMenu {
+.contactsMenu,
+.log-inMenu {
   display: flex;
   padding: 8px 56px;
 }
@@ -101,21 +103,26 @@
     padding: 0 16px;
     z-index: 99;
   }
+
   .logo {
     display: none;
   }
+
   .menu {
     flex-direction: row;
     justify-content: space-between;
   }
+
   .menu > button {
     font-size: 14px;
     line-height: 16.8px;
   }
+
   .summary,
   .addTask,
   .board,
-  .contacts {
+  .contacts,
+  .log-in {
     flex-direction: column;
     width: 80px;
     height: 76px;
@@ -124,22 +131,27 @@
     padding: 8px 0;
     border-radius: 8px;
   }
+
   .summaryMenu,
   .addTaskMenu,
   .boardMenu,
-  .contactsMenu {
+  .contactsMenu,
+  .log-inMenu {
     flex-direction: column;
     padding: 0;
     justify-content: center;
     align-items: center;
   }
+
   .addTaskMenu > img,
   .summaryMenu > img,
   .boardMenu > img,
-  .contactsMenu > img {
+  .contactsMenu > img,
+  .log-inMenu > img {
     width: 24px;
     height: 24px;
   }
+
   .ofice {
     display: none;
   }

@@ -32,7 +32,7 @@ function hideBackgroundWithDelay(background) {
 }
 
 /**
- * Behandelt den Login-Vorgang.
+ * Behandelt den Login-Vorgang und zeigt spezifische Fehlermeldungen an.
  *
  * @param {Event} event - Das Login-Event.
  */
@@ -44,9 +44,9 @@ function handleLogin(event) {
 
   fetchUserData()
     .then((usersData) => {
-      const { userFound, userName } = validateUser(usersData, email, password);
+      const { status, userName } = validateUser(usersData, email, password);
 
-      if (userFound) {
+      if (status === "success") {
         if (rememberMe) {
           saveCredentialsToLocalStorage(email, password);
         } else {
@@ -54,7 +54,7 @@ function handleLogin(event) {
         }
         loginUser(userName);
       } else {
-        showError();
+        showError(status);
       }
     })
     .catch(handleLoginError);
@@ -84,26 +84,44 @@ async function fetchUserData() {
 }
 
 /**
- * Validiert die Benutzerdaten.
+ * Validiert die Benutzerdaten und gibt spezifische Fehlermeldungen zurück.
  *
  * @param {Object} usersData - Die Benutzerdaten.
  * @param {string} email - Die eingegebene E-Mail-Adresse.
  * @param {string} password - Das eingegebene Passwort.
- * @returns {Object} Ein Objekt mit `userFound` (boolean) und `userName` (string).
+ * @returns {Object} Ein Objekt mit `status` (string) und `userName` (string oder null).
  */
 function validateUser(usersData, email, password) {
+  // Regulärer Ausdruck für eine gültige E-Mail-Adresse (zusätzliche Validierung)
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return { status: "invalidEmail", userName: null };
+  }
+
   let userFound = false;
+  let correctPassword = false;
   let userName = "";
 
   for (const userId in usersData) {
     const user = usersData[userId];
-    if (user.email === email && user.password === password) {
+
+    if (user.email === email) {
       userFound = true;
-      userName = user.name;
+      if (user.password === password) {
+        correctPassword = true;
+        userName = user.name;
+      }
       break;
     }
   }
-  return { userFound, userName };
+
+  if (!userFound) {
+    return { status: "emailNotRegistered", userName: null };
+  } else if (!correctPassword) {
+    return { status: "wrongPassword", userName: null };
+  }
+
+  return { status: "success", userName };
 }
 
 /**
@@ -182,3 +200,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+/**
+ * Zeigt eine spezifische Fehlermeldung basierend auf dem Fehlerstatus an.
+ *
+ * @param {string} status - Der Fehlerstatus.
+ */
+function showError(status) {
+  const errorMessage = document.querySelector(".error");
+
+  switch (status) {
+    case "invalidEmail":
+      errorMessage.textContent = "Bitte eine gültige E-Mail-Adresse eingeben!";
+      break;
+    case "emailNotRegistered":
+      errorMessage.textContent = "Diese E-Mail ist nicht registriert.";
+      break;
+    case "wrongPassword":
+      errorMessage.textContent = "Falsches Passwort. Bitte versuche es erneut.";
+      break;
+    default:
+      errorMessage.textContent = "Ein unbekannter Fehler ist aufgetreten.";
+  }
+
+  errorMessage.style.display = "block"; // Fehlermeldung einblenden
+}

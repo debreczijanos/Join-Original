@@ -1,95 +1,109 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help</title>
-    <link rel="stylesheet" href="../style/Legal-Helpp_privacy.css">
-    <link rel="stylesheet" href="../style/privacyPolicy.css">
-    <link rel="stylesheet" href="../style/fonts.css">
-    <link rel="stylesheet" href="../style/assets.css">
-    <link rel="stylesheet" href="../style/nav.css">
-    <link rel="stylesheet" href="../style/header.css">
 
-    <script src="../JS/navToggel.js"></script>
-    <script src="../JS/includeHTML.js"></script>
-    <script src="../JS/currentDate.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help</title>
+  <link rel="stylesheet" href="../style/Legal-Helpp_privacy.css">
+  <link rel="stylesheet" href="../style/privacyPolicy.css">
+  <link rel="stylesheet" href="../style/fonts.css">
+  <link rel="stylesheet" href="../style/assets.css">
+  <link rel="stylesheet" href="../style/nav.css">
+  <link rel="stylesheet" href="../style/header.css">
+
+  <script src="../JS/navToggel.js"></script>
+  <script src="../JS/includeHTML.js"></script>
+
 
 </head>
+
 <body>
 
-    <div id="include-container"></div>
+  <div id="include-container"></div>
 
-    <main>
-        <div class="mein-content">
-    
-          <section class="contacts-container">
-            <div id="contactId"></div>
-          </section>
-    
-          <section>
-            <div class="header header-legal">
-              <h1 class="responsiceH1">Help</h1>
-              <button onclick="goToLastPage()">
-                <img src="../img/arrow-left-line.png" alt="">
-              </button>
-            </div>
-            <div class="text-div">
-              <p>
-                Welcome to the Help Page of Join - Your Guide to Our Kanban Project Management Tool
-              </p>
-              <h2>What is Join?</h2>
-              <p>
-                Join is an innovative project management tool based on the Kanban methodology. It was developed by dedicated students as part of their education at the Developer Akademie. While Join is primarily designed for educational purposes, it still offers an intuitively designed platform for tracking workflows and tasks.
+  <main>
+    <div class="mein-content">
 
-                It’s important to note that Join has been created mainly for learning, thus it may not be well-suited for extensive professional use. We strive to provide a user-friendly experience; however, we cannot guarantee continuous performance or complete accuracy.
-              </p>
-  
-             
-              <h2>How to use it</h2>
-              <p>Here’s a brief guide on utilizing Join:</p>
-              
-              <h2>Project Overview </h2>
-              
-              <p>Upon logging in, you’ll be greeted by a default dashboard that displays your project information.</p>
+      <section class="contacts-container">
+        <div id="contactId"></div>
+      </section>
 
-              <h2>The Board</h2>
+      <section>
+        <div class="header header-legal">
+          <h1 class="responsiceH1">Help</h1>
+          <button class="help-back" onclick="goToLastPage()">
+            <img src="../img/arrow-left-line.png" alt="">
+          </button>
+        </div>
+        <div class="text-div">
+          <p>
+            Welcome to the Help Page of Join - Your Guide to Our Kanban Project Management Tool
+          </p>
+          <h2>What is Join?</h2>
+          <p>
+            Join is an innovative project management tool based on the Kanban methodology. It was developed by dedicated
+            students as part of their education at the Developer Akademie. While Join is primarily designed for
+            educational purposes, it still offers an intuitively designed platform for tracking workflows and tasks.
 
-              <p>The board visualizes your project with four predefined lists: "To Do," "In Progress," "Awaiting Feedback," and "Done."</p>
+            It’s important to note that Join has been created mainly for learning, thus it may not be well-suited for
+            extensive professional use. We strive to provide a user-friendly experience; however, we cannot guarantee
+            continuous performance or complete accuracy.
+          </p>
 
-              <h2>Adding Cards</h2>
 
-              <p>To create tasks, click the "+" icon under the relevant list. Fill in details such as task name, description, due date, and assignees.</p>
+          <h2>How to use it</h2>
+          <p>Here’s a brief guide on utilizing Join:</p>
 
-              <h2>Moving Cards</h2>
+          <h2>Project Overview </h2>
 
-              <p>Track your tasks’ progress by simply dragging and dropping cards from one list to another.</p>
+          <p>Upon logging in, you’ll be greeted by a default dashboard that displays your project information.</p>
 
-              <h2>Deleting Cards</h2>
+          <h2>The Board</h2>
 
-              <p> Once a task is completed, you can either move it to the "Done" list or delete it. Please be cautious when deleting cards, as this action is irreversible.</p>
+          <p>The board visualizes your project with four predefined lists: "To Do," "In Progress," "Awaiting Feedback,"
+            and "Done."</p>
 
-              <h2>Creating Contacts</h2>
+          <h2>Adding Cards</h2>
 
-              <p>  To collaborate with team members, you can add contacts in the "Contacts" section. Click on "New Contact" and provide the necessary information. After creation, these contacts can be assigned tasks and actively engage in the project.
+          <p>To create tasks, click the "+" icon under the relevant list. Fill in details such as task name,
+            description, due date, and assignees.</p>
 
-                Keep your project board consistently updated to ensure all team members are informed about the current status.
-                
-                Have questions about Join? Feel free to reach out to us at <a href="mailto:someone@example.com">luc.miller@gmail.com</a> We're here to assist you! <br> <br>
-                
-                Enjoy using Join!</p>
-              
-            <div class="sub-text-div">
-             
-            </div>
-          </section>
-    
-      </main>
-    
-      <script>
-        // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
-        includeHTML('#include-container', './nav.html');
-      </script>
-    
+          <h2>Moving Cards</h2>
+
+          <p>Track your tasks’ progress by simply dragging and dropping cards from one list to another.</p>
+
+          <h2>Deleting Cards</h2>
+
+          <p> Once a task is completed, you can either move it to the "Done" list or delete it. Please be cautious when
+            deleting cards, as this action is irreversible.</p>
+
+          <h2>Creating Contacts</h2>
+
+          <p> To collaborate with team members, you can add contacts in the "Contacts" section. Click on "New Contact"
+            and provide the necessary information. After creation, these contacts can be assigned tasks and actively
+            engage in the project.
+
+            Keep your project board consistently updated to ensure all team members are informed about the current
+            status.
+
+            Have questions about Join? Feel free to reach out to us at <a
+              href="mailto:someone@example.com">luc.miller@gmail.com</a> We're here to assist you! <br> <br>
+
+            Enjoy using Join!</p>
+
+          <div class="sub-text-div">
+
+          </div>
+      </section>
+
+  </main>
+
+  <script>
+    // Rufe die Funktion auf, um "header.html" in das Element mit der ID "include-container" einzufügen
+    includeHTML('#include-container', './nav.html');
+  </script>
+
 </body>
+
 </html>
