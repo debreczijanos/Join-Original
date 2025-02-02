@@ -1,10 +1,10 @@
 let draggedTaskId = null;
 
 /**
- * Startet den Drag-Vorgang für einen Task.
+ * Starts the drag process for a task.
  *
- * @param {DragEvent} event - Das Drag-Event.
- * @param {string} taskId - Die ID des zu ziehenden Tasks.
+ * @param {DragEvent} event - The drag event.
+ * @param {string} taskId - The ID of the task being dragged.
  */
 function dragStart(event, taskId) {
   draggedTaskId = taskId;
@@ -12,40 +12,40 @@ function dragStart(event, taskId) {
 }
 
 /**
- * Erlaubt das Ablegen eines Tasks in einer Kanban-Spalte.
+ * Allows a task to be dropped into a Kanban column.
  *
- * @param {DragEvent} event - Das Drag-Over-Event.
+ * @param {DragEvent} event - The drag-over event.
  */
 function allowDrop(event) {
   event.preventDefault();
 
   const target = event.target.closest(".kanban-column");
 
-  // Alle Spalten auf Standardstil zurücksetzen
+  // Reset styles for all columns
   document.querySelectorAll(".kanban-column").forEach((column) => {
     column.style.backgroundColor = "";
     column.style.borderRadius = "";
   });
 
-  // Falls ein gültiges Ziel existiert, wende den Stil an
+  // Apply style if a valid target exists
   if (target) {
-    target.style.backgroundColor = "#E7E7E7"; // Hintergrundfarbe
-    target.style.borderRadius = "16px"; // Abgerundete Ecken
+    target.style.backgroundColor = "#E7E7E7"; // Background color
+    target.style.borderRadius = "16px"; // Rounded corners
   }
 }
 
 /**
- * Behandelt das Ablegen eines Tasks in einer neuen Spalte.
+ * Handles dropping a task into a new column.
  *
- * @param {DragEvent} event - Das Drop-Event.
- * @param {string} newStatus - Der neue Status, in den der Task verschoben wird.
+ * @param {DragEvent} event - The drop event.
+ * @param {string} newStatus - The new status to which the task is moved.
  */
 function drop(event, newStatus) {
   event.preventDefault();
 
   const targetColumn = event.target.closest(".kanban-column");
   if (!targetColumn) {
-    console.error("Ungültiges Drop-Ziel: Kanban-Column nicht gefunden");
+    console.error("Invalid drop target: Kanban column not found");
     return;
   }
 
@@ -56,7 +56,7 @@ function drop(event, newStatus) {
   const targetStatus = targetColumn.getAttribute("data-status");
   if (targetStatus !== newStatus.toLowerCase().replace(/\s+/g, "-")) {
     console.error(
-      `Ungültiges Drop-Ziel oder Status stimmt nicht überein: erwartet "${newStatus}", gefunden "${targetStatus}"`
+      `Invalid drop target or status mismatch: expected "${newStatus}", found "${targetStatus}"`
     );
     return;
   }
@@ -66,7 +66,7 @@ function drop(event, newStatus) {
     targetColumn.querySelector(".tasks").appendChild(taskElement);
     updateTaskStatus(draggedTaskId, newStatus);
   } else {
-    console.error("Task-Element nicht gefunden:", draggedTaskId);
+    console.error("Task element not found:", draggedTaskId);
   }
 
   draggedTaskId = null;
@@ -74,10 +74,10 @@ function drop(event, newStatus) {
 }
 
 /**
- * Verschiebt einen Task in einen neuen Container.
+ * Moves a task to a new container.
  *
- * @param {HTMLElement} targetColumn - Die Zielspalte, in die der Task verschoben werden soll.
- * @param {string} newStatus - Der neue Status des Tasks.
+ * @param {HTMLElement} targetColumn - The target column where the task should be moved.
+ * @param {string} newStatus - The new status of the task.
  */
 function moveTaskToNewContainer(targetColumn, newStatus) {
   const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
@@ -90,10 +90,10 @@ function moveTaskToNewContainer(targetColumn, newStatus) {
 }
 
 /**
- * Aktualisiert den Status eines Tasks.
+ * Updates the status of a task.
  *
- * @param {string} taskId - Die ID des Tasks.
- * @param {string} newStatus - Der neue Status des Tasks.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} newStatus - The new status of the task.
  */
 function updateTaskStatus(taskId, newStatus) {
   const task = findTaskById(taskId);
@@ -104,20 +104,20 @@ function updateTaskStatus(taskId, newStatus) {
 }
 
 /**
- * Findet einen Task anhand seiner ID.
+ * Finds a task by its ID.
  *
- * @param {string} taskId - Die ID des Tasks.
- * @returns {Object|null} Der gefundene Task oder null, falls nicht vorhanden.
+ * @param {string} taskId - The ID of the task.
+ * @returns {Object|null} The found task or null if not found.
  */
 function findTaskById(taskId) {
   return allTasksData.find((task) => task.id === taskId);
 }
 
 /**
- * Sendet eine Anfrage, um den Status eines Tasks zu aktualisieren.
+ * Sends a request to update the status of a task.
  *
- * @param {string} taskId - Die ID des Tasks.
- * @param {string} newStatus - Der neue Status des Tasks.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} newStatus - The new status of the task.
  */
 function sendStatusUpdate(taskId, newStatus) {
   const updateUrl = `${API_URL}/${taskId}.json`;
@@ -129,18 +129,28 @@ function sendStatusUpdate(taskId, newStatus) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error(
-          `Fehler beim Aktualisieren des Status: ${response.status}`
-        );
+        throw new Error(`Error updating status: ${response.status}`);
       }
     })
     .catch((error) => {});
 }
 
+/**
+ * Finds a task by its ID.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @returns {Object|null} The found task or null if not found.
+ */
 function findTaskById(taskId) {
   return allTasksData.find((task) => task.id === taskId);
 }
 
+/**
+ * Sends a request to update the status of a task.
+ *
+ * @param {string} taskId - The ID of the task.
+ * @param {string} newStatus - The new status of the task.
+ */
 function sendStatusUpdate(taskId, newStatus) {
   const updateUrl = `${API_URL}/${taskId}.json`;
   const body = JSON.stringify({ status: newStatus });
@@ -152,16 +162,14 @@ function sendStatusUpdate(taskId, newStatus) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error(
-          `Fehler beim Aktualisieren des Status: ${response.status}`
-        );
+        throw new Error(`Error updating status: ${response.status}`);
       }
     })
     .catch((error) => {});
 }
 
 /**
- * Überprüft, ob Spalten leer sind, und zeigt eine Nachricht an.
+ * Checks if columns are empty and displays a message.
  */
 function checkEmptyColumns() {
   const columns = document.querySelectorAll(".kanban-column");
@@ -182,21 +190,21 @@ function checkEmptyColumns() {
 }
 
 /**
- * Behandelt die Antwort auf eine Status-Aktualisierungsanfrage.
+ * Handles the response for a status update request.
  *
- * @param {Response} response - Die Antwort des Fetch-Requests.
- * @param {string} newStatus - Der neue Status des Tasks.
- * @throws {Error} Wenn die Anfrage fehlschlägt.
+ * @param {Response} response - The response from the fetch request.
+ * @param {string} newStatus - The new status of the task.
+ * @throws {Error} If the request fails.
  */
 function handleUpdateResponse(response, newStatus) {
   if (!response.ok)
-    throw new Error(`Fehler beim Aktualisieren des Status: ${response.status}`);
+    throw new Error(`Error updating status: ${response.status}`);
 }
 
 /**
- * Behandelt Fehler, indem eine Nachricht angezeigt wird.
+ * Handles errors by displaying a message.
  *
- * @param {string} message - Die Fehlermeldung.
+ * @param {string} message - The error message.
  */
 function handleError(message) {
   alert(message);

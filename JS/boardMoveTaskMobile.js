@@ -1,13 +1,13 @@
 /**
- * Prüft, ob das Gerät ein mobiles oder Tablet-Gerät ist.
- * @returns {boolean} - `true` wenn das Gerät ein Mobilgerät ist, sonst `false`.
+ * Checks if the device is a mobile or tablet device.
+ * @returns {boolean} - `true` if the device is mobile, otherwise `false`.
  */
 function isMobileOrTablet() {
   return /Mobi|Tablet|iPad|iPhone|Android/i.test(navigator.userAgent);
 }
 
 /**
- * Zeigt oder versteckt Dropdown-Pfeile basierend auf der Bildschirmgröße.
+ * Shows or hides dropdown arrows based on screen size.
  */
 function showDropdownOnMobile() {
   const dropdownArrows = document.querySelectorAll("#dropdown-arrow");
@@ -23,9 +23,9 @@ function showDropdownOnMobile() {
 }
 
 /**
- * Aktualisiert den Task-Status und speichert ihn im Backend.
- * @param {Event} event - Das Klick-Event.
- * @param {string} newStatus - Der neue Status (z.B. 'Done').
+ * Updates the task status and saves it in the backend.
+ * @param {Event} event - The click event.
+ * @param {string} newStatus - The new status (e.g., 'Done').
  */
 async function moveTask(event, newStatus) {
   event.stopPropagation();
@@ -43,17 +43,17 @@ async function moveTask(event, newStatus) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: newStatus }),
     });
-    if (!response.ok) throw new Error("Fehler beim Aktualisieren.");
+    if (!response.ok) throw new Error("Error updating status.");
     renderKanbanBoard();
     showDropdownOnMobile();
   } catch (error) {
-    console.error("Backend-Fehler:", error);
+    console.error("Backend error:", error);
   }
 }
 
 /**
- * Schaltet das mobile Dropdown-Menü um.
- * @param {Event} event - Das Klick-Event.
+ * Toggles the mobile dropdown menu.
+ * @param {Event} event - The click event.
  */
 function toggleMobileDropdown(event) {
   event.stopPropagation();
@@ -73,9 +73,9 @@ function toggleMobileDropdown(event) {
 }
 
 /**
- * Blendet den aktuellen Status-Button aus.
- * @param {HTMLElement} taskMenu - Das Task-Menü.
- * @param {string} taskStatus - Der aktuelle Status des Tasks.
+ * Hides the button for the current task status.
+ * @param {HTMLElement} taskMenu - The task menu.
+ * @param {string} taskStatus - The current task status.
  */
 function hideCurrentStatusButton(taskMenu, taskStatus) {
   const button = taskMenu.querySelector(
@@ -85,9 +85,9 @@ function hideCurrentStatusButton(taskMenu, taskStatus) {
 }
 
 /**
- * Zeigt oder versteckt das Task-Menü.
- * @param {HTMLElement} taskMenu - Das Task-Menü.
- * @param {HTMLElement} arrow - Der Dropdown-Pfeil.
+ * Shows or hides the task menu.
+ * @param {HTMLElement} taskMenu - The task menu.
+ * @param {HTMLElement} arrow - The dropdown arrow.
  */
 function toggleMenuVisibility(taskMenu, arrow) {
   const isHidden = taskMenu.classList.toggle("display-none");
@@ -95,8 +95,8 @@ function toggleMenuVisibility(taskMenu, arrow) {
 }
 
 /**
- * Gibt eine Mapping-Tabelle für die Statusnamen zurück.
- * @returns {Object} - Statusnamen-Mapping.
+ * Returns a mapping table for status names.
+ * @returns {Object} - Status name mapping.
  */
 function getStatusMap() {
   return {
@@ -108,7 +108,7 @@ function getStatusMap() {
 }
 
 /**
- * Beobachtet Änderungen im DOM und aktualisiert die Dropdown-Pfeile.
+ * Observes changes in the DOM and updates dropdown arrows accordingly.
  */
 function observeDOMChanges() {
   const kanbanBoard = document.getElementById("kanban-board");
@@ -122,7 +122,7 @@ function observeDOMChanges() {
   observer.observe(kanbanBoard, { childList: true, subtree: true });
 }
 
-// Initialisierung nach Laden der Seite
+// Initialization after the page loads
 document.addEventListener("DOMContentLoaded", () =>
   setTimeout(showDropdownOnMobile, 1000)
 );
@@ -130,7 +130,7 @@ window.addEventListener("resize", showDropdownOnMobile);
 observeDOMChanges();
 
 /**
- * Schließt offene Dropdown-Menüs beim Klick außerhalb.
+ * Closes open dropdown menus when clicking outside.
  */
 document.addEventListener("click", (event) => {
   document

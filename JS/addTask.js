@@ -1,9 +1,9 @@
 /**
- * Lädt eine HTML-Datei und fügt deren Inhalt in ein Element ein.
+ * Loads an HTML file and inserts its content into an element.
  *
- * @param {string} selector - Der CSS-Selektor des Ziel-Elements.
- * @param {string} file - Der Pfad zur HTML-Datei.
- * @param {Function} [callback] - Eine optionale Callback-Funktion, die nach dem Laden ausgeführt wird.
+ * @param {string} selector - The CSS selector of the target element.
+ * @param {string} file - The path to the HTML file.
+ * @param {Function} [callback] - An optional callback function to execute after loading.
  */
 function includeHTML(selector, file, callback) {
   const element = document.querySelector(selector);
@@ -18,7 +18,7 @@ function includeHTML(selector, file, callback) {
       .then((data) => {
         element.innerHTML = data;
         if (typeof callback === "function") {
-          callback(); // Führe die Callback-Funktion aus
+          callback();
         }
       })
       .catch((error) => console.error("Error loading HTML:", error));
@@ -29,9 +29,9 @@ includeHTML("#include-container", "./nav.html", function () {
 });
 
 /**
- * Entfernt den aktiven Zustand von allen Buttons.
+ * Removes the active state from all buttons.
  *
- * @param {NodeList} buttons - Eine Liste der zu bearbeitenden Buttons.
+ * @param {NodeList} buttons - A list of buttons to process.
  */
 function clearActiveStates(buttons) {
   buttons.forEach((btn) => {
@@ -42,9 +42,9 @@ function clearActiveStates(buttons) {
 }
 
 /**
- * Aktiviert einen Button und setzt die zugehörige Bildfarbe.
+ * Activates a button and sets the corresponding image color.
  *
- * @param {HTMLElement} button - Der Button, der aktiviert werden soll.
+ * @param {HTMLElement} button - The button to activate.
  */
 function activateButton(button) {
   button.classList.add("active");
@@ -53,10 +53,10 @@ function activateButton(button) {
 }
 
 /**
- * Fügt Event-Listener zu Buttons hinzu und aktiviert standardmäßig einen Button.
+ * Adds event listeners to buttons and activates a default button.
  *
- * @param {NodeList} buttons - Eine Liste der Buttons.
- * @param {number} defaultActiveIndex - Der Index des standardmäßig aktiven Buttons (optional, Standard: 1).
+ * @param {NodeList} buttons - A list of buttons.
+ * @param {number} defaultActiveIndex - The index of the default active button (optional, default: 1).
  */
 function setupButtonListeners(buttons, defaultActiveIndex = 1) {
   buttons.forEach((button, index) => {
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Fügt Event-Listener zu Eingabefeldern hinzu, um Fehler zu entfernen.
+ * Adds event listeners to input fields to remove errors.
  */
 function addInputListeners() {
   const fieldsToValidate = getRequiredFields();
@@ -90,10 +90,10 @@ function addInputListeners() {
 }
 
 /**
- * Fügt Event-Listener hinzu, um Fehler bei einem Eingabefeld zu entfernen.
+ * Adds event listeners to remove errors from an input field.
  *
- * @param {HTMLElement} input - Das Eingabefeld.
- * @param {string} errorClass - Die CSS-Klasse des zu entfernenden Fehlers.
+ * @param {HTMLElement} input - The input field.
+ * @param {string} errorClass - The CSS class of the error to remove.
  */
 function addErrorRemovalListeners(input, errorClass) {
   input.addEventListener("input", () => removeError(input, errorClass));
@@ -103,7 +103,7 @@ function addErrorRemovalListeners(input, errorClass) {
 }
 
 /**
- * Verarbeitet Events im Dropdown-Menü der Kategorie und entfernt Fehler.
+ * Handles events in the category dropdown and removes errors.
  */
 function handleCategoryDropdown() {
   const categoryInput = document.getElementById("customDropdownInput");
@@ -123,10 +123,10 @@ function handleCategoryDropdown() {
 }
 
 /**
- * Entfernt die Fehlerklasse von einem Eingabefeld und löscht zugehörigen Fehlertext.
+ * Removes the error class from an input field and deletes the associated error text.
  *
- * @param {HTMLElement} input - Das Eingabefeld.
- * @param {string} errorClass - Die CSS-Klasse des Fehlertextes.
+ * @param {HTMLElement} input - The input field.
+ * @param {string} errorClass - The CSS class of the error text.
  */
 function removeError(input, errorClass) {
   if (input.value.trim()) {

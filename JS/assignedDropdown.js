@@ -1,5 +1,5 @@
 /**
- * API-URLs
+ * API URLs
  */
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -7,14 +7,14 @@ const API_CONTACTS =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
 
 /**
- * Liste der ausgewählten Kontakte
+ * List of selected contacts
  */
 let selectedContacts = [];
 
 /**
- * Schaltet das Dropdown-Menü um.
+ * Toggles the dropdown menu.
  *
- * @param {string} dropdownId - Die ID des Dropdown-Menüs.
+ * @param {string} dropdownId - The ID of the dropdown menu.
  */
 function toggleDropdown(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
@@ -32,10 +32,10 @@ function toggleDropdown(dropdownId) {
 }
 
 /**
- * Schließt ein Dropdown, wenn außerhalb geklickt wird.
+ * Closes a dropdown when clicking outside of it.
  *
- * @param {string} inputId - Die ID des Eingabefelds.
- * @param {string} menuId - Die ID des Dropdown-Menüs.
+ * @param {string} inputId - The ID of the input field.
+ * @param {string} menuId - The ID of the dropdown menu.
  */
 function closeDropdownOnOutsideClick(inputId, menuId) {
   document.addEventListener("click", (event) => {
@@ -54,10 +54,10 @@ function closeDropdownOnOutsideClick(inputId, menuId) {
 }
 
 /**
- * Initialisiert ein Dropdown-Menü mit zugehörigen Event-Listenern.
+ * Initializes a dropdown menu with event listeners.
  *
- * @param {string} inputId - Die ID des Eingabefelds.
- * @param {string} menuId - Die ID des Dropdown-Menüs.
+ * @param {string} inputId - The ID of the input field.
+ * @param {string} menuId - The ID of the dropdown menu.
  */
 function initializeDropdown(inputId, menuId) {
   const input = document.getElementById(inputId);
@@ -78,10 +78,10 @@ function initializeDropdown(inputId, menuId) {
 }
 
 /**
- * Filtert die Einträge in einem Dropdown-Menü basierend auf der Eingabe.
+ * Filters the entries in a dropdown menu based on input.
  *
- * @param {string} inputId - Die ID des Eingabefelds.
- * @param {string} menuSelector - Der CSS-Selektor der Dropdown-Einträge.
+ * @param {string} inputId - The ID of the input field.
+ * @param {string} menuSelector - The CSS selector for the dropdown entries.
  */
 function filterDropdown(inputId, menuSelector) {
   const input = document.getElementById(inputId);
@@ -97,10 +97,10 @@ function filterDropdown(inputId, menuSelector) {
 }
 
 /**
- * Setzt den Wert eines Dropdowns, wenn ein Eintrag angeklickt wird.
+ * Sets the value of a dropdown when an entry is clicked.
  *
- * @param {string} menuId - Die ID des Dropdown-Menüs.
- * @param {string} inputId - Die ID des Eingabefelds.
+ * @param {string} menuId - The ID of the dropdown menu.
+ * @param {string} inputId - The ID of the input field.
  */
 function setDropdownValueOnClick(menuId, inputId) {
   const menu = document.getElementById(menuId);
@@ -118,7 +118,7 @@ function setDropdownValueOnClick(menuId, inputId) {
 }
 
 /**
- * Initialisierung der Dropdowns
+ * Initialization of dropdowns
  */
 document.addEventListener("DOMContentLoaded", () => {
   initializeDropdown("dropdownInput", "dropdownMenu");
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Verhindere Texteingabe, erlaube aber z.B. Zahlen
+ * Prevents text input but allows numbers, for example.
  */
 const input = document.getElementById("customDropdownInput");
 input.addEventListener("keypress", (event) => {
@@ -173,10 +173,10 @@ input.addEventListener("input", (event) => {
 });
 
 /**
- * Lädt Kontakte von APIs und fügt sie dem Dropdown hinzu.
+ * Loads contacts from APIs and adds them to the dropdown menu.
  *
- * @param {string} apiURL - Die URL der API.
- * @param {string} dropdownId - Die ID des Dropdown-Menüs.
+ * @param {string} apiURL - The API URL.
+ * @param {string} dropdownId - The ID of the dropdown menu.
  */
 async function loadContacts(apiURL, dropdownId) {
   try {
@@ -186,30 +186,30 @@ async function loadContacts(apiURL, dropdownId) {
     const allContacts = await fetchAllContacts(apiURL);
     addContactsToDropdown(allContacts, uniqueContacts, dropdownMenu);
   } catch (error) {
-    console.error("Fehler beim Laden der Kontakte:", error);
+    console.error("Error loading contacts:", error);
   }
 }
 
 /**
- * Holt ein Dropdown-Menü-Element.
+ * Retrieves a dropdown menu element.
  *
- * @param {string} dropdownId - Die ID des Dropdown-Menüs.
- * @returns {HTMLElement} Das Dropdown-Menü-Element.
+ * @param {string} dropdownId - The ID of the dropdown menu.
+ * @returns {HTMLElement} The dropdown menu element.
  */
 function getDropdownMenu(dropdownId) {
   const dropdownMenu = document.getElementById(dropdownId);
   if (!dropdownMenu) {
-    throw new Error("Dropdown-Menü nicht gefunden!");
+    throw new Error("Dropdown menu not found!");
   }
-  dropdownMenu.innerHTML = ""; // Vorherigen Inhalt löschen
+  dropdownMenu.innerHTML = ""; // Clear previous content
   return dropdownMenu;
 }
 
 /**
- * Ruft Kontakte aus zwei APIs ab und kombiniert sie.
+ * Fetches contacts from two APIs and combines them.
  *
- * @param {string} apiURL - Die URL der ersten API.
- * @returns {Array} Eine Liste aller Kontakte.
+ * @param {string} apiURL - The URL of the first API.
+ * @returns {Array} A list of all contacts.
  */
 async function fetchAllContacts(apiURL) {
   const contactsFromMainAPI = await fetchContactsFromAPI(apiURL);
@@ -218,15 +218,15 @@ async function fetchAllContacts(apiURL) {
 }
 
 /**
- * Ruft Kontakte aus einer API ab.
+ * Fetches contacts from an API.
  *
- * @param {string} url - Die API-URL.
- * @returns {Array} Eine Liste der Kontakte.
+ * @param {string} url - The API URL.
+ * @returns {Array} A list of contacts.
  */
 async function fetchContactsFromAPI(url) {
   const response = await fetch(url);
   if (!response.ok) {
-    console.error(`Fehler beim Abrufen der Daten von ${url}`);
+    console.error(`Error fetching data from ${url}`);
     return [];
   }
   const data = await response.json();
@@ -234,11 +234,11 @@ async function fetchContactsFromAPI(url) {
 }
 
 /**
- * Fügt Kontakte zum Dropdown hinzu und sortiert sie alphabetisch.
+ * Adds contacts to the dropdown and sorts them alphabetically.
  *
- * @param {Array} contacts - Die Liste der Kontakte.
- * @param {Set} uniqueContacts - Eine Menge zur Vermeidung von Duplikaten.
- * @param {HTMLElement} dropdownMenu - Das Dropdown-Menü-Element.
+ * @param {Array} contacts - The list of contacts.
+ * @param {Set} uniqueContacts - A set to avoid duplicates.
+ * @param {HTMLElement} dropdownMenu - The dropdown menu element.
  */
 function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
   const sortedContacts = contacts.sort((a, b) =>
@@ -255,10 +255,10 @@ function addContactsToDropdown(contacts, uniqueContacts, dropdownMenu) {
 }
 
 /**
- * Erstellt ein Element für einen Kontakt.
+ * Creates an element for a contact.
  *
- * @param {Object} contact - Der Kontakt.
- * @returns {HTMLElement} Das erstellte Kontakt-Element.
+ * @param {Object} contact - The contact object.
+ * @returns {HTMLElement} The created contact element.
  */
 function createContactElement(contact) {
   const label = document.createElement("label");
@@ -269,26 +269,26 @@ function createContactElement(contact) {
   checkbox.id = checkboxId;
   label.htmlFor = checkboxId;
 
-  // Standardstil für das Label setzen
-  label.style.backgroundColor = "#f9f9f9"; // Standardhintergrund
-  label.style.padding = "10px"; // Optional, für bessere Sichtbarkeit
-  label.style.display = "flex"; // Optional, wenn du Flex-Layout verwendest
+  // Set default styling for the label
+  label.style.backgroundColor = "#f9f9f9"; // Default background
+  label.style.padding = "10px"; // Optional, for better visibility
+  label.style.display = "flex"; // Optional, if using a flex layout
   label.style.alignItems = "center";
 
-  // Ändere den Hintergrund beim Ändern des Checkbox-Zustands
+  // Change background color when checkbox state changes
   checkbox.onchange = () => {
     if (checkbox.checked) {
-      label.style.backgroundColor = "#2A3647"; // Grünlicher Hintergrund
-      label.style.color = "#ffffff"; // Textfarbe weiß
+      label.style.backgroundColor = "#2A3647"; // Dark blue background
+      label.style.color = "#ffffff"; // White text
     } else {
-      label.style.backgroundColor = "#f9f9f9"; // Standardhintergrund
-      label.style.color = "#000000"; // Textfarbe schwarz
+      label.style.backgroundColor = "#f9f9f9"; // Default background
+      label.style.color = "#000000"; // Black text
     }
 
     updateSelectedContacts(contact.name, button, checkbox.checked);
   };
 
-  // Füge die Checkbox, den Button und den Namen dem Label hinzu
+  // Append the checkbox, button, and name to the label
   label.appendChild(checkbox);
   label.appendChild(button);
   label.appendChild(document.createTextNode(contact.name));
@@ -297,10 +297,10 @@ function createContactElement(contact) {
 }
 
 /**
- * Erstellt ein Checkbox-Element.
+ * Creates a checkbox element.
  *
- * @param {string} name - Der Name des Kontakts.
- * @returns {HTMLElement} Das Checkbox-Element.
+ * @param {string} name - The name of the contact.
+ * @returns {HTMLElement} The checkbox element.
  */
 function createCheckbox(name) {
   const checkbox = document.createElement("input");
@@ -310,10 +310,10 @@ function createCheckbox(name) {
 }
 
 /**
- * Erstellt einen Button für einen Kontakt.
+ * Creates a button for a contact.
  *
- * @param {string} name - Der Name des Kontakts.
- * @returns {HTMLElement} Der erstellte Button.
+ * @param {string} name - The name of the contact.
+ * @returns {HTMLElement} The created button.
  */
 function createContactButton(name) {
   const button = document.createElement("button");
@@ -324,7 +324,11 @@ function createContactButton(name) {
 }
 
 /**
- * Ausgewählte Kontakte aktualisiere
+ * Updates the selected contacts.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @param {HTMLElement} button - The button element representing the contact.
+ * @param {boolean} isChecked - Whether the contact is selected or not.
  */
 function updateSelectedContacts(contactName, button, isChecked) {
   const selectedContactsContainer = document.getElementById("selectedContacts");
@@ -339,7 +343,11 @@ function updateSelectedContacts(contactName, button, isChecked) {
 }
 
 /**
- * Kontakt hinzufügen
+ * Adds a contact to the selected list.
+ *
+ * @param {HTMLElement} button - The button element representing the contact.
+ * @param {string} contactName - The name of the contact.
+ * @param {HTMLElement} container - The container where the contact buttons are displayed.
  */
 function addSelectedContact(button, contactName, container) {
   if (selectedContacts.includes(contactName)) return;
@@ -356,7 +364,10 @@ function addSelectedContact(button, contactName, container) {
 }
 
 /**
- * ausgewälte kontakt entfernen
+ * Removes a selected contact.
+ *
+ * @param {string} contactName - The name of the contact to remove.
+ * @param {HTMLElement} container - The container displaying the selected contacts.
  */
 function removeSelectedContact(contactName, container) {
   selectedContacts = selectedContacts.filter((name) => name !== contactName);
@@ -370,6 +381,11 @@ function removeSelectedContact(contactName, container) {
   renderSelectedContacts(container);
 }
 
+/**
+ * Renders the selected contacts in the container.
+ *
+ * @param {HTMLElement} container - The container where the selected contacts are displayed.
+ */
 function renderSelectedContacts(container) {
   const maxVisible = 3;
   container.innerHTML = "";
@@ -399,6 +415,11 @@ function renderSelectedContacts(container) {
   }
 }
 
+/**
+ * Deselects a contact and updates the selected list.
+ *
+ * @param {string} contactName - The name of the contact to deselect.
+ */
 function deselectContact(contactName) {
   const checkboxes = document.querySelectorAll(".dropdown-menu input");
   checkboxes.forEach((checkbox) => {
@@ -411,10 +432,20 @@ function deselectContact(contactName) {
   renderSelectedContacts(selectedContactsContainer);
 }
 
+/**
+ * Retrieves the list of selected contacts.
+ *
+ * @returns {Array} The array of selected contact names.
+ */
 function getSelectedContacts() {
   return selectedContacts;
 }
 
+/**
+ * Builds a task object with form data.
+ *
+ * @returns {Object} The task object.
+ */
 function buildTaskObject() {
   return {
     title: document.getElementById("title").value.trim(),
@@ -429,10 +460,10 @@ function buildTaskObject() {
 }
 
 /**
- * Generiert eine Farbe basierend auf dem ersten Buchstaben eines Namens.
+ * Generates a color based on the first letter of a name.
  *
- * @param {string} letter - Der erste Buchstabe des Namens.
- * @returns {string} Die generierte Farbe.
+ * @param {string} letter - The first letter of the name.
+ * @returns {string} The generated color in HSL format.
  */
 function generateColorFromLetter(letter) {
   const charCode = letter.toUpperCase().charCodeAt(0);

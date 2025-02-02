@@ -1,7 +1,7 @@
 /**
- * Sammelt die Daten eines neuen Tasks aus dem Formular.
+ * Collects the data for a new task from the form.
  *
- * @returns {Object} Die gesammelten Task-Daten.
+ * @returns {Object} The collected task data.
  */
 function collectTaskData() {
   const title = document.getElementById("title").value;
@@ -32,7 +32,7 @@ function collectTaskData() {
 }
 
 /**
- * Fügt eine neue Subtask zur Liste hinzu.
+ * Adds a new subtask to the list.
  */
 function addSubtask() {
   const input = document.getElementById("subtask-input");
@@ -53,9 +53,9 @@ function addSubtask() {
 }
 
 /**
- * Bearbeitet den Text einer Subtask.
+ * Edits the text of a subtask.
  *
- * @param {HTMLElement} button - Der Button, der die Edit-Funktion auslöst.
+ * @param {HTMLElement} button - The button that triggers the edit function.
  */
 function editSubtask(button) {
   const subtaskText = button.parentElement.querySelector(".subtask-text");
@@ -67,7 +67,7 @@ function editSubtask(button) {
 }
 
 /**
- * Löscht die Felder des Formulars und setzt sie zurück.
+ * Clears the form fields and resets them.
  */
 function clearFormFields() {
   document.getElementById("titlel").value = "";
@@ -82,16 +82,16 @@ function clearFormFields() {
 }
 
 /**
- * Öffnet die Details eines Tasks in einem Overlay.
+ * Opens the details of a task in an overlay.
  *
- * @param {string} taskId - Die ID des anzuzeigenden Tasks.
+ * @param {string} taskId - The ID of the task to display.
  */
 function openTaskDetails(taskId) {
   draggedTaskId = taskId;
   const task = getTaskById(taskId);
 
   if (!task) {
-    handleError(`Task nicht gefunden: ${taskId}`);
+    handleError(`Task not found: ${taskId}`);
     return;
   }
   populateTaskDetailsOverlay(task);
@@ -102,19 +102,19 @@ function openTaskDetails(taskId) {
 }
 
 /**
- * Sucht einen Task anhand seiner ID.
+ * Searches for a task by its ID.
  *
- * @param {string} taskId - Die ID des zu suchenden Tasks.
- * @returns {Object|null} Der gefundene Task oder null, falls nicht vorhanden.
+ * @param {string} taskId - The ID of the task to search for.
+ * @returns {Object|null} The found task or null if not found.
  */
 function getTaskById(taskId) {
   return allTasksData.find((task) => task.id === taskId);
 }
 
 /**
- * Füllt das Overlay mit den Task-Details.
+ * Populates the overlay with task details.
  *
- * @param {Object} task - Die Daten des anzuzeigenden Tasks.
+ * @param {Object} task - The task data to display.
  */
 function populateTaskDetailsOverlay(task) {
   document.getElementById("overlay-category").innerText =
@@ -129,9 +129,9 @@ function populateTaskDetailsOverlay(task) {
 }
 
 /**
- * Füllt die Teilnehmer-Daten (Assigned To) im Overlay.
+ * Populates the assigned participants in the overlay.
  *
- * @param {Array<string>} assignedTo - Eine Liste der zugewiesenen Personen.
+ * @param {Array<string>} assignedTo - A list of assigned participants.
  */
 function populateAssignedTo(assignedTo) {
   const container = document.getElementById("overlay-assigned-to");

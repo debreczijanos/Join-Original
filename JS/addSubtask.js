@@ -6,14 +6,14 @@ const subtasksWrapper = document.querySelector(".subtasks-wrapper");
 const subtaskList = document.getElementById("subtaskList");
 
 /**
- * Funktion: Input beim Klicken auf die Wrapper-Fläche fokussieren
+ * Function: Focuses the input field when clicking on the wrapper area.
  */
 function focusInput() {
   subtaskInput.focus();
 }
 
 /**
- * Funktion: Icons basierend auf Fokus aktualisieren
+ * Function: Updates the visibility of icons based on input focus.
  */
 function setupInputFocusListeners() {
   subtaskInput.addEventListener("focus", () => showInputIcons());
@@ -21,7 +21,7 @@ function setupInputFocusListeners() {
 }
 
 /**
- * Zeigt die Icons für das Eingabefeld an.
+ * Shows the icons for the input field.
  */
 function showInputIcons() {
   subtasksWrapper.classList.add("focused");
@@ -29,7 +29,7 @@ function showInputIcons() {
 }
 
 /**
- * Versteckt die Icons für das Eingabefeld, wenn es leer ist.
+ * Hides the icons for the input field if it is empty.
  */
 function hideInputIconsIfEmpty() {
   if (subtaskInput.value.trim() === "") {
@@ -39,9 +39,9 @@ function hideInputIconsIfEmpty() {
 }
 
 /**
- * Schaltet die Sichtbarkeit von Icons basierend auf dem Zustand.
+ * Toggles the visibility of icons based on the state.
  *
- * @param {boolean} showAddIcon - Wenn true, wird das "Hinzufügen"-Icon angezeigt.
+ * @param {boolean} showAddIcon - If true, the "Add" icon is displayed.
  */
 function toggleIconsVisibility(showAddIcon) {
   iconAdd.classList.toggle("hidden", !showAddIcon);
@@ -50,9 +50,9 @@ function toggleIconsVisibility(showAddIcon) {
 }
 
 /**
- * Löscht den Inhalt des Eingabefelds und setzt den Fokus darauf.
+ * Clears the input field and sets focus back on it.
  *
- * @param {event} event - Das Klick-Event.
+ * @param {Event} event - The click event.
  */
 function clearInput(event) {
   event.stopPropagation();
@@ -61,9 +61,9 @@ function clearInput(event) {
 }
 
 /**
- *  Fügt einen neuen Subtask zur Liste hinzu.
+ * Adds a new subtask to the list.
  *
- * @param {event} event - Das Klick-Event.
+ * @param {Event} event - The click event.
  */
 function addSubtask(event) {
   event.stopPropagation();
@@ -78,10 +78,10 @@ function addSubtask(event) {
 }
 
 /**
- * Erstellt ein neues Subtask-Element.
+ * Creates a new subtask element.
  *
- * @param {string} text - Der Text des Subtasks.
- * @returns {HTMLElement} Das Subtask-Element.
+ * @param {string} text - The subtask text.
+ * @returns {HTMLElement} The subtask element.
  */
 function createSubtaskElement(text) {
   const subtaskItem = document.createElement("div");
@@ -97,10 +97,10 @@ function createSubtaskElement(text) {
 }
 
 /**
- * Erstellt ein Text-Element für den Subtask.
+ * Creates a text element for the subtask.
  *
- * @param {string} text - Der Text des Subtasks.
- * @returns {HTMLElement} Das Text-Element.
+ * @param {string} text - The subtask text.
+ * @returns {HTMLElement} The text element.
  */
 function createSubtaskText(text) {
   const textElement = document.createElement("li");
@@ -109,11 +109,11 @@ function createSubtaskText(text) {
 }
 
 /**
- * Erstellt die Aktions-Icons für einen Subtask.
+ * Creates the action icons for a subtask.
  *
- * @param {HTMLElement} subtaskItem - Das Subtask-Element.
- * @param {HTMLElement} subtaskTextElement - Das Text-Element des Subtasks.
- * @returns {HTMLElement} Der Container mit den Aktionen.
+ * @param {HTMLElement} subtaskItem - The subtask element.
+ * @param {HTMLElement} subtaskTextElement - The text element of the subtask.
+ * @returns {HTMLElement} The container with action icons.
  */
 function createSubtaskActions(subtaskItem, subtaskTextElement) {
   const actions = document.createElement("div");
@@ -134,12 +134,12 @@ function createSubtaskActions(subtaskItem, subtaskTextElement) {
 }
 
 /**
- * Erstellt ein Icon-Element mit einem Klick-Handler.
+ * Creates an icon element with a click handler.
  *
- * @param {string} src - Der Pfad zur Icon-Datei.
- * @param {string} alt - Der Alternativtext für das Icon.
- * @param {Function} clickHandler - Der Klick-Handler für das Icon.
- * @returns {HTMLElement} Das Icon-Element.
+ * @param {string} src - The path to the icon file.
+ * @param {string} alt - The alternative text for the icon.
+ * @param {Function} clickHandler - The click event handler for the icon.
+ * @returns {HTMLElement} The icon element.
  */
 function createIcon(src, alt, clickHandler) {
   const icon = document.createElement("img");
@@ -151,9 +151,9 @@ function createIcon(src, alt, clickHandler) {
 }
 
 /**
- * Erstellt einen Trenner für die Subtask-Aktionen.
+ * Creates a divider for the subtask actions.
  *
- * @returns {HTMLElement} Das Trenner-Element.
+ * @returns {HTMLElement} The divider element.
  */
 function createDivider() {
   const divider = document.createElement("div");
@@ -162,7 +162,7 @@ function createDivider() {
 }
 
 /**
- * Setzt das Eingabefeld zurück.
+ * Resets the input field.
  */
 function resetSubtaskInput() {
   subtaskInput.value = "";
@@ -170,10 +170,10 @@ function resetSubtaskInput() {
 }
 
 /**
- * Ermöglicht das Bearbeiten eines Subtasks.
+ * Enables editing of a subtask.
  *
- * @param {HTMLElement} subtaskItem - Das Subtask-Element.
- * @param {HTMLElement} subtaskTextElement - Das Text-Element des Subtasks.
+ * @param {HTMLElement} subtaskItem - The subtask element.
+ * @param {HTMLElement} subtaskTextElement - The text element of the subtask.
  */
 function editSubtask(subtaskItem, subtaskTextElement) {
   const editInput = createEditInput(subtaskTextElement.textContent);
@@ -192,10 +192,10 @@ function editSubtask(subtaskItem, subtaskTextElement) {
 }
 
 /**
- * Erstellt ein Eingabefeld für das Bearbeiten eines Subtasks.
+ * Creates an input field for editing a subtask.
  *
- * @param {string} value - Der aktuelle Text des Subtasks.
- * @returns {HTMLElement} Das Eingabefeld.
+ * @param {string} value - The current text of the subtask.
+ * @returns {HTMLElement} The input field.
  */
 function createEditInput(value) {
   const input = document.createElement("input");
@@ -206,10 +206,10 @@ function createEditInput(value) {
 }
 
 /**
- * Speichert die Bearbeitung eines Subtasks.
+ * Handles the save action when editing a subtask.
  *
- * @param {KeyboardEvent} event - Das Keyboard-Event.
- * @param {Function} saveHandler - Die Funktion, die das Speichern ausführt.
+ * @param {KeyboardEvent} event - The keyboard event.
+ * @param {Function} saveHandler - The function that executes the save action.
  */
 function handleEditSave(event, saveHandler) {
   if (event.key === "Enter") {
@@ -218,36 +218,34 @@ function handleEditSave(event, saveHandler) {
 }
 
 /**
- * Speichert den bearbeiteten Subtask.
+ * Saves the edited subtask.
  *
- * @param {HTMLElement} editInput - Das Eingabefeld für die Bearbeitung.
- * @param {HTMLElement} subtaskTextElement - Das Text-Element des Subtasks.
+ * @param {HTMLElement} editInput - The input field for editing.
+ * @param {HTMLElement} subtaskTextElement - The text element of the subtask.
  */
 function saveSubtaskEdit(editInput, subtaskTextElement) {
   const newValue = editInput.value.trim();
 
   if (newValue === "") {
-    // Wenn das Feld leer ist, kehre zum vorherigen Wert zurück
-    editInput.replaceWith(subtaskTextElement); // Eingabefeld durch ursprünglichen Text ersetzen
+    editInput.replaceWith(subtaskTextElement);
     return;
   }
 
-  // Wenn ein gültiger Wert eingegeben wurde, speichere ihn
   subtaskTextElement.textContent = newValue;
   editInput.replaceWith(subtaskTextElement);
 }
 
 /**
- * Löscht einen Subtask aus der Liste.
+ * Deletes a subtask from the list.
  *
- * @param {HTMLElement} subtaskItem - Das Subtask-Element, das gelöscht werden soll.
+ * @param {HTMLElement} subtaskItem - The subtask element to be deleted.
  */
 function deleteSubtask(subtaskItem) {
   subtaskItem.remove();
 }
 
 /**
- * Initialisiert die Event-Listener für das Subtask-Management.
+ * Initializes event listeners for subtask management.
  */
 function setupEventListeners() {
   subtasksWrapper.addEventListener("click", focusInput);
