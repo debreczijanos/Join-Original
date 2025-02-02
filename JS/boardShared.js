@@ -10,7 +10,7 @@ function toggleDropdown() {
   } else {
     dropdownMenu.classList.add("d-none");
     dropdownMenu.style.display = "none";
-  }
+  } 
 }
 
 /**

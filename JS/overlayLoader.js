@@ -1,8 +1,8 @@
 /**
- * Öffnet das "Add Task"-Overlay und lädt die Inhalte dynamisch.
+ * Opens the "Add Task" overlay and loads the content dynamically.
  *
- * Die HTML-Inhalte werden von einer Datei geladen und gefiltert,
- * um nur die relevanten Inhalte in das Overlay zu setzen.
+ * The HTML content is loaded from a file and filtered to include only the relevant content
+ * in the overlay.
  */
 function openAddTaskOverlay() {
   const overlay = document.getElementById("add-task-overlay");
@@ -11,7 +11,7 @@ function openAddTaskOverlay() {
   fetch("../html/addTaskOverlay.html")
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Fehler beim Laden der Datei");
+        throw new Error("Error loading the file");
       }
       return response.text();
     })
@@ -27,12 +27,12 @@ function openAddTaskOverlay() {
       );
     })
     .catch((error) => {
-      overlayContent.innerHTML = `<p>Fehler: ${error.message}</p>`;
+      overlayContent.innerHTML = `<p>Error: ${error.message}</p>`;
     });
 }
 
 /**
- * Schließt das "Add Task"-Overlay und entfernt die Sichtbarkeit.
+ * Closes the "Add Task" overlay and removes its visibility.
  */
 function closeAddTaskOverlay() {
   const overlay = document.getElementById("add-task-overlay");

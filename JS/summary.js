@@ -1,14 +1,14 @@
 /**
- * URL der Firebase-Datenbank (ersetze mit deiner eigenen URL).
+ * URL of the Firebase database (replace with your own URL).
  */
 const databaseURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
 /**
- * Hauptfunktion zum Laden der Tasks und Aktualisieren der UI.
+ * Main function to load the tasks and update the UI.
  *
- * Diese Funktion ruft die Tasks aus der Datenbank ab, berechnet die Task-Zähler
- * und aktualisiert die Benutzeroberfläche.
+ * This function fetches the tasks from the database, calculates the task counts,
+ * and updates the user interface.
  */
 async function loadSummaryData() {
   try {
@@ -18,27 +18,27 @@ async function loadSummaryData() {
     const counts = calculateTaskCounts(tasks);
     updateUI(counts);
   } catch (error) {
-    console.error("Fehler beim Abrufen der Daten:", error);
+    console.error("Error fetching data:", error);
   }
 }
 
 /**
- * Ruft die Task-Daten aus der Firebase-Datenbank ab.
+ * Fetches the task data from the Firebase database.
  *
- * @returns {Object|null} Die abgerufenen Tasks oder null, wenn keine Daten gefunden wurden.
+ * @returns {Object|null} The fetched tasks or null if no data was found.
  */
 async function fetchTasksFromDatabase() {
   const response = await fetch(databaseURL);
   const tasks = await response.json();
-  if (!tasks) console.log("Keine Tasks gefunden.");
+  if (!tasks) console.log("No tasks found.");
   return tasks;
 }
 
 /**
- * Berechnet die Zählerstände basierend auf den Task-Daten.
+ * Calculates the counts based on the task data.
  *
- * @param {Object} tasks - Die Task-Daten aus der Datenbank.
- * @returns {Object} Ein Objekt mit den Zählerständen für verschiedene Kategorien.
+ * @param {Object} tasks - The task data from the database.
+ * @returns {Object} An object with the counts for different categories.
  */
 function calculateTaskCounts(tasks) {
   let toDoCount = 0,
@@ -72,9 +72,9 @@ function calculateTaskCounts(tasks) {
 }
 
 /**
- * Aktualisiert die Benutzeroberfläche mit den berechneten Zählerständen.
+ * Updates the user interface with the calculated counts.
  *
- * @param {Object} counts - Ein Objekt mit den Zählerständen.
+ * @param {Object} counts - An object with the counts.
  */
 function updateUI(counts) {
   document.querySelector(".summary-to-do").textContent = counts.toDoCount;
@@ -88,6 +88,6 @@ function updateUI(counts) {
 }
 
 /**
- * Daten laden, wenn die Seite fertig geladen ist
+ * Loads data when the page has finished loading.
  */
 document.addEventListener("DOMContentLoaded", loadSummaryData);

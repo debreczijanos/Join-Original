@@ -1,5 +1,5 @@
 /**
- * Initialisiert die Navigation und setzt das aktive Menüelement basierend auf der URL.
+ * Initializes the navigation and sets the active menu item based on the URL.
  */
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Ermittelt die aktive Menüklasse basierend auf der aktuellen URL.
- * @returns {string|null} - Die Klasse des aktiven Menüpunkts oder null, falls kein Treffer.
+ * Determines the active menu class based on the current URL.
+ * @returns {string|null} - The class of the active menu item or null if no match is found.
  */
 function getActiveMenuClass() {
   const currentPath = window.location.pathname;
@@ -35,9 +35,9 @@ function getActiveMenuClass() {
 }
 
 /**
- * Setzt die "active"-Klasse für das gefundene Menüelement.
- * @param {NodeList} menuItems - Liste der Menüelemente.
- * @param {string|null} activeMenuClass - Die Klasse des aktiven Menüpunkts.
+ * Sets the "active" class for the found menu item.
+ * @param {NodeList} menuItems - List of menu items.
+ * @param {string|null} activeMenuClass - The class of the active menu item.
  */
 function updateActiveMenu(menuItems, activeMenuClass) {
   menuItems.forEach((el) => el.classList.remove("active"));
@@ -49,8 +49,8 @@ function updateActiveMenu(menuItems, activeMenuClass) {
 }
 
 /**
- * Fügt allen Menüelementen ein Click-Event hinzu, um sie aktiv zu setzen.
- * @param {NodeList} menuItems - Liste der Menüelemente.
+ * Adds a click event to all menu items to set them as active.
+ * @param {NodeList} menuItems - List of menu items.
  */
 function addClickListeners(menuItems) {
   menuItems.forEach((item) => {

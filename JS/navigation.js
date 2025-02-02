@@ -1,5 +1,5 @@
 /**
- * Speichert die aktuelle Seite in `sessionStorage`, bevor die Seite verlassen wird.
+ * Saves the current page in `sessionStorage` before leaving the page.
  */
 function saveLastPage() {
   const currentPage = window.location.href;
@@ -13,19 +13,19 @@ function saveLastPage() {
 }
 
 /**
- * Leitet den Benutzer zur zuletzt besuchten Seite weiter.
+ * Redirects the user to the last visited page.
  */
 function goToLastPage() {
   const lastPage = sessionStorage.getItem("lastPage");
   if (lastPage) {
     window.location.href = lastPage;
   } else {
-    window.history.back(); // Falls keine gespeicherte Seite vorhanden ist
+    window.history.back(); // If no saved page exists
   }
 }
 
-// Speichert die aktuelle Seite beim **Verlassen** der Seite, damit schnelle Wechsel erfasst werden
+// Saves the current page when **leaving** the page so that quick switches are recorded
 window.addEventListener("beforeunload", saveLastPage);
 
-// Falls das nicht reicht, speichern wir zusätzlich beim Laden der Seite
+// If that's not enough, we also save it when the page loads
 document.addEventListener("DOMContentLoaded", saveLastPage);

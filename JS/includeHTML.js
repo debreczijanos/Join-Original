@@ -1,9 +1,9 @@
 /**
- * Lädt eine externe HTML-Datei in ein bestimmtes Element und führt optional eine Callback-Funktion aus.
+ * Loads an external HTML file into a specific element and optionally executes a callback function.
  *
- * @param {string} selector - Der CSS-Selektor des Elements, in das der HTML-Inhalt eingefügt werden soll.
- * @param {string} file - Der Pfad zur HTML-Datei, die geladen werden soll.
- * @param {Function} [callback] - Eine optionale Callback-Funktion, die nach dem Laden des Inhalts ausgeführt wird.
+ * @param {string} selector - The CSS selector of the element into which the HTML content should be inserted.
+ * @param {string} file - The path to the HTML file to be loaded.
+ * @param {Function} [callback] - An optional callback function that will be executed after the content is loaded.
  */
 function includeHTML(selector, file, callback) {
   const element = document.querySelector(selector);

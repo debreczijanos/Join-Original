@@ -1,8 +1,8 @@
 /**
- * Navigiert zur Kanban-Board-Seite.
+ * Navigates to the Kanban board page.
  *
- * Diese Funktion leitet den Benutzer zur Seite "boardTest.html" weiter.
- * Die relative URL wird verwendet, um die Seite im Unterordner `./html` zu finden.
+ * This function redirects the user to the "boardTest.html" page.
+ * The relative URL is used to find the page in the `./html` subfolder.
  */
 function navigateToBoard() {
   window.location.href = "./html/boardTest.html";

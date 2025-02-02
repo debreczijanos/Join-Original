@@ -1,26 +1,26 @@
 /**
- * Die URL zur Firebase-API für Aufgaben.
+ * The URL to the Firebase API for tasks.
  */
 const API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks";
 
 /**
- * Die URL zur Firebase-API für Benutzer.
+ * The URL to the Firebase API for users.
  */
 const API_CONTACTS =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 /**
- * Enthält alle geladenen Aufgaben.
+ * Contains all the loaded tasks.
  * @type {Array<Object>}
  */
 let allTasksData = [];
 
 /**
- * Öffnet das "Aufgabe hinzufügen"-Fenster basierend auf der Fensterbreite.
+ * Opens the "Add Task" window based on the window width.
  *
- * - Mobile Geräte: Weiterleitung zur Seite "addTask.html".
- * - Desktop: Zeigt ein Popup zum Hinzufügen von Aufgaben.
+ * - Mobile devices: Redirects to the "addTask.html" page.
+ * - Desktop: Shows a popup for adding tasks.
  */
 function openTaskField() {
   let screenWidth = window.innerWidth;
@@ -35,13 +35,13 @@ function openTaskField() {
       iframe.src = "./addTaskPartial.html";
       iframeOverlay.classList.remove("d-none");
     } else {
-      console.error("Das IFrame-Overlay konnte nicht gefunden werden.");
+      console.error("The iframe overlay could not be found.");
     }
   }
 }
 
 /**
- * Überwacht die Fenstergröße und leitet um, wenn die Größe unter 950px fällt
+ * Monitors the window size and redirects if the size falls below 950px.
  */
 window.addEventListener("resize", function () {
   let screenWidth = window.innerWidth;
@@ -55,7 +55,7 @@ window.addEventListener("resize", function () {
 });
 
 /**
- * Schließt das "Aufgabe hinzufügen"-Fenster und setzt das Formular zurück.
+ * Closes the "Add Task" window and resets the form.
  */
 function closeTaskWindow() {
   const taskWindow = document.getElementById("show-hide-class");
@@ -64,25 +64,25 @@ function closeTaskWindow() {
 }
 
 /**
- * Lädt alle Aufgaben aus der Firebase-API und rendert das Kanban-Board.
+ * Loads all tasks from the Firebase API and renders the Kanban board.
  */
 async function loadTasks() {
   try {
     const response = await fetch(`${API_URL}.json`);
     if (!response.ok)
-      handleError(`Fehler beim Abrufen der Daten: ${response.statusText}`);
+      handleError(`Error fetching data: ${response.statusText}`);
     const tasks = await response.json();
     prepareTasksData(tasks);
     renderKanbanBoard();
   } catch (error) {
-    handleError("Fehler beim Laden der Aufgaben");
+    handleError("Error loading tasks");
   }
 }
 
 /**
- * Wandelt die empfangenen Aufgaben in ein standardisiertes Format um.
+ * Converts the received tasks into a standardized format.
  *
- * @param {Object} tasks - Die empfangenen Aufgaben.
+ * @param {Object} tasks - The received tasks.
  */
 function prepareTasksData(tasks) {
   allTasksData = Object.entries(tasks).map(([id, task]) => ({
@@ -93,10 +93,10 @@ function prepareTasksData(tasks) {
 }
 
 /**
- * Wandelt die Subtasks in ein standardisiertes Format um.
+ * Converts the subtasks into a standardized format.
  *
- * @param {Object} subtasks - Die Subtasks einer Aufgabe.
- * @returns {Array<Object>} Die transformierten Subtasks.
+ * @param {Object} subtasks - The subtasks of a task.
+ * @returns {Array<Object>} The transformed subtasks.
  */
 function transformSubtasks(subtasks) {
   return Object.entries(subtasks).map(([key, value]) => {
@@ -105,12 +105,12 @@ function transformSubtasks(subtasks) {
     } else if (typeof value === "object") {
       return value;
     }
-    return { name: "Unbekannt", completed: false };
+    return { name: "Unknown", completed: false };
   });
 }
 
 /**
- * Rendert die Aufgaben im Kanban-Board.
+ * Renders the tasks in the Kanban board.
  */
 function renderKanbanBoard() {
   const containers = getTaskContainers();
@@ -121,9 +121,9 @@ function renderKanbanBoard() {
 }
 
 /**
- * Holt die Container-Elemente für die verschiedenen Status im Kanban-Board.
+ * Gets the container elements for the different statuses in the Kanban board.
  *
- * @returns {Object} Ein Objekt mit den Containern für "To Do", "In Progress", "Feedback" und "Done".
+ * @returns {Object} An object with the containers for "To Do", "In Progress", "Feedback", and "Done".
  */
 function getTaskContainers() {
   return {
@@ -135,18 +135,18 @@ function getTaskContainers() {
 }
 
 /**
- * Löscht den Inhalt aller Kanban-Board-Container.
+ * Clears the contents of all Kanban board containers.
  *
- * @param {Object} containers - Die Container-Elemente des Kanban-Boards.
+ * @param {Object} containers - The container elements of the Kanban board.
  */
 function clearTaskContainers(containers) {
   Object.values(containers).forEach((container) => (container.innerHTML = ""));
 }
 
 /**
- * Verteilt die Aufgaben basierend auf ihrem Status in die entsprechenden Kanban-Container.
+ * Distributes the tasks based on their status into the corresponding Kanban containers.
  *
- * @param {Object} containers - Die Container-Elemente des Kanban-Boards.
+ * @param {Object} containers - The container elements of the Kanban board.
  */
 function distributeTasks(containers) {
   allTasksData.forEach((task) => {
@@ -156,11 +156,11 @@ function distributeTasks(containers) {
 }
 
 /**
- * Fügt eine Aufgabe in den entsprechenden Kanban-Container basierend auf ihrem Status ein.
+ * Adds a task to the appropriate Kanban container based on its status.
  *
- * @param {HTMLElement} taskElement - Das Element der Aufgabe.
- * @param {Object} containers - Die Container-Elemente des Kanban-Boards.
- * @param {string} status - Der Status der Aufgabe.
+ * @param {HTMLElement} taskElement - The task element.
+ * @param {Object} containers - The container elements of the Kanban board.
+ * @param {string} status - The status of the task.
  */
 function appendTaskToContainer(taskElement, containers, status) {
   switch (status) {
@@ -180,17 +180,17 @@ function appendTaskToContainer(taskElement, containers, status) {
 }
 
 /**
- * Formatiert die Liste der zugewiesenen Personen für die Anzeige.
+ * Formats the list of assigned persons for display.
  *
- * - Zeigt die Initialen der ersten zwei Personen mit zufälligen Farben an.
- * - Fügt eine zusätzliche Anzeige hinzu, wenn weitere Teilnehmer vorhanden sind.
+ * - Shows the initials of the first two people with random colors.
+ * - Adds extra display if more participants are present.
  *
- * @param {Array<string>} assignedTo - Liste der zugewiesenen Personen.
- * @returns {string} HTML-String mit formatierten Teilnehmern.
+ * @param {Array<string>} assignedTo - List of assigned persons.
+ * @returns {string} HTML string with formatted participants.
  */
 function formatAssignedTo(assignedTo) {
   if (!assignedTo || assignedTo.length === 0) {
-    return "Nicht zugewiesen";
+    return "Not assigned";
   }
   const visibleParticipants = assignedTo.slice(0, 2);
   const remainingCount = assignedTo.length - visibleParticipants.length;
@@ -218,19 +218,19 @@ function formatAssignedTo(assignedTo) {
 }
 
 /**
- * Startet den Drag-and-Drop-Vorgang für eine Aufgabe.
+ * Starts the drag-and-drop process for a task.
  *
- * @param {DragEvent} event - Das Drag-Event.
- * @param {string} taskId - Die ID der zu ziehenden Aufgabe.
+ * @param {DragEvent} event - The drag event.
+ * @param {string} taskId - The ID of the task being dragged.
  */
 function dragStart(event, taskId) {
   event.dataTransfer.setData("text/plain", taskId);
 }
 
 /**
- * Generiert eine zufällige HEX-Farbe.
+ * Generates a random HEX color.
  *
- * @returns {string} Eine zufällige Farbe im HEX-Format (z. B. "#A1B2C3").
+ * @returns {string} A random color in HEX format (e.g., "#A1B2C3").
  */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -242,12 +242,12 @@ function getRandomColor() {
 }
 
 /**
- * Füllt die Liste der Subtasks in einem Overlay aus.
+ * Fills the list of subtasks in an overlay.
  *
- * - Zeigt die Subtasks mit Checkboxen an.
- * - Aktualisiert die Fortschrittsleiste basierend auf den Subtasks.
+ * - Displays subtasks with checkboxes.
+ * - Updates the progress bar based on the subtasks.
  *
- * @param {Array<Object>} subtasks - Liste der Subtasks mit ihren Eigenschaften.
+ * @param {Array<Object>} subtasks - List of subtasks with their properties.
  */
 function populateSubtasks(subtasks) {
   const container = document.getElementById("overlay-subtasks");
@@ -270,14 +270,14 @@ function populateSubtasks(subtasks) {
 }
 
 /**
- * Wechselt den Status eines Subtasks zwischen abgeschlossen und nicht abgeschlossen.
+ * Toggles the completion status of a subtask between completed and not completed.
  *
- * @param {number} index - Der Index des Subtasks in der Liste.
+ * @param {number} index - The index of the subtask in the list.
  */
 function toggleSubtaskCompletion(index) {
   const task = getTaskById(draggedTaskId);
   if (!task || !task.subtasks || index >= task.subtasks.length) {
-    console.error(`Subtask mit Index ${index} nicht gefunden.`);
+    console.error(`Subtask with index ${index} not found.`);
     return;
   }
 
@@ -287,10 +287,10 @@ function toggleSubtaskCompletion(index) {
 }
 
 /**
- * Speichert den aktuellen Status der Subtasks in der Backend-Datenbank.
+ * Saves the current status of the subtasks to the backend database.
  *
- * @param {string} taskId - Die ID der Aufgabe.
- * @param {Array<Object>} subtasks - Die aktualisierten Subtasks.
+ * @param {string} taskId - The ID of the task.
+ * @param {Array<Object>} subtasks - The updated subtasks.
  */
 function saveSubtaskStatusToBackend(taskId, subtasks) {
   const updateUrl = `${API_URL}/${taskId}.json`;
@@ -302,21 +302,21 @@ function saveSubtaskStatusToBackend(taskId, subtasks) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw new Error(`Fehler beim Speichern der Subtasks.`);
+        throw new Error(`Error saving subtasks.`);
       }
     })
     .catch((error) =>
-      console.error("Fehler beim Speichern der Subtasks:", error)
+      console.error("Error saving subtasks:", error)
     );
 }
 
 /**
- * Aktualisiert die Fortschrittsleiste basierend auf dem Status der Subtasks.
+ * Updates the progress bar based on the status of the subtasks.
  *
- * - Berechnet den Prozentsatz der abgeschlossenen Subtasks.
- * - Aktualisiert die Fortschrittsleiste und den Text.
+ * - Calculates the percentage of completed subtasks.
+ * - Updates the progress bar and the text.
  *
- * @param {Array<Object>} subtasks - Liste der Subtasks mit ihren Eigenschaften.
+ * @param {Array<Object>} subtasks - List of subtasks with their properties.
  */
 function updateOverlayProgressBar(subtasks) {
   const totalSubtasks = subtasks.length;
@@ -330,16 +330,16 @@ function updateOverlayProgressBar(subtasks) {
 
   if (progressBar && progressText) {
     progressBar.value = progressPercentage;
-    progressText.innerText = `${completedSubtasks} von ${totalSubtasks} Subtasks erledigt (${progressPercentage.toFixed(
+    progressText.innerText = `${completedSubtasks} of ${totalSubtasks} subtasks completed (${progressPercentage.toFixed(
       0
     )}%)`;
   }
 }
 
 /**
- * Zeigt das Overlay für die Task-Details an.
+ * Displays the overlay for task details.
  *
- * Entfernt die Klasse `d-none` vom Overlay, um es sichtbar zu machen.
+ * Removes the `d-none` class from the overlay to make it visible.
  */
 function showTaskDetailsOverlay() {
   const overlay = document.getElementById("task-details-overlay");
@@ -349,9 +349,9 @@ function showTaskDetailsOverlay() {
 }
 
 /**
- * Schließt das Overlay für die Task-Details.
+ * Closes the task details overlay.
  *
- * Fügt die Klasse `d-none` zum Overlay hinzu, um es auszublenden.
+ * Adds the `d-none` class to the overlay to hide it.
  */
 function closeTaskDetails() {
   const overlay = document.getElementById("task-details-overlay");
@@ -361,20 +361,20 @@ function closeTaskDetails() {
 }
 
 /**
- * Schließt das Task-Details-Overlay, wenn außerhalb des Inhaltsbereichs geklickt wird.
- * @param {MouseEvent} event - Das Klick-Ereignis.
+ * Closes the task details overlay if clicked outside the content area.
+ * @param {MouseEvent} event - The click event.
  */
 function closeTaskDetailsOnClick(event) {
   const overlay = document.getElementById("task-details-overlay");
   const overlayContent = overlay.querySelector(".overlay-content");
 
-  // Prüft, ob der Klick außerhalb des Overlay-Inhalts war
+  // Checks if the click was outside the overlay content
   if (event.target === overlay) {
     closeTaskDetails();
   }
 }
 
-// Event-Listener für das Overlay hinzufügen
+// Add event listener for the overlay
 document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("task-details-overlay");
   if (overlay) {
@@ -383,13 +383,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Erstellt ein HTML-Element für eine Aufgabe.
+ * Creates an HTML element for a task.
  *
- * - Fügt Klassen, Attribute und Event-Handler hinzu.
- * - Enthält eine Funktion zum Anzeigen der Task-Details bei Klick.
+ * - Adds classes, attributes, and event handlers.
+ * - Includes a function to show task details on click.
  *
- * @param {Object} task - Die zu erstellende Aufgabe.
- * @returns {HTMLElement} Das HTML-Element der Aufgabe.
+ * @param {Object} task - The task to create.
+ * @returns {HTMLElement} The task HTML element.
  */
 function createTaskElement(task) {
   const taskElement = document.createElement("div");
@@ -404,14 +404,14 @@ function createTaskElement(task) {
 }
 
 /**
- * Generiert den HTML-Inhalt einer Aufgabe.
+ * Generates the HTML content for a task.
  *
- * - Zeigt Kategorie, Titel, Beschreibung, Fortschrittsanzeige und Zuweisung an.
- * - Berücksichtigt den Fortschritt der Subtasks.
- * - Nutzt unterschiedliche Stile basierend auf der Kategorie.
+ * - Displays category, title, description, progress bar, and assignment.
+ * - Considers the progress of the subtasks.
+ * - Uses different styles based on the category.
  *
- * @param {Object} task - Die Aufgabe, deren HTML generiert wird.
- * @returns {string} Der HTML-Inhalt der Aufgabe.
+ * @param {Object} task - The task to generate HTML for.
+ * @returns {string} The HTML content for the task.
  */
 function getTaskHTML(task) {
   const assignedTo = formatAssignedTo(task.assignedTo);
@@ -429,10 +429,10 @@ function getTaskHTML(task) {
       : "";
 
   return `
-    <!-- Kategorie oben -->
+    <!-- Category at the top -->
     <div class= "category-dropdown">
     <h3 class= "task-category" style="${categoryStyle}"> ${
-    task.category || "Keine Kategorie"
+    task.category || "No Category"
   }</h3>
   <img id="dropdown-arrow" class="display-none dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
   
@@ -445,30 +445,30 @@ function getTaskHTML(task) {
   
   </div>
 
-    <!-- Titel -->
-    <h4>${task.title || "Kein Titel"}</h4>
+    <!-- Title -->
+    <h4>${task.title || "No Title"}</h4>
 
-    <!-- Beschreibung -->
-    <p class= "task-description">${task.description || "Keine Beschreibung"}</p>
+    <!-- Description -->
+    <p class= "task-description">${task.description || "No Description"}</p>
 
-    <!-- Fortschrittsanzeige -->
+    <!-- Progress bar -->
     <div class="progress-container">
       <progress id="overlay-progress" value="${progressPercentage}" max="100"></progress>
-      <p>${progressPercentage.toFixed(0)}% der Subtasks abgeschlossen</p>
+      <p>${progressPercentage.toFixed(0)}% of subtasks completed</p>
     </div>
 
-    <!-- Zuweisung -->
-    <p class="initialien"><strong>Zugeteilt an:</strong> ${assignedTo}</p>
+    <!-- Assignment -->
+    <p class="initialien"><strong>Assigned to:</strong> ${assignedTo}</p>
   `;
 }
 
 /**
- * Aktualisiert die Fortschrittsanzeige einer Aufgabe basierend auf den Subtasks.
+ * Updates the progress display of a task based on its subtasks.
  *
- * - Berechnet den Fortschritt (in Prozent).
- * - Aktualisiert die Fortschrittsleiste und die Textanzeige im HTML.
+ * - Calculates the progress (in percentage).
+ * - Updates the progress bar and the text display in HTML.
  *
- * @param {string} taskId - Die ID der Aufgabe, deren Fortschritt aktualisiert wird.
+ * @param {string} taskId - The ID of the task whose progress is being updated.
  */
 function updateTaskProgress(taskId) {
   const task = getTaskById(taskId);

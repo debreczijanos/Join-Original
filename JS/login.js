@@ -1,5 +1,5 @@
 /**
- * Startet die Animation des Hintergrunds und des Logos.
+ * Starts the background and logo animation.
  */
 function startAnimation() {
   let background = document.getElementById("backgroundAnimation");
@@ -9,9 +9,9 @@ function startAnimation() {
 }
 
 /**
- * Blendet den Hintergrund langsam aus.
+ * Slowly fades out the background.
  *
- * @param {HTMLElement} background - Das Hintergrund-Element.
+ * @param {HTMLElement} background - The background element.
  */
 function fadeOutBackground(background) {
   setTimeout(() => {
@@ -21,9 +21,9 @@ function fadeOutBackground(background) {
 }
 
 /**
- * Versteckt den Hintergrund nach einer Verzögerung.
+ * Hides the background after a delay.
  *
- * @param {HTMLElement} background - Das Hintergrund-Element.
+ * @param {HTMLElement} background - The background element.
  */
 function hideBackgroundWithDelay(background) {
   setTimeout(() => {
@@ -32,9 +32,9 @@ function hideBackgroundWithDelay(background) {
 }
 
 /**
- * Behandelt den Login-Vorgang und zeigt spezifische Fehlermeldungen an.
+ * Handles the login process and displays specific error messages.
  *
- * @param {Event} event - Das Login-Event.
+ * @param {Event} event - The login event.
  */
 function handleLogin(event) {
   event.preventDefault();
@@ -61,9 +61,9 @@ function handleLogin(event) {
 }
 
 /**
- * Holt die Eingabewerte für E-Mail und Passwort aus dem Formular.
+ * Retrieves the input values for email and password from the form.
  *
- * @returns {Object} Ein Objekt mit `email` und `password`.
+ * @returns {Object} An object with `email` and `password`.
  */
 function getInputValues() {
   const email = document.getElementById("email").value.trim();
@@ -72,9 +72,9 @@ function getInputValues() {
 }
 
 /**
- * Ruft die Benutzerdaten aus der Datenbank ab.
+ * Fetches the user data from the database.
  *
- * @returns {Promise<Object>} Die Benutzerdaten als JSON-Objekt.
+ * @returns {Promise<Object>} The user data as a JSON object.
  */
 async function fetchUserData() {
   const response = await fetch(
@@ -84,15 +84,15 @@ async function fetchUserData() {
 }
 
 /**
- * Validiert die Benutzerdaten und gibt spezifische Fehlermeldungen zurück.
+ * Validates the user data and returns specific error messages.
  *
- * @param {Object} usersData - Die Benutzerdaten.
- * @param {string} email - Die eingegebene E-Mail-Adresse.
- * @param {string} password - Das eingegebene Passwort.
- * @returns {Object} Ein Objekt mit `status` (string) und `userName` (string oder null).
+ * @param {Object} usersData - The user data.
+ * @param {string} email - The entered email address.
+ * @param {string} password - The entered password.
+ * @returns {Object} An object with `status` (string) and `userName` (string or null).
  */
 function validateUser(usersData, email, password) {
-  // Regulärer Ausdruck für eine gültige E-Mail-Adresse (zusätzliche Validierung)
+  // Regular expression for a valid email address (additional validation)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return { status: "invalidEmail", userName: null };
@@ -125,9 +125,9 @@ function validateUser(usersData, email, password) {
 }
 
 /**
- * Loggt den Benutzer ein und speichert den Benutzernamen im LocalStorage.
+ * Logs the user in and saves the username in localStorage.
  *
- * @param {string} userName - Der Benutzername.
+ * @param {string} userName - The username.
  */
 function loginUser(userName) {
   localStorage.setItem("userName", userName);
@@ -135,24 +135,24 @@ function loginUser(userName) {
 }
 
 /**
- * Zeigt eine Fehlermeldung bei falschen Anmeldedaten an.
+ * Displays an error message for incorrect login credentials.
  */
 function showError() {
   document.querySelector(".error").style.display = "block";
 }
 
 /**
- * Behandelt Fehler, die beim Abrufen der Benutzerdaten auftreten.
+ * Handles errors that occur when fetching user data.
  *
- * @param {Error} error - Der Fehler.
+ * @param {Error} error - The error.
  */
 function handleLoginError(error) {
-  console.error("Fehler beim Abrufen der Benutzerdaten:", error);
-  alert("Ein Fehler ist aufgetreten. Bitte versuche es später erneut.");
+  console.error("Error fetching user data:", error);
+  alert("An error occurred. Please try again later.");
 }
 
 /**
- * Behandelt den Login als Gast.
+ * Handles the guest login.
  */
 function handleGuestLogin() {
   localStorage.setItem("userName", "Guest");
@@ -160,10 +160,10 @@ function handleGuestLogin() {
 }
 
 /**
- * Speichert die Anmeldedaten im LocalStorage.
+ * Saves the login credentials in localStorage.
  *
- * @param {string} email - Die E-Mail-Adresse.
- * @param {string} password - Das Passwort.
+ * @param {string} email - The email address.
+ * @param {string} password - The password.
  */
 function saveCredentialsToLocalStorage(email, password) {
   localStorage.setItem("savedEmail", email);
@@ -171,7 +171,7 @@ function saveCredentialsToLocalStorage(email, password) {
 }
 
 /**
- * Entfernt die gespeicherten Anmeldedaten aus dem LocalStorage.
+ * Removes the saved login credentials from localStorage.
  */
 function clearCredentialsFromLocalStorage() {
   localStorage.removeItem("savedEmail");
@@ -179,7 +179,7 @@ function clearCredentialsFromLocalStorage() {
 }
 
 /**
- * Event-Listener für das Laden der Seite
+ * Event listener for page load
  */
 document.addEventListener("DOMContentLoaded", () => {
   const savedEmail = localStorage.getItem("savedEmail");
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedEmail && savedPassword) {
     document.getElementById("email").value = savedEmail;
     document.getElementById("password").value = savedPassword;
-    rememberMeCheckbox.checked = true; // Checkbox aktivieren
+    rememberMeCheckbox.checked = true; // Activate checkbox
   }
 
   const form = document.querySelector(".logInDate");
@@ -202,26 +202,26 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Zeigt eine spezifische Fehlermeldung basierend auf dem Fehlerstatus an.
+ * Displays a specific error message based on the error status.
  *
- * @param {string} status - Der Fehlerstatus.
+ * @param {string} status - The error status.
  */
 function showError(status) {
   const errorMessage = document.querySelector(".error");
 
   switch (status) {
     case "invalidEmail":
-      errorMessage.textContent = "Bitte eine gültige E-Mail-Adresse eingeben!";
+      errorMessage.textContent = "Please enter a valid email address!";
       break;
     case "emailNotRegistered":
-      errorMessage.textContent = "Diese E-Mail ist nicht registriert.";
+      errorMessage.textContent = "This email is not registered.";
       break;
     case "wrongPassword":
-      errorMessage.textContent = "Falsches Passwort. Bitte versuche es erneut.";
+      errorMessage.textContent = "Incorrect password. Please try again.";
       break;
     default:
-      errorMessage.textContent = "Ein unbekannter Fehler ist aufgetreten.";
+      errorMessage.textContent = "An unknown error occurred.";
   }
 
-  errorMessage.style.display = "block"; // Fehlermeldung einblenden
+  errorMessage.style.display = "block"; // Show error message
 }

@@ -1,5 +1,5 @@
 /**
- * Aktiviert oder deaktiviert den Submit-Button basierend auf den Eingabefeldern und der Checkbox.
+ * Activates or deactivates the submit button based on the input fields and the checkbox.
  */
 function updateSubmitButton(allFilled) {
   const submitButton = document.getElementById("submitButton");
@@ -7,7 +7,7 @@ function updateSubmitButton(allFilled) {
   const confirmPasswordInput = document.getElementById("confirmPasswordInput");
   const acceptTerms = document.getElementById("acceptTerms");
 
-  // Button aktivieren NUR wenn alle Felder ausgefüllt sind, Passwörter stimmen UND Checkbox aktiviert ist
+  // Enable button ONLY when all fields are filled, passwords match AND checkbox is checked
   const passwordsMatch =
     passwordInput.value === confirmPasswordInput.value &&
     passwordInput.value.length >= 6;
@@ -19,21 +19,22 @@ function updateSubmitButton(allFilled) {
     ? "#2a3647"
     : "#d1d1d1";
 }
+
 /**
- * Fügt Event-Listener zu allen relevanten Eingabefeldern hinzu,
- * um Fehler direkt zu entfernen und dynamisch zu validieren.
+ * Adds event listeners to all relevant input fields to
+ * remove errors directly and validate dynamically.
  */
 function addInputListeners() {
   const inputs = document.querySelectorAll(".costume-input input");
   const errorElement = document.getElementById("error");
 
   inputs.forEach((input) => {
-    // Entferne Fehler, wenn der Benutzer zu tippen beginnt
+    // Remove error when the user starts typing
     input.addEventListener("input", () => {
       errorElement.textContent = "";
     });
 
-    // Validierung beim Verlassen des Feldes
+    // Validation when leaving the field
     input.addEventListener("blur", () => {
       checkInputs();
     });
@@ -41,9 +42,9 @@ function addInputListeners() {
 }
 
 /**
- * Behandelt das Absenden des Formulars, validiert die Daten und sendet sie an den Server.
+ * Handles the form submission, validates the data, and sends it to the server.
  *
- * @param {Event} event - Das Submit-Event.
+ * @param {Event} event - The submit event.
  */
 async function handleSubmit(event) {
   event.preventDefault();
@@ -51,29 +52,29 @@ async function handleSubmit(event) {
   const errorElement = document.getElementById("error");
   const formData = collectFormData();
 
-  // Fehler-Reset
+  // Error reset
   errorElement.textContent = "";
   errorElement.style.color = "red";
 
-  // Validierung der Daten
+  // Validate data
   if (!validateFormData(formData)) {
     return;
   }
 
-  // Daten an den Server senden
+  // Send data to the server
   try {
     const response = await sendDataToServer(formData);
     handleServerResponse(response);
   } catch (error) {
     errorElement.textContent =
-      "Netzwerkfehler: Bitte überprüfen Sie Ihre Verbindung.";
+      "Network error: Please check your connection.";
   }
 }
 
 /**
- * Sammelt die Daten aus den Eingabefeldern.
+ * Collects data from the input fields.
  *
- * @returns {Object} Die gesammelten Formulardaten.
+ * @returns {Object} The collected form data.
  */
 function collectFormData() {
   return {
@@ -88,10 +89,10 @@ function collectFormData() {
 }
 
 /**
- * Sendet die Formulardaten an den Server.
+ * Sends the form data to the server.
  *
- * @param {Object} formData - Die zu sendenden Daten.
- * @returns {Response|Object} Die Antwort des Servers oder ein Fehlerobjekt.
+ * @param {Object} formData - The data to be sent.
+ * @returns {Response|Object} The server's response or an error object.
  */
 async function sendDataToServer({ name, email, password, acceptTerms }) {
   const url =
@@ -103,7 +104,7 @@ async function sendDataToServer({ name, email, password, acceptTerms }) {
 
     if (isEmailAlreadyRegistered(usersData, email)) {
       errorElement.textContent =
-        "Diese E-Mail-Adresse ist bereits registriert!";
+        "This email address is already registered!";
       errorElement.style.color = "red";
       return { ok: false, reason: "email_exists" };
     }
@@ -111,17 +112,17 @@ async function sendDataToServer({ name, email, password, acceptTerms }) {
     return await saveNewUser(url, { name, email, password, acceptTerms });
   } catch (error) {
     errorElement.textContent =
-      "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+      "A server error occurred. Please try again later.";
     errorElement.style.color = "red";
     return { ok: false, reason: "server_error" };
   }
 }
 
 /**
- * Ruft bestehende Benutzerdaten vom Server ab.
+ * Fetches existing user data from the server.
  *
- * @param {string} url - Die URL der API.
- * @returns {Object} Die Benutzerdaten.
+ * @param {string} url - The API URL.
+ * @returns {Object} The user data.
  */
 async function fetchExistingUsers(url) {
   const response = await fetch(url);
@@ -129,11 +130,11 @@ async function fetchExistingUsers(url) {
 }
 
 /**
- * Speichert einen neuen Benutzer auf dem Server.
+ * Saves a new user on the server.
  *
- * @param {string} url - Die URL der API.
- * @param {Object} userData - Die zu speichernden Benutzerdaten.
- * @returns {Response} Die Antwort des Servers.
+ * @param {string} url - The API URL.
+ * @param {Object} userData - The user data to be saved.
+ * @returns {Response} The server's response.
  */
 async function saveNewUser(url, userData) {
   return await fetch(url, {
@@ -144,20 +145,20 @@ async function saveNewUser(url, userData) {
 }
 
 /**
- * Behandelt Serverfehler.
+ * Handles server errors.
  *
- * @param {Error} error - Der aufgetretene Fehler.
- * @returns {Object} Ein Fehlerobjekt mit der Ursache.
+ * @param {Error} error - The error that occurred.
+ * @returns {Object} An error object with the reason.
  */
 function handleServerError(error) {
-  console.error("Fehler beim Senden der Anfrage:", error);
+  console.error("Error sending request:", error);
   return { ok: false, reason: "server_error" };
 }
 
 /**
- * Behandelt die Antwort des Servers.
+ * Handles the server's response.
  *
- * @param {Response|Object} response - Die Antwort des Servers.
+ * @param {Response|Object} response - The server's response.
  */
 function handleServerResponse(response) {
   const errorElement = document.getElementById("error");
@@ -165,20 +166,20 @@ function handleServerResponse(response) {
   if (response && response.ok) {
     displaySuccessMessage();
   } else if (response.reason === "email_exists") {
-    errorElement.textContent = "Diese E-Mail-Adresse ist bereits registriert!";
+    errorElement.textContent = "This email address is already registered!";
     errorElement.style.color = "red";
   } else if (response.reason === "server_error") {
     errorElement.textContent =
-      "Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es später erneut.";
+      "A server error occurred. Please try again later.";
     errorElement.style.color = "red";
   } else {
-    errorElement.textContent = "Ein unbekannter Fehler ist aufgetreten.";
+    errorElement.textContent = "An unknown error occurred.";
     errorElement.style.color = "red";
   }
 }
 
 /**
- * Zeigt eine Erfolgsnachricht an und leitet den Benutzer weiter.
+ * Displays a success message and redirects the user.
  */
 function displaySuccessMessage() {
   document.querySelector(".center").style.display = "none";
@@ -191,7 +192,7 @@ function displaySuccessMessage() {
 }
 
 /**
- * Navigiert zur Indexseite.
+ * Navigates to the index page.
  */
 function navigateToIndex() {
   window.location.href = "../index.html";
@@ -199,6 +200,6 @@ function navigateToIndex() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("acceptTerms").addEventListener("change", () => {
-    checkInputs(); // Überprüft erneut alle Eingaben und aktualisiert den Button-Status
+    checkInputs(); // Re-checks all inputs and updates the button status
   });
 });

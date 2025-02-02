@@ -1,6 +1,6 @@
 /**
- * Überprüft, ob alle erforderlichen Eingabefelder ausgefüllt sind,
- * und aktualisiert den Status des Submit-Buttons.
+ * Checks if all required input fields are filled in,
+ * and updates the status of the submit button.
  */
 function checkInputs() {
   const inputs = getAllInputs();
@@ -10,9 +10,9 @@ function checkInputs() {
 }
 
 /**
- * Holt alle relevanten Eingabefelder aus dem Formular.
+ * Retrieves all relevant input fields from the form.
  *
- * @returns {NodeList} Eine Liste der Eingabefelder.
+ * @returns {NodeList} A list of the input fields.
  */
 function getAllInputs() {
   return document.querySelectorAll(
@@ -21,10 +21,10 @@ function getAllInputs() {
 }
 
 /**
- * Validiert, ob alle Eingabefelder ausgefüllt sind.
+ * Validates if all input fields are filled.
  *
- * @param {NodeList} inputs - Eine Liste der Eingabefelder.
- * @returns {boolean} True, wenn alle Felder ausgefüllt sind, sonst false.
+ * @param {NodeList} inputs - A list of the input fields.
+ * @returns {boolean} True if all fields are filled, otherwise false.
  */
 function validateInputs(inputs) {
   let allFilled = true;
@@ -39,10 +39,10 @@ function validateInputs(inputs) {
 }
 
 /**
- * Überprüft, ob ein Eingabefeld leer ist.
+ * Checks if an input field is empty.
  *
- * @param {HTMLElement} input - Das zu prüfende Eingabefeld.
- * @returns {boolean} True, wenn das Feld leer ist, sonst false.
+ * @param {HTMLElement} input - The input field to check.
+ * @returns {boolean} True if the field is empty, otherwise false.
  */
 function isInputEmpty(input) {
   return (
@@ -52,10 +52,10 @@ function isInputEmpty(input) {
 }
 
 /**
- * Überprüft, ob eine E-Mail-Adresse gültig ist.
+ * Checks if an email address is valid.
  *
- * @param {string} email - Die zu prüfende E-Mail-Adresse.
- * @returns {boolean} True, wenn die E-Mail-Adresse gültig ist, sonst false.
+ * @param {string} email - The email address to check.
+ * @returns {boolean} True if the email address is valid, otherwise false.
  */
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,7 +63,7 @@ function isValidEmail(email) {
 }
 
 /**
- * Überprüft, ob der Name gültig ist (nur Buchstaben, mindestens 2 Zeichen)
+ * Checks if the name is valid (only letters, at least 2 characters).
  */
 function isValidName(name) {
   const nameRegex = /^[a-zA-ZäöüÄÖÜß\s-]{2,}$/;
@@ -71,11 +71,11 @@ function isValidName(name) {
 }
 
 /**
- * Überprüft, ob eine E-Mail-Adresse bereits registriert ist.
+ * Checks if an email address is already registered.
  *
- * @param {Object} usersData - Die bestehenden Benutzerdaten.
- * @param {string} email - Die zu prüfende E-Mail-Adresse.
- * @returns {boolean} True, wenn die E-Mail-Adresse registriert ist, sonst false.
+ * @param {Object} usersData - The existing user data.
+ * @param {string} email - The email address to check.
+ * @returns {boolean} True if the email address is registered, otherwise false.
  */
 function isEmailAlreadyRegistered(usersData, email) {
   return usersData
@@ -84,10 +84,10 @@ function isEmailAlreadyRegistered(usersData, email) {
 }
 
 /**
- * Validiert die Formulardaten.
+ * Validates the form data.
  *
- * @param {Object} formData - Die zu validierenden Formulardaten.
- * @returns {boolean} Ob die Formulardaten gültig sind.
+ * @param {Object} formData - The form data to validate.
+ * @returns {boolean} Whether the form data is valid.
  */
 function validateFormData(formData) {
   const errorElement = document.getElementById("error");
@@ -95,38 +95,38 @@ function validateFormData(formData) {
 
   if (!isValidName(formData.name)) {
     errorMessages.push(
-      "Bitte geben Sie einen gültigen Namen ein (nur Buchstaben, mindestens 2 Zeichen)."
+      "Please enter a valid name (only letters, at least 2 characters)."
     );
   }
 
   if (!isValidEmail(formData.email)) {
-    errorMessages.push("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+    errorMessages.push("Please enter a valid email address.");
   }
 
   if (formData.password.length < 6) {
-    errorMessages.push("Das Passwort muss mindestens 6 Zeichen lang sein.");
+    errorMessages.push("Password must be at least 6 characters long.");
   }
 
   if (formData.password !== formData.confirmPassword) {
-    errorMessages.push("Die Passwörter stimmen nicht überein.");
+    errorMessages.push("Passwords do not match.");
   }
 
   if (!formData.acceptTerms) {
-    errorMessages.push("Sie müssen die Datenschutzrichtlinie akzeptieren.");
+    errorMessages.push("You must accept the privacy policy.");
   }
 
-  // Falls es Fehler gibt, zeigen wir sie an und geben false zurück
+  // If there are errors, display them and return false
   if (errorMessages.length > 0) {
-    errorElement.innerHTML = errorMessages.join("<br>"); // Alle Fehler untereinander anzeigen
+    errorElement.innerHTML = errorMessages.join("<br>"); // Display all errors one below the other
     return false;
   }
 
-  errorElement.textContent = ""; // Wenn alles passt, Fehlermeldung entfernen
+  errorElement.textContent = ""; // If everything is fine, remove error message
   return true;
 }
 
 /**
- * Fügt Event-Listener zu allen Eingabefeldern hinzu, um Fehler direkt zu validieren.
+ * Adds event listeners to all input fields to validate errors immediately.
  */
 function addLiveValidationListeners() {
   document
@@ -144,10 +144,10 @@ function addLiveValidationListeners() {
 }
 
 /**
- * Sperrt oder entsperrt die Felder basierend auf Fehlern in Name oder E-Mail.
+ * Locks or unlocks the fields based on errors in the name or email.
  */
 /**
- * Sperrt oder entsperrt die Felder basierend auf Fehlern in Name, E-Mail oder Passwort.
+ * Locks or unlocks the fields based on errors in the name, email, or password.
  */
 function toggleFieldLock(nameError, emailError, passwordError) {
   const emailInput = document.getElementById("emailInput");
@@ -156,14 +156,14 @@ function toggleFieldLock(nameError, emailError, passwordError) {
   );
   const acceptTerms = document.getElementById("acceptTerms");
 
-  // Falls der Name falsch ist, ALLES sperren (inkl. E-Mail)
+  // If the name is wrong, lock everything (including email)
   emailInput.disabled = nameError;
   passwordInputs.forEach((input) => (input.disabled = nameError || emailError));
-  acceptTerms.disabled = nameError || emailError || passwordError; // Checkbox bleibt gesperrt, wenn Passwort falsch ist
+  acceptTerms.disabled = nameError || emailError || passwordError; // Checkbox remains locked if password is wrong
 }
 
 /**
- * Validiert das Namensfeld und sperrt die anderen Felder bei einem Fehler.
+ * Validates the name field and locks other fields in case of an error.
  */
 function validateNameField() {
   const nameInput = document.getElementById("nameInput");
@@ -173,17 +173,17 @@ function validateNameField() {
 
   if (nameError) {
     errorElement.textContent =
-      "Bitte geben Sie einen gültigen Namen ein (nur Buchstaben, mindestens 2 Zeichen).";
+      "Please enter a valid name (only letters, at least 2 characters).";
   } else {
     errorElement.textContent = "";
   }
 
-  // Falls Name falsch ist → ALLE Felder sperren
+  // If the name is wrong → Lock all fields
   toggleFieldLock(nameError, false);
 }
 
 /**
- * Validiert das E-Mail-Feld in Echtzeit und sperrt die anderen Felder bei einem Fehler.
+ * Validates the email field in real-time and locks other fields in case of an error.
  */
 async function validateEmailField() {
   const emailInput = document.getElementById("emailInput");
@@ -194,12 +194,12 @@ async function validateEmailField() {
 
   if (emailError) {
     errorElement.textContent =
-      "Bitte geben Sie eine gültige E-Mail-Adresse ein.";
+      "Please enter a valid email address.";
     toggleFieldLock(false, true);
     return;
   }
 
-  // Backend-Check, ob die E-Mail bereits existiert
+  // Backend check if the email already exists
   try {
     const url =
       "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -207,7 +207,7 @@ async function validateEmailField() {
 
     if (isEmailAlreadyRegistered(usersData, email)) {
       errorElement.textContent =
-        "Diese E-Mail-Adresse ist bereits registriert!";
+        "This email address is already registered!";
       toggleFieldLock(false, true);
       return;
     } else {
@@ -215,15 +215,15 @@ async function validateEmailField() {
       toggleFieldLock(false, false);
     }
   } catch (error) {
-    console.error("Fehler bei der Serverüberprüfung:", error);
+    console.error("Error during server check:", error);
     errorElement.textContent =
-      "Serverfehler: Bitte versuchen Sie es später erneut.";
+      "Server error: Please try again later.";
     toggleFieldLock(false, true);
   }
 }
 
 /**
- * Fügt Event-Listener zu den Feldern hinzu, um sie direkt nach der Eingabe zu validieren.
+ * Adds event listeners to the fields to validate them immediately after input.
  */
 function addLiveValidationListeners() {
   document
@@ -241,8 +241,8 @@ function addLiveValidationListeners() {
 }
 
 /**
- * Validiert die Passwörter und stellt sicher, dass die Fehlermeldung bleibt,
- * bis das Problem wirklich behoben ist.
+ * Validates the passwords and ensures that the error message stays
+ * until the issue is really fixed.
  */
 function validatePasswordField() {
   const passwordInput = document.getElementById("passwordInput");
@@ -251,28 +251,28 @@ function validatePasswordField() {
 
   let passwordError = false;
 
-  // Falls eines der Felder leer ist, keine Validierung, aber Fehlermeldung bleibt sichtbar
+  // If one of the fields is empty, no validation, but the error message stays visible
   if (
     passwordInput.value.trim() === "" ||
     confirmPasswordInput.value.trim() === ""
   ) {
     passwordError = true;
-    errorElement.textContent = "Beide Passwortfelder müssen ausgefüllt sein.";
+    errorElement.textContent = "Both password fields must be filled out.";
   } else if (passwordInput.value.length < 6) {
     passwordError = true;
     errorElement.textContent =
-      "Das Passwort muss mindestens 6 Zeichen lang sein.";
+      "Password must be at least 6 characters long.";
   } else if (passwordInput.value !== confirmPasswordInput.value) {
     passwordError = true;
-    errorElement.textContent = "Die Passwörter stimmen nicht überein.";
+    errorElement.textContent = "Passwords do not match.";
   }
 
-  // Nur wenn KEIN Fehler existiert, die Fehlermeldung entfernen
+  // Only if NO error exists, remove the error message
   if (!passwordError) {
     errorElement.textContent = "";
   }
 
-  // Falls Name oder E-Mail falsch ist, bleiben sie gesperrt
+  // If name or email is wrong, they stay locked
   let nameError = !isValidName(
     document.getElementById("nameInput").value.trim()
   );
@@ -285,14 +285,14 @@ function validatePasswordField() {
 }
 
 /**
- * Löscht die Fehlermeldung, wenn keine Fehler mehr da sind.
+ * Clears the error message if there are no errors.
  */
 function clearError() {
   const errorElement = document.getElementById("error");
   errorElement.textContent = "";
 }
 
-// Event-Listener beim Laden der Seite hinzufügen
+// Add event listener on page load
 document.addEventListener("DOMContentLoaded", () => {
   addLiveValidationListeners();
 });

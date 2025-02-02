@@ -98,7 +98,7 @@ function getRandomColor() {
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-// CSS für Kontakte
+// CSS for Contacs
 function injectContactStyles() {
   const css = `
       .contact-item {
@@ -135,14 +135,14 @@ function getContactOverlayTemplate(contactData, isEditMode) {
   const email = isEditMode ? contactData.email : "";
   const phone = isEditMode ? contactData.telefonnummer || "" : "";
 
-  // Wähle, was angezeigt wird: erster Buchstabe oder Bild
+  // Choose, what is displayed: first letter or picture 
   const placeholder = name
     ? `<p style="background-color: ${getRandomColor()};">${name[0].toUpperCase()}</p>`
     : `<img src="../img/personLogo.png" alt="Logo" class="placeholder-image">`;
 
   return /*html*/ `
     <div class="overlay-content">
-      <!-- Platzhalter für Bild und Text -->
+      <!-- Placeholder for image or text -->
       <div class="overlay-header">
       <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
       <h2>${isEditMode ? "Edit Contact" : "Add Contact"}</h2>
@@ -150,7 +150,7 @@ function getContactOverlayTemplate(contactData, isEditMode) {
       <hr>
       </div>
   
-      <!-- Erster Buchstabe oder Bild als Platzhalter -->
+      <!-- First letter or image as placeholder -->
       <div class="overlay-placeholder">
         ${placeholder}
       </div>
@@ -193,11 +193,11 @@ function getContactOverlayTemplate(contactData, isEditMode) {
 }
 
 /**
- * Erstellt ein Bestätigungsdialog für das Löschen eines Kontakts.
+ * Creates a confirm-dialog to delete one of the Contacts
  *
  * @function createConfirmationBox
- * @param {string} contactName - Der Name des Kontakts, der gelöscht werden soll.
- * @returns {HTMLElement} Das HTML-Element der Bestätigungsbox.
+ * @param {string} contactName - The name of the contact, that is to be deleted
+ * @returns {HTMLElement} The HTML-Element of the confirming-box.
  */
 function createConfirmationBox(contactName) {
   const confirmationBox = document.createElement("div");

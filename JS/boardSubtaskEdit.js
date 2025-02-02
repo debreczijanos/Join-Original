@@ -1,4 +1,4 @@
-// Selektoren für Subtask-Funktionen
+// Selectors for Subtask functions
 const subtaskInput = document.getElementById("subtaskInput");
 const iconAdd = document.getElementById("iconAdd");
 const iconCancel = document.getElementById("iconCancel");
@@ -12,7 +12,7 @@ let isAddingSubtask = false;
 document.addEventListener("DOMContentLoaded", setupEventListeners);
 
 /**
- * Initialisiert Event-Listener.
+ * Initializes event listeners.
  */
 function setupEventListeners() {
   subtasksWrapper.removeEventListener("click", focusInput);
@@ -26,14 +26,14 @@ function setupEventListeners() {
 }
 
 /**
- * Fokussiert das Eingabefeld.
+ * Focuses on the input field.
  */
 function focusInput() {
   subtaskInput.focus();
 }
 
 /**
- * Richtet die Event-Listener für das Eingabefeld ein.
+ * Sets up event listeners for the input field.
  */
 function setupInputFocusListeners() {
   subtaskInput.addEventListener("focus", showInputIcons);
@@ -41,7 +41,7 @@ function setupInputFocusListeners() {
 }
 
 /**
- * Zeigt Eingabe-Icons.
+ * Shows input icons.
  */
 function showInputIcons() {
   subtasksWrapper.classList.add("focused");
@@ -49,7 +49,7 @@ function showInputIcons() {
 }
 
 /**
- * Versteckt Icons bei leerem Input.
+ * Hides icons if input is empty.
  */
 function hideInputIconsIfEmpty() {
   if (subtaskInput.value.trim() === "") {
@@ -59,8 +59,8 @@ function hideInputIconsIfEmpty() {
 }
 
 /**
- * Schaltet Icon-Sichtbarkeit.
- * @param {boolean} showAddIcon - Ob das Add-Icon angezeigt wird.
+ * Toggles icon visibility.
+ * @param {boolean} showAddIcon - Whether the add icon should be shown.
  */
 function toggleIconsVisibility(showAddIcon) {
   iconAdd.classList.toggle("hidden", !showAddIcon);
@@ -69,8 +69,8 @@ function toggleIconsVisibility(showAddIcon) {
 }
 
 /**
- * Leert das Eingabefeld.
- * @param {Event} event - Das Event-Objekt.
+ * Clears the input field.
+ * @param {Event} event - The event object.
  */
 function clearInput(event) {
   event.stopPropagation();
@@ -79,8 +79,8 @@ function clearInput(event) {
 }
 
 /**
- * Setzt die Task-ID für Subtasks.
- * @param {string} taskId - Die ID des Tasks.
+ * Sets the task ID for subtasks.
+ * @param {string} taskId - The task ID.
  */
 function openEditTaskOverlay(taskId) {
   if (currentSubtaskTaskId === taskId) return;
@@ -89,55 +89,55 @@ function openEditTaskOverlay(taskId) {
 }
 
 /**
- * Lädt Subtasks von der API.
- * @param {string} taskId - Die ID des Tasks.
+ * Loads subtasks from the API.
+ * @param {string} taskId - The task ID.
  */
 async function loadExistingSubtasks(taskId) {
   if (!taskId) {
-    console.error("Task ID fehlt.");
+    console.error("Task ID missing.");
     return;
   }
 
-  subtaskList.innerHTML = ""; // Vorherigen Inhalt leeren
+  subtaskList.innerHTML = ""; // Clear previous content
 
   try {
     const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
-    if (!response.ok) throw new Error("Fehler beim Abrufen der Subtasks");
+    if (!response.ok) throw new Error("Error fetching subtasks");
 
     const subtasks = await response.json();
 
-    // Falls subtasks `null` oder leer sind, abbrechen
+    // If subtasks are `null` or empty, exit
     if (
       !subtasks ||
       typeof subtasks !== "object" ||
       Object.keys(subtasks).length === 0
     ) {
-      return; // Macht einfach nichts
+      return; // Do nothing
     }
 
     const subtaskArray = Object.values(subtasks);
 
     if (subtaskArray.length === 0) {
-      console.warn("Keine Subtasks gefunden.");
+      console.warn("No subtasks found.");
       return;
     }
 
-    // Subtasks rendern
+    // Render subtasks
     subtaskArray.forEach((subtask) => {
       if (!subtask || !subtask.name) {
-        console.warn("Ungültige Subtask-Daten", subtask);
+        console.warn("Invalid subtask data", subtask);
         return;
       }
       subtaskList.appendChild(createSubtaskElement(subtask.name));
     });
   } catch (error) {
-    console.error("Fehler beim Laden der Subtasks:", error);
-    alert("Fehler beim Laden der Subtasks.");
+    console.error("Error loading subtasks:", error);
+    alert("Error loading subtasks.");
   }
 }
 
 /**
- * Fügt einen neuen Subtask hinzu.
+ * Adds a new subtask.
  */
 async function addSubtask(event) {
   if (isAddingSubtask) return;
@@ -151,14 +151,14 @@ async function addSubtask(event) {
     await saveNewSubtask(subtaskText);
     updateUIAfterAdd(subtaskText);
   } catch (error) {
-    alert("Subtask konnte nicht hinzugefügt werden");
+    alert("Subtask could not be added");
   } finally {
     resetState();
   }
 }
 
 /**
- * Speichert einen neuen Subtask in der Datenbank.
+ * Saves a new subtask to the database.
  */
 async function saveNewSubtask(subtaskText) {
   const response = await fetch(
@@ -175,7 +175,7 @@ async function saveNewSubtask(subtaskText) {
 }
 
 /**
- * Aktualisiert die UI nach Hinzufügen eines Subtasks.
+ * Updates the UI after adding a subtask.
  */
 function updateUIAfterAdd(subtaskText) {
   subtaskList.appendChild(createSubtaskElement(subtaskText));
@@ -184,7 +184,7 @@ function updateUIAfterAdd(subtaskText) {
 }
 
 /**
- * Setzt die Subtask-Bearbeitung zurück.
+ * Resets the subtask state.
  */
 function resetState() {
   isAddingSubtask = false;
@@ -192,9 +192,9 @@ function resetState() {
 }
 
 /**
- * Erstellt ein Subtask-Element mit Bearbeitungs- und Löschfunktionen.
- * @param {string} text - Der Name des Subtasks.
- * @returns {HTMLElement} Das erstellte Element.
+ * Creates a subtask element with edit and delete functions.
+ * @param {string} text - The name of the subtask.
+ * @returns {HTMLElement} The created element.
  */
 function createSubtaskElement(text) {
   const subtaskItem = document.createElement("div");
@@ -224,10 +224,10 @@ function createSubtaskElement(text) {
 }
 
 /**
- * Erstellt Aktions-Icons.
- * @param {HTMLElement} subtaskItem - Das Subtask-Element.
- * @param {HTMLElement} subtaskTextElement - Der Subtask-Text.
- * @returns {HTMLElement} Die Aktionselemente.
+ * Creates action icons for the subtask.
+ * @param {HTMLElement} subtaskItem - The subtask element.
+ * @param {HTMLElement} subtaskTextElement - The subtask text element.
+ * @returns {HTMLElement} The action elements.
  */
 function createSubtaskActions(subtaskItem, subtaskTextElement) {
   const actions = document.createElement("div");
@@ -245,11 +245,11 @@ function createSubtaskActions(subtaskItem, subtaskTextElement) {
 }
 
 /**
- * Erstellt ein Icon.
- * @param {string} src - Der Bildpfad.
- * @param {string} alt - Der Alternativtext.
- * @param {Function} clickHandler - Klick-Handler-Funktion.
- * @returns {HTMLElement} Das Icon-Element.
+ * Creates an icon for the action.
+ * @param {string} src - The image path.
+ * @param {string} alt - The alt text.
+ * @param {Function} clickHandler - The click handler function.
+ * @returns {HTMLElement} The icon element.
  */
 function createIcon(src, alt, clickHandler) {
   const icon = document.createElement("img");
@@ -261,10 +261,10 @@ function createIcon(src, alt, clickHandler) {
 }
 
 /**
- * Bearbeitet einen Subtask.
+ * Edits a subtask.
  */
 function editSubtask(subtaskItem, subtaskTextElement) {
-  // Prüfen ob bereits im Bearbeitungsmodus
+  // Check if already in edit mode
   if (subtaskItem.querySelector(".edit-input")) {
     return;
   }
@@ -275,7 +275,7 @@ function editSubtask(subtaskItem, subtaskTextElement) {
 }
 
 /**
- * Erstellt Input-Element für die Bearbeitung.
+ * Creates an input element for editing.
  */
 function createEditInput(textElement) {
   const input = document.createElement("input");
@@ -286,7 +286,7 @@ function createEditInput(textElement) {
 }
 
 /**
- * Richtet Event-Listener für die Bearbeitung ein.
+ * Sets up event listeners for editing.
  */
 function setupEditListeners(input, subtaskItem, textElement) {
   input.addEventListener("keypress", (e) => {
@@ -302,7 +302,7 @@ function setupEditListeners(input, subtaskItem, textElement) {
 }
 
 /**
- * Ersetzt Text-Element mit Input-Element.
+ * Replaces the text with an input element.
  */
 function replaceTextWithInput(subtaskItem, input, textElement) {
   subtaskItem.replaceChild(input, textElement);
@@ -310,16 +310,16 @@ function replaceTextWithInput(subtaskItem, input, textElement) {
 }
 
 /**
- * Speichert Subtask-Änderungen in der Firebase-Datenbank.
- * @param {HTMLInputElement} input - Das Eingabefeld.
- * @param {HTMLElement} subtaskTextElement - Der ursprüngliche Text-Container.
- * @param {HTMLElement} subtaskItem - Das Subtask-Element.
+ * Saves subtask edits to the Firebase database.
+ * @param {HTMLInputElement} input - The input field.
+ * @param {HTMLElement} subtaskTextElement - The original text container.
+ * @param {HTMLElement} subtaskItem - The subtask element.
  */
 async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
   const newValue = input.value.trim();
   if (!newValue) {
-    alert("Das Subtask-Feld darf nicht leer sein.");
-    // Wenn leer, zurück zum ursprünglichen Text
+    alert("Subtask field cannot be empty.");
+    // If empty, revert to original text
     subtaskItem.replaceChild(subtaskTextElement, input);
     return;
   }
@@ -357,13 +357,13 @@ async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
     subtaskTextElement.textContent = newValue;
     subtaskItem.replaceChild(subtaskTextElement, input);
   } catch (error) {
-    alert("Fehler beim Speichern");
+    alert("Error saving");
     subtaskItem.replaceChild(subtaskTextElement, input);
   }
 }
 
 /**
- * Löscht einen Subtask.
+ * Deletes a subtask.
  */
 async function deleteSubtask(subtaskItem) {
   if (!currentSubtaskTaskId) return;
@@ -379,12 +379,12 @@ async function deleteSubtask(subtaskItem) {
     await reindexSubtasks(subtasks, subtaskItem);
     subtaskItem.remove();
   } catch (error) {
-    alert("Subtask konnte nicht gelöscht werden");
+    alert("Subtask could not be deleted");
   }
 }
 
 /**
- * Holt Subtasks von der Datenbank.
+ * Fetches subtasks from the database.
  */
 async function fetchSubtasks() {
   const response = await fetch(
@@ -394,7 +394,7 @@ async function fetchSubtasks() {
 }
 
 /**
- * Löscht Subtask aus der Datenbank.
+ * Deletes the subtask from the database.
  */
 async function deleteSubtaskFromDB(subtasks, subtaskItem) {
   const subtaskText = subtaskItem.querySelector("li")?.textContent.trim();
@@ -413,7 +413,7 @@ async function deleteSubtaskFromDB(subtasks, subtaskItem) {
 }
 
 /**
- * Reindexiert die verbleibenden Subtasks.
+ * Reindexes the remaining subtasks after deletion.
  */
 async function reindexSubtasks(subtasks, deletedItem) {
   const remainingSubtasks = {};

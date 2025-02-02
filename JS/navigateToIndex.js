@@ -1,8 +1,8 @@
 /**
- * Navigiert zur Startseite.
+ * Navigates to the homepage.
  *
- * Diese Funktion leitet den Benutzer zur Seite "index.html" im übergeordneten Verzeichnis weiter.
- * Die relative URL wird verwendet, um die Startseite zu finden.
+ * This function redirects the user to the "index.html" page in the parent directory.
+ * The relative URL is used to find the homepage.
  */
 function navigateToIndex() {
   window.location.href = "../index.html";
