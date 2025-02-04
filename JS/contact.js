@@ -1,7 +1,7 @@
 /**
- * Firebase-URLs für die API-Endpunkte.
- * @constant {string} apiURL - URL für Benutzerdaten.
- * @constant {string} API_CONTACTS - URL für Kontaktdaten.
+ * Firebase URLs for the API endpoints.
+ * @constant {string} apiURL - URL for user data.
+ * @constant {string} API_CONTACTS - URL for contact data.
  */
 const apiURL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -9,13 +9,13 @@ const API_CONTACTS =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
 
 /**
- * Funktion, um Daten von einer angegebenen API zu holen.
+ * Function to fetch data from a specified API.
  *
  * @async
  * @function fetchData
- * @param {string} url - Die URL der API, von der Daten abgerufen werden sollen.
- * @returns {Promise<Object|undefined>} Gibt ein Promise zurück, das die abgerufenen Daten als Objekt enthält.
- * @throws {Error} Wenn die HTTP-Antwort nicht erfolgreich ist.
+ * @param {string} url - The URL of the API from which to fetch data.
+ * @returns {Promise<Object|undefined>} Returns a Promise that contains the fetched data as an object.
+ * @throws {Error} If the HTTP response is not successful.
  * @example
  * fetchData(apiURL).then(data => console.log(data)).catch(error => console.error(error));
  */
@@ -23,21 +23,21 @@ async function fetchData(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Fehler beim Laden der Daten:", error);
+    console.error("Error loading data:", error);
   }
 }
 
 /**
- * Rendert die Kontaktliste und die zugehörigen Details.
+ * Renders the contact list and the associated details.
  *
  * @async
  * @function renderContacts
- * @returns {Promise<void>} Gibt ein Promise zurück, das die Ausführung der Funktion angibt.
+ * @returns {Promise<void>} Returns a Promise indicating the function's execution.
  */
 async function renderContacts() {
   const contactsDiv = document.getElementById("contactsId");
@@ -58,54 +58,54 @@ async function renderContacts() {
 }
 
 /**
- * Aktualisiert die Kontaktliste und zeigt die sortierten Kontakte an.
+ * Updates the contact list and displays the sorted contacts.
  *
  * @function updateContactList
- * @param {HTMLElement} contactsDiv - Das HTML-Element, das die Kontaktliste enthält.
- * @param {HTMLElement} contactDetailsDiv - Das HTML-Element, das die Kontaktdetails enthält.
- * @param {Array<Object>} combinedData - Die kombinierten und verarbeiteten Kontaktdaten.
+ * @param {HTMLElement} contactsDiv - The HTML element containing the contact list.
+ * @param {HTMLElement} contactDetailsDiv - The HTML element containing the contact details.
+ * @param {Array<Object>} combinedData - The combined and processed contact data.
  */
 function updateContactList(contactsDiv, contactDetailsDiv, combinedData) {
   if (combinedData.length > 0) {
     const sortedData = sortContactsByName(combinedData);
     renderSortedContacts(contactsDiv, contactDetailsDiv, sortedData);
   } else {
-    contactsDiv.innerHTML = "<p>Keine Kontakte gefunden.</p>";
-    contactDetailsDiv.innerHTML = "<p>Keine Details verfügbar.</p>";
+    contactsDiv.innerHTML = "<p>No contacts found.</p>";
+    contactDetailsDiv.innerHTML = "<p>No details available.</p>";
   }
 }
 
 /**
- * Sortiert Kontakte alphabetisch nach Namen.
+ * Sorts contacts alphabetically by name.
  *
  * @function sortContactsByName
- * @param {Array<Object>} contacts - Die Liste der Kontakte.
- * @returns {Array<Object>} Die sortierte Liste der Kontakte.
+ * @param {Array<Object>} contacts - The list of contacts.
+ * @returns {Array<Object>} The sorted list of contacts.
  */
 function sortContactsByName(contacts) {
   return contacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /**
- * Behandelt Fehler beim Rendern von Kontakten.
+ * Handles errors during the rendering of contacts.
  *
  * @function handleRenderError
- * @param {HTMLElement} contactsDiv - Das HTML-Element, das die Kontaktliste enthält.
- * @param {HTMLElement} contactDetailsDiv - Das HTML-Element, das die Kontaktdetails enthält.
- * @param {Error} error - Der Fehler, der beim Rendern aufgetreten ist.
+ * @param {HTMLElement} contactsDiv - The HTML element containing the contact list.
+ * @param {HTMLElement} contactDetailsDiv - The HTML element containing the contact details.
+ * @param {Error} error - The error that occurred during rendering.
  */
 function handleRenderError(contactsDiv, contactDetailsDiv, error) {
-  contactsDiv.innerHTML = `<p>Fehler beim Laden der Kontakte: ${error.message}</p>`;
-  contactDetailsDiv.innerHTML = "<p>Fehler beim Laden der Details.</p>";
+  contactsDiv.innerHTML = `<p>Error loading contacts: ${error.message}</p>`;
+  contactDetailsDiv.innerHTML = "<p>Error loading details.</p>";
 }
 
 /**
- * Kombiniert die Kontakt- und Benutzerdaten, entfernt Duplikate.
+ * Combines the contact and user data, removes duplicates.
  *
  * @function combineContactsAndUsers
- * @param {Object} contacts - Die Kontaktdaten.
- * @param {Object} users - Die Benutzerdaten.
- * @returns {Array<Object>} Ein Array mit kombinierten und deduplizierten Kontakten.
+ * @param {Object} contacts - The contact data.
+ * @param {Object} users - The user data.
+ * @returns {Array<Object>} An array of combined and deduplicated contacts.
  */
 function combineContactsAndUsers(contacts, users) {
   const contactsArray = parseDataToArray(contacts);
@@ -115,11 +115,11 @@ function combineContactsAndUsers(contacts, users) {
 }
 
 /**
- * Konvertiert ein Datenobjekt in ein Array.
+ * Converts a data object into an array.
  *
  * @function parseDataToArray
- * @param {Object|null} data - Das Datenobjekt.
- * @returns {Array<Object>} Ein Array, das die Daten als Objekte enthält.
+ * @param {Object|null} data - The data object.
+ * @returns {Array<Object>} An array containing the data as objects.
  */
 function parseDataToArray(data) {
   return data
@@ -128,11 +128,11 @@ function parseDataToArray(data) {
 }
 
 /**
- * Entfernt doppelte Einträge in einem Array basierend auf E-Mail und ID.
+ * Removes duplicate entries in an array based on email and ID.
  *
  * @function removeDuplicatesByEmailAndId
- * @param {Array<Object>} array - Das Array, das überprüft wird.
- * @returns {Array<Object>} Ein Array ohne Duplikate.
+ * @param {Array<Object>} array - The array to check.
+ * @returns {Array<Object>} An array without duplicates.
  */
 function removeDuplicatesByEmailAndId(array) {
   return array.reduce((acc, current) => {
@@ -148,11 +148,11 @@ function removeDuplicatesByEmailAndId(array) {
 }
 
 /**
- * Hebt den ausgewählten Kontakt hervor und zeigt dessen Details an.
+ * Highlights the selected contact and shows its details.
  *
  * @function highlightSelectedContact
- * @param {HTMLElement} selectedDiv - Das HTML-Element des ausgewählten Kontakts.
- * @param {Object} contactData - Die Daten des ausgewählten Kontakts.
+ * @param {HTMLElement} selectedDiv - The HTML element of the selected contact.
+ * @param {Object} contactData - The data of the selected contact.
  */
 function highlightSelectedContact(selectedDiv, contactData) {
   deselectAllContacts();
@@ -165,7 +165,7 @@ function highlightSelectedContact(selectedDiv, contactData) {
 }
 
 /**
- * Hebt die Auswahl von allen Kontakten auf.
+ * Deselects all contacts.
  *
  * @function deselectAllContacts
  */
@@ -176,22 +176,22 @@ function deselectAllContacts() {
 }
 
 /**
- * Markiert einen Kontakt als ausgewählt.
+ * Marks a contact as selected.
  *
  * @function selectContact
- * @param {HTMLElement} contactDiv - Das HTML-Element des zu markierenden Kontakts.
+ * @param {HTMLElement} contactDiv - The HTML element of the contact to mark.
  */
 function selectContact(contactDiv) {
   contactDiv.classList.add("selected");
 }
 
 /**
- * Löscht einen Kontakt nach Bestätigung durch den Benutzer.
+ * Deletes a contact after user confirmation.
  *
  * @async
  * @function deleteContact
- * @param {string} contactId - Die ID des zu löschenden Kontakts.
- * @param {string} contactName - Der Name des zu löschenden Kontakts.
+ * @param {string} contactId - The ID of the contact to delete.
+ * @param {string} contactName - The name of the contact to delete.
  */
 async function deleteContact(contactId, contactName) {
   const confirmationBox = createConfirmationBox(contactName);
@@ -205,17 +205,17 @@ async function deleteContact(contactId, contactName) {
     });
 
   confirmationBox.querySelector(".cancel-btn").addEventListener("click", () => {
-    confirmationBox.remove(); // Schließe die Bestätigungsbox
+    confirmationBox.remove(); // Close the confirmation box
   });
 }
 
 /**
- * Handhabt die Löschung eines Kontakts und aktualisiert die UI.
+ * Handles the deletion of a contact and updates the UI.
  *
  * @async
  * @function handleContactDeletion
- * @param {string} contactId - Die ID des zu löschenden Kontakts.
- * @param {HTMLElement} confirmationBox - Die Bestätigungsbox, die geschlossen werden soll.
+ * @param {string} contactId - The ID of the contact to delete.
+ * @param {HTMLElement} confirmationBox - The confirmation box to be closed.
  */
 async function handleContactDeletion(contactId, confirmationBox) {
   try {
@@ -227,18 +227,18 @@ async function handleContactDeletion(contactId, confirmationBox) {
     );
 
     if (!response.ok) {
-      throw new Error(`Fehler beim Löschen des Kontakts: ${response.status}`);
+      throw new Error(`Error deleting contact: ${response.status}`);
     }
     confirmationBox.remove();
     closeAddContactOverlay();
     renderContacts();
   } catch (error) {
-    console.error("Fehler beim Löschen des Kontakts:", error);
+    console.error("Error deleting contact:", error);
   }
 }
 
 /**
- * Ruft die Kontakte beim Laden der Seite auf.
+ * Fetches the contacts when the page loads.
  *
  * @function
  * @listens DOMContentLoaded
@@ -246,7 +246,7 @@ async function handleContactDeletion(contactId, confirmationBox) {
 document.addEventListener("DOMContentLoaded", renderContacts);
 
 /**
- * Schließt das Overlay zur Erstellung oder Bearbeitung eines Kontakts.
+ * Closes the overlay for creating or editing a contact.
  *
  * @function closeAddContactOverlay
  */
@@ -258,7 +258,7 @@ function closeAddContactOverlay() {
 }
 
 /**
- * Erstellt einen neuen Kontakt, wenn das Formular gültig ist, und aktualisiert die Kontaktliste.
+ * Creates a new contact if the form is valid, and updates the contact list.
  *
  * @function createContact
  */
@@ -271,18 +271,18 @@ function createContact() {
         renderContacts();
       })
       .catch((error) => {
-        console.error("Fehler beim Hinzufügen des Kontakts:", error);
+        console.error("Error adding contact:", error);
       });
   }
 }
 
 /**
- * Speichert einen neuen Kontakt in der Datenbank.
+ * Saves a new contact to the database.
  *
  * @async
  * @function saveNewContact
- * @param {Object} contact - Die Kontaktinformationen, die gespeichert werden sollen.
- * @throws {Error} Wenn die HTTP-Antwort nicht erfolgreich ist.
+ * @param {Object} contact - The contact information to save.
+ * @throws {Error} If the HTTP response is not successful.
  */
 async function saveNewContact(contact) {
   const response = await fetch(`${API_CONTACTS}`, {
@@ -294,15 +294,15 @@ async function saveNewContact(contact) {
   });
 
   if (!response.ok) {
-    throw new Error(`Fehler beim Speichern des Kontakts: ${response.status}`);
+    throw new Error(`Error saving contact: ${response.status}`);
   }
 }
 
 /**
- * Öffnet ein Overlay zur Erstellung oder Bearbeitung eines Kontakts.
+ * Opens an overlay for creating or editing a contact.
  *
  * @function openContactOverlay
- * @param {Object|null} [contactData=null] - Die Kontaktdaten, falls im Bearbeitungsmodus.
+ * @param {Object|null} [contactData=null] - The contact data, if in edit mode.
  */
 function openContactOverlay(contactData = null) {
   const isEditMode = !!contactData;
@@ -315,11 +315,11 @@ function openContactOverlay(contactData = null) {
 }
 
 /**
- * Fügt Event-Listener für Eingabefelder im Overlay hinzu.
+ * Adds event listeners for input fields in the overlay.
  *
  * @function attachOverlayEventListeners
- * @param {boolean} isEditMode - Gibt an, ob sich die Funktion im Bearbeitungsmodus befindet.
- * @param {Object|null} contactData - Die Kontaktdaten im Bearbeitungsmodus, sonst `null`.
+ * @param {boolean} isEditMode - Indicates whether the function is in edit mode.
+ * @param {Object|null} contactData - The contact data in edit mode, otherwise `null`.
  */
 function attachOverlayEventListeners(isEditMode, contactData) {
   const nameInput = document.getElementById("contactName");
@@ -343,20 +343,20 @@ function attachOverlayEventListeners(isEditMode, contactData) {
 }
 
 /**
- * Öffnet ein Overlay zur Erstellung eines neuen Kontakts.
+ * Opens an overlay for creating a new contact.
  *
  * @function openAddContactOverlay
  */
 function openAddContactOverlay() {
-  openContactOverlay(); // Aufruf ohne Kontakt-Daten
+  openContactOverlay(); // Call without contact data
 }
 
 /**
- * Öffnet ein Overlay zur Bearbeitung eines vorhandenen Kontakts.
+ * Opens an overlay for editing an existing contact.
  *
  * @function openEditContactOverlay
- * @param {Object} contactData - Die Daten des zu bearbeitenden Kontakts.
+ * @param {Object} contactData - The data of the contact to edit.
  */
 function openEditContactOverlay(contactData) {
-  openContactOverlay(contactData); // Aufruf mit Kontakt-Daten
+  openContactOverlay(contactData); // Call with contact data
 }

@@ -441,7 +441,8 @@ p > span {
   overflow-y: auto;
   overflow-x: hidden;
   position: absolute;
-  top: 98%;
+  /* top: 98%; */
+  top: 106%;
 }
 
 .subtask-item {

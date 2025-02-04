@@ -1,5 +1,5 @@
 /**
- * Leert das Formular und setzt alle Felder auf die Standardwerte zurück.
+ * Clears the form and resets all fields to their default values.
  */
 function clearForm() {
   resetTextInputs([
@@ -17,25 +17,25 @@ function clearForm() {
 }
 
 /**
- * Setzt die Werte von Texteingabefeldern zurück.
+ * Resets the values of text input fields.
  *
- * @param {Array<string>} inputIds - Die IDs der Texteingabefelder.
+ * @param {Array<string>} inputIds - The IDs of the text input fields.
  */
 function resetTextInputs(inputIds) {
   inputIds.forEach((id) => (document.getElementById(id).value = ""));
 }
 
 /**
- * Löscht den inneren HTML-Inhalt von Elementen.
+ * Clears the inner HTML content of elements.
  *
- * @param {Array<string>} elementIds - Die IDs der Elemente.
+ * @param {Array<string>} elementIds - The IDs of the elements.
  */
 function clearInnerHTML(elementIds) {
   elementIds.forEach((id) => (document.getElementById(id).innerHTML = ""));
 }
 
 /**
- * Setzt das Datumsfeld zurück.
+ * Resets the date field.
  */
 function resetDateInput() {
   const dateInput = document.querySelector("input[type='date']");
@@ -43,7 +43,7 @@ function resetDateInput() {
 }
 
 /**
- * Setzt die Prioritäts-Buttons zurück und aktiviert den Standardwert.
+ * Resets the priority buttons and activates the default value.
  */
 function resetPrioButtons() {
   const buttons = document.querySelectorAll(".prio-btn button");
@@ -53,7 +53,7 @@ function resetPrioButtons() {
 }
 
 /**
- * Setzt das Kategoriemenü zurück.
+ * Resets the category dropdown menu.
  */
 function resetCategoryDropdown() {
   const categoryDropdown = document.getElementById("customDropdownMenu");
@@ -61,9 +61,9 @@ function resetCategoryDropdown() {
 }
 
 /**
- * Entfernt die Markierung von Checkboxen.
+ * Unchecks checkboxes.
  *
- * @param {string} selector - Der CSS-Selektor für die Checkboxen.
+ * @param {string} selector - The CSS selector for the checkboxes.
  */
 function uncheckCheckboxes(selector) {
   document
@@ -72,7 +72,7 @@ function uncheckCheckboxes(selector) {
 }
 
 /**
- * Erstellt eine neue Aufgabe und sendet sie an die API.
+ * Creates a new task and sends it to the API.
  */
 function createTask() {
   const requiredFields = getRequiredFields();
@@ -81,13 +81,19 @@ function createTask() {
   if (validateFields(requiredFields)) return;
 
   const task = buildTaskObject();
+  // Subtasks automatically receive completed: false if not provided
+  task.subtasks = getSubtasks().map((subtask) => ({
+    name: subtask,
+    completed: false, // Ensure the completed field is set
+  }));
+
   sendTaskToAPI(task);
 }
 
 /**
- * Liefert die erforderlichen Formularfelder und ihre Validierungsinformationen.
+ * Returns the required form fields and their validation information.
  *
- * @returns {Array<Object>} Eine Liste der erforderlichen Felder.
+ * @returns {Array<Object>} A list of required fields.
  */
 function getRequiredFields() {
   return [
@@ -110,9 +116,9 @@ function getRequiredFields() {
 }
 
 /**
- * Entfernt alle Fehlermeldungen aus dem Formular.
+ * Removes all error messages from the form.
  *
- * @param {Array<Object>} fields - Die Felder mit Fehlern.
+ * @param {Array<Object>} fields - The fields with errors.
  */
 function removeErrorMessages(fields) {
   document.querySelectorAll(".error-message").forEach((el) => el.remove());
@@ -120,14 +126,14 @@ function removeErrorMessages(fields) {
 }
 
 /**
- * Validiert die angegebenen Felder.
+ * Validates the specified fields.
  *
- * @param {Array<Object>} fields - Die Felder, die validiert werden sollen.
- * @returns {boolean} Gibt true zurück, wenn Fehler gefunden wurden.
+ * @param {Array<Object>} fields - The fields to be validated.
+ * @returns {boolean} Returns true if errors are found.
  */
 function validateFields(fields) {
   let hasErrors = false;
-  const today = new Date().toISOString().split("T")[0]; // Heutiges Datum im Format YYYY-MM-DD
+  const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD format
 
   fields.forEach(({ input, errorMessage, errorClass }) => {
     if (!input.value.trim()) {
@@ -135,12 +141,12 @@ function validateFields(fields) {
       displayError(input, errorMessage, errorClass);
     }
 
-    // Zusätzliche Validierung für das Datum
+    // Additional validation for the date
     if (input.type === "date" && input.value < today) {
       hasErrors = true;
       displayError(
         input,
-        "Das Datum darf nicht vor heute liegen!",
+        "The date cannot be before today!",
         "error-due-date"
       );
     }
@@ -150,11 +156,11 @@ function validateFields(fields) {
 }
 
 /**
- * Zeigt eine Fehlermeldung für ein bestimmtes Feld an.
+ * Displays an error message for a specific field.
  *
- * @param {HTMLElement} input - Das Eingabefeld mit einem Fehler.
- * @param {string} errorMessage - Die anzuzeigende Fehlermeldung.
- * @param {string} errorClass - Die CSS-Klasse für die Fehlermeldung.
+ * @param {HTMLElement} input - The input field with an error.
+ * @param {string} errorMessage - The error message to display.
+ * @param {string} errorClass - The CSS class for the error message.
  */
 function displayError(input, errorMessage, errorClass) {
   input.classList.add("error");
@@ -168,27 +174,9 @@ function displayError(input, errorMessage, errorClass) {
 }
 
 /**
- * Erstellt ein Task-Objekt aus den Formularfeldern.
+ * Retrieves the selected contacts from the form.
  *
- * @returns {Object} Das erstellte Task-Objekt.
- */
-// function buildTaskObject() {
-//   return {
-//     title: document.getElementById("title").value.trim(),
-//     description: document.getElementById("description").value.trim(),
-//     assignedTo: getSelectedContacts(),
-//     dueDate: document.querySelector("input[type='date']").value,
-//     prio: getActivePrio(),
-//     status: "To Do",
-//     category: document.getElementById("customDropdownInput").value.trim(),
-//     subtasks: getSubtasks(),
-//   };
-// }
-
-/**
- * Holt die ausgewählten Kontakte aus dem Formular.
- *
- * @returns {Array<string>} Eine Liste der Namen der ausgewählten Kontakte.
+ * @returns {Array<string>} A list of the names of the selected contacts.
  */
 function getSelectedContacts() {
   return Array.from(document.getElementById("selectedContacts").children).map(
@@ -197,9 +185,9 @@ function getSelectedContacts() {
 }
 
 /**
- * Holt die aktive Prioritätsstufe aus den Buttons.
+ * Retrieves the active priority level from the buttons.
  *
- * @returns {string|null} Die aktive Priorität oder null, wenn keine aktiv ist.
+ * @returns {string|null} The active priority or null if none is active.
  */
 function getActivePrio() {
   const activeButton = document.querySelector(".prio-btn button.active");
@@ -207,9 +195,9 @@ function getActivePrio() {
 }
 
 /**
- * Holt die Subtasks aus der Liste.
+ * Retrieves the subtasks from the list.
  *
- * @returns {Array<string>} Eine Liste der Subtasks.
+ * @returns {Array<string>} A list of subtasks.
  */
 function getSubtasks() {
   return Array.from(
@@ -222,9 +210,9 @@ function isInIframe() {
 }
 
 /**
- * Sendet eine Aufgabe an die API und zeigt das Ergebnis in der UI an.
+ * Sends a task to the API and displays the result in the UI.
  *
- * @param {Object} task - Das zu sendende Task-Objekt.
+ * @param {Object} task - The task object to be sent.
  */
 let isRequestInProgress = false;
 
@@ -243,10 +231,10 @@ function sendTaskToAPI(task) {
     .then((response) => {
       if (response.ok) {
         if (isInIframe()) {
-          // Im Overlay-Modus: Nachricht an das Hauptfenster senden
+          // In overlay mode: Send a message to the parent window
           parent.postMessage({ type: "taskSuccess" }, "*");
         } else {
-          // Normales Verhalten: Erfolgsnachricht und Weiterleitung
+          // Normal behavior: Show success message and redirect
           const overlay = document.getElementById("overlay");
           overlay.style.display = "flex";
 
@@ -267,7 +255,7 @@ function sendTaskToAPI(task) {
 }
 
 /**
- * Fügt Event-Listener hinzu, um Fehlernachrichten bei Eingabeänderungen zu entfernen.
+ * Adds event listeners to remove error messages when input changes.
  */
 function addInputListeners() {
   const fieldsToValidate = getRequiredFields();
@@ -275,14 +263,14 @@ function addInputListeners() {
   fieldsToValidate.forEach(({ input, errorClass }) => {
     addErrorRemovalListeners(input, errorClass);
 
-    // Zusätzliche Validierung für Datumseingaben
+    // Additional validation for date inputs
     if (input.type === "date") {
       input.addEventListener("change", () => {
         const today = new Date().toISOString().split("T")[0];
         if (input.value < today) {
           displayError(
             input,
-            "Das Datum darf nicht vor heute liegen!",
+            "The date cannot be before today!",
             "error-due-date"
           );
         } else {
@@ -296,10 +284,10 @@ function addInputListeners() {
 }
 
 /**
- * Fügt Event-Listener zu einem Eingabefeld hinzu, um Fehler zu entfernen.
+ * Adds event listeners to an input field to remove errors.
  *
- * @param {HTMLElement} input - Das Eingabefeld.
- * @param {string} errorClass - Die CSS-Klasse des Fehlertexts.
+ * @param {HTMLElement} input - The input field.
+ * @param {string} errorClass - The CSS class of the error message.
  */
 function addErrorRemovalListeners(input, errorClass) {
   input.addEventListener("input", () => removeError(input, errorClass));
@@ -309,7 +297,7 @@ function addErrorRemovalListeners(input, errorClass) {
 }
 
 /**
- * Behandelt die Interaktion mit dem Kategorie-Dropdown und entfernt Fehlernachrichten.
+ * Handles interactions with the category dropdown and removes error messages.
  */
 function handleCategoryDropdown() {
   const categoryInput = document.getElementById("customDropdownInput");
@@ -329,10 +317,10 @@ function handleCategoryDropdown() {
 }
 
 /**
- * Entfernt die Fehleranzeige eines Eingabefelds, wenn es gültige Eingaben enthält.
+ * Removes the error display from an input field if it contains valid input.
  *
- * @param {HTMLElement} input - Das Eingabefeld.
- * @param {string} errorClass - Die CSS-Klasse des Fehlertexts.
+ * @param {HTMLElement} input - The input field.
+ * @param {string} errorClass - The CSS class of the error message.
  */
 function removeError(input, errorClass) {
   if (input.value.trim()) {
@@ -347,7 +335,7 @@ function removeError(input, errorClass) {
 function setMinDateForDateInput() {
   const dateInput = document.querySelector("input[type='date']");
   if (dateInput) {
-    // Heutiges Datum im Format YYYY-MM-DD
+    // Today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split("T")[0];
     dateInput.setAttribute("min", today);
   }
@@ -382,7 +370,7 @@ document.querySelector(".create-task-btn").addEventListener("click", (e) => {
 });
 
 /**
- * Event-Listener beim Laden der Seite hinzufügen
+ * Event listener to add when the page loads.
  */
 window.onload = () => {
   addInputListeners();
@@ -391,7 +379,7 @@ window.onload = () => {
 };
 
 /**
- * Event-Listener für die Buttons hinzufügen
+ * Event listener for the buttons.
  */
 document.querySelector(".clear-btn").addEventListener("click", clearForm);
 document

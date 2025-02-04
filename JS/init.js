@@ -1,9 +1,9 @@
 /**
- * Initialisiert die Anwendung und richtet notwendige Event-Listener und Dropdowns ein.
+ * Initializes the application and sets up necessary event listeners and dropdowns.
  *
- * Die Funktion wird ausgeführt, sobald die Seite vollständig geladen ist (`DOMContentLoaded`).
- * Sie konfiguriert Dropdowns, lädt Kontakte, setzt Event-Listener für Eingaben und Buttons
- * und sorgt für eine reibungslose Bedienung der Anwendung.
+ * The function is executed once the page has fully loaded (`DOMContentLoaded`).
+ * It configures dropdowns, loads contacts, sets up event listeners for inputs and buttons,
+ * and ensures smooth operation of the application.
  */
 function initApp() {
   initializeDropdown("dropdownInput", "dropdownMenu", ".dropdown-menu-item");
@@ -21,6 +21,6 @@ function initApp() {
 }
 
 /**
- * Starte die Initialisierung der App, sobald die Seite geladen ist
+ * Start the initialization of the app once the page is loaded
  */
 document.addEventListener("DOMContentLoaded", initApp);

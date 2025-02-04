@@ -1,396 +1,181 @@
 /**
- * Validiert das Formular zur Kontakt-Erstellung oder -Bearbeitung.
+ * Validates the contact creation or editing form.
  *
  * @function validateContactForm
- * @returns {boolean} `true`, wenn alle Formularfelder gültig sind; ansonsten `false`.
+ * @returns {boolean} `true` if all form fields are valid; otherwise `false`.
  */
-function validateContactForm() {
-  const isNameValid = validateName();
-  const isEmailValid = validateEmail();
-  const isPhoneValid = validatePhone();
-  return isNameValid && isEmailValid && isPhoneValid;
-}
-
+ 
 /**
- * Sammelt die eingegebenen Daten aus dem Kontaktformular.
+ * Gathers the data entered in the contact form.
  *
  * @function gatherContactFormData
- * @returns {Object} Ein Objekt mit den Kontaktinformationen: `name`, `email`, `telefonnummer`.
+ * @returns {Object} An object containing the contact information: `name`, `email`, `phone number`.
  */
-function gatherContactFormData() {
-  const name = document.getElementById("contactName").value.trim();
-  const email = document.getElementById("contactEmail").value.trim();
-  const telefonnummer = document.getElementById("contactPhone").value.trim();
-
-  return { name, email, telefonnummer };
-}
-
+ 
 /**
- * Validiert den Namen im Kontaktformular.
+ * Validates the name in the contact form.
  *
  * @function validateName
- * @returns {boolean} `true`, wenn der Name gültig ist; ansonsten `false`.
+ * @returns {boolean} `true` if the name is valid; otherwise `false`.
  */
-function validateName() {
-  const nameInput = document.getElementById("contactName");
-  const errorName = document.getElementById("errorName");
-  const nameRegex = /^[a-zA-Z\s]+$/;
-
-  if (!nameRegex.test(nameInput.value.trim())) {
-    errorName.textContent =
-      "Name darf nur Buchstaben und Leerzeichen enthalten.";
-    toggleCreateButton();
-    return false;
-  } else {
-    errorName.textContent = "";
-    toggleCreateButton();
-    return true;
-  }
-}
-
+ 
 /**
- * Validiert die eingegebene E-Mail-Adresse und überprüft, ob sie bereits registriert ist.
+ * Validates the entered email address and checks if it is already registered.
  *
  * @async
  * @function validateEmail
- * @param {boolean} [isEditMode=false] - Gibt an, ob sich die Funktion im Bearbeitungsmodus befindet.
- * @param {string} [originalEmail=""] - Die ursprüngliche E-Mail-Adresse im Bearbeitungsmodus.
- * @returns {Promise<boolean>} Gibt `true` zurück, wenn die E-Mail-Adresse gültig ist; andernfalls `false`.
+ * @param {boolean} [isEditMode=false] - Indicates whether the function is in edit mode.
+ * @param {string} [originalEmail=""] - The original email address in edit mode.
+ * @returns {Promise<boolean>} Returns `true` if the email address is valid; otherwise `false`.
  */
-async function validateEmail(isEditMode = false, originalEmail = "") {
-  const emailValue = getEmailInputValue();
-  const errorMessage = validateEmailFormat(
-    emailValue,
-    isEditMode,
-    originalEmail
-  );
-
-  if (errorMessage) {
-    displayEmailError(errorMessage);
-    toggleCreateButton();
-    return false;
-  }
-
-  if (await isEmailAlreadyRegistered(emailValue, isEditMode, originalEmail)) {
-    displayEmailError("Diese Email-Adresse ist bereits registriert.");
-    toggleCreateButton();
-    return false;
-  }
-
-  clearEmailError();
-  toggleCreateButton();
-  return true;
-}
-
+ 
 /**
- * Holt den Wert aus dem E-Mail-Eingabefeld.
+ * Retrieves the value from the email input field.
  *
  * @function getEmailInputValue
- * @returns {string} Der Wert des E-Mail-Eingabefelds.
+ * @returns {string} The value of the email input field.
  */
-function getEmailInputValue() {
-  const emailInput = document.getElementById("contactEmail");
-  return emailInput.value.trim();
-}
-
+ 
 /**
- * Validiert das Format der eingegebenen E-Mail-Adresse.
+ * Validates the format of the entered email address.
  *
  * @function validateEmailFormat
- * @param {string} emailValue - Die E-Mail-Adresse, die validiert werden soll.
- * @param {boolean} isEditMode - Gibt an, ob sich die Funktion im Bearbeitungsmodus befindet.
- * @param {string} originalEmail - Die ursprüngliche E-Mail-Adresse im Bearbeitungsmodus.
- * @returns {string|null} Eine Fehlermeldung, wenn die E-Mail-Adresse ungültig ist; andernfalls `null`.
+ * @param {string} emailValue - The email address to be validated.
+ * @param {boolean} isEditMode - Indicates whether the function is in edit mode.
+ * @param {string} originalEmail - The original email address in edit mode.
+ * @returns {string|null} An error message if the email address is invalid; otherwise `null`.
  */
-function validateEmailFormat(emailValue, isEditMode, originalEmail) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailValue) return "";
-  if (!emailRegex.test(emailValue))
-    return "Bitte geben Sie eine gültige Email-Adresse ein.";
-  if (isEditMode && emailValue === originalEmail) return "";
-  return null;
-}
-
+ 
 /**
- * Überprüft, ob eine E-Mail-Adresse bereits registriert ist.
+ * Checks if an email address is already registered.
  *
  * @async
  * @function isEmailAlreadyRegistered
- * @param {string} emailValue - Die zu überprüfende E-Mail-Adresse.
- * @param {boolean} isEditMode - Gibt an, ob sich die Funktion im Bearbeitungsmodus befindet.
- * @param {string} originalEmail - Die ursprüngliche E-Mail-Adresse im Bearbeitungsmodus.
- * @returns {Promise<boolean>} Gibt `true` zurück, wenn die E-Mail-Adresse bereits registriert ist; ansonsten `false`.
+ * @param {string} emailValue - The email address to be checked.
+ * @param {boolean} isEditMode - Indicates whether the function is in edit mode.
+ * @param {string} originalEmail - The original email address in edit mode.
+ * @returns {Promise<boolean>} Returns `true` if the email address is already registered; otherwise `false`.
  */
-async function isEmailAlreadyRegistered(emailValue, isEditMode, originalEmail) {
-  if (isEditMode && emailValue === originalEmail) return false;
-  const existingEmails = await fetchExistingEmails();
-  return existingEmails.includes(emailValue);
-}
-
+ 
 /**
- * Zeigt eine Fehlermeldung für die E-Mail-Adresse an.
+ * Displays an error message for the email address.
  *
  * @function displayEmailError
- * @param {string} message - Die anzuzeigende Fehlermeldung.
+ * @param {string} message - The error message to be displayed.
  */
-function displayEmailError(message) {
-  const errorEmail = document.getElementById("errorEmail");
-  errorEmail.textContent = message;
-}
-
+ 
 /**
- * Entfernt die Fehlermeldung für die E-Mail-Adresse.
+ * Clears the error message for the email address.
  *
  * @function clearEmailError
  */
-function clearEmailError() {
-  const errorEmail = document.getElementById("errorEmail");
-  errorEmail.textContent = "";
-}
-
+ 
 /**
- * Validiert die Telefonnummer im Kontaktformular.
+ * Validates the phone number in the contact form.
  *
  * @function validatePhone
- * @returns {boolean} Gibt `true` zurück, wenn die Telefonnummer gültig ist; andernfalls `false`.
+ * @returns {boolean} Returns `true` if the phone number is valid; otherwise `false`.
  */
-function validatePhone() {
-  const phoneInput = document.getElementById("contactPhone");
-  const errorPhone = document.getElementById("errorPhone");
-  const phoneRegex = /^\+?[0-9]{7,15}$/;
-
-  if (!phoneInput.value.trim()) {
-    errorPhone.textContent = "";
-    toggleCreateButton();
-    return false;
-  }
-
-  if (!phoneRegex.test(phoneInput.value.trim())) {
-    errorPhone.textContent =
-      "Telefonnummer mindestlänge 7 Zahlen und darf nur Zahlen enthalten (optional mit '+').";
-    toggleCreateButton();
-    return false;
-  }
-
-  errorPhone.textContent = "";
-  toggleCreateButton();
-  return true;
-}
-
+ 
 /**
- * Ruft alle vorhandenen E-Mail-Adressen von Kontakten und Benutzern ab.
+ * Fetches all existing email addresses from contacts and users.
  *
  * @async
  * @function fetchExistingEmails
- * @returns {Promise<Array<string>>} Ein Array von E-Mail-Adressen.
+ * @returns {Promise<Array<string>>} An array of email addresses.
  */
-async function fetchExistingEmails() {
-  try {
-    const [contacts, users] = await fetchContactsAndUsers();
-    return combineAndDeduplicateEmails(contacts, users);
-  } catch {
-    return [];
-  }
-}
-
+ 
 /**
- * Holt Kontakt- und Benutzerdaten von der API.
+ * Fetches contact and user data from the API.
  *
  * @async
  * @function fetchContactsAndUsers
- * @returns {Promise<Array<Object>>} Ein Array mit Kontakt- und Benutzerdaten.
+ * @returns {Promise<Array<Object>>} An array of contact and user data.
  */
-async function fetchContactsAndUsers() {
-  const [contactsResponse, usersResponse] = await Promise.all([
-    fetch(`${API_CONTACTS}`),
-    fetch(`${apiURL}`),
-  ]);
-
-  const contactsData = await contactsResponse.json();
-  const usersData = await usersResponse.json();
-
-  return [contactsData, usersData];
-}
-
+ 
 /**
- * Extrahiert E-Mail-Adressen aus den Daten.
+ * Extracts email addresses from the data.
  *
  * @function extractEmails
- * @param {Object} data - Die Daten, aus denen E-Mails extrahiert werden.
- * @param {string} [type="contact"] - Der Typ der Daten ("contact" oder "user").
- * @returns {Array<string>} Ein Array mit E-Mail-Adressen.
+ * @param {Object} data - The data from which emails are to be extracted.
+ * @param {string} [type="contact"] - The type of data ("contact" or "user").
+ * @returns {Array<string>} An array of email addresses.
  */
-function extractEmails(data, type = "contact") {
-  if (!data) return [];
-  return Object.values(data).map((item) =>
-    type === "contact" ? item.email.trim() : item.email.trim()
-  );
-}
-
+ 
 /**
- * Kombiniert und entfernt Duplikate aus Kontakt- und Benutzer-E-Mails.
+ * Combines and deduplicates contact and user emails.
  *
  * @function combineAndDeduplicateEmails
- * @param {Object} contactsData - Die Kontaktdaten.
- * @param {Object} usersData - Die Benutzerdaten.
- * @returns {Array<string>} Ein Array eindeutiger E-Mail-Adressen.
+ * @param {Object} contactsData - The contact data.
+ * @param {Object} usersData - The user data.
+ * @returns {Array<string>} An array of unique email addresses.
  */
-function combineAndDeduplicateEmails(contactsData, usersData) {
-  const contactEmails = extractEmails(contactsData, "contact");
-  const userEmails = extractEmails(usersData, "user");
-  return [...new Set([...contactEmails, ...userEmails])];
-}
-
+ 
 /**
- * Aktiviert oder deaktiviert die Buttons basierend auf der Formularvalidität.
+ * Enables or disables the buttons based on form validity.
  *
  * @function toggleCreateButton
  */
-function toggleCreateButton() {
-  const createButton = document.getElementById("createContactButton");
-  const saveButton = document.querySelector(".save-btn");
-  const isValid = validateFormInputs();
-  updateButtonState(createButton, isValid);
-  updateButtonState(saveButton, isValid);
-}
-
+ 
 /**
- * Überprüft die Eingaben im Formular auf Fehler und ob alle Felder ausgefüllt sind.
+ * Checks the form inputs for errors and whether all fields are filled out.
  *
  * @function validateFormInputs
- * @returns {boolean} `true`, wenn das Formular gültig ist; ansonsten `false`.
+ * @returns {boolean} `true` if the form is valid; otherwise `false`.
  */
-function validateFormInputs() {
-  const errorName = document.getElementById("errorName").textContent;
-  const errorEmail = document.getElementById("errorEmail").textContent;
-  const errorPhone = document.getElementById("errorPhone").textContent;
-  const nameInput = document.getElementById("contactName").value.trim();
-  const emailInput = document.getElementById("contactEmail").value.trim();
-  const phoneInput = document.getElementById("contactPhone").value.trim();
-
-  return (
-    !errorName &&
-    !errorEmail &&
-    !errorPhone &&
-    nameInput &&
-    emailInput &&
-    phoneInput
-  );
-}
-
+ 
 /**
- * Aktualisiert den Zustand eines Buttons (aktiviert/deaktiviert).
+ * Updates the state of a button (enables/disables it).
  *
  * @function updateButtonState
- * @param {HTMLElement} button - Der Button, dessen Zustand geändert wird.
- * @param {boolean} isValid - Gibt an, ob der Button aktiviert (`true`) oder deaktiviert (`false`) sein soll.
+ * @param {HTMLElement} button - The button whose state is to be changed.
+ * @param {boolean} isValid - Indicates whether the button should be enabled (`true`) or disabled (`false`).
  */
-function updateButtonState(button, isValid) {
-  if (button) {
-    button.disabled = !isValid;
-  }
-}
-
+ 
 /**
- * Speichert die Änderungen eines Kontakts.
+ * Saves the changes of a contact.
  *
  * @async
  * @function saveEditedContact
- * @param {string} contactId - Die ID des zu bearbeitenden Kontakts.
+ * @param {string} contactId - The ID of the contact being edited.
  */
-async function saveEditedContact(contactId) {
-  if (await isFormValid()) {
-    const updatedData = getUpdatedContactData();
-
-    try {
-      await updateContactInDatabase(contactId, updatedData);
-      await updateUIAfterSave(updatedData);
-      closeAddContactOverlay();
-    } catch (error) {
-      handleSaveError(error);
-    }
-  }
-}
-
+ 
 /**
- * Überprüft die Validität der Formularfelder (Name, E-Mail, Telefonnummer).
+ * Checks the validity of the form fields (name, email, phone number).
  *
  * @async
  * @function isFormValid
- * @returns {Promise<boolean>} Gibt `true` zurück, wenn das Formular gültig ist; andernfalls `false`.
+ * @returns {Promise<boolean>} Returns `true` if the form is valid; otherwise `false`.
  */
-async function isFormValid() {
-  const isNameValid = validateName();
-  const email = document.getElementById("contactEmail").value.trim();
-  const isEmailValid = await validateEmail(true, email);
-  const isPhoneValid = validatePhone();
-
-  return isNameValid && isEmailValid && isPhoneValid;
-}
-
+ 
 /**
- * Holt die aktualisierten Daten aus dem Kontaktformular.
+ * Retrieves the updated data from the contact form.
  *
  * @function getUpdatedContactData
- * @returns {Object} Ein Objekt mit den aktualisierten Kontaktinformationen: `name`, `email`, `telefonnummer`.
+ * @returns {Object} An object with the updated contact information: `name`, `email`, `phone number`.
  */
-function getUpdatedContactData() {
-  const name = document.getElementById("contactName").value.trim();
-  const email = document.getElementById("contactEmail").value.trim();
-  const phone = document.getElementById("contactPhone").value.trim();
-
-  return { name, email, telefonnummer: phone };
-}
-
+ 
 /**
- * Aktualisiert einen Kontakt in der Datenbank.
+ * Updates a contact in the database.
  *
  * @async
  * @function updateContactInDatabase
- * @param {string} contactId - Die ID des zu aktualisierenden Kontakts.
- * @param {Object} updatedData - Die aktualisierten Kontaktdaten.
- * @throws {Error} Wenn die HTTP-Anfrage fehlschlägt.
+ * @param {string} contactId - The ID of the contact to be updated.
+ * @param {Object} updatedData - The updated contact data.
+ * @throws {Error} If the HTTP request fails.
  */
-async function updateContactInDatabase(contactId, updatedData) {
-  const response = await fetch(
-    `${API_CONTACTS.replace(".json", "")}/${contactId}.json`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedData),
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error(`Fehler beim Speichern: ${response.status}`);
-  }
-}
-
+ 
 /**
- * Aktualisiert die Benutzeroberfläche nach dem Speichern eines Kontakts.
+ * Updates the user interface after saving a contact.
  *
  * @async
  * @function updateUIAfterSave
- * @param {Object} updatedData - Die aktualisierten Kontaktdaten.
+ * @param {Object} updatedData - The updated contact data.
  */
-async function updateUIAfterSave(updatedData) {
-  await renderContacts();
-
-  const selectedDiv = document.querySelector(`.contact-item.selected`);
-  if (selectedDiv) {
-    highlightSelectedContact(selectedDiv, updatedData);
-  }
-}
-
+ 
 /**
- * Behandelt Fehler, die beim Speichern eines Kontakts auftreten.
+ * Handles errors that occur when saving a contact.
  *
  * @function handleSaveError
- * @param {Error} error - Der aufgetretene Fehler.
+ * @param {Error} error - The error that occurred.
  */
-function handleSaveError(error) {
-  console.error("Fehler beim Aktualisieren des Kontakts:", error);
-}

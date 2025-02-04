@@ -13,7 +13,7 @@ function showDropdownMenu() {
   document.addEventListener("click", handleOutsideClick);
 }
 
-/**
+/** 
  * This function close the dropdown menu.
  *
  * @param {event} event

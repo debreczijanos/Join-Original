@@ -1,19 +1,19 @@
 /**
- * Verhindert die Standard-Formularweiterleitung und sendet eine Nachricht an das Hauptdokument,
- * um über die erfolgreiche Erstellung der Aufgabe zu informieren.
+ * Prevents the default form submission and sends a message to the parent document
+ * to notify about the successful task creation.
  *
- * @param {Event} event - Das übergebene Ereignis-Objekt des Formular-Submits.
+ * @param {Event} event - The event object passed from the form submit.
  */
 function submitTask(event) {
-  event.preventDefault(); // Verhindert die Standard-Weiterleitung
+  event.preventDefault(); // Prevents the default redirection
 
-  console.log("Task erfolgreich erstellt!");
-  parent.postMessage("taskSuccess", "*"); // Nachricht an das Hauptdokument senden
+  console.log("Task successfully created!");
+  parent.postMessage("taskSuccess", "*"); // Send message to the parent document
 }
 
 /**
- * Lauscht auf Nachrichten vom iFrame und zeigt bei Erfolg eine Erfolgsmeldung an,
- * schließt das Overlay und lädt die Seite neu.
+ * Listens for messages from the iframe and displays a success message on success,
+ * closes the overlay, and reloads the page.
  */
 window.addEventListener("message", function (event) {
   if (event.data && event.data.type === "taskSuccess") {
@@ -22,14 +22,14 @@ window.addEventListener("message", function (event) {
 
     setTimeout(() => {
       successOverlay.style.display = "none";
-      closeAddTask(); // Overlay schließen
-      location.reload(); // Seite aktualisieren
+      closeAddTask(); // Close the overlay
+      location.reload(); // Reload the page
     }, 3000);
   }
 });
 
 /**
- * Schließt das Overlay-Fenster und setzt das iFrame zurück.
+ * Closes the overlay window and resets the iframe.
  */
 function closeAddTask() {
   const overlay = document.getElementById("iframeOverlay");
@@ -38,23 +38,43 @@ function closeAddTask() {
   }
   const iframe = document.getElementById("overlayFrame");
   if (iframe) {
-    iframe.src = ""; // Setzt das iFrame zurück
+    iframe.src = ""; // Resets the iframe
   }
 }
 
 /**
- * Empfangt Nachrichten vom iFrame und schließt das Overlay,
- * wenn eine `closeOverlay`-Aktion empfangen wird.
+ * Receives messages from the iframe and closes the overlay
+ * when a `closeOverlay` action is received.
  */
 window.addEventListener("message", function (event) {
   if (event.data && event.data.action === "closeOverlay") {
-    console.log("Schließen-Nachricht empfangen.");
-
-    // Schließe das Overlay und setze das iFrame zurück
+    // Close the overlay and reset the iframe
     const overlay = document.getElementById("iframeOverlay");
     if (overlay) {
       overlay.classList.add("d-none");
-      document.getElementById("overlayFrame").src = ""; // Zurücksetzen des iFrame-Inhalts
+      document.getElementById("overlayFrame").src = ""; // Reset iframe content
     }
+  }
+});
+
+/**
+ * Closes the overlay when a click occurs outside the iframe.
+ * @param {MouseEvent} event - The click event.
+ */
+function closeOverlayOnClick(event) {
+  const overlay = document.getElementById("iframeOverlay");
+  const overlayContent = document.querySelector(".iframe-overlay-content");
+
+  // Checks if the click was outside the overlay content
+  if (event.target === overlay) {
+    closeAddTask();
+  }
+}
+
+// Adds the event listener when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+  const overlay = document.getElementById("iframeOverlay");
+  if (overlay) {
+    overlay.addEventListener("click", closeOverlayOnClick);
   }
 });

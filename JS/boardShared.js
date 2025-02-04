@@ -1,23 +1,23 @@
 /**
- * Öffnet oder schließt das Dropdown-Menü.
+ * Toggles the dropdown menu (open/close).
  */
 function toggleDropdown() {
   const dropdownMenu = document.getElementById("dropdownMenu");
 
   if (dropdownMenu.classList.contains("d-none")) {
     dropdownMenu.classList.remove("d-none");
-    dropdownMenu.style.display = "block"; // Sichtbar machen
+    dropdownMenu.style.display = "block";
   } else {
     dropdownMenu.classList.add("d-none");
-    dropdownMenu.style.display = "none"; // Verbergen
-  }
+    dropdownMenu.style.display = "none";
+  } 
 }
 
 /**
- * Erstellt eine Checkbox.
+ * Creates a checkbox element.
  *
- * @param {string} name - Name des Kontakts.
- * @returns {HTMLInputElement} Die erstellte Checkbox.
+ * @param {string} name - Name of the contact.
+ * @returns {HTMLInputElement} The created checkbox.
  */
 function createCheckbox(name) {
   const checkbox = document.createElement("input");
@@ -27,51 +27,50 @@ function createCheckbox(name) {
 }
 
 /**
- * Generiert eine Farbe basierend auf dem ersten Buchstaben eines Namens.
+ * Generates a color based on the first letter of a name.
  *
- * @param {string} letter - Der erste Buchstabe des Namens.
- * @returns {string} Die generierte Farbe.
+ * @param {string} letter - The first letter of the name.
+ * @returns {string} The generated color.
  */
 function generateColorFromLetter(letter) {
   const charCode = letter.toUpperCase().charCodeAt(0);
   const hue = (charCode - 65) * 15;
-  return `hsl(${hue}, 70%, 50%)`; // HSL-Farbmodell für dynamische Farben
+  return `hsl(${hue}, 70%, 50%)`;
 }
 
 /**
- * Aktualisiert den Stil eines Dropdown-Labels basierend auf dem Zustand.
+ * Updates the style of a dropdown label based on its selection state.
  *
- * @param {HTMLElement} contactElement - Das Element des Kontakts.
- * @param {boolean} isChecked - Ob der Kontakt ausgewählt ist.
+ * @param {HTMLElement} contactElement - The contact element.
+ * @param {boolean} isChecked - Whether the contact is selected.
  */
 function updateDropdownStyle(contactElement, isChecked) {
   if (isChecked) {
-    contactElement.style.backgroundColor = "#2A3647"; // Dunkler Hintergrund für Auswahl
-    contactElement.style.color = "#ffffff"; // Weiße Schrift
+    contactElement.style.backgroundColor = "#2A3647";
+    contactElement.style.color = "#ffffff";
 
-    // Entferne Hover-Effekt, falls vorhanden
     contactElement.onmouseover = null;
     contactElement.onmouseout = null;
   } else {
-    contactElement.style.backgroundColor = "#f9f9f9"; // Standard-Hintergrund
-    contactElement.style.color = "#000000"; // Schwarze Schrift
+    contactElement.style.backgroundColor = "#f9f9f9";
+    contactElement.style.color = "#000000";
 
-    // Entferne vorherige Event-Listener, um doppelte Listener zu vermeiden
     contactElement.onmouseover = () => {
-      contactElement.style.backgroundColor = "#a8a3a666"; // Hover-Hintergrund
-      contactElement.style.color = "#000000"; // Hover-Schriftfarbe
+      contactElement.style.backgroundColor = "#a8a3a666";
+      contactElement.style.color = "#000000";
     };
 
     contactElement.onmouseout = () => {
-      contactElement.style.backgroundColor = "#f9f9f9"; // Zurück zum Standard
-      contactElement.style.color = "#000000"; // Zurück zur Standard-Schriftfarbe
+      contactElement.style.backgroundColor = "#f9f9f9";
+      contactElement.style.color = "#000000";
     };
   }
 }
 
 /**
- * Aktualisiert die Zuweisungen im Backend.
- * @param {string[]} updatedAssignments - Die aktualisierte Liste der zugewiesenen Kontakte.
+ * Updates task assignments in the backend.
+ *
+ * @param {string[]} updatedAssignments - The updated list of assigned contacts.
  */
 async function updateTaskAssignments(updatedAssignments) {
   try {
@@ -95,10 +94,10 @@ async function updateTaskAssignments(updatedAssignments) {
 }
 
 /**
- * Erstellt einen Button mit dem Initial des Kontakts.
+ * Creates a button with the initial of the contact's name.
  *
- * @param {string} name - Name des Kontakts.
- * @returns {HTMLButtonElement} Der erstellte Button.
+ * @param {string} name - Name of the contact.
+ * @returns {HTMLButtonElement} The created button.
  */
 function createContactButton(name) {
   const button = document.createElement("button");

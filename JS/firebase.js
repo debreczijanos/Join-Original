@@ -9,7 +9,7 @@ const BASE_URL =
 async function getData(path = "") {
   let response = await fetch(BASE_URL + path + ".json");
   return await response.json();
-}
+} 
 
 /**
  *  This function save the data in Firebase database.

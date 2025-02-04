@@ -12,10 +12,10 @@
 
 .kanban-board {
   display: flex;
-  justify-content: space-around;
-  padding: 0px 2px;
-  gap: 18px;
-  height: 100vh;
+  justify-content: space-evenly;
+  padding: 0px 10px;
+  gap: 10px;
+  height: 100%;
 }
 
 /* .kanban-column {
@@ -644,8 +644,8 @@ input[type="text"]::placeholder {
 }
 
 #overlay-title {
-  font-size: 61px;
-  line-height: 73.2px;
+  font-size: 38px;
+  /* line-height: 73.2px; */
   font-weight: 700;
   color: #000000;
   margin: 0;
@@ -678,6 +678,8 @@ input[type="text"]::placeholder {
   line-height: 19.2px;
   font-weight: 400;
   color: #000000;
+  margin-block-start: 0;
+  padding-inline: 16px;
 }
 
 .edit-button > img,
@@ -797,7 +799,7 @@ input[type="text"]::placeholder {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  margin-top: 16px;
+  margin-top: 100px;
 }
 
 .initialien {
@@ -881,11 +883,14 @@ p > .extra-count {
   margin-bottom: 10px;
   padding: 15px;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  width: 240px;
 }
 
 .task:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .task h4 {
@@ -897,6 +902,12 @@ p > .extra-count {
 .task p {
   margin: 5px 0;
   color: #555;
+}
+
+.task-description {
+  max-height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task ul {
@@ -918,6 +929,10 @@ label {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+#overlay-subtasks > li > label {
+  word-break: break-all;
 }
 
 .responsive-button {
@@ -942,9 +957,9 @@ label {
   border-radius: 6px !important;
 }
 
-.kanban-column {
+/* .kanban-column {
   height: 100vh;
-}
+} */
 
 .no-tasks-message {
   color: #6c757d;
@@ -953,6 +968,62 @@ label {
   border: 1px dashed #cccccc;
   border-radius: 10px;
   background-color: #f8f9fa;
+}
+
+#dropdown-arrow {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+#dropdown-arrow:hover {
+  background-color: #d1d1d1;
+  border-radius: 50%;
+  padding: 0.01px;
+  cursor: pointer;
+}
+
+.dropdown-arrow.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.task-mobile-move {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  top: 34px;
+  width: 100%;
+  left: 0;
+  gap: 6px;
+  background-color: #f6f7f8;
+  height: calc(100% - 34px);
+  border-radius: 0px 0px 16px 16px;
+}
+
+.task-mobile-move > button {
+  font-size: 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2a3647;
+  color: white;
+  height: 38px;
+}
+
+.task-mobile-move > button:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.subtask-item {
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.subtask-item > li {
+  max-width: 82%;
+  word-break: break-all;
 }
 
 @media (max-width: 1250px) {
@@ -964,6 +1035,10 @@ label {
 
   .kanban-column {
     height: auto;
+  }
+
+  .kanban-column[data-status="done"] .tasks {
+    margin-bottom: 24px;
   }
 
   .title-board {
@@ -1014,6 +1089,12 @@ label {
   /* Hover-Effekt */
   .tasks::-webkit-scrollbar-thumb:hover {
     background: #2a3647; /* Farbe bei Hover */
+  }
+}
+
+@media (max-width: 1024px) {
+  .save-btn {
+    margin-top: 125px;
   }
 }
 

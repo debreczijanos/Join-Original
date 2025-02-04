@@ -7,6 +7,8 @@
 
     <link rel="shortcut icon" href="../img/logoDark.png" type="image/x-icon">
 
+    <script src="../JS/navigation.js"></script>
+
     <link rel="stylesheet" href="../style/summary.css">
     <link rel="stylesheet" href="../style/assets.css">
     <link rel="stylesheet" href="../style/nav.css">
@@ -27,18 +29,20 @@
     <script src="../JS/boardAddTask.js" defer></script>
     <script src="../JS/boardOverlayAssigned.js" defer></script>
     <script src="../JS/boardShared.js" defer></script>
+    <script src="../JS/boardMoveTaskMobile.js" defer></script>
+    <script src="../JS/boardSubtaskEdit.js" defer></script>
+    <script src="../JS/navHighlight.js" defer></script>
 
-    <!-- <script src="../JS/assignedDropdown.js" defer></script>
-    <script src="../JS/addSubtask.js" defer></script>
-    <script src="../JS/addTask.js" defer></script>
 
-    <script src="../JS/clearUndCreateTask.js" defer></script>
-    <script src="../JS/init.js" defer></script> -->
 
     <title>Join Board</title>
 
     <style>
         .d-none {
+            display: none;
+        }
+
+        .display-none {
             display: none;
         }
 
@@ -52,6 +56,7 @@
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
             align-items: center;
+            z-index: 1;
         }
 
         .iframe-overlay-content {
@@ -89,14 +94,6 @@
                 </div>
             </div>
 
-            <div id="add-task-overlay" class="overlay-add-tasks">
-                <div class="overlay-content-add-tasks">
-                    <span class="close-btn" onclick="closeAddTaskOverlay()">×</span>
-                    <div id="add-task-overlay-content">
-                        <!-- Dynamischer Inhalt wird hier geladen -->
-                    </div>
-                </div>
-            </div>
 
             <section id="kanban-board" class="kanban-board">
 
@@ -199,6 +196,23 @@
                             <option value="Medium">Medium</option>
                             <option value="Low">Low</option>
                         </select>
+
+                        <div class="add-subtasks">
+                            <label for="subtasks">Subtasks</label>
+                            <div class="subtasks-wrapper" onclick="focusInput()">
+                                <input type="text" name="subtasks" id="subtaskInput" placeholder="Add new subtask">
+                                <img class="subtask-icon" id="iconAdd" onclick="addSubtask(event)"
+                                    src="../img/subTaskIcon.svg" alt="Add subtask">
+                                <img class="subtask-icon hidden" id="iconCancel" src="../img/subTaskCancel.svg"
+                                    alt="Cancel" onclick="clearInput(event)">
+                                <img class="subtask-icon hidden" id="iconConfirm" src="../img/subTaskEnter.svg"
+                                    alt="Confirm" onclick="addSubtask(event)">
+                            </div>
+
+                            <div class="subtask-list" id="subtaskList">
+                                <!-- Subtasks werden hier dynamisch eingefügt -->
+                            </div>
+                        </div>
 
                         <div class="save-btn">
                             <button type="button" onclick="saveEditedTask()">Speichern</button>

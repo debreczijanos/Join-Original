@@ -1,8 +1,8 @@
 /**
- * Formatiert Subtasks mit Checkboxen und gibt die HTML-Struktur zurück.
+ * Formats subtasks with checkboxes and returns the HTML structure.
  *
- * @param {Array} subtasks - Eine Liste von Subtasks mit `name` und `completed`.
- * @returns {string} Die HTML-Struktur der formatierten Subtasks.
+ * @param {Array} subtasks - A list of subtasks containing `name` and `completed` status.
+ * @returns {string} The HTML structure of formatted subtasks.
  */
 function formatSubtasksWithCheckboxes(subtasks) {
   return (
@@ -16,16 +16,16 @@ function formatSubtasksWithCheckboxes(subtasks) {
               </label>
             </li>`
       )
-      .join("") || "<li>Keine Subtasks</li>"
+      .join("") || "<li>No subtasks</li>"
   );
 }
 
 /**
- * Löscht eine Task basierend auf der `draggedTaskId`.
+ * Deletes a task based on the `draggedTaskId`.
  */
 function deleteTask() {
   if (!draggedTaskId) {
-    console.error("Keine gültige Task-ID gefunden");
+    console.error("No valid task ID found");
     return;
   }
 
@@ -34,28 +34,28 @@ function deleteTask() {
 }
 
 /**
- * Löscht eine Task aus dem Backend.
+ * Deletes a task from the backend.
  *
- * @param {string} url - Die API-URL der zu löschenden Task.
+ * @param {string} url - The API URL of the task to be deleted.
  */
 function deleteTaskFromBackend(url) {
   fetch(url, { method: "DELETE" })
     .then((response) => handleDeleteResponse(response))
-    .catch((error) => handleError(`Fehler beim Löschen: ${error.message}`));
+    .catch((error) => handleError(`Error deleting task: ${error.message}`));
 }
 
 /**
- * Behandelt die Antwort des Backends nach dem Löschen einer Task.
+ * Handles the backend response after deleting a task.
  *
- * @param {Response} response - Die Fetch-Antwort.
+ * @param {Response} response - The fetch response.
  */
 function handleDeleteResponse(response) {
-  if (!response.ok) throw new Error("Fehler beim Löschen der Aufgabe");
+  if (!response.ok) throw new Error("Error deleting task");
   removeTaskFromFrontend();
 }
 
 /**
- * Entfernt eine Task aus der UI und aktualisiert die Kanban-Tafel.
+ * Removes a task from the UI and updates the Kanban board.
  */
 function removeTaskFromFrontend() {
   allTasksData = allTasksData.filter((task) => task.id !== draggedTaskId);
@@ -64,28 +64,31 @@ function removeTaskFromFrontend() {
 }
 
 /**
- * Öffnet das Formular zur Bearbeitung einer Task.
+ * Opens the form to edit a task.
  */
 function editTask() {
   if (!draggedTaskId) {
-    handleError("Keine gültige Task-ID zum Bearbeiten gefunden");
+    handleError("No valid task ID found for editing");
     return;
   }
 
   const task = getTaskById(draggedTaskId);
   if (!task) {
-    handleError(`Task nicht gefunden: ${draggedTaskId}`);
+    handleError(`Task not found: ${draggedTaskId}`);
     return;
   }
 
+  currentSubtaskTaskId = draggedTaskId;
   populateEditForm(task);
+  loadExistingSubtasks(currentSubtaskTaskId);
   showEditTaskOverlay();
+  closeTaskDetails();
 }
 
 /**
- * Füllt das Bearbeitungsformular mit den Daten einer Task.
+ * Populates the edit form with task data.
  *
- * @param {Object} task - Die Task-Daten.
+ * @param {Object} task - The task data.
  */
 async function populateEditForm(task) {
   setInputValue("edit-title", task.title || "");
@@ -93,15 +96,15 @@ async function populateEditForm(task) {
   setInputValue("edit-due-date", task.dueDate || "");
   setInputValue("edit-priority", task.prio || "Low");
 
-  // Kontakte laden und Dropdown synchronisieren
   await loadContactsForEditForm(task.assignedTo || []);
 
   populateEditTaskForm(task);
 }
 
 /**
- * Lädt Kontakte und markiert die zugewiesenen im Bearbeitungsformular.
- * @param {Array<string>} assignedContacts - Die Liste der zugewiesenen Kontakte.
+ * Loads contacts and marks assigned ones in the edit form.
+ *
+ * @param {Array<string>} assignedContacts - The list of assigned contacts.
  */
 async function loadContactsForEditForm(assignedContacts = []) {
   const dropdownMenu = document.getElementById("dropdownMenu");
@@ -125,63 +128,98 @@ async function loadContactsForEditForm(assignedContacts = []) {
 }
 
 /**
- * Setzt den Wert eines Formularfelds.
+ * Sets the value of a form field.
  *
- * @param {string} elementId - Die ID des Formularfelds.
- * @param {string} value - Der zu setzende Wert.
+ * @param {string} elementId - The ID of the form field.
+ * @param {string} value - The value to be set.
  */
 function setInputValue(elementId, value) {
   const element = document.getElementById(elementId);
   if (element) {
     element.value = value;
   } else {
-    logError(`Element mit ID ${elementId} nicht gefunden.`);
+    logError(`Element with ID ${elementId} not found.`);
   }
 }
 
 /**
- * Zeigt das Overlay zum Bearbeiten einer Task an.
+ * Displays the overlay for editing a task.
  */
 function showEditTaskOverlay() {
   toggleOverlay("edit-task-overlay", false);
 }
 
 /**
- * Schließt das Overlay zum Bearbeiten einer Task.
+ * Closes the overlay for editing a task.
  */
 function closeEditTask() {
   toggleOverlay("edit-task-overlay", true);
+  document.removeEventListener("mousedown", handleOutsideClick);
+  loadTasks();
 }
 
 /**
- * Blendet ein Overlay ein oder aus.
+ * Toggles an overlay's visibility.
  *
- * @param {string} overlayId - Die ID des Overlays.
- * @param {boolean} isHidden - Ob das Overlay versteckt werden soll.
+ * @param {string} overlayId - The ID of the overlay.
+ * @param {boolean} isHidden - Whether the overlay should be hidden.
  */
 function toggleOverlay(overlayId, isHidden) {
   const overlay = document.getElementById(overlayId);
+
   if (overlay) {
     overlay.classList.toggle("d-none", isHidden);
-  } else {
-    logError(`Overlay mit ID ${overlayId} nicht gefunden.`);
+
+    if (!isHidden) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
   }
 }
 
 /**
- * Speichert die bearbeitete Task.
+ * Handles clicks outside of the overlay.
+ *
+ * @param {Event} event - The click event.
+ */
+function handleOutsideClick(event) {
+  const editOverlay = document.getElementById("edit-task-overlay");
+  const detailsOverlay = document.getElementById("task-details-overlay");
+
+  if (editOverlay && !editOverlay.classList.contains("d-none")) {
+    const editContent = editOverlay.querySelector(".overlay-content");
+    if (
+      !editContent.contains(event.target) &&
+      event.target !== document.querySelector(".edit-button")
+    ) {
+      closeEditTask();
+    }
+  }
+
+  if (detailsOverlay && !detailsOverlay.classList.contains("d-none")) {
+    const detailsContent = detailsOverlay.querySelector(".overlay-content");
+    if (!detailsContent.contains(event.target)) {
+      closeTaskDetails();
+    }
+  }
+}
+
+/**
+ * Saves the edited task.
  */
 function saveEditedTask() {
   const updatedTask = getUpdatedTaskFromForm();
   if (!validateTaskData(updatedTask)) return;
   updateTaskInBackend(draggedTaskId, updatedTask);
   closeTaskDetails();
+  loadTasks();
 }
 
 /**
- * Holt die aktualisierten Task-Daten aus dem Bearbeitungsformular.
+ * Retrieves the updated task data from the edit form.
  *
- * @returns {Object} Die aktualisierten Task-Daten.
+ * @returns {Object} The updated task data.
  */
 function getUpdatedTaskFromForm() {
   const assignedContacts = Array.from(
@@ -193,34 +231,40 @@ function getUpdatedTaskFromForm() {
     description: getInputValue("edit-description"),
     dueDate: getInputValue("edit-due-date"),
     prio: getInputValue("edit-priority"),
-    assignedTo: assignedContacts, // Hinzugefügte Kontakte
+    assignedTo: assignedContacts,
   };
 }
 
+/**
+ * Retrieves the value of an input field.
+ *
+ * @param {string} elementId - The ID of the input field.
+ * @returns {string} The input value or an empty string if the element is not found.
+ */
 function getInputValue(elementId) {
   const element = document.getElementById(elementId);
   return element ? element.value : "";
 }
 
 /**
- * Validiert die Daten einer Task.
+ * Validates task data.
  *
- * @param {Object} task - Die Task-Daten.
- * @returns {boolean} True, wenn die Daten gültig sind, sonst false.
+ * @param {Object} task - The task data.
+ * @returns {boolean} True if the data is valid, otherwise false.
  */
 function validateTaskData(task) {
   if (!task.title || !task.dueDate) {
-    alert("Titel und Fälligkeitsdatum sind erforderlich!");
+    alert("Title and due date are required!");
     return false;
   }
   return true;
 }
 
 /**
- * Aktualisiert eine Task im Backend.
+ * Updates a task in the backend.
  *
- * @param {string} taskId - Die ID der zu aktualisierenden Task.
- * @param {Object} updatedTask - Die neuen Task-Daten.
+ * @param {string} taskId - The ID of the task to be updated.
+ * @param {Object} updatedTask - The new task data.
  */
 function updateTaskInBackend(taskId, updatedTask) {
   const updateUrl = `${API_URL}/${taskId}.json`;
@@ -231,19 +275,19 @@ function updateTaskInBackend(taskId, updatedTask) {
     body: JSON.stringify(updatedTask),
   })
     .then((response) => handleBackendResponse(response, taskId, updatedTask))
-    .catch((error) => logError(`Fehler beim Speichern der Aufgabe: ${error}`));
+    .catch((error) => logError(`Error saving the task: ${error}`));
 }
 
 /**
- * Behandelt die Antwort des Backends nach einer Aktualisierung.
+ * Handles the backend response after an update.
  *
- * @param {Response} response - Die Fetch-Antwort.
- * @param {string} taskId - Die ID der Task.
- * @param {Object} updatedTask - Die neuen Task-Daten.
+ * @param {Response} response - The fetch response.
+ * @param {string} taskId - The ID of the task.
+ * @param {Object} updatedTask - The new task data.
  */
 function handleBackendResponse(response, taskId, updatedTask) {
   if (!response.ok) {
-    logError(`Fehler beim Aktualisieren der Aufgabe: ${response.status}`);
+    logError(`Error updating task: ${response.status}`);
     return;
   }
 
@@ -253,24 +297,24 @@ function handleBackendResponse(response, taskId, updatedTask) {
 }
 
 /**
- * Aktualisiert die Task-Daten im Frontend.
+ * Updates task data in the frontend.
  *
- * @param {string} taskId - Die ID der Task.
- * @param {Object} updatedTask - Die neuen Task-Daten.
+ * @param {string} taskId - The ID of the task.
+ * @param {Object} updatedTask - The new task data.
  */
 function updateFrontendTask(taskId, updatedTask) {
   const taskIndex = allTasksData.findIndex((task) => task.id === taskId);
   if (taskIndex !== -1) {
     allTasksData[taskIndex] = { ...allTasksData[taskIndex], ...updatedTask };
   } else {
-    logError(`Task im Frontend nicht gefunden: ${taskId}`);
+    logError(`Task not found in the frontend: ${taskId}`);
   }
 }
 
 /**
- * Protokolliert einen Fehler in der Konsole.
+ * Logs an error message to the console.
  *
- * @param {string} message - Die Fehlermeldung.
+ * @param {string} message - The error message.
  */
 function logError(message) {
   console.error(message);
@@ -289,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * Speichert eine neue Aufgabe im Backend und aktualisiert die Oberfläche.
+ * Saves a new task to the backend and updates the UI.
  */
 function saveTask() {
   const taskData = collectTaskData();
@@ -311,14 +355,14 @@ function saveTask() {
 }
 
 /**
- * Erstellt eine neue Aufgabe, prüft auf erforderliche Felder und fügt sie hinzu.
+ * Creates a new task, validates required fields, and adds it to the task list.
  */
 async function createTask() {
   const taskData = collectTaskData();
 
   if (!taskData.title || !taskData.dueDate || !taskData.category) {
     alert(
-      "Bitte fülle alle erforderlichen Felder aus (Titel, Fälligkeitsdatum und Kategorie)."
+      "Please fill in all required fields (Title, Due Date, and Category)."
     );
     return;
   }
@@ -355,7 +399,7 @@ async function createTask() {
 }
 
 /**
- * Lädt Kontakte aus beiden APIs und kombiniert sie.
+ * Loads contacts from both APIs and combines them.
  */
 async function loadContacts() {
   const dropdownMenu = document.getElementById("dropdownMenu");
@@ -368,7 +412,7 @@ async function loadContacts() {
     ]);
 
     if (!usersResponse.ok || !contactsResponse.ok) {
-      throw new Error("Fehler beim Laden der Kontakte von den APIs.");
+      throw new Error("Error loading contacts from APIs.");
     }
 
     const users = await usersResponse.json();
@@ -377,16 +421,16 @@ async function loadContacts() {
     const allContacts = [...Object.values(users), ...Object.values(contacts)];
     renderContactsDropdown(allContacts, dropdownMenu);
   } catch (error) {
-    dropdownMenu.innerHTML = "Fehler beim Laden der Kontakte.";
+    dropdownMenu.innerHTML = "Error loading contacts.";
     console.error("Fehler:", error);
   }
 }
 
 /**
- * Formatiert Subtasks als HTML-Liste.
+ * Formats subtasks as an HTML list.
  *
- * @param {Array} subtasks - Eine Liste der Subtasks mit `name`.
- * @returns {string} Eine HTML-Liste der Subtasks.
+ * @param {Array} subtasks - A list of subtasks with `name`.
+ * @returns {string} An HTML list of subtasks.
  */
 function formatSubtasks(subtasks) {
   return (
@@ -397,9 +441,9 @@ function formatSubtasks(subtasks) {
 }
 
 /**
- * Löscht eine Subtask aus der Liste.
+ * Deletes a subtask from the list.
  *
- * @param {HTMLElement} button - Der Button, der die Subtask löschen soll.
+ * @param {HTMLElement} button - The button that triggers the subtask deletion.
  */
 function deleteSubtask(button) {
   const li = button.parentElement;
@@ -407,6 +451,6 @@ function deleteSubtask(button) {
 }
 
 /**
- * Lädt Kontakte, wenn die Seite geladen wird.
+ * Loads contacts when the page is loaded.
  */
 window.onload = loadContacts;

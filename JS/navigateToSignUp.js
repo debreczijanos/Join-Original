@@ -1,8 +1,8 @@
 /**
- * Navigiert zur Registrierungsseite.
+ * Navigates to the registration page.
  *
- * Diese Funktion leitet den Benutzer zur Seite "signUp.html" weiter.
- * Die relative URL wird verwendet, um die Seite im Unterordner `./html` zu finden.
+ * This function redirects the user to the "signUp.html" page.
+ * The relative URL is used to find the page in the `./html` subfolder.
  */
 function navigateToSignUp() {
   window.location.href = "./html/signUp.html";

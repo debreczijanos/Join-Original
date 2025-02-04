@@ -1,5 +1,5 @@
 /**
- * Schaltet die Sichtbarkeit des Navigations-Menüs um.
+ * Toggles the visibility of the navigation menu.
  */
 function navToggel() {
   const x = document.getElementById("myLinks");
@@ -11,10 +11,10 @@ function navToggel() {
 }
 
 /**
- * Setzt den Initialbuchstaben des Benutzernamens im Header.
+ * Sets the initial letter of the username in the header.
  *
- * Der Benutzername wird aus dem LocalStorage abgerufen.
- * Wenn kein Name vorhanden ist, wird "Guest" verwendet.
+ * The username is retrieved from localStorage.
+ * If no name is found, "Guest" is used.
  */
 function setUserInitial() {
   const userName = localStorage.getItem("userName") || "Guest";
@@ -27,10 +27,10 @@ function setUserInitial() {
 }
 
 /**
- * Aktiviert den Logout-Button, um den Benutzer auszuloggen.
+ * Activates the logout button to log the user out.
  *
- * Beim Klick auf den Logout-Button werden die Benutzerdaten
- * aus dem LocalStorage entfernt und der Benutzer wird auf die Login-Seite weitergeleitet.
+ * When the logout button is clicked, the user data is removed
+ * from localStorage and the user is redirected to the login page.
  */
 function activateLogoutButton() {
   const logoutButton = document.querySelector(".nav-toggel button:last-child");
@@ -43,8 +43,8 @@ function activateLogoutButton() {
 }
 
 /**
- * Initialisiert den Header durch Setzen des Benutzernamens,
- * Aktivieren des Logout-Buttons und Aktivieren der Overlay-Schließfunktion.
+ * Initializes the header by setting the username,
+ * activating the logout button, and enabling the overlay close function.
  */
 function initializeHeader() {
   setUserInitial();
@@ -53,7 +53,7 @@ function initializeHeader() {
 }
 
 /**
- * Schließt das Overlay, wenn außerhalb des Overlays geklickt wird.
+ * Closes the overlay when clicking outside of it.
  */
 function setupOverlayClose() {
   const overlay = document.getElementById("myLinks");
@@ -70,42 +70,42 @@ function setupOverlayClose() {
 }
 
 /**
- * Navigiert zur Kanban-Board-Seite.
+ * Navigates to the Kanban board page.
  */
 function navigateToBoard() {
   window.location.href = "../html/boardTest.html";
 }
 
 /**
- * Navigiert zur Zusammenfassungsseite.
+ * Navigates to the summary page.
  */
 function navigateToSummary() {
   window.location.href = "../html/summary.html";
 }
 
 /**
- * Navigiert zur Seite zum Hinzufügen von Aufgaben.
+ * Navigates to the add task page.
  */
 function navigateToAddTask() {
   window.location.href = "../html/addTask.html";
 }
 
 /**
- * Navigiert zur Kontaktseite.
+ * Navigates to the contacts page.
  */
 function navigateToContacts() {
   window.location.href = "../html/contacts.html";
 }
 
 /**
- * Navigiert zur Seite mit rechtlichen Hinweisen.
+ * Navigates to the legal notice page.
  */
 function navigateToLegalNotice() {
   window.location.href = "../html/legalNotice.html";
 }
 
 /**
- * Navigiert zur Datenschutzrichtlinien-Seite.
+ * Navigates to the privacy policy page.
  */
 function navigateToprivacyPolicy() {
   window.location.href = "../html/privacyPolicy.html";

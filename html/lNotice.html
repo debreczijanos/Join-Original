@@ -12,13 +12,54 @@
     <link rel="stylesheet" href="../style/legalNotice.css">
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/assets.css">
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/nav.css">
 
     <title>Legal Notice</title>
+
+    <style>
+        @media (max-width: 1250px) {
+            .ofice {
+                display: flex !important;
+                flex-direction: row;
+                padding: 0;
+                justify-content: end;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <header>
+        <h2>Kanban Project Management Tool</h2>
+        <img src="../img/Capa3.png" alt="logo" style="display: none;">
+    </header>
+    <div class="nav">
+
+        <div class="logo">
+            <img src="../img/Capa2.png" alt="logo">
+        </div>
+
+        <div class="menu">
+            <div class="log-in" onclick="navigateToIndex()">
+                <div class="log-inMenu ">
+                    <img onclick="navigateToIndex()" src="../img/Icons.png" alt="Login Logo">
+                    <button onclick="navigateToIndex()">Log In </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ofice bottom-menu-link d-none-mobile">
+            <a href="./pPolicy.html" onclick="saveTheUrl()">Privacy Policy</a>
+            <a href="./lNotice.html">Legal notice</a>
+        </div>
+
+    </div>
+
+
     <main>
-        <div class="mein-content" style="margin-left: 0px !important;">
+        <div class="mein-content">
 
             <section class="contacts-container">
                 <div id="contactId"></div>

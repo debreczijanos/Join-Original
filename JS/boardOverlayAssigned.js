@@ -4,13 +4,13 @@ const CONTACTS_API_URL =
   "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/contact.json";
 
 /**
- * Liste der ausgewählten Kontakte
+ * List of selected contacts.
  */
 let selectedContacts = [];
-let currentTaskId = null; // Speichert die aktuelle Task-ID
+let currentTaskId = null; // Stores the current task ID
 
 /**
- * Schließt das Dropdown, wenn außerhalb geklickt wird.
+ * Closes the dropdown when clicking outside of it.
  */
 document.addEventListener("click", (event) => {
   const dropdown = document.querySelector(".dropdown");
@@ -20,26 +20,23 @@ document.addEventListener("click", (event) => {
 });
 
 /**
- * Füllt das Dropdown mit den geladenen Kontakten.
- * @param {Array} contacts - Die Liste der geladenen Kontakte.
- * @param {Array} [assignedContacts=[]] - Liste der bereits zugewiesenen Kontakte (optional).
+ * Populates the dropdown with loaded contacts.
+ * @param {Array} contacts - The list of loaded contacts.
+ * @param {Array} [assignedContacts=[]] - List of already assigned contacts (optional).
  */
 function populateDropdown(contacts, assignedContacts = []) {
   const dropdownMenu = document.getElementById("dropdownMenu");
-  dropdownMenu.innerHTML = ""; // Vorherige Inhalte löschen
+  dropdownMenu.innerHTML = "";
 
   contacts.forEach((contact) => {
     const contactElement = document.createElement("label");
     contactElement.className = "dropdown-item";
 
-    // Checkbox erstellen
     const checkbox = createCheckbox(contact.name);
     checkbox.checked = assignedContacts.includes(contact.name);
 
-    // Button mit dem ersten Buchstaben des Namens erstellen
     const button = createContactButton(contact.name);
 
-    // Event-Handler für Checkbox
     checkbox.onchange = () => {
       const isChecked = checkbox.checked;
 
@@ -54,28 +51,23 @@ function populateDropdown(contacts, assignedContacts = []) {
         }
       }
 
-      // Aktualisiere die Anzeige der ausgewählten Kontakte
       updateSelectedContactsDisplay();
-
-      // Optional: Synchronisiere mit dem Backend
       updateTaskAssignments(selectedContacts);
     };
 
-    // Elemente hinzufügen
     contactElement.appendChild(checkbox);
     contactElement.appendChild(button);
     contactElement.appendChild(document.createTextNode(contact.name));
     dropdownMenu.appendChild(contactElement);
 
-    // Aktualisiere initialen Stil
     updateDropdownStyle(contactElement, checkbox.checked);
   });
 }
 
 /**
- * Aktualisiert die Liste der ausgewählten Kontakte.
- * @param {string} contactName - Der Name des Kontakts.
- * @param {boolean} isChecked - Ob der Kontakt ausgewählt ist.
+ * Updates the list of selected contacts.
+ * @param {string} contactName - The name of the contact.
+ * @param {boolean} isChecked - Whether the contact is selected.
  */
 function updateSelectedContacts(contactName, isChecked) {
   if (isChecked) {
@@ -89,11 +81,9 @@ function updateSelectedContacts(contactName, isChecked) {
     }
   }
 
-  // Aktualisiere die Anzeige der ausgewählten Kontakte
   const selectedContactsContainer = document.getElementById("selectedContacts");
   renderSelectedContacts(selectedContactsContainer);
 
-  // Aktualisiere die Task-Daten (falls erforderlich)
   if (currentTaskId) {
     const task = allTasksData.find((task) => task.id === currentTaskId);
     if (task) {
@@ -103,8 +93,8 @@ function updateSelectedContacts(contactName, isChecked) {
 }
 
 /**
- * Lädt die Zuweisungen einer spezifischen Aufgabe und markiert die zugewiesenen Kontakte.
- * @param {string} taskId - Die ID der Aufgabe.
+ * Loads the assignments of a specific task and marks the assigned contacts.
+ * @param {string} taskId - The ID of the task.
  */
 async function loadTaskAssignments(taskId) {
   currentTaskId = taskId;
@@ -127,7 +117,6 @@ async function loadTaskAssignments(taskId) {
     selectedContacts = task.assignedTo || [];
     console.log("Selected contacts for this task:", selectedContacts);
 
-    // Synchronisiere das Dropdown mit den geladenen Kontakten
     syncDropdownWithSelectedContacts();
   } catch (error) {
     console.error("Error loading task assignments:", error);
@@ -135,7 +124,7 @@ async function loadTaskAssignments(taskId) {
 }
 
 /**
- * Synchronisiert das Dropdown mit den ausgewählten Kontakten.
+ * Synchronizes the dropdown with the selected contacts.
  */
 function syncDropdownWithSelectedContacts() {
   const dropdownMenu = document.getElementById("dropdownMenu");
@@ -147,22 +136,22 @@ function syncDropdownWithSelectedContacts() {
 }
 
 /**
- * Initialisiert das Laden der Kontakte und der spezifischen Aufgabe.
+ * Initializes the loading of contacts and the specific task.
  */
 document.addEventListener("DOMContentLoaded", async () => {
-  const taskId = "OF604eP7v0MtTlC5Del"; // Beispiel-Task-ID
-  await loadContacts(); // Kontakte laden
+  const taskId = "OF604eP7v0MtTlC5Del";
+  await loadContacts();
 });
 
 /**
- * Rendert das Dropdown-Menü mit den geladenen Kontakten.
+ * Renders the dropdown menu with the loaded contacts.
  *
- * @param {Array} contacts - Liste der Kontakte.
- * @param {HTMLElement} dropdownMenu - Das Dropdown-Menü-Element.
- * @param {Array} assignedContacts - Die Liste der bereits zugewiesenen Kontakte.
+ * @param {Array} contacts - List of contacts.
+ * @param {HTMLElement} dropdownMenu - The dropdown menu element.
+ * @param {Array} assignedContacts - The list of already assigned contacts.
  */
 function renderContactsDropdown(contacts, dropdownMenu, assignedContacts = []) {
-  dropdownMenu.innerHTML = ""; // Leere das Dropdown
+  dropdownMenu.innerHTML = "";
 
   contacts.forEach((contact) => {
     const label = document.createElement("label");
@@ -174,7 +163,6 @@ function renderContactsDropdown(contacts, dropdownMenu, assignedContacts = []) {
     const checkbox = createCheckbox(contact.name);
     checkbox.checked = assignedContacts.includes(contact.name);
 
-    // Styling aktualisieren basierend auf dem Status
     updateDropdownStyle(label, checkbox.checked);
 
     checkbox.onchange = () => {
@@ -190,7 +178,6 @@ function renderContactsDropdown(contacts, dropdownMenu, assignedContacts = []) {
         }
       }
 
-      // Aktualisiere die Ansicht der ausgewählten Kontakte
       renderSelectedContacts(document.getElementById("selectedContacts"));
     };
 
@@ -204,10 +191,10 @@ function renderContactsDropdown(contacts, dropdownMenu, assignedContacts = []) {
 }
 
 /**
- * Fügt einen Kontakt zu den ausgewählten hinzu.
+ * Adds a contact to the selected contacts list.
  *
- * @param {string} name - Name des Kontakts.
- * @param {HTMLElement} button - Button für den Kontakt.
+ * @param {string} name - Name of the contact.
+ * @param {HTMLElement} button - Button for the contact.
  */
 function addContact(name, button) {
   if (!selectedContacts.includes(name)) {
@@ -217,9 +204,9 @@ function addContact(name, button) {
 }
 
 /**
- * Entfernt einen Kontakt aus den ausgewählten.
+ * Removes a contact from the selected contacts list.
  *
- * @param {string} name - Name des Kontakts.
+ * @param {string} name - Name of the contact.
  */
 function removeContact(name) {
   selectedContacts = selectedContacts.filter((contact) => contact !== name);
@@ -227,15 +214,14 @@ function removeContact(name) {
 }
 
 /**
- * Rendert die ausgewählten Kontakte mit einer maximal sichtbaren Anzahl.
+ * Renders the selected contacts with a maximum visible count.
  *
- * @param {HTMLElement} container - Der Container für die Anzeige der ausgewählten Kontakte.
+ * @param {HTMLElement} container - The container displaying the selected contacts.
  */
 function renderSelectedContacts(container) {
-  const maxVisible = 3; // Maximale Anzahl sichtbar
-  container.innerHTML = ""; // Container leeren
+  const maxVisible = 3;
+  container.innerHTML = "";
 
-  // Zeige die ersten 3 Kontakte
   selectedContacts.slice(0, maxVisible).forEach((contactName) => {
     const initials = contactName
       .split(" ")
@@ -252,7 +238,6 @@ function renderSelectedContacts(container) {
     container.appendChild(participantElement);
   });
 
-  // Zeige die Anzahl der zusätzlichen Kontakte
   const extraCount = selectedContacts.length - maxVisible;
   if (extraCount > 0) {
     const extraCountElement = document.createElement("span");
@@ -263,14 +248,13 @@ function renderSelectedContacts(container) {
 }
 
 /**
- * Entfernt einen Kontakt aus der Liste der ausgewählten Kontakte.
+ * Deselects a contact from the selected contacts list.
  *
- * @param {string} contactName - Der Name des zu entfernenden Kontakts.
+ * @param {string} contactName - The name of the contact to be removed.
  */
 function deselectContact(contactName) {
   selectedContacts = selectedContacts.filter((name) => name !== contactName);
 
-  // Checkbox des entsprechenden Kontakts im Dropdown deaktivieren
   const checkboxes = document.querySelectorAll(".dropdown-item input");
   checkboxes.forEach((checkbox) => {
     if (checkbox.value === contactName) {
@@ -279,42 +263,42 @@ function deselectContact(contactName) {
   });
 
   const selectedContactsContainer = document.getElementById("selectedContacts");
-  populateEditTaskForm(selectedContactsContainer); // Aktualisiere die Anzeige
-}
-
-function generateColorFromLetter(letter) {
-  const charCode = letter.toUpperCase().charCodeAt(0);
-  const hue = (charCode - 65) * 15;
-  return `hsl(${hue}, 70%, 50%)`; // HSL-Farbmodell für dynamische Farben
+  populateEditTaskForm(selectedContactsContainer);
 }
 
 /**
- * Füllt das Bearbeitungsformular mit den Task-Daten.
+ * Generates a color based on the first letter of a name.
  *
- * @param {Object} task - Die Daten des Tasks, der bearbeitet werden soll.
+ * @param {string} letter - The first letter of the name.
+ * @returns {string} The generated color in HSL format.
+ */
+function generateColorFromLetter(letter) {
+  const charCode = letter.toUpperCase().charCodeAt(0);
+  const hue = (charCode - 65) * 15;
+  return `hsl(${hue}, 70%, 50%)`;
+}
+
+/**
+ * Populates the edit task form with task data.
+ *
+ * @param {Object} task - The task data to be edited.
  */
 function populateEditTaskForm(task) {
-  // Setze die Task-Details in das Formular
   document.getElementById("edit-title").value = task.title || "";
   document.getElementById("edit-description").value = task.description || "";
   document.getElementById("edit-due-date").value = task.dueDate || "";
   document.getElementById("edit-priority").value = task.prio || "Medium";
 
-  // Aktualisiere die `selectedContacts`
   selectedContacts = task.assignedTo || [];
 
-  // Zeige die Kontakte
   updateSelectedContactsDisplay();
-  // Bereite den Container für ausgewählte Kontakte vor
   const selectedContactsContainer = document.getElementById("selectedContacts");
   selectedContactsContainer.innerHTML = "";
 
   if (task.assignedTo && task.assignedTo.length > 0) {
-    // Limitiere auf die ersten 3 Teilnehmer
     const visibleParticipants = task.assignedTo.slice(0, 3);
     const remainingCount = task.assignedTo.length - visibleParticipants.length;
 
-    // Erstelle die ersten 3 Teilnehmer als `span`-Elemente
     visibleParticipants.forEach((person) => {
       const initials = person
         .split(" ")
@@ -331,7 +315,6 @@ function populateEditTaskForm(task) {
       selectedContactsContainer.appendChild(participantElement);
     });
 
-    // Falls es mehr als 3 Teilnehmer gibt, füge einen Zähler hinzu
     if (remainingCount > 0) {
       const extraCountElement = document.createElement("span");
       extraCountElement.classList.add("participant", "extra-count");
@@ -339,18 +322,18 @@ function populateEditTaskForm(task) {
       selectedContactsContainer.appendChild(extraCountElement);
     }
   } else {
-    // Keine Kontakte zugewiesen
-    selectedContactsContainer.innerHTML = `<p>Keine Kontakte zugewiesen</p>`;
+    selectedContactsContainer.innerHTML = `<p>No contacts assigned</p>`;
   }
 }
 
+/**
+ * Updates the display of selected contacts.
+ */
 function updateSelectedContactsDisplay() {
   const selectedContactsContainer = document.getElementById("selectedContacts");
 
-  // 1. Container leeren
   selectedContactsContainer.innerHTML = "";
 
-  // 2. Zeige maximal 3 Kontakte
   const maxVisible = 3;
   const visibleContacts = selectedContacts.slice(0, maxVisible);
 
@@ -370,7 +353,6 @@ function updateSelectedContactsDisplay() {
     selectedContactsContainer.appendChild(participantElement);
   });
 
-  // 3. Zusätzliche Kontakte anzeigen
   const extraCount = selectedContacts.length - maxVisible;
   if (extraCount > 0) {
     const extraCountElement = document.createElement("span");

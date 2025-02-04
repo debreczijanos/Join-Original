@@ -1,22 +1,22 @@
 /**
- * Zeigt das aktuelle Datum in einem spezifischen Format an.
+ * Displays the current date in a specific format.
  *
- * Diese Funktion wird ausgeführt, wenn die Seite vollständig geladen ist.
- * Sie setzt das aktuelle Datum im Format "TT. Monat JJJJ" in ein Element mit der ID `current-date`.
+ * This function is executed when the page is fully loaded.
+ * It sets the current date in the format "DD. Month YYYY" in an element with the ID `current-date`.
  */
 document.addEventListener("DOMContentLoaded", function () {
   const dateElement = document.getElementById("current-date");
   const today = new Date();
   const options = { year: "numeric", month: "long", day: "numeric" };
-  dateElement.textContent = today.toLocaleDateString("de-DE", options); // Beispiel: November 7, 2024
+  dateElement.textContent = today.toLocaleDateString("de-DE", options); // Example: November 7, 2024
 });
 
 /**
- * Zeigt den Benutzernamen aus dem `localStorage` in der Begrüßung an.
+ * Displays the username from `localStorage` in the greeting.
  *
- * Diese Funktion wird ausgeführt, wenn die Seite vollständig geladen ist.
- * Sie liest den Benutzernamen aus dem `localStorage` (oder verwendet "Guest" als Standard)
- * und aktualisiert das Begrüßungselement mit der Klasse `.greating h1`.
+ * This function is executed when the page is fully loaded.
+ * It reads the username from `localStorage` (or uses "Guest" as the default)
+ * and updates the greeting element with the class `.greating h1`.
  */
 document.addEventListener("DOMContentLoaded", function () {
   const userName = localStorage.getItem("userName") || "Guest";
