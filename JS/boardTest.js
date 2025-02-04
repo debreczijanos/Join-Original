@@ -23,15 +23,35 @@ let allTasksData = [];
  * - Desktop: Zeigt ein Popup zum Hinzufügen von Aufgaben.
  */
 function openTaskField() {
-  if (window.innerWidth < 900) {
+  let screenWidth = window.innerWidth;
+
+  if (screenWidth < 950) {
     window.location.href = "../html/addTask.html";
   } else {
-    const element = document.getElementById("show-hide-class");
-    if (element) {
-      element.classList.remove("d-none");
+    let iframeOverlay = document.getElementById("iframeOverlay");
+    let iframe = document.getElementById("overlayFrame");
+
+    if (iframe && iframeOverlay) {
+      iframe.src = "./addTaskPartial.html";
+      iframeOverlay.classList.remove("d-none");
+    } else {
+      console.error("Das IFrame-Overlay konnte nicht gefunden werden.");
     }
   }
 }
+
+/**
+ * Überwacht die Fenstergröße und leitet um, wenn die Größe unter 950px fällt
+ */
+window.addEventListener("resize", function () {
+  let screenWidth = window.innerWidth;
+  let iframeOverlay = document.getElementById("iframeOverlay");
+
+  if (screenWidth < 950 && !iframeOverlay.classList.contains("d-none")) {
+    closeAddTask();
+    window.location.href = "../html/addTask.html";
+  }
+});
 
 /**
  * Schließt das "Aufgabe hinzufügen"-Fenster und setzt das Formular zurück.

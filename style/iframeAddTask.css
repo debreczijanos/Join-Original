@@ -1,0 +1,857 @@
+#dropdownMenu input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none; /* Für Safari */
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#dropdownMenu input[type="checkbox"]:checked {
+  background-color: #2a3647;
+  border: 2px solid white;
+}
+
+#dropdownMenu input[type="checkbox"]:checked::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 18px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  position: relative;
+  top: -6px;
+  left: 8px;
+}
+
+.add-task-ctn-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* height: 100vh; */
+  padding: 0;
+}
+
+.gesamt {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  max-width: 1440px;
+  position: relative;
+}
+
+.add-task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-task-header > span {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 73.2px;
+  color: #000000;
+}
+
+.add-task-ctn,
+.add-task-title,
+.add-task-description,
+.add-task-assigned,
+.add-task-date,
+.add-task-date-value,
+.add-task-date-prio,
+.add-task-date-category,
+.add-subtasks {
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+}
+
+.add-task-ctn {
+  height: 376px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.add-task-title {
+  justify-content: center;
+  gap: 8px;
+  height: 96px;
+}
+
+.add-task-title > label,
+.add-task-title > label > span,
+.add-task-description > label,
+.add-task-assigned > label,
+.add-task-date-value > label,
+.add-task-date-prio > label,
+.add-task-date-category > label,
+.add-subtasks > label,
+.subtasks-wrapper > input,
+.required,
+.clear-btn {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+label {
+  color: #2a3647;
+}
+
+#dropdownMenu > label {
+  margin-bottom: 1px;
+}
+
+label > span,
+p > span {
+  color: red;
+}
+
+#title,
+#description,
+.dropdown,
+.custom-dropdown {
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+  background-color: #ffffff;
+}
+
+#title {
+  width: 440px;
+  height: 48px;
+  padding: 12px 21px;
+}
+
+#title:focus-within,
+#description:focus-within,
+.add-task-date-value > input:focus-within,
+.custom-dropdown:focus-within {
+  border-color: #29abe2;
+  outline: none;
+}
+
+#title > ::placeholder,
+#description > ::placeholder-shown,
+.subtasks-wrapper > input ::placeholder {
+  color: #d1d1d1;
+}
+
+.add-task-description {
+  height: 168px;
+  gap: 8px;
+}
+
+.add-task-description > textarea {
+  padding: 18px 16px;
+  max-width: 440px;
+  max-height: 100%;
+  color: #000000;
+}
+
+.add-task-assigned,
+.add-task-date-category,
+.add-subtasks {
+  height: 80px;
+  gap: 8px;
+  position: relative;
+}
+
+.dropdown,
+.custom-dropdown {
+  width: 100%;
+  height: 48px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dropdown:hover,
+.custom-dropdown:hover,
+#dropdownInput:hover,
+#customDropdownInput:hover {
+  cursor: pointer;
+}
+
+#dropdownInput,
+#customDropdownInput {
+  width: 100%;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  border: none;
+  background-color: transparent;
+}
+
+#dropdownInput::placeholder,
+#customDropdownInput::placeholder {
+  color: #000000;
+}
+
+#dropdownInput:focus-within,
+#customDropdownInput:focus-within,
+.subtasks-wrapper > input:focus-within {
+  outline: none;
+}
+
+.dropdown-arrow,
+#iconAdd {
+  width: 24px;
+  height: 24px;
+}
+
+.dropdown {
+  background-color: #ffffff;
+}
+
+.dropdown-arrow:hover,
+.subtask-icon:hover {
+  background-color: #d1d1d1;
+  border-radius: 50%;
+  padding: 0.01px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 99%;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Vertikaler Scrollbalken */
+.dropdown-menu::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.dropdown-menu::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.dropdown-menu::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
+.dropdown-menu.open {
+  display: block !important;
+}
+
+.dropdown-menu label {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.dropdown-menu label:hover {
+  background-color: #eeeeee;
+  border-radius: 10px;
+}
+
+.dropdown-menu label button {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.dropdown-menu input[type="checkbox"] {
+  position: absolute;
+  right: 22px;
+  cursor: pointer;
+}
+
+.selected-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 110%;
+  left: 0px;
+}
+
+.selected-contacts button,
+.extra-count-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  background-color: #29abe2;
+}
+
+.partition {
+  border: 1px solid #d1d1d1;
+  width: 0;
+  height: 424px;
+}
+
+.add-task-date {
+  height: 416px;
+  justify-content: space-around;
+}
+
+.add-task-date-value {
+  height: 96px;
+  gap: 8px;
+}
+
+.add-task-date-prio {
+  height: 88px;
+  gap: 8px;
+}
+
+.add-task-date-value > input {
+  height: 48px;
+  width: 440px;
+  border-radius: 10px;
+  padding: 12px 16px;
+  border: solid 1px #d1d1d1;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.prio-btn {
+  width: 440px;
+  height: 56px;
+  display: flex;
+  gap: 16px;
+}
+
+.prio-btn > button {
+  border: none;
+  border-radius: 10px;
+  padding: 16px 10px;
+  width: 136px;
+  height: 56px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #000000;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prio-btn > button:hover {
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.prio-btn button.urgent.active {
+  background-color: #ff3d00;
+  color: white;
+}
+
+.prio-btn button.medium.active {
+  background-color: #ffa800;
+  color: white;
+}
+
+.prio-btn button.low.active {
+  background-color: #7ae229;
+  color: white;
+}
+
+#customDropdownMenu {
+  position: absolute;
+  top: 101.5%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: solid 1px #d1d1d1;
+  z-index: 1000;
+  border-radius: 10px;
+}
+
+#customDropdownMenu.open {
+  display: block !important;
+}
+
+.custom-dropdown-item {
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.custom-dropdown-item:hover {
+  background-color: #eeeeee;
+}
+
+.subtasks-wrapper {
+  display: flex;
+  width: 440px;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: space-between;
+  border: solid 1px #d1d1d1;
+  border-radius: 10px;
+  cursor: text;
+  background-color: #ffffff;
+}
+
+.subtasks-wrapper > input {
+  border: none;
+  outline: none;
+  flex: 1;
+  background-color: transparent;
+}
+
+.subtasks-wrapper.focused {
+  border-color: #29abe2;
+}
+
+.hidden {
+  display: none;
+}
+
+.subtask-list {
+  height: 90px;
+  width: 440px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
+  top: 98%;
+}
+
+.subtask-item {
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.subtask-item:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.subtask-actions {
+  display: none;
+}
+
+.subtask-item:hover .subtask-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.subtask-icon-action {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.subtask-icon-action:hover {
+  transform: scale(1.2);
+}
+
+/* Vertikaler Scrollbalken */
+.subtask-list::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.subtask-list::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.subtask-list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.subtask-list::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.subtask-list::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #d1d1d1;
+  margin: 0 2px;
+}
+
+/* Vertikaler Scrollbalken */
+.add-task-ctn-date::-webkit-scrollbar {
+  width: 4px; /* Breite des vertikalen Scrollbalkens */
+}
+
+/* Horizontaler Scrollbalken */
+.add-task-ctn-date::-webkit-scrollbar {
+  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+}
+
+/* Hintergrund der Scrollbar-Spur */
+.add-task-ctn-date::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Hintergrundfarbe */
+}
+
+/* Scrollbalken selbst */
+.add-task-ctn-date::-webkit-scrollbar-thumb {
+  background: #29abe2;
+  /* Farbe */
+  border-radius: 8px; /* Abgerundete Kanten */
+}
+
+/* Hover-Effekt */
+.add-task-ctn-date::-webkit-scrollbar-thumb:hover {
+  background: #2a3647; /* Farbe bei Hover */
+}
+
+.submit-btn {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  height: 56px;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 4px;
+  margin-top: 100px;
+}
+.clear-btn,
+.create-task-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 56px;
+  gap: 4px;
+  padding: 16px;
+}
+
+.clear-btn {
+  border: solid 1px #2a3647;
+  color: #2a3647;
+  width: 110px;
+  background-color: #f6f7f8;
+}
+
+.create-task-btn.active {
+  border: none;
+  color: white;
+  background-color: #2a3647;
+  width: 183px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+  cursor: pointer;
+}
+
+.create-task-btn.inactive {
+  border: none;
+  color: white;
+  background-color: grey;
+  width: 183px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 25.2px;
+  cursor: not-allowed;
+}
+
+.clear-btn:hover {
+  color: #29abe2;
+  border: solid 1px #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.create-task-btn.active:hover {
+  background-color: #29abe2;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.error-title {
+  top: 94px;
+  margin-left: 10px;
+}
+
+.error-due-date {
+  top: 91px;
+  margin-left: 10px;
+}
+
+.error-category {
+  position: absolute;
+  top: 99%;
+  left: 0;
+  margin-left: 10px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#successMessage {
+  display: flex;
+  gap: 15px;
+  color: white;
+  padding: 0px 25px;
+  border-radius: 20px;
+  background-color: #2a3647;
+  height: 74px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: -50px; /* Startet unter dem Bildschirm */
+  left: 50%;
+  transform: translateX(-50%);
+  animation: slideUp 1s ease-out forwards;
+  text-align: center;
+  z-index: 1000; /* Über andere Elemente */
+}
+
+/* Animation für das Hochfahren des Texts */
+@keyframes slideUp {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 50%; /* Mitte des Bildschirms */
+    opacity: 1;
+  }
+}
+
+/* @media (max-width: 1360px) {
+  .add-task-ctn-date {
+    padding: 70px 36px 90px 0px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .add-task-ctn-date {
+    padding: 70px 0px 90px 0px;
+  }
+} */
+
+/* @media (max-width: 1024px) {
+  .partition {
+    display: none;
+  }
+
+  .add-task-date {
+    padding-top: 50px;
+  }
+
+  .add-task-ctn-date {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 130px;
+    height: 100%;
+    justify-content: start;
+    max-height: 100vh;
+    padding-right: 0;
+    padding-top: 0;
+    overflow: auto;
+  }
+
+  .add-subtasks {
+    padding-top: 20px;
+  }
+  .error-category {
+    position: absolute;
+    top: 102%;
+  }
+  .add-task-date-prio {
+    padding-top: 12px;
+    height: auto;
+  }
+  .subtask-list {
+    top: 127%;
+  }
+} */
+
+/* @media (max-width: 500px) {
+  .add-task-header > span {
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 56.4px;
+  }
+
+  .add-task-title > label,
+  .add-task-title > label > span,
+  .add-task-description > label,
+  .add-task-assigned > label,
+  .add-task-date-value > label,
+  .add-task-date-prio > label,
+  .add-task-date-category > label,
+  .add-subtasks > label,
+  .subtasks-wrapper > input,
+  .required,
+  .add-task-date-value > input,
+  #title,
+  #description,
+  .dropdown,
+  .custom-dropdown,
+  .add-task-date-value > input,
+  .prio-btn > button,
+  #dropdownInput,
+  #customDropdownInput {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    display: flex;
+    width: 100%;
+  }
+
+  .clear-btn {
+    font-size: 16px;
+  }
+
+  .prio-btn > button {
+    height: 41px;
+    width: 124px;
+  }
+
+  .prio-btn {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+
+  .add-task-date-prio {
+    width: 100%;
+  }
+
+  .add-task-ctn,
+  .add-task-title,
+  .add-task-description,
+  .add-task-assigned,
+  .add-task-date,
+  .add-task-date-value,
+  .add-task-date-category,
+  .add-subtasks,
+  #title,
+  #description,
+  .dropdown,
+  .custom-dropdown,
+  .add-task-date-value > input,
+  .subtasks-wrapper,
+  .subtask-list {
+    width: 100%;
+    align-items: center;
+  }
+
+  .required {
+    padding-left: 4px;
+  }
+
+  .submit-btn {
+    justify-content: center;
+  }
+
+  .error-message {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .error-message,
+  .error-title,
+  .error-due-date {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 350px) {
+  .prio-btn > button {
+    width: 90px;
+  }
+} */
+
+#closeIframeBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+#closeIframeBtn:hover {
+  background-color: #d1d1d1;
+  border-radius: 50%;
+  padding: 0.01px;
+}

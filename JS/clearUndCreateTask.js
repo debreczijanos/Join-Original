@@ -217,6 +217,10 @@ function getSubtasks() {
   ).map((li) => li.textContent.trim());
 }
 
+function isInIframe() {
+  return window.self !== window.top;
+}
+
 /**
  * Sendet eine Aufgabe an die API und zeigt das Ergebnis in der UI an.
  *
@@ -238,14 +242,20 @@ function sendTaskToAPI(task) {
   )
     .then((response) => {
       if (response.ok) {
-        const overlay = document.getElementById("overlay");
-        overlay.style.display = "flex";
+        if (isInIframe()) {
+          // Im Overlay-Modus: Nachricht an das Hauptfenster senden
+          parent.postMessage({ type: "taskSuccess" }, "*");
+        } else {
+          // Normales Verhalten: Erfolgsnachricht und Weiterleitung
+          const overlay = document.getElementById("overlay");
+          overlay.style.display = "flex";
 
-        setTimeout(() => {
-          overlay.style.display = "none";
-          clearForm(); // Formular leeren
-          window.location.href = "../html/boardTest.html";
-        }, 3000);
+          setTimeout(() => {
+            overlay.style.display = "none";
+            clearForm();
+            window.location.href = "../html/boardTest.html";
+          }, 3000);
+        }
       } else {
         console.error("Error creating task.");
       }

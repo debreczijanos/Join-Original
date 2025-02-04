@@ -48,20 +48,24 @@ function updateDropdownStyle(contactElement, isChecked) {
   if (isChecked) {
     contactElement.style.backgroundColor = "#2A3647"; // Dunkler Hintergrund für Auswahl
     contactElement.style.color = "#ffffff"; // Weiße Schrift
+
+    // Entferne Hover-Effekt, falls vorhanden
+    contactElement.onmouseover = null;
+    contactElement.onmouseout = null;
   } else {
     contactElement.style.backgroundColor = "#f9f9f9"; // Standard-Hintergrund
     contactElement.style.color = "#000000"; // Schwarze Schrift
 
-    // Hover-Effekt mit Event-Listener
-    contactElement.addEventListener("mouseover", () => {
+    // Entferne vorherige Event-Listener, um doppelte Listener zu vermeiden
+    contactElement.onmouseover = () => {
       contactElement.style.backgroundColor = "#a8a3a666"; // Hover-Hintergrund
       contactElement.style.color = "#000000"; // Hover-Schriftfarbe
-    });
+    };
 
-    contactElement.addEventListener("mouseout", () => {
+    contactElement.onmouseout = () => {
       contactElement.style.backgroundColor = "#f9f9f9"; // Zurück zum Standard
       contactElement.style.color = "#000000"; // Zurück zur Standard-Schriftfarbe
-    });
+    };
   }
 }
 
