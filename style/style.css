@@ -1,6 +1,8 @@
 body {
   background-color: #f6f7f8;
+  scroll-behavior: smooth;
 }
+
 
 .d-none {
   display: none;
@@ -336,7 +338,7 @@ footer {
     width: 64px;
     height: 78.03px;
     top: 37px;
-    left: 38px;
+    left: 22px;
   }
 
   .start-position-logo .white-logo {
@@ -448,6 +450,12 @@ footer {
   .logInPersonal > .inputEmail > input,
   .logInPersonal > .inputPasword > input {
     font-size: 16px;
+  }
+}
+
+@media (max-height: 780px){
+  .logIn{
+    height: 80%;
   }
 }
 
