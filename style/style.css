@@ -3,7 +3,6 @@ body {
   scroll-behavior: smooth;
 }
 
-
 .d-none {
   display: none;
 }
@@ -268,8 +267,8 @@ button {
 }   
 
 footer {
-  position: absolute;
-  bottom: 35px;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
@@ -337,8 +336,8 @@ footer {
   .end-position-logo {
     width: 64px;
     height: 78.03px;
-    top: 37px;
-    left: 22px;
+    top: 20px;
+    left: 20px;
   }
 
   .start-position-logo .white-logo {
@@ -419,7 +418,7 @@ footer {
 
   .identify {
     position: absolute;
-    bottom: 80px;
+    bottom: 40px;
     left: 49%;
     transform: translate(-50%, 0px);
     text-align: center;
@@ -430,7 +429,7 @@ footer {
   }
 
   .identify > span {
-    font-size: 20px;
+    font-size: 17px;
     line-height: 24px;
   }
 
@@ -455,10 +454,19 @@ footer {
 
 @media (max-height: 780px){
   .logIn{
-    height: 80%;
+    height: 65%;
   }
 }
 
+@media(max-height: 670px){
+  .logIn{
+    gap: 11px; 
+  }
+
+  .allLogInBtn{
+    gap: 15px; 
+  }
+}
 
 /*-----------------------------------------*/
 
