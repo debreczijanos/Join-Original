@@ -159,7 +159,7 @@ function highlightSelectedContact(selectedDiv, contactData) {
   selectContact(selectedDiv);
   updateContactDetails(contactData);
 
-  if (window.innerWidth <= 1250) {
+  if (window.innerWidth <= 1025) {
     openEditContactOverlay(contactData);
   }
 }

@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="../style/fonts.css">
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/addTask.css">
-    <link rel="stylesheet" href="../style/boardTest.css">
+    <link rel="stylesheet" href="../style/boardAll.css">
     <link rel="stylesheet" href="../style/addTask.css">
 
     <script src="../JS/includeHTML.js"></script>
     <script src="../JS/navToggel.js"></script>
 
-    <script src="../JS/boardTest.js" defer></script>
+    <script src="../JS/board.js" defer></script>
     <script src="../JS/overlayLoader.js" defer></script>
     <script src="../JS/boardSearch.js" defer></script>
     <script src="../JS/boardOverlayEdit.js" defer></script>
@@ -70,11 +70,11 @@
 
 <body>
 
-    <div class="gesamt">
+    <div class="page-content">
         <div id="include-container"></div>
 
 
-        <div class="mein-content">
+        <div class="main-content">
 
             <section class="board-header">
                 <div class="title-board">
@@ -222,100 +222,9 @@
             </div>
         </div>
 
-        <!-- Add Task Overlay  -->
-        <div class="background-box d-none" id="show-hide-class">
-            <div class="great-open-Task">
-                <div class="title-and-out">
-                    <h2>Add Task</h2>
-                    <span style="cursor: pointer;" onclick="closeTaskWindow()">X</span>
-                </div>
-
-                <div class="form-section">
-                    <div class="first-form form">
-                        <form>
-                            <label for="title">Title<span class="required">*</span></label>
-                            <input type="text" id="titlel" placeholder="Enter a title" required>
-                            <div id="title-error" class="error-message d-none">This field is required</div>
-
-                            <label for="description">Description</label>
-                            <textarea class="description" id="descriptions" placeholder="Enter a description"
-                                style="resize: none;"></textarea>
-
-                            <!--experimen change-->
-
-                            <label for="assigned">Assigned to</label>
-                            <div class="dropdown">
-                                <input type="text" id="dropdownInput" placeholder="Select contacts to assign" onclick="toggleDropdown('dropdownMenu')" data-listener-added="true">
-                                <img class="dropdown-arrow" src="../img/arrow_drop_down.png " alt="dropdown">
-                                <div id="dropdownMenu" class="dropdown-menu"><label for="checkbox-Janos" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Janos" id="checkbox-Janos"><button style="margin-right: 10px; background-color: rgb(38, 217, 83);">J</button>Janos</label><label for="checkbox-Kevin" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Kevin" id="checkbox-Kevin"><button style="margin-right: 10px; background-color: rgb(38, 217, 128);">K</button>Kevin</label><label for="checkbox-Laura Schmidt" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Laura Schmidt" id="checkbox-Laura Schmidt"><button style="margin-right: 10px; background-color: rgb(38, 217, 172);">L</button>Laura Schmidt</label><label for="checkbox-Leo" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Leo" id="checkbox-Leo"><button style="margin-right: 10px; background-color: rgb(38, 217, 172);">L</button>Leo</label><label for="checkbox-lia" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="lia" id="checkbox-lia"><button style="margin-right: 10px; background-color: rgb(38, 217, 172);">L</button>lia</label><label for="checkbox-molly" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="molly" id="checkbox-molly"><button style="margin-right: 10px; background-color: rgb(38, 217, 217);">M</button>molly</label><label for="checkbox-Müller Mustermann" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Müller Mustermann" id="checkbox-Müller Mustermann"><button style="margin-right: 10px; background-color: rgb(38, 217, 217);">M</button>Müller Mustermann</label><label for="checkbox-Norbert" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Norbert" id="checkbox-Norbert"><button style="margin-right: 10px; background-color: rgb(38, 172, 217);">N</button>Norbert</label><label for="checkbox-Oksana " style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Oksana " id="checkbox-Oksana "><button style="margin-right: 10px; background-color: rgb(38, 128, 217);">O</button>Oksana </label><label for="checkbox-Richard" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Richard" id="checkbox-Richard"><button style="margin-right: 10px; background-color: rgb(83, 38, 217);">R</button>Richard</label><label for="checkbox-rifrif" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="rifrif" id="checkbox-rifrif"><button style="margin-right: 10px; background-color: rgb(83, 38, 217);">R</button>rifrif</label><label for="checkbox-Schmidt Jürgen" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="Schmidt Jürgen" id="checkbox-Schmidt Jürgen"><button style="margin-right: 10px; background-color: rgb(128, 38, 217);">S</button>Schmidt Jürgen</label><label for="checkbox-test" style="background-color: rgb(249, 249, 249); padding: 10px; display: flex; align-items: center;"><input type="checkbox" value="test" id="checkbox-test"><button style="margin-right: 10px; background-color: rgb(172, 38, 217);">T</button>test</label></div>
-    
-    
-                                
-                                <!-- Neuer Container für die ausgewählten Namen -->
-                                <div id="selectedContacts" class="selected-contacts"></div>
-                            </div>
-
-                            
-                        </form>
-                    </div>
-
-                    <div class="division-line"></div>
-
-                    <div class="second-form">
-                        <form>
-                            <label for="due-date">Due date<span class="required">*</span></label>
-                            <div class="date-input">
-                                <input type="date" id="due-date" class="description" placeholder="dd/mm/yyyy" required>
-                                <div id="due-date-error" class="error-message d-none">This field is required</div>
-                                <span class="calendar-icon"></span>
-                            </div>
-
-                            <label for="priority">Priority</label>
-                            <div class="priority-buttons">
-                                <button type="button" class="priority-button urgent">
-                                    Urgent
-                                    <img src="../img/Priorityhigh.png" alt="arrows upwards">
-                                </button>
-                                <button type="button" class="priority-button medium selected">
-                                    Medium
-                                    <img src="../img/Prioritymiddel.png" alt="priority middle">
-                                </button>
-                                <button type="button" class="priority-button low">
-                                    Low
-                                    <img src="../img/Prioritylow.png" alt="priority low">
-                                </button>
-                            </div>
-
-                            <label for="category">Category<span class="required">*</span></label>
-                            <select id="category" required>
-                                <option value="" disabled selected>Select task category</option>
-                                <option value="Work">Work</option>
-                                <option value="Personal">Personal</option>
-                                <option value="Development">Development</option>
-                                <option value="Testing">Testing</option>
-                            </select>
-                            <div id="category-error" class="error-message d-none">This field is required</div>
-
-                            <label for="subtasks">Subtask</label>
-                            <div class="subtasks">
-                                <div class="input-container">
-                                    <input type="text" id="subtask-input" placeholder="Add new subtask">
-                                    <button type="button" class="add-subtask-button" onclick="addSubtask()">+</button>
-                                </div>
-                                <!-- Subtask-Liste -->
-                                <div class="subtask-list-container" style="margin-left: 20px;">
-                                    <ul id="subtask-list"></ul>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-
-                <div class="button-container">
-                    <button class="cancel-button" onclick="closeTaskWindow()">Cancel</button>
-                    <button type="button" class="create-task-button" onclick="createTask()">Create Task</button>
-                </div>
+        <div id="overlay" class="overlay" style="display: none;">
+            <div id="successMessage">
+                Task added to board <img src="../img/board.png" alt="board img ">
             </div>
         </div>
         <!-- Add Task Overlay  -->

@@ -8,6 +8,10 @@
   color: white;
 }
 
+section#mycontacts {
+  padding-bottom: 100px;
+}
+
 @media (max-width: 950px) {
   .backArrow {
     margin-top: 16px;
@@ -49,7 +53,7 @@
   }
 
   .addContactButton {
-     display: none; 
+    display: none;
   }
 
   .logo-box {
@@ -432,10 +436,6 @@
     border-radius: 10px !important;
   }
 
-  .text {
-    /* display: block; */
-  }
-
   h2 {
     border-right: unset;
   }
@@ -446,8 +446,7 @@
     width: 90px;
     border: 1px solid rgb(41, 171, 226);
   }
-
-} 
+}
 
 @media (max-width: 380px) {
   .error-message {

@@ -144,11 +144,7 @@ function validateFields(fields) {
     // Additional validation for the date
     if (input.type === "date" && input.value < today) {
       hasErrors = true;
-      displayError(
-        input,
-        "The date cannot be before today!",
-        "error-due-date"
-      );
+      displayError(input, "The date cannot be before today!", "error-due-date");
     }
   });
 
@@ -241,7 +237,7 @@ function sendTaskToAPI(task) {
           setTimeout(() => {
             overlay.style.display = "none";
             clearForm();
-            window.location.href = "../html/boardTest.html";
+            window.location.href = "../html/board.html";
           }, 3000);
         }
       } else {

@@ -24,7 +24,7 @@ function getActiveMenuClass() {
   const pathToMenuClass = {
     "/summary.html": "summary",
     "/addTask.html": "addTask",
-    "/boardTest.html": "board",
+    "/board.html": "board",
     "/contacts.html": "contacts",
   };
 

@@ -189,16 +189,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedEmail && savedPassword) {
     document.getElementById("email").value = savedEmail;
     document.getElementById("password").value = savedPassword;
-    rememberMeCheckbox.checked = true; // Activate checkbox
+    rememberMeCheckbox.checked = true;
   }
-
-  const form = document.querySelector(".logInDate");
-  form.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      handleLogin(event);
-    }
-  });
 });
 
 /**

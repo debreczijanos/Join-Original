@@ -41,7 +41,7 @@ button {
   cursor: pointer;
 }
 
-.gesamt {
+.page-content {
   display: flex;
   flex-direction: column;
   width: 100vw;
@@ -50,7 +50,7 @@ button {
   position: relative;
 }
 
-.mein-content {
+.main-content {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -101,7 +101,7 @@ input[type="checkbox"]:checked::after {
 }
 
 /* Vertikaler Scrollbalken */
-.mein-content::-webkit-scrollbar {
+.main-content::-webkit-scrollbar {
   width: 4px; /* Breite des vertikalen Scrollbalkens */
 }
 
@@ -116,25 +116,25 @@ input[type="checkbox"]:checked::after {
 }
 
 /* Scrollbalken selbst */
-.mein-content::-webkit-scrollbar-thumb {
+.main-content::-webkit-scrollbar-thumb {
   background: #29abe2;
   /* Farbe */
   border-radius: 8px; /* Abgerundete Kanten */
 }
 
 /* Hover-Effekt */
-.mein-content::-webkit-scrollbar-thumb:hover {
+.main-content::-webkit-scrollbar-thumb:hover {
   background: #2a3647; /* Farbe bei Hover */
 }
 
 @media (max-width: 1360px) {
-  .mein-content {
+  .main-content {
     margin-left: 268px;
   }
 }
 
 @media (max-width: 1250px) {
-  .mein-content {
+  .main-content {
     padding: 20px 16px;
     margin-left: 0;
     max-height: calc(100% - 140px);
@@ -142,7 +142,7 @@ input[type="checkbox"]:checked::after {
 }
 
 @media (max-width: 450px) {
-  .mein-content {
+  .main-content {
     padding: 20px 4px 20px 4px;
     margin-left: 0;
   }

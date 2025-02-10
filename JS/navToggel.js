@@ -73,7 +73,7 @@ function setupOverlayClose() {
  * Navigates to the Kanban board page.
  */
 function navigateToBoard() {
-  window.location.href = "../html/boardTest.html";
+  window.location.href = "../html/board.html";
 }
 
 /**

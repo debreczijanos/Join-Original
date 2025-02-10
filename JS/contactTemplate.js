@@ -1,3 +1,11 @@
+/**
+ * Renders the sorted contacts list with alphabetical headers.
+ *
+ * @function renderSortedContacts
+ * @param {HTMLElement} contactsDiv - The container for the contact list.
+ * @param {HTMLElement} contactDetailsDiv - The container for contact details.
+ * @param {Array<Object>} sortedData - The sorted contact data.
+ */
 function renderSortedContacts(contactsDiv, contactDetailsDiv, sortedData) {
   let currentLetter = "";
 
@@ -15,10 +23,17 @@ function renderSortedContacts(contactsDiv, contactDetailsDiv, sortedData) {
 
   const selectedContact = document.querySelector(".contact-item.selected");
   if (!selectedContact) {
-    contactDetailsDiv.innerHTML = "<p>Wählen Sie einen Kontakt aus.</p>";
+    contactDetailsDiv.innerHTML = "<p>Select a contact.</p>";
   }
 }
 
+/**
+ * Creates a letter header for the contact list.
+ *
+ * @function createLetterHeader
+ * @param {string} letter - The letter to display as a header.
+ * @returns {HTMLElement} The letter header element.
+ */
 function createLetterHeader(letter) {
   const headerDiv = document.createElement("div");
   headerDiv.classList.add("letter-header");
@@ -26,6 +41,14 @@ function createLetterHeader(letter) {
   return headerDiv;
 }
 
+/**
+ * Creates a contact item in the contact list.
+ *
+ * @function createContactDiv
+ * @param {Object} entry - The contact data.
+ * @param {string} firstLetter - The first letter of the contact's name.
+ * @returns {HTMLElement} The contact item element.
+ */
 function createContactDiv(entry, firstLetter) {
   const contactDiv = document.createElement("div");
   contactDiv.classList.add("contact-item");
@@ -47,11 +70,24 @@ function createContactDiv(entry, firstLetter) {
   return contactDiv;
 }
 
+/**
+ * Updates the contact details section.
+ *
+ * @function updateContactDetails
+ * @param {Object} contactData - The contact data to display.
+ */
 function updateContactDetails(contactData) {
   const contactDetailsDiv = document.getElementById("contactDate");
   contactDetailsDiv.innerHTML = createContactDetailsTemplate(contactData);
 }
 
+/**
+ * Generates the contact details HTML template.
+ *
+ * @function createContactDetailsTemplate
+ * @param {Object} contactData - The contact data.
+ * @returns {string} The HTML string for the contact details.
+ */
 function createContactDetailsTemplate(contactData) {
   return `
       <div class="contact-info">
@@ -91,6 +127,12 @@ function createContactDetailsTemplate(contactData) {
     `;
 }
 
+/**
+ * Generates a random color using the HSL format.
+ *
+ * @function getRandomColor
+ * @returns {string} A random HSL color string.
+ */
 function getRandomColor() {
   const hue = Math.floor(Math.random() * 360);
   const saturation = Math.floor(Math.random() * 50) + 50;
@@ -98,7 +140,11 @@ function getRandomColor() {
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-// CSS for Contacs
+/**
+ * Injects CSS styles for contact elements into the document.
+ *
+ * @function injectContactStyles
+ */
 function injectContactStyles() {
   const css = `
       .contact-item {
@@ -130,19 +176,25 @@ function injectContactStyles() {
 
 injectContactStyles();
 
+/**
+ * Generates the contact overlay template for adding or editing a contact.
+ *
+ * @function getContactOverlayTemplate
+ * @param {Object} contactData - The contact data.
+ * @param {boolean} isEditMode - Indicates whether it is in edit mode.
+ * @returns {string} The HTML string for the contact overlay.
+ */
 function getContactOverlayTemplate(contactData, isEditMode) {
   const name = isEditMode ? contactData.name : "";
   const email = isEditMode ? contactData.email : "";
   const phone = isEditMode ? contactData.telefonnummer || "" : "";
 
-  // Choose, what is displayed: first letter or picture 
   const placeholder = name
     ? `<p style="background-color: ${getRandomColor()};">${name[0].toUpperCase()}</p>`
     : `<img src="../img/personLogo.png" alt="Logo" class="placeholder-image">`;
 
   return /*html*/ `
     <div class="overlay-content">
-      <!-- Placeholder for image or text -->
       <div class="overlay-header">
       <img src="../img/Capa2.png" alt="Logo" class="overlay-image">
       <h2>${isEditMode ? "Edit Contact" : "Add Contact"}</h2>
@@ -150,12 +202,10 @@ function getContactOverlayTemplate(contactData, isEditMode) {
       <hr>
       </div>
   
-      <!-- First letter or image as placeholder -->
       <div class="overlay-placeholder">
         ${placeholder}
       </div>
   
-      <!-- Formular -->
       <div class="overlay-form">
         <button class="close-overlay-btn" onclick="closeAddContactOverlay()">✖</button>
         <form id="contactForm">
@@ -193,11 +243,11 @@ function getContactOverlayTemplate(contactData, isEditMode) {
 }
 
 /**
- * Creates a confirm-dialog to delete one of the Contacts
+ * Creates a confirmation dialog for deleting a contact.
  *
  * @function createConfirmationBox
- * @param {string} contactName - The name of the contact, that is to be deleted
- * @returns {HTMLElement} The HTML-Element of the confirming-box.
+ * @param {string} contactName - The name of the contact to be deleted.
+ * @returns {HTMLElement} The confirmation box element.
  */
 function createConfirmationBox(contactName) {
   const confirmationBox = document.createElement("div");

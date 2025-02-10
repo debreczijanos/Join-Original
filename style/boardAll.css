@@ -1,4 +1,4 @@
-.mein-content {
+.main-content {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -1027,7 +1027,7 @@ label {
 }
 
 @media (max-width: 1250px) {
-  .mein-content {
+  .main-content {
     padding: 20px 16px;
     margin-left: 0;
     max-height: calc(100% - 140px);
@@ -1127,7 +1127,7 @@ label {
     align-items: center;
     margin-right: 34px;
   }
-  .mein-content {
+  .main-content {
     padding: 20px 4px 20px 4px;
     margin-left: 0;
   }

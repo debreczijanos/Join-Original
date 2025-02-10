@@ -168,7 +168,7 @@ button {
 
 .error {
   position: relative;
-  bottom: 30px;
+  bottom: 16px;
   display: none;
   margin-block: 0;
   padding: 5px;
@@ -264,7 +264,7 @@ button {
   color: #29abe2;
   border: 1px solid #29abe2;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.2);
-}   
+}
 
 footer {
   position: fixed;
@@ -452,21 +452,20 @@ footer {
   }
 }
 
-@media (max-height: 780px){
-  .logIn{
+@media (max-height: 780px) {
+  .logIn {
     height: 65%;
   }
 }
 
-@media(max-height: 670px){
-  .logIn{
-    gap: 11px; 
+@media (max-height: 670px) {
+  .logIn {
+    gap: 11px;
   }
 
-  .allLogInBtn{
-    gap: 15px; 
+  .allLogInBtn {
+    gap: 15px;
   }
 }
 
 /*-----------------------------------------*/
-
