@@ -51,7 +51,6 @@ window.addEventListener("resize", function () {
     closeAddTask();
     window.location.href = "../html/addTask.html";
   }
-  // showDropdownOnMobile();
 });
 
 /**
@@ -192,29 +191,56 @@ function formatAssignedTo(assignedTo) {
   if (!assignedTo || assignedTo.length === 0) {
     return "Not assigned";
   }
+
   const visibleParticipants = assignedTo.slice(0, 2);
   const remainingCount = assignedTo.length - visibleParticipants.length;
-  const formattedParticipants = visibleParticipants.map((person) => {
-    const initials = person
-      .split(" ")
-      .map((namePart) => namePart[0].toUpperCase())
-      .join("");
-
-    const randomColor = getRandomColor();
-    return `
-      <span class="participant" style="background-color: ${randomColor};">
-        ${initials}
-      </span>
-    `;
-  });
+  const formattedParticipants = visibleParticipants.map(
+    generateParticipantSpan
+  );
 
   if (remainingCount > 0) {
-    formattedParticipants.push(
-      `<span class="participant extra-count">+${remainingCount}</span>`
-    );
+    formattedParticipants.push(createExtraCountSpan(remainingCount));
   }
 
   return formattedParticipants.join(" ");
+}
+
+/**
+ * Generates the HTML for a participant's initials.
+ *
+ * @param {string} person - The name of the participant.
+ * @returns {string} HTML span element with initials and background color.
+ */
+function generateParticipantSpan(person) {
+  const initials = extractInitials(person);
+  const randomColor = getRandomColor();
+
+  return `<span class="participant" style="background-color: ${randomColor};">
+            ${initials}
+          </span>`;
+}
+
+/**
+ * Extracts initials from a full name.
+ *
+ * @param {string} name - The full name of the participant.
+ * @returns {string} The extracted initials.
+ */
+function extractInitials(name) {
+  return name
+    .split(" ")
+    .map((namePart) => namePart[0].toUpperCase())
+    .join("");
+}
+
+/**
+ * Creates a "+X" span for additional participants.
+ *
+ * @param {number} remainingCount - The number of additional participants.
+ * @returns {string} HTML span element with the "+X" text.
+ */
+function createExtraCountSpan(remainingCount) {
+  return `<span class="participant extra-count">+${remainingCount}</span>`;
 }
 
 /**
@@ -305,9 +331,7 @@ function saveSubtaskStatusToBackend(taskId, subtasks) {
         throw new Error(`Error saving subtasks.`);
       }
     })
-    .catch((error) =>
-      console.error("Error saving subtasks:", error)
-    );
+    .catch((error) => console.error("Error saving subtasks:", error));
 }
 
 /**
@@ -368,13 +392,11 @@ function closeTaskDetailsOnClick(event) {
   const overlay = document.getElementById("task-details-overlay");
   const overlayContent = overlay.querySelector(".overlay-content");
 
-  // Checks if the click was outside the overlay content
   if (event.target === overlay) {
     closeTaskDetails();
   }
 }
 
-// Add event listener for the overlay
 document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById("task-details-overlay");
   if (overlay) {

@@ -29,39 +29,72 @@ function populateDropdown(contacts, assignedContacts = []) {
   dropdownMenu.innerHTML = "";
 
   contacts.forEach((contact) => {
-    const contactElement = document.createElement("label");
-    contactElement.className = "dropdown-item";
-
-    const checkbox = createCheckbox(contact.name);
-    checkbox.checked = assignedContacts.includes(contact.name);
-
-    const button = createContactButton(contact.name);
-
-    checkbox.onchange = () => {
-      const isChecked = checkbox.checked;
-
-      if (isChecked) {
-        if (!selectedContacts.includes(contact.name)) {
-          selectedContacts.push(contact.name);
-        }
-      } else {
-        const index = selectedContacts.indexOf(contact.name);
-        if (index > -1) {
-          selectedContacts.splice(index, 1);
-        }
-      }
-
-      updateSelectedContactsDisplay();
-      updateTaskAssignments(selectedContacts);
-    };
-
-    contactElement.appendChild(checkbox);
-    contactElement.appendChild(button);
-    contactElement.appendChild(document.createTextNode(contact.name));
+    const contactElement = createDropdownItem(contact, assignedContacts);
     dropdownMenu.appendChild(contactElement);
-
-    updateDropdownStyle(contactElement, checkbox.checked);
   });
+}
+
+/**
+ * Creates a dropdown item for a contact.
+ * @param {Object} contact - The contact object.
+ * @param {Array} assignedContacts - List of assigned contacts.
+ * @returns {HTMLElement} The dropdown item element.
+ */
+function createDropdownItem(contact, assignedContacts) {
+  const contactElement = document.createElement("label");
+  contactElement.className = "dropdown-item";
+
+  const checkbox = createCheckbox(contact.name);
+  checkbox.checked = assignedContacts.includes(contact.name);
+
+  checkbox.onchange = () => handleCheckboxChange(checkbox, contact.name);
+
+  const button = createContactButton(contact.name);
+
+  contactElement.appendChild(checkbox);
+  contactElement.appendChild(button);
+  contactElement.appendChild(document.createTextNode(contact.name));
+
+  updateDropdownStyle(contactElement, checkbox.checked);
+
+  return contactElement;
+}
+
+/**
+ * Handles the change event for a contact checkbox.
+ * @param {HTMLElement} checkbox - The checkbox element.
+ * @param {string} contactName - The name of the contact.
+ */
+function handleCheckboxChange(checkbox, contactName) {
+  if (checkbox.checked) {
+    addToSelectedContacts(contactName);
+  } else {
+    removeFromSelectedContacts(contactName);
+  }
+
+  updateSelectedContactsDisplay();
+  updateTaskAssignments(selectedContacts);
+}
+
+/**
+ * Adds a contact to the selected contacts list.
+ * @param {string} contactName - The name of the contact.
+ */
+function addToSelectedContacts(contactName) {
+  if (!selectedContacts.includes(contactName)) {
+    selectedContacts.push(contactName);
+  }
+}
+
+/**
+ * Removes a contact from the selected contacts list.
+ * @param {string} contactName - The name of the contact.
+ */
+function removeFromSelectedContacts(contactName) {
+  const index = selectedContacts.indexOf(contactName);
+  if (index > -1) {
+    selectedContacts.splice(index, 1);
+  }
 }
 
 /**
@@ -70,25 +103,55 @@ function populateDropdown(contacts, assignedContacts = []) {
  * @param {boolean} isChecked - Whether the contact is selected.
  */
 function updateSelectedContacts(contactName, isChecked) {
+  updateContactSelection(contactName, isChecked);
+  refreshSelectedContactsDisplay();
+
+  if (currentTaskId) {
+    updateTaskAssignmentsInData();
+  }
+}
+
+/**
+ * Adds or removes a contact from the selected list.
+ * @param {string} contactName - The name of the contact.
+ * @param {boolean} isChecked - Whether the contact is selected.
+ */
+function updateContactSelection(contactName, isChecked) {
   if (isChecked) {
     if (!selectedContacts.includes(contactName)) {
       selectedContacts.push(contactName);
     }
   } else {
-    const index = selectedContacts.indexOf(contactName);
-    if (index > -1) {
-      selectedContacts.splice(index, 1);
-    }
+    removeContactFromSelection(contactName);
   }
+}
 
+/**
+ * Removes a contact from the selected list.
+ * @param {string} contactName - The name of the contact.
+ */
+function removeContactFromSelection(contactName) {
+  const index = selectedContacts.indexOf(contactName);
+  if (index > -1) {
+    selectedContacts.splice(index, 1);
+  }
+}
+
+/**
+ * Refreshes the display of selected contacts.
+ */
+function refreshSelectedContactsDisplay() {
   const selectedContactsContainer = document.getElementById("selectedContacts");
   renderSelectedContacts(selectedContactsContainer);
+}
 
-  if (currentTaskId) {
-    const task = allTasksData.find((task) => task.id === currentTaskId);
-    if (task) {
-      task.assignedTo = [...selectedContacts];
-    }
+/**
+ * Updates the assigned contacts in the task data.
+ */
+function updateTaskAssignmentsInData() {
+  const task = allTasksData.find((task) => task.id === currentTaskId);
+  if (task) {
+    task.assignedTo = [...selectedContacts];
   }
 }
 
@@ -100,19 +163,8 @@ async function loadTaskAssignments(taskId) {
   currentTaskId = taskId;
 
   try {
-    const taskResponse = await fetch(
-      `https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`
-    );
-
-    if (!taskResponse.ok) {
-      throw new Error("Failed to load task data");
-    }
-
-    const task = await taskResponse.json();
-    if (!task) {
-      console.warn("Task not found or response is null");
-      return;
-    }
+    const task = await fetchTaskData(taskId);
+    if (!task) return handleMissingTask();
 
     selectedContacts = task.assignedTo || [];
     console.log("Selected contacts for this task:", selectedContacts);
@@ -121,6 +173,31 @@ async function loadTaskAssignments(taskId) {
   } catch (error) {
     console.error("Error loading task assignments:", error);
   }
+}
+
+/**
+ * Fetches task data from the API.
+ * @param {string} taskId - The ID of the task.
+ * @returns {Promise<Object|null>} The task data or null if not found.
+ */
+async function fetchTaskData(taskId) {
+  const response = await fetch(
+    `https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`
+  );
+
+  if (!response.ok) {
+    console.error("Failed to load task data");
+    return null;
+  }
+
+  return await response.json();
+}
+
+/**
+ * Handles the case when a task is missing or null.
+ */
+function handleMissingTask() {
+  console.warn("Task not found or response is null");
 }
 
 /**
@@ -154,40 +231,99 @@ function renderContactsDropdown(contacts, dropdownMenu, assignedContacts = []) {
   dropdownMenu.innerHTML = "";
 
   contacts.forEach((contact) => {
-    const label = document.createElement("label");
-    label.className = "dropdown-item";
-    label.style.display = "flex";
-    label.style.alignItems = "center";
-    label.style.padding = "10px";
-
-    const checkbox = createCheckbox(contact.name);
-    checkbox.checked = assignedContacts.includes(contact.name);
-
-    updateDropdownStyle(label, checkbox.checked);
-
-    checkbox.onchange = () => {
-      updateDropdownStyle(label, checkbox.checked);
-      if (checkbox.checked) {
-        if (!assignedContacts.includes(contact.name)) {
-          assignedContacts.push(contact.name);
-        }
-      } else {
-        const index = assignedContacts.indexOf(contact.name);
-        if (index > -1) {
-          assignedContacts.splice(index, 1);
-        }
-      }
-
-      renderSelectedContacts(document.getElementById("selectedContacts"));
-    };
-
-    const button = createContactButton(contact.name);
-
-    label.appendChild(checkbox);
-    label.appendChild(button);
-    label.appendChild(document.createTextNode(contact.name));
+    const label = createDropdownLabel(contact, assignedContacts);
     dropdownMenu.appendChild(label);
   });
+}
+
+/**
+ * Creates a dropdown label for a contact.
+ *
+ * @param {Object} contact - The contact object.
+ * @param {Array} assignedContacts - List of assigned contacts.
+ * @returns {HTMLElement} The created label element.
+ */
+function createDropdownLabel(contact, assignedContacts) {
+  const label = document.createElement("label");
+  label.className = "dropdown-item";
+  label.style.display = "flex";
+  label.style.alignItems = "center";
+  label.style.padding = "10px";
+
+  const checkbox = createContactCheckbox(contact, assignedContacts, label);
+  const button = createContactButton(contact.name);
+
+  label.appendChild(checkbox);
+  label.appendChild(button);
+  label.appendChild(document.createTextNode(contact.name));
+
+  return label;
+}
+
+/**
+ * Creates a checkbox for a contact.
+ *
+ * @param {Object} contact - The contact object.
+ * @param {Array} assignedContacts - List of assigned contacts.
+ * @param {HTMLElement} label - The parent label element.
+ * @returns {HTMLElement} The created checkbox element.
+ */
+function createContactCheckbox(contact, assignedContacts, label) {
+  const checkbox = createCheckbox(contact.name);
+  checkbox.checked = assignedContacts.includes(contact.name);
+
+  updateDropdownStyle(label, checkbox.checked);
+
+  checkbox.onchange = () => {
+    handleCheckboxChange(checkbox, contact.name, assignedContacts, label);
+  };
+
+  return checkbox;
+}
+
+/**
+ * Handles the checkbox change event.
+ *
+ * @param {HTMLElement} checkbox - The checkbox element.
+ * @param {string} contactName - The name of the contact.
+ * @param {Array} assignedContacts - The assigned contacts array.
+ * @param {HTMLElement} label - The label element.
+ */
+function handleCheckboxChange(checkbox, contactName, assignedContacts, label) {
+  updateDropdownStyle(label, checkbox.checked);
+
+  if (checkbox.checked) {
+    addToAssignedContacts(contactName, assignedContacts);
+  } else {
+    removeFromAssignedContacts(contactName, assignedContacts);
+  }
+
+  renderSelectedContacts(document.getElementById("selectedContacts"));
+}
+
+/**
+ * Adds a contact to the assigned contacts list.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @param {Array} assignedContacts - The assigned contacts array.
+ */
+function addToAssignedContacts(contactName, assignedContacts) {
+  if (!assignedContacts.includes(contactName)) {
+    assignedContacts.push(contactName);
+  }
+}
+
+/**
+ * Removes a contact from the assigned contacts list.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @param {Array} assignedContacts - The assigned contacts array.
+ */
+function removeFromAssignedContacts(contactName, assignedContacts) {
+  const index = assignedContacts.indexOf(contactName);
+  if (index > -1) {
+    assignedContacts.splice(index, 1);
+  }
 }
 
 /**

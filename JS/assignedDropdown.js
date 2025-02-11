@@ -121,44 +121,49 @@ function setDropdownValueOnClick(menuId, inputId) {
  * Initialization of dropdowns
  */
 document.addEventListener("DOMContentLoaded", () => {
-  initializeDropdown("dropdownInput", "dropdownMenu");
-  initializeDropdown("customDropdownInput", "customDropdownMenu");
-
-  const assignedInputId = "dropdownInput";
-  const assignedMenuId = "dropdownMenu";
-
-  const assignedInput = document.getElementById(assignedInputId);
-  if (assignedInput) {
-    assignedInput.addEventListener("click", (event) => {
-      event.stopPropagation();
-      toggleDropdown(assignedMenuId, event);
-    });
-    assignedInput.addEventListener("keyup", () => {
-      filterDropdown(assignedInputId, `#${assignedMenuId} label`);
-    });
-    closeDropdownOnOutsideClick(assignedInputId, assignedMenuId);
-  }
-
-  const categoryInputId = "customDropdownInput";
-  const categoryMenuId = "customDropdownMenu";
-
-  const categoryInput = document.getElementById(categoryInputId);
-  if (categoryInput) {
-    categoryInput.addEventListener("click", (event) => {
-      event.stopPropagation();
-      toggleDropdown(categoryMenuId, event);
-    });
-    categoryInput.addEventListener("input", () => {
-      filterDropdown(
-        categoryInputId,
-        `#${categoryMenuId} .custom-dropdown-item`
-      );
-    });
-    closeDropdownOnOutsideClick(categoryInputId, categoryMenuId);
-  }
-
-  setDropdownValueOnClick(categoryMenuId, categoryInputId);
+  setupDropdown("dropdownInput", "dropdownMenu");
+  setupDropdown("customDropdownInput", "customDropdownMenu");
 });
+
+/**
+ * Sets up a dropdown with necessary event listeners.
+ *
+ * @param {string} inputId - The ID of the input field.
+ * @param {string} menuId - The ID of the dropdown menu.
+ */
+function setupDropdown(inputId, menuId) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+
+  addDropdownEventListeners(input, menuId);
+  setupFiltering(input, menuId);
+  closeDropdownOnOutsideClick(inputId, menuId);
+}
+
+/**
+ * Adds event listeners to open/close the dropdown.
+ *
+ * @param {HTMLElement} input - The dropdown input field.
+ * @param {string} menuId - The ID of the dropdown menu.
+ */
+function addDropdownEventListeners(input, menuId) {
+  input.addEventListener("click", (event) => {
+    event.stopPropagation();
+    toggleDropdown(menuId);
+  });
+}
+
+/**
+ * Sets up input filtering for the dropdown.
+ *
+ * @param {HTMLElement} input - The dropdown input field.
+ * @param {string} menuId - The ID of the dropdown menu.
+ */
+function setupFiltering(input, menuId) {
+  input.addEventListener("input", () => {
+    filterDropdown(input.id, `#${menuId} .custom-dropdown-item`);
+  });
+}
 
 /**
  * Prevents text input but allows numbers, for example.
@@ -265,35 +270,63 @@ function createContactElement(contact) {
   const checkbox = createCheckbox(contact.name);
   const button = createContactButton(contact.name);
 
-  const checkboxId = `checkbox-${contact.name}`;
-  checkbox.id = checkboxId;
-  label.htmlFor = checkboxId;
+  setupLabelAttributes(label, checkbox, contact.name);
+  setupCheckboxListener(checkbox, label, contact.name, button);
 
-  // Set default styling for the label
-  label.style.backgroundColor = "#f9f9f9"; // Default background
-  label.style.padding = "10px"; // Optional, for better visibility
-  label.style.display = "flex"; // Optional, if using a flex layout
-  label.style.alignItems = "center";
-
-  // Change background color when checkbox state changes
-  checkbox.onchange = () => {
-    if (checkbox.checked) {
-      label.style.backgroundColor = "#2A3647"; // Dark blue background
-      label.style.color = "#ffffff"; // White text
-    } else {
-      label.style.backgroundColor = "#f9f9f9"; // Default background
-      label.style.color = "#000000"; // Black text
-    }
-
-    updateSelectedContacts(contact.name, button, checkbox.checked);
-  };
-
-  // Append the checkbox, button, and name to the label
   label.appendChild(checkbox);
   label.appendChild(button);
   label.appendChild(document.createTextNode(contact.name));
 
   return label;
+}
+
+/**
+ * Sets up the label attributes and default styling.
+ *
+ * @param {HTMLElement} label - The label element.
+ * @param {HTMLElement} checkbox - The checkbox element.
+ * @param {string} name - The contact name.
+ */
+function setupLabelAttributes(label, checkbox, name) {
+  const checkboxId = `checkbox-${name}`;
+  checkbox.id = checkboxId;
+  label.htmlFor = checkboxId;
+
+  label.style.backgroundColor = "#f9f9f9";
+  label.style.padding = "10px";
+  label.style.display = "flex";
+  label.style.alignItems = "center";
+}
+
+/**
+ * Sets up the event listener for the checkbox.
+ *
+ * @param {HTMLElement} checkbox - The checkbox element.
+ * @param {HTMLElement} label - The label element.
+ * @param {string} name - The contact name.
+ * @param {HTMLElement} button - The button element.
+ */
+function setupCheckboxListener(checkbox, label, name, button) {
+  checkbox.onchange = () => {
+    toggleCheckboxState(checkbox.checked, label);
+    updateSelectedContacts(name, button, checkbox.checked);
+  };
+}
+
+/**
+ * Toggles the checkbox state by changing label styles.
+ *
+ * @param {boolean} isChecked - Whether the checkbox is checked.
+ * @param {HTMLElement} label - The label element.
+ */
+function toggleCheckboxState(isChecked, label) {
+  if (isChecked) {
+    label.style.backgroundColor = "#2A3647";
+    label.style.color = "#ffffff";
+  } else {
+    label.style.backgroundColor = "#f9f9f9";
+    label.style.color = "#000000";
+  }
 }
 
 /**
@@ -386,27 +419,51 @@ function removeSelectedContact(contactName, container) {
  *
  * @param {HTMLElement} container - The container where the selected contacts are displayed.
  */
+/**
+ * Renders the selected contacts in the container.
+ *
+ * @param {HTMLElement} container - The container where the selected contacts are displayed.
+ */
 function renderSelectedContacts(container) {
-  const maxVisible = 3;
   container.innerHTML = "";
-  selectedContacts.slice(0, maxVisible).forEach((contactName) => {
-    const button = document.createElement("button");
-    button.textContent = contactName.charAt(0).toUpperCase();
-    button.dataset.contactName = contactName;
-    button.style.marginRight = "10px";
-    button.style.backgroundColor = generateColorFromLetter(
-      contactName.charAt(0)
-    );
+  const visibleContacts = selectedContacts.slice(0, 3);
 
-    button.onclick = () => {
-      deselectContact(contactName);
-      renderSelectedContacts(container);
-    };
-
+  visibleContacts.forEach((contactName) => {
+    const button = createContactButton(contactName);
     container.appendChild(button);
   });
 
-  const extraCount = selectedContacts.length - maxVisible;
+  addExtraContactsButton(container);
+}
+
+/**
+ * Creates a button element for a selected contact.
+ *
+ * @param {string} contactName - The name of the contact.
+ * @returns {HTMLElement} The created button element.
+ */
+function createContactButton(contactName) {
+  const button = document.createElement("button");
+  button.textContent = contactName.charAt(0).toUpperCase();
+  button.dataset.contactName = contactName;
+  button.style.marginRight = "10px";
+  button.style.backgroundColor = generateColorFromLetter(contactName.charAt(0));
+
+  button.onclick = () => {
+    deselectContact(contactName);
+    renderSelectedContacts(document.getElementById("selectedContacts"));
+  };
+
+  return button;
+}
+
+/**
+ * Adds a "+X" button if there are more than 3 selected contacts.
+ *
+ * @param {HTMLElement} container - The container where the extra button is added.
+ */
+function addExtraContactsButton(container) {
+  const extraCount = selectedContacts.length - 3;
   if (extraCount > 0) {
     const extraButton = document.createElement("div");
     extraButton.textContent = `+${extraCount}`;

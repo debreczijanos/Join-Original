@@ -92,7 +92,6 @@ async function fetchUserData() {
  * @returns {Object} An object with `status` (string) and `userName` (string or null).
  */
 function validateUser(usersData, email, password) {
-  // Regular expression for a valid email address (additional validation)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return { status: "invalidEmail", userName: null };
@@ -215,5 +214,5 @@ function showError(status) {
       errorMessage.textContent = "An unknown error occurred.";
   }
 
-  errorMessage.style.display = "block"; // Show error message
+  errorMessage.style.display = "block";
 }

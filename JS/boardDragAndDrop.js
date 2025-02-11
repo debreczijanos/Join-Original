@@ -21,16 +21,14 @@ function allowDrop(event) {
 
   const target = event.target.closest(".kanban-column");
 
-  // Reset styles for all columns
   document.querySelectorAll(".kanban-column").forEach((column) => {
     column.style.backgroundColor = "";
     column.style.borderRadius = "";
   });
 
-  // Apply style if a valid target exists
   if (target) {
-    target.style.backgroundColor = "#E7E7E7"; // Background color
-    target.style.borderRadius = "16px"; // Rounded corners
+    target.style.backgroundColor = "#E7E7E7";
+    target.style.borderRadius = "16px";
   }
 }
 
@@ -43,24 +41,66 @@ function allowDrop(event) {
 function drop(event, newStatus) {
   event.preventDefault();
 
+  const targetColumn = getTargetColumn(event);
+  if (!targetColumn) return;
+
+  resetColumnStyles();
+  if (!isValidDropTarget(targetColumn, newStatus)) return;
+
+  moveTaskToColumn(targetColumn, newStatus);
+  draggedTaskId = null;
+  checkEmptyColumns();
+}
+
+/**
+ * Retrieves the target Kanban column from the event.
+ *
+ * @param {DragEvent} event - The drop event.
+ * @returns {HTMLElement|null} The target column or null if not found.
+ */
+function getTargetColumn(event) {
   const targetColumn = event.target.closest(".kanban-column");
   if (!targetColumn) {
     console.error("Invalid drop target: Kanban column not found");
-    return;
+    return null;
   }
+  return targetColumn;
+}
 
+/**
+ * Resets the background styles of all Kanban columns.
+ */
+function resetColumnStyles() {
   document.querySelectorAll(".kanban-column").forEach((column) => {
     column.style.backgroundColor = "";
   });
+}
 
+/**
+ * Validates if the drop target matches the expected new status.
+ *
+ * @param {HTMLElement} targetColumn - The target Kanban column.
+ * @param {string} newStatus - The expected new status.
+ * @returns {boolean} True if valid, otherwise false.
+ */
+function isValidDropTarget(targetColumn, newStatus) {
   const targetStatus = targetColumn.getAttribute("data-status");
   if (targetStatus !== newStatus.toLowerCase().replace(/\s+/g, "-")) {
     console.error(
       `Invalid drop target or status mismatch: expected "${newStatus}", found "${targetStatus}"`
     );
-    return;
+    return false;
   }
+  return true;
+}
 
+/**
+ * Moves the dragged task to the target column.
+ *
+ * @param {HTMLElement} targetColumn - The target Kanban column.
+ * @param {string} newStatus - The new status of the task.
+ */
+function moveTaskToColumn(targetColumn, newStatus) {
   const taskElement = document.querySelector(`[data-id="${draggedTaskId}"]`);
   if (taskElement) {
     targetColumn.querySelector(".tasks").appendChild(taskElement);
@@ -68,9 +108,6 @@ function drop(event, newStatus) {
   } else {
     console.error("Task element not found:", draggedTaskId);
   }
-
-  draggedTaskId = null;
-  checkEmptyColumns();
 }
 
 /**

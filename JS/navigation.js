@@ -20,12 +20,15 @@ function goToLastPage() {
   if (lastPage) {
     window.location.href = lastPage;
   } else {
-    window.history.back(); // If no saved page exists
+    window.history.back();
   }
 }
-
-// Saves the current page when **leaving** the page so that quick switches are recorded
+/**
+ *  Saves the current page when **leaving** the page so that quick switches are recorded
+ */
 window.addEventListener("beforeunload", saveLastPage);
 
-// If that's not enough, we also save it when the page loads
+/**
+ * Saves the current page in `sessionStorage` when the page is hidden.
+ */
 document.addEventListener("DOMContentLoaded", saveLastPage);

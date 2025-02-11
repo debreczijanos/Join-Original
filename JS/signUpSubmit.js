@@ -7,7 +7,6 @@ function updateSubmitButton(allFilled) {
   const confirmPasswordInput = document.getElementById("confirmPasswordInput");
   const acceptTerms = document.getElementById("acceptTerms");
 
-  // Enable button ONLY when all fields are filled, passwords match AND checkbox is checked
   const passwordsMatch =
     passwordInput.value === confirmPasswordInput.value &&
     passwordInput.value.length >= 6;
@@ -29,12 +28,10 @@ function addInputListeners() {
   const errorElement = document.getElementById("error");
 
   inputs.forEach((input) => {
-    // Remove error when the user starts typing
     input.addEventListener("input", () => {
       errorElement.textContent = "";
     });
 
-    // Validation when leaving the field
     input.addEventListener("blur", () => {
       checkInputs();
     });
@@ -48,26 +45,18 @@ function addInputListeners() {
  */
 async function handleSubmit(event) {
   event.preventDefault();
-
   const errorElement = document.getElementById("error");
   const formData = collectFormData();
-
-  // Error reset
   errorElement.textContent = "";
   errorElement.style.color = "red";
-
-  // Validate data
   if (!validateFormData(formData)) {
     return;
   }
-
-  // Send data to the server
   try {
     const response = await sendDataToServer(formData);
     handleServerResponse(response);
   } catch (error) {
-    errorElement.textContent =
-      "Network error: Please check your connection.";
+    errorElement.textContent = "Network error: Please check your connection.";
   }
 }
 
@@ -103,8 +92,7 @@ async function sendDataToServer({ name, email, password, acceptTerms }) {
     const usersData = await fetchExistingUsers(url);
 
     if (isEmailAlreadyRegistered(usersData, email)) {
-      errorElement.textContent =
-        "This email address is already registered!";
+      errorElement.textContent = "This email address is already registered!";
       errorElement.style.color = "red";
       return { ok: false, reason: "email_exists" };
     }
@@ -200,6 +188,6 @@ function navigateToIndex() {
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("acceptTerms").addEventListener("change", () => {
-    checkInputs(); // Re-checks all inputs and updates the button status
+    checkInputs();
   });
 });

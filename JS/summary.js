@@ -41,34 +41,64 @@ async function fetchTasksFromDatabase() {
  * @returns {Object} An object with the counts for different categories.
  */
 function calculateTaskCounts(tasks) {
-  let toDoCount = 0,
-    doneCount = 0,
-    urgentCount = 0,
-    allTasksCount = 0,
-    inProgressCount = 0,
-    awaitingFeedbackCount = 0;
+  const counts = initializeCounts();
 
-  Object.values(tasks).forEach((task) => {
-    const status = task.status?.trim();
-    const prio = task.prio?.trim();
-
-    if (status === "To Do") toDoCount++;
-    if (status === "Done") doneCount++;
-    if (status === "In Progress") inProgressCount++;
-    if (status === "Await Feedback") awaitingFeedbackCount++;
-    if (prio === "Urgent") urgentCount++;
-
-    allTasksCount++;
+  Object.values(tasks).forEach(({ status = "", prio = "" }) => {
+    updateStatusCounts(counts, status.trim());
+    updatePriorityCounts(counts, prio.trim());
+    counts.allTasksCount++;
   });
 
+  return counts;
+}
+
+/**
+ * Initializes the counts object.
+ *
+ * @returns {Object} An object with all counters set to 0.
+ */
+function initializeCounts() {
   return {
-    toDoCount,
-    doneCount,
-    urgentCount,
-    allTasksCount,
-    inProgressCount,
-    awaitingFeedbackCount,
+    toDoCount: 0,
+    doneCount: 0,
+    urgentCount: 0,
+    allTasksCount: 0,
+    inProgressCount: 0,
+    awaitingFeedbackCount: 0,
   };
+}
+
+/**
+ * Updates the task count based on the status.
+ *
+ * @param {Object} counts - The counts object.
+ * @param {string} status - The task status.
+ */
+function updateStatusCounts(counts, status) {
+  switch (status) {
+    case "To Do":
+      counts.toDoCount++;
+      break;
+    case "Done":
+      counts.doneCount++;
+      break;
+    case "In Progress":
+      counts.inProgressCount++;
+      break;
+    case "Await Feedback":
+      counts.awaitingFeedbackCount++;
+      break;
+  }
+}
+
+/**
+ * Updates the task count based on priority.
+ *
+ * @param {Object} counts - The counts object.
+ * @param {string} prio - The task priority.
+ */
+function updatePriorityCounts(counts, prio) {
+  if (prio === "Urgent") counts.urgentCount++;
 }
 
 /**

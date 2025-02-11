@@ -4,31 +4,50 @@
  * @returns {Object} The collected task data.
  */
 function collectTaskData() {
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const dueDate = document.getElementById("due-date").value;
-  const assigned = document.getElementById("assigned").value;
-  const category = document.getElementById("category").value;
+  return {
+    title: getInputValue("title"),
+    description: getInputValue("description"),
+    dueDate: getInputValue("due-date"),
+    assigned: getInputValue("assigned"),
+    category: getInputValue("category"),
+    priority: getSelectedPriority(),
+    subtasks: collectSubtasks(),
+  };
+}
 
-  const priority =
-    document.querySelector(".priority-buttons .selected")?.textContent || "Low";
+/**
+ * Gets the value of an input field by its ID.
+ *
+ * @param {string} id - The ID of the input field.
+ * @returns {string} The value of the input field.
+ */
+function getInputValue(id) {
+  return document.getElementById(id)?.value || "";
+}
 
-  const subtasks = Array.from(
+/**
+ * Gets the selected priority from the priority buttons.
+ *
+ * @returns {string} The selected priority or "Low" if none is selected.
+ */
+function getSelectedPriority() {
+  return (
+    document.querySelector(".priority-buttons .selected")?.textContent || "Low"
+  );
+}
+
+/**
+ * Collects subtasks from the subtask list.
+ *
+ * @returns {Array<Object>} An array of subtasks.
+ */
+function collectSubtasks() {
+  return Array.from(
     document.querySelectorAll("#subtask-list li .subtask-text")
   ).map((item) => ({
     name: item.textContent,
     completed: false,
   }));
-
-  return {
-    title,
-    description,
-    dueDate,
-    assigned,
-    priority,
-    category,
-    subtasks,
-  };
 }
 
 /**
@@ -138,25 +157,72 @@ function populateAssignedTo(assignedTo) {
   container.innerHTML = "";
 
   (assignedTo || []).forEach((person) => {
-    const initials = person
-      .split(" ")
-      .map((word) => word[0]?.toUpperCase())
-      .join("");
-    const backgroundColor = getRandomColor();
-
-    const participantContainer = document.createElement("div");
-    participantContainer.classList.add("participant-container");
-
-    const initialsElement = document.createElement("p");
-    initialsElement.classList.add("participant-initials");
-    initialsElement.innerText = initials;
-    initialsElement.style.backgroundColor = backgroundColor;
-
-    const participant = document.createElement("span");
-    participant.classList.add("participant");
-    participant.innerText = person;
-    participantContainer.appendChild(initialsElement);
-    participantContainer.appendChild(participant);
+    const participantContainer = createParticipantElement(person);
     container.appendChild(participantContainer);
   });
+}
+
+/**
+ * Creates a participant container with initials and name.
+ *
+ * @param {string} person - The participant's full name.
+ * @returns {HTMLElement} The created participant container.
+ */
+function createParticipantElement(person) {
+  const initials = extractInitials(person);
+  const backgroundColor = getRandomColor();
+
+  const container = document.createElement("div");
+  container.classList.add("participant-container");
+
+  const initialsElement = createInitialsElement(initials, backgroundColor);
+  const nameElement = createNameElement(person);
+
+  container.appendChild(initialsElement);
+  container.appendChild(nameElement);
+
+  return container;
+}
+
+/**
+ * Extracts initials from a full name.
+ *
+ * @param {string} name - The full name of the participant.
+ * @returns {string} The extracted initials.
+ */
+function extractInitials(name) {
+  return name
+    .split(" ")
+    .map((word) => word[0]?.toUpperCase())
+    .join("");
+}
+
+/**
+ * Creates an element displaying the participant's initials.
+ *
+ * @param {string} initials - The initials of the participant.
+ * @param {string} backgroundColor - The background color for the initials.
+ * @returns {HTMLElement} The initials element.
+ */
+function createInitialsElement(initials, backgroundColor) {
+  const initialsElement = document.createElement("p");
+  initialsElement.classList.add("participant-initials");
+  initialsElement.innerText = initials;
+  initialsElement.style.backgroundColor = backgroundColor;
+
+  return initialsElement;
+}
+
+/**
+ * Creates an element displaying the participant's name.
+ *
+ * @param {string} person - The participant's full name.
+ * @returns {HTMLElement} The name element.
+ */
+function createNameElement(person) {
+  const nameElement = document.createElement("span");
+  nameElement.classList.add("participant");
+  nameElement.innerText = person;
+
+  return nameElement;
 }

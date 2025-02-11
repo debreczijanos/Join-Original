@@ -31,12 +31,9 @@ async function moveTask(event, newStatus) {
   event.stopPropagation();
   const taskElement = event.target.closest(".task");
   if (!taskElement) return;
-
   const taskId = taskElement.getAttribute("data-id");
   if (!taskId) return;
-
   allTasksData.find((task) => task.id === taskId).status = newStatus;
-
   try {
     const response = await fetch(`${API_URL}/${taskId}.json`, {
       method: "PATCH",
@@ -122,7 +119,9 @@ function observeDOMChanges() {
   observer.observe(kanbanBoard, { childList: true, subtree: true });
 }
 
-// Initialization after the page loads
+/**
+ * Initialization after the page loads
+ */
 document.addEventListener("DOMContentLoaded", () =>
   setTimeout(showDropdownOnMobile, 1000)
 );

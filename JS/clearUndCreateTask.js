@@ -77,14 +77,11 @@ function uncheckCheckboxes(selector) {
 function createTask() {
   const requiredFields = getRequiredFields();
   removeErrorMessages(requiredFields);
-
   if (validateFields(requiredFields)) return;
-
   const task = buildTaskObject();
-  // Subtasks automatically receive completed: false if not provided
   task.subtasks = getSubtasks().map((subtask) => ({
     name: subtask,
-    completed: false, // Ensure the completed field is set
+    completed: false,
   }));
 
   sendTaskToAPI(task);
@@ -133,15 +130,13 @@ function removeErrorMessages(fields) {
  */
 function validateFields(fields) {
   let hasErrors = false;
-  const today = new Date().toISOString().split("T")[0]; // Today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
 
   fields.forEach(({ input, errorMessage, errorClass }) => {
     if (!input.value.trim()) {
       hasErrors = true;
       displayError(input, errorMessage, errorClass);
     }
-
-    // Additional validation for the date
     if (input.type === "date" && input.value < today) {
       hasErrors = true;
       displayError(input, "The date cannot be before today!", "error-due-date");
@@ -227,10 +222,8 @@ function sendTaskToAPI(task) {
     .then((response) => {
       if (response.ok) {
         if (isInIframe()) {
-          // In overlay mode: Send a message to the parent window
           parent.postMessage({ type: "taskSuccess" }, "*");
         } else {
-          // Normal behavior: Show success message and redirect
           const overlay = document.getElementById("overlay");
           overlay.style.display = "flex";
 
@@ -258,8 +251,6 @@ function addInputListeners() {
 
   fieldsToValidate.forEach(({ input, errorClass }) => {
     addErrorRemovalListeners(input, errorClass);
-
-    // Additional validation for date inputs
     if (input.type === "date") {
       input.addEventListener("change", () => {
         const today = new Date().toISOString().split("T")[0];
@@ -331,7 +322,6 @@ function removeError(input, errorClass) {
 function setMinDateForDateInput() {
   const dateInput = document.querySelector("input[type='date']");
   if (dateInput) {
-    // Today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split("T")[0];
     dateInput.setAttribute("min", today);
   }

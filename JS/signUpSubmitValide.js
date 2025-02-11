@@ -115,13 +115,12 @@ function validateFormData(formData) {
     errorMessages.push("You must accept the privacy policy.");
   }
 
-  // If there are errors, display them and return false
   if (errorMessages.length > 0) {
-    errorElement.innerHTML = errorMessages.join("<br>"); // Display all errors one below the other
+    errorElement.innerHTML = errorMessages.join("<br>");
     return false;
   }
 
-  errorElement.textContent = ""; // If everything is fine, remove error message
+  errorElement.textContent = "";
   return true;
 }
 
@@ -156,10 +155,9 @@ function toggleFieldLock(nameError, emailError, passwordError) {
   );
   const acceptTerms = document.getElementById("acceptTerms");
 
-  // If the name is wrong, lock everything (including email)
   emailInput.disabled = nameError;
   passwordInputs.forEach((input) => (input.disabled = nameError || emailError));
-  acceptTerms.disabled = nameError || emailError || passwordError; // Checkbox remains locked if password is wrong
+  acceptTerms.disabled = nameError || emailError || passwordError;
 }
 
 /**
@@ -178,7 +176,6 @@ function validateNameField() {
     errorElement.textContent = "";
   }
 
-  // If the name is wrong → Lock all fields
   toggleFieldLock(nameError, false);
 }
 
@@ -193,21 +190,18 @@ async function validateEmailField() {
   let emailError = !isValidEmail(email);
 
   if (emailError) {
-    errorElement.textContent =
-      "Please enter a valid email address.";
+    errorElement.textContent = "Please enter a valid email address.";
     toggleFieldLock(false, true);
     return;
   }
 
-  // Backend check if the email already exists
   try {
     const url =
       "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
     const usersData = await fetchExistingUsers(url);
 
     if (isEmailAlreadyRegistered(usersData, email)) {
-      errorElement.textContent =
-        "This email address is already registered!";
+      errorElement.textContent = "This email address is already registered!";
       toggleFieldLock(false, true);
       return;
     } else {
@@ -216,8 +210,7 @@ async function validateEmailField() {
     }
   } catch (error) {
     console.error("Error during server check:", error);
-    errorElement.textContent =
-      "Server error: Please try again later.";
+    errorElement.textContent = "Server error: Please try again later.";
     toggleFieldLock(false, true);
   }
 }
@@ -251,7 +244,6 @@ function validatePasswordField() {
 
   let passwordError = false;
 
-  // If one of the fields is empty, no validation, but the error message stays visible
   if (
     passwordInput.value.trim() === "" ||
     confirmPasswordInput.value.trim() === ""
@@ -260,19 +252,16 @@ function validatePasswordField() {
     errorElement.textContent = "Both password fields must be filled out.";
   } else if (passwordInput.value.length < 6) {
     passwordError = true;
-    errorElement.textContent =
-      "Password must be at least 6 characters long.";
+    errorElement.textContent = "Password must be at least 6 characters long.";
   } else if (passwordInput.value !== confirmPasswordInput.value) {
     passwordError = true;
     errorElement.textContent = "Passwords do not match.";
   }
 
-  // Only if NO error exists, remove the error message
   if (!passwordError) {
     errorElement.textContent = "";
   }
 
-  // If name or email is wrong, they stay locked
   let nameError = !isValidName(
     document.getElementById("nameInput").value.trim()
   );
@@ -292,7 +281,11 @@ function clearError() {
   errorElement.textContent = "";
 }
 
-// Add event listener on page load
+/**
+ * Updates the status of the submit button.
+ *
+ * @param {boolean} enabled - Whether the button should be enabled.
+ */
 document.addEventListener("DOMContentLoaded", () => {
   addLiveValidationListeners();
 });
