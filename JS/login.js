@@ -32,32 +32,23 @@ function hideBackgroundWithDelay(background) {
 }
 
 /**
- * Handles the login process and displays specific error messages.
- *
+ * Handles the login process and displays error messages.
  * @param {Event} event - The login event.
  */
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
-
   const { email, password } = getInputValues();
   const rememberMe = document.getElementById("checkbox").checked;
+  const { status, userName } = await fetchUserData().then((users) =>
+    validateUser(users, email, password)
+  );
 
-  fetchUserData()
-    .then((usersData) => {
-      const { status, userName } = validateUser(usersData, email, password);
-
-      if (status === "success") {
-        if (rememberMe) {
-          saveCredentialsToLocalStorage(email, password);
-        } else {
-          clearCredentialsFromLocalStorage();
-        }
-        loginUser(userName);
-      } else {
-        showError(status);
-      }
-    })
-    .catch(handleLoginError);
+  if (status === "success") {
+    rememberMe
+      ? saveCredentialsToLocalStorage(email, password)
+      : clearCredentialsFromLocalStorage();
+    loginUser(userName);
+  } else showError(status);
 }
 
 /**
@@ -84,43 +75,26 @@ async function fetchUserData() {
 }
 
 /**
- * Validates the user data and returns specific error messages.
- *
- * @param {Object} usersData - The user data.
- * @param {string} email - The entered email address.
- * @param {string} password - The entered password.
- * @returns {Object} An object with `status` (string) and `userName` (string or null).
+ * Validates user credentials.
+ * @param {Object} usersData - The user database.
+ * @param {string} email - Entered email.
+ * @param {string} password - Entered password.
+ * @returns {Object} - Login status and username.
  */
 function validateUser(usersData, email, password) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return { status: "invalidEmail", userName: null };
-  }
-
-  let userFound = false;
-  let correctPassword = false;
-  let userName = "";
 
   for (const userId in usersData) {
-    const user = usersData[userId];
-
-    if (user.email === email) {
-      userFound = true;
-      if (user.password === password) {
-        correctPassword = true;
-        userName = user.name;
-      }
-      break;
-    }
+    const { email: userEmail, password: userPass, name } = usersData[userId];
+    if (userEmail === email)
+      return {
+        status: userPass === password ? "success" : "wrongPassword",
+        userName: userPass === password ? name : null,
+      };
   }
 
-  if (!userFound) {
-    return { status: "emailNotRegistered", userName: null };
-  } else if (!correctPassword) {
-    return { status: "wrongPassword", userName: null };
-  }
-
-  return { status: "success", userName };
+  return { status: "emailNotRegistered", userName: null };
 }
 
 /**
@@ -199,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function showError(status) {
   const errorMessage = document.querySelector(".error");
-
   switch (status) {
     case "invalidEmail":
       errorMessage.textContent = "Please enter a valid email address!";
@@ -213,6 +186,5 @@ function showError(status) {
     default:
       errorMessage.textContent = "An unknown error occurred.";
   }
-
   errorMessage.style.display = "block";
 }

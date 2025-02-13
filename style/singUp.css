@@ -221,8 +221,34 @@ form {
   }
 
   .sign-up-header > span {
-    font-size: 47px;
-    line-height: 56.4px;
+    font-size: 32px;
+    line-height: 18.4px;
+  }
+
+  .arrow-left-line {
+    cursor: pointer;
+    position: absolute;
+    top: 34px;
+    left: 10px;
+    z-index: 1;
+  }
+
+  .input-ctn {
+    height: 262px;
+    width: 422px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  form {
+    gap: 8px;
+  }
+
+  .logo {
+    position: absolute;
+    left: 72px;
+    top: 54px;
   }
 
   .sign-up-header > hr {
@@ -245,13 +271,14 @@ form {
   form {
     width: 100%;
     font-size: 16px;
+    height: auto;
   }
 }
 
 @media (max-width: 1024px) {
   .sign-up {
-    margin-top: 300px;
-    padding: 32px 32px;
+    margin-top: 0px;
+    padding: 22px 22px;
   }
 }
 

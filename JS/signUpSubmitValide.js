@@ -85,43 +85,23 @@ function isEmailAlreadyRegistered(usersData, email) {
 
 /**
  * Validates the form data.
- *
  * @param {Object} formData - The form data to validate.
  * @returns {boolean} Whether the form data is valid.
  */
 function validateFormData(formData) {
-  const errorElement = document.getElementById("error");
-  let errorMessages = [];
+  const errors = [];
+  if (!isValidName(formData.name))
+    errors.push("Enter a valid name (min. 2 letters).");
+  if (!isValidEmail(formData.email))
+    errors.push("Enter a valid email address.");
+  if (formData.password.length < 6)
+    errors.push("Password must be at least 6 characters.");
+  if (formData.password !== formData.confirmPassword)
+    errors.push("Passwords do not match.");
+  if (!formData.acceptTerms) errors.push("You must accept the privacy policy.");
 
-  if (!isValidName(formData.name)) {
-    errorMessages.push(
-      "Please enter a valid name (only letters, at least 2 characters)."
-    );
-  }
-
-  if (!isValidEmail(formData.email)) {
-    errorMessages.push("Please enter a valid email address.");
-  }
-
-  if (formData.password.length < 6) {
-    errorMessages.push("Password must be at least 6 characters long.");
-  }
-
-  if (formData.password !== formData.confirmPassword) {
-    errorMessages.push("Passwords do not match.");
-  }
-
-  if (!formData.acceptTerms) {
-    errorMessages.push("You must accept the privacy policy.");
-  }
-
-  if (errorMessages.length > 0) {
-    errorElement.innerHTML = errorMessages.join("<br>");
-    return false;
-  }
-
-  errorElement.textContent = "";
-  return true;
+  document.getElementById("error").innerHTML = errors.join("<br>");
+  return errors.length === 0;
 }
 
 /**
@@ -180,39 +160,34 @@ function validateNameField() {
 }
 
 /**
- * Validates the email field in real-time and locks other fields in case of an error.
+ * Validates the email field and locks other fields if invalid.
  */
 async function validateEmailField() {
-  const emailInput = document.getElementById("emailInput");
+  const email = document.getElementById("emailInput").value.trim();
   const errorElement = document.getElementById("error");
-  const email = emailInput.value.trim();
 
-  let emailError = !isValidEmail(email);
-
-  if (emailError) {
-    errorElement.textContent = "Please enter a valid email address.";
-    toggleFieldLock(false, true);
-    return;
-  }
+  if (!isValidEmail(email))
+    return setEmailError("Please enter a valid email address.", true);
 
   try {
-    const url =
-      "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-    const usersData = await fetchExistingUsers(url);
+    const usersData = await fetchExistingUsers(
+      "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+    );
+    if (isEmailAlreadyRegistered(usersData, email))
+      return setEmailError("This email address is already registered!", true);
 
-    if (isEmailAlreadyRegistered(usersData, email)) {
-      errorElement.textContent = "This email address is already registered!";
-      toggleFieldLock(false, true);
-      return;
-    } else {
-      errorElement.textContent = "";
-      toggleFieldLock(false, false);
-    }
-  } catch (error) {
-    console.error("Error during server check:", error);
-    errorElement.textContent = "Server error: Please try again later.";
-    toggleFieldLock(false, true);
+    setEmailError("", false);
+  } catch {
+    setEmailError("Server error: Please try again later.", true);
   }
+}
+
+/**
+ * Sets the email error message and updates field locks.
+ */
+function setEmailError(message, lock) {
+  document.getElementById("error").textContent = message;
+  toggleFieldLock(false, lock);
 }
 
 /**
@@ -234,43 +209,53 @@ function addLiveValidationListeners() {
 }
 
 /**
- * Validates the passwords and ensures that the error message stays
- * until the issue is really fixed.
+ * Validates passwords and ensures error messages persist until fixed.
  */
 function validatePasswordField() {
-  const passwordInput = document.getElementById("passwordInput");
-  const confirmPasswordInput = document.getElementById("confirmPasswordInput");
-  const errorElement = document.getElementById("error");
+  const password = document.getElementById("passwordInput").value.trim();
+  const confirmPassword = document
+    .getElementById("confirmPasswordInput")
+    .value.trim();
 
-  let passwordError = false;
+  const errorMsg = getPasswordError(password, confirmPassword);
+  setPasswordError(errorMsg);
 
-  if (
-    passwordInput.value.trim() === "" ||
-    confirmPasswordInput.value.trim() === ""
-  ) {
-    passwordError = true;
-    errorElement.textContent = "Both password fields must be filled out.";
-  } else if (passwordInput.value.length < 6) {
-    passwordError = true;
-    errorElement.textContent = "Password must be at least 6 characters long.";
-  } else if (passwordInput.value !== confirmPasswordInput.value) {
-    passwordError = true;
-    errorElement.textContent = "Passwords do not match.";
-  }
+  const hasError = !!errorMsg;
+  toggleFieldLock(hasNameError(), hasEmailError(), hasError);
+  updateSubmitButton(!hasError);
+}
 
-  if (!passwordError) {
-    errorElement.textContent = "";
-  }
+/**
+ * Returns an error message if the password validation fails.
+ */
+function getPasswordError(password, confirmPassword) {
+  if (!password || !confirmPassword)
+    return "Both password fields must be filled out.";
+  if (password.length < 6)
+    return "Password must be at least 6 characters long.";
+  if (password !== confirmPassword) return "Passwords do not match.";
+  return "";
+}
 
-  let nameError = !isValidName(
-    document.getElementById("nameInput").value.trim()
-  );
-  let emailError = !isValidEmail(
-    document.getElementById("emailInput").value.trim()
-  );
+/**
+ * Updates the error message display.
+ */
+function setPasswordError(message) {
+  document.getElementById("error").textContent = message;
+}
 
-  toggleFieldLock(nameError, emailError, passwordError);
-  updateSubmitButton(!nameError && !emailError && !passwordError);
+/**
+ * Checks if the name input has an error.
+ */
+function hasNameError() {
+  return !isValidName(document.getElementById("nameInput").value.trim());
+}
+
+/**
+ * Checks if the email input has an error.
+ */
+function hasEmailError() {
+  return !isValidEmail(document.getElementById("emailInput").value.trim());
 }
 
 /**

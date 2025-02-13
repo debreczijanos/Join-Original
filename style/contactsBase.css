@@ -12,13 +12,14 @@ html {
 }
 
 .layout-wrapper {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   max-width: 1440px;
   display: flex;
   padding-bottom: 0px;
-  margin-bottom: -111px;
+  /* margin-bottom: -111px; */
   padding-left: 232px;
+  height: calc(100vh - 96px);
 }
 
 .addContactButtonResponsiv {

@@ -6,13 +6,11 @@ function updateSubmitButton(allFilled) {
   const passwordInput = document.getElementById("passwordInput");
   const confirmPasswordInput = document.getElementById("confirmPasswordInput");
   const acceptTerms = document.getElementById("acceptTerms");
-
   const passwordsMatch =
     passwordInput.value === confirmPasswordInput.value &&
     passwordInput.value.length >= 6;
 
   const isCheckboxChecked = acceptTerms.checked;
-
   submitButton.disabled = !allFilled || !passwordsMatch || !isCheckboxChecked;
   submitButton.style.backgroundColor = !submitButton.disabled
     ? "#2a3647"
@@ -39,23 +37,19 @@ function addInputListeners() {
 }
 
 /**
- * Handles the form submission, validates the data, and sends it to the server.
- *
- * @param {Event} event - The submit event.
+ * Handles the form submission, validates data, and sends it to the server.
  */
 async function handleSubmit(event) {
   event.preventDefault();
   const errorElement = document.getElementById("error");
-  const formData = collectFormData();
   errorElement.textContent = "";
   errorElement.style.color = "red";
-  if (!validateFormData(formData)) {
-    return;
-  }
+
+  if (!validateFormData(collectFormData())) return;
+
   try {
-    const response = await sendDataToServer(formData);
-    handleServerResponse(response);
-  } catch (error) {
+    handleServerResponse(await sendDataToServer(collectFormData()));
+  } catch {
     errorElement.textContent = "Network error: Please check your connection.";
   }
 }
@@ -78,32 +72,31 @@ function collectFormData() {
 }
 
 /**
- * Sends the form data to the server.
- *
- * @param {Object} formData - The data to be sent.
- * @returns {Response|Object} The server's response or an error object.
+ * Sends form data to the server after checking for existing users.
  */
 async function sendDataToServer({ name, email, password, acceptTerms }) {
   const url =
     "https://join-388-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  const usersData = await fetchExistingUsers(url);
+  if (isEmailAlreadyRegistered(usersData, email))
+    return showError("This email address is already registered!");
+
+  return saveNewUser(url, { name, email, password, acceptTerms }).catch(() =>
+    showError("A server error occurred. Please try again later.")
+  );
+}
+
+/**
+ * Displays an error message.
+ */
+function showError(message) {
   const errorElement = document.getElementById("error");
-
-  try {
-    const usersData = await fetchExistingUsers(url);
-
-    if (isEmailAlreadyRegistered(usersData, email)) {
-      errorElement.textContent = "This email address is already registered!";
-      errorElement.style.color = "red";
-      return { ok: false, reason: "email_exists" };
-    }
-
-    return await saveNewUser(url, { name, email, password, acceptTerms });
-  } catch (error) {
-    errorElement.textContent =
-      "A server error occurred. Please try again later.";
-    errorElement.style.color = "red";
-    return { ok: false, reason: "server_error" };
-  }
+  errorElement.textContent = message;
+  errorElement.style.color = "red";
+  return {
+    ok: false,
+    reason: message.includes("registered") ? "email_exists" : "server_error",
+  };
 }
 
 /**

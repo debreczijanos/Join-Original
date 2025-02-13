@@ -10,7 +10,7 @@ function toggleDropdown() {
   } else {
     dropdownMenu.classList.add("d-none");
     dropdownMenu.style.display = "none";
-  } 
+  }
 }
 
 /**
@@ -45,26 +45,27 @@ function generateColorFromLetter(letter) {
  * @param {boolean} isChecked - Whether the contact is selected.
  */
 function updateDropdownStyle(contactElement, isChecked) {
-  if (isChecked) {
-    contactElement.style.backgroundColor = "#2A3647";
-    contactElement.style.color = "#ffffff";
+  contactElement.style.backgroundColor = isChecked ? "#2A3647" : "#f9f9f9";
+  contactElement.style.color = isChecked ? "#ffffff" : "#000000";
 
+  if (!isChecked) {
+    contactElement.onmouseover = () => setDropdownHover(contactElement, true);
+    contactElement.onmouseout = () => setDropdownHover(contactElement, false);
+  } else {
     contactElement.onmouseover = null;
     contactElement.onmouseout = null;
-  } else {
-    contactElement.style.backgroundColor = "#f9f9f9";
-    contactElement.style.color = "#000000";
-
-    contactElement.onmouseover = () => {
-      contactElement.style.backgroundColor = "#a8a3a666";
-      contactElement.style.color = "#000000";
-    };
-
-    contactElement.onmouseout = () => {
-      contactElement.style.backgroundColor = "#f9f9f9";
-      contactElement.style.color = "#000000";
-    };
   }
+}
+
+/**
+ * Sets hover styles for the dropdown.
+ *
+ * @param {HTMLElement} element - The contact element.
+ * @param {boolean} isHover - Whether the element is hovered.
+ */
+function setDropdownHover(element, isHover) {
+  element.style.backgroundColor = isHover ? "#a8a3a666" : "#f9f9f9";
+  element.style.color = "#000000";
 }
 
 /**
@@ -74,7 +75,7 @@ function updateDropdownStyle(contactElement, isChecked) {
  */
 async function updateTaskAssignments(updatedAssignments) {
   try {
-    const response = await fetch(
+    await fetch(
       `https://join-388-default-rtdb.europe-west1.firebasedatabase.app/tasks/${currentTaskId}/assignedTo.json`,
       {
         method: "PUT",
@@ -82,15 +83,7 @@ async function updateTaskAssignments(updatedAssignments) {
         body: JSON.stringify(updatedAssignments),
       }
     );
-
-    if (!response.ok) {
-      throw new Error("Failed to update task assignments");
-    }
-
-    console.log("Task assignments updated successfully!");
-  } catch (error) {
-    console.error("Error updating task assignments:", error);
-  }
+  } catch {}
 }
 
 /**

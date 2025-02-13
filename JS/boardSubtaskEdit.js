@@ -89,50 +89,26 @@ function openEditTaskOverlay(taskId) {
 }
 
 /**
- * Loads subtasks from the API.
+ * Loads subtasks from the API and updates the UI.
  * @param {string} taskId - The task ID.
  */
 async function loadExistingSubtasks(taskId) {
-  if (!taskId) {
-    console.error("Task ID missing.");
-    return;
-  }
-
-  subtaskList.innerHTML = ""; // Clear previous content
+  if (!taskId) return console.error("Task ID missing.");
+  subtaskList.innerHTML = "";
 
   try {
     const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
     if (!response.ok) throw new Error("Error fetching subtasks");
 
     const subtasks = await response.json();
+    if (!subtasks || typeof subtasks !== "object") return;
 
-    // If subtasks are `null` or empty, exit
-    if (
-      !subtasks ||
-      typeof subtasks !== "object" ||
-      Object.keys(subtasks).length === 0
-    ) {
-      return; // Do nothing
-    }
-
-    const subtaskArray = Object.values(subtasks);
-
-    if (subtaskArray.length === 0) {
-      console.warn("No subtasks found.");
-      return;
-    }
-
-    // Render subtasks
-    subtaskArray.forEach((subtask) => {
-      if (!subtask || !subtask.name) {
-        console.warn("Invalid subtask data", subtask);
-        return;
-      }
-      subtaskList.appendChild(createSubtaskElement(subtask.name));
+    Object.values(subtasks).forEach((subtask) => {
+      if (subtask?.name)
+        subtaskList.appendChild(createSubtaskElement(subtask.name));
     });
   } catch (error) {
     console.error("Error loading subtasks:", error);
-    alert("Error loading subtasks.");
   }
 }
 
@@ -194,33 +170,42 @@ function resetState() {
 /**
  * Creates a subtask element with edit and delete functions.
  * @param {string} text - The name of the subtask.
- * @returns {HTMLElement} The created element.
+ * @returns {HTMLElement} - The created element.
  */
 function createSubtaskElement(text) {
   const subtaskItem = document.createElement("div");
   subtaskItem.classList.add("subtask-item");
 
-  const subtaskTextElement = document.createElement("li");
-  subtaskTextElement.textContent = text;
+  const subtaskTextElement = Object.assign(document.createElement("li"), {
+    textContent: text,
+  });
+  const actions = createSubtaskActions(subtaskItem, subtaskTextElement);
 
+  subtaskItem.append(subtaskTextElement, actions);
+  return subtaskItem;
+}
+
+/**
+ * Creates action icons for a subtask.
+ * @param {HTMLElement} subtaskItem - The subtask element.
+ * @param {HTMLElement} subtaskTextElement - The subtask text element.
+ * @returns {HTMLElement} - The action elements.
+ */
+function createSubtaskActions(subtaskItem, subtaskTextElement) {
   const actions = document.createElement("div");
   actions.classList.add("subtask-actions");
 
-  const editIcon = createIcon("../img/SubtasksEdit.png", "Edit", () =>
-    editSubtask(subtaskItem, subtaskTextElement)
-  );
+  ["../img/SubtasksEdit.png", "../img/SubtasksDel.png"].forEach((src, i) => {
+    actions.appendChild(
+      createIcon(src, i ? "Delete" : "Edit", () =>
+        i
+          ? deleteSubtask(subtaskItem)
+          : editSubtask(subtaskItem, subtaskTextElement)
+      )
+    );
+  });
 
-  const deleteIcon = createIcon("../img/SubtasksDel.png", "Delete", () =>
-    deleteSubtask(subtaskItem)
-  );
-
-  actions.appendChild(editIcon);
-  actions.appendChild(deleteIcon);
-
-  subtaskItem.appendChild(subtaskTextElement);
-  subtaskItem.appendChild(actions);
-
-  return subtaskItem;
+  return actions;
 }
 
 /**
@@ -264,7 +249,6 @@ function createIcon(src, alt, clickHandler) {
  * Edits a subtask.
  */
 function editSubtask(subtaskItem, subtaskTextElement) {
-  // Check if already in edit mode
   if (subtaskItem.querySelector(".edit-input")) {
     return;
   }
@@ -317,49 +301,55 @@ function replaceTextWithInput(subtaskItem, input, textElement) {
  */
 async function saveSubtaskEdit(input, subtaskTextElement, subtaskItem) {
   const newValue = input.value.trim();
-  if (!newValue) {
-    alert("Subtask field cannot be empty.");
-    // If empty, revert to original text
-    subtaskItem.replaceChild(subtaskTextElement, input);
-    return;
-  }
-
-  const taskId = currentSubtaskTaskId;
-  if (!taskId) {
-    subtaskItem.replaceChild(subtaskTextElement, input);
-    return;
-  }
+  if (!newValue) return restoreSubtask(subtaskItem, input, subtaskTextElement);
 
   try {
-    const response = await fetch(`${API_URL}/${taskId}/subtasks.json`);
-    const subtasks = await response.json();
-
-    if (!subtasks) {
-      subtaskItem.replaceChild(subtaskTextElement, input);
-      return;
-    }
-
-    const subtaskKey = Object.keys(subtasks).find(
+    const subtasks = await fetchSubtasks();
+    const subtaskKey = Object.keys(subtasks || {}).find(
       (key) => subtasks[key]?.name === subtaskTextElement.textContent.trim()
     );
 
-    if (!subtaskKey) {
-      subtaskItem.replaceChild(subtaskTextElement, input);
-      return;
-    }
+    if (!subtaskKey)
+      return restoreSubtask(subtaskItem, input, subtaskTextElement);
 
-    await fetch(`${API_URL}/${taskId}/subtasks/${subtaskKey}.json`, {
+    await updateSubtaskInDB(subtaskKey, newValue);
+    subtaskTextElement.textContent = newValue;
+  } catch (error) {
+    alert("Error saving subtask.");
+  }
+
+  subtaskItem.replaceChild(subtaskTextElement, input);
+}
+
+/**
+ * Restores original subtask text if editing is canceled.
+ */
+function restoreSubtask(subtaskItem, input, subtaskTextElement) {
+  subtaskItem.replaceChild(subtaskTextElement, input);
+}
+
+/**
+ * Updates the subtask in Firebase.
+ */
+async function updateSubtaskInDB(subtaskKey, newValue) {
+  await fetch(
+    `${API_URL}/${currentSubtaskTaskId}/subtasks/${subtaskKey}.json`,
+    {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: newValue }),
-    });
+    }
+  );
+}
 
-    subtaskTextElement.textContent = newValue;
-    subtaskItem.replaceChild(subtaskTextElement, input);
-  } catch (error) {
-    alert("Error saving");
-    subtaskItem.replaceChild(subtaskTextElement, input);
-  }
+/**
+ * Fetches all subtasks from Firebase.
+ */
+async function fetchSubtasks() {
+  const response = await fetch(
+    `${API_URL}/${currentSubtaskTaskId}/subtasks.json`
+  );
+  return response.ok ? response.json() : null;
 }
 
 /**

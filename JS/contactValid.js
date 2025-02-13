@@ -56,29 +56,38 @@ function validateName() {
  * @param {string} [originalEmail=""] - The original email address in edit mode.
  * @returns {Promise<boolean>} Returns `true` if the email is valid; otherwise, `false`.
  */
+/**
+ * Validates email input and checks for duplicates.
+ */
 async function validateEmail(isEditMode = false, originalEmail = "") {
   const emailValue = getEmailInputValue();
-  const errorMessage = validateEmailFormat(
-    emailValue,
-    isEditMode,
-    originalEmail
-  );
+  if (!emailValue) return setEmailError("Email is required.") || false;
 
-  if (errorMessage) {
-    displayEmailError(errorMessage);
-    toggleCreateButton();
-    return false;
-  }
+  const error = validateEmailFormat(emailValue, isEditMode, originalEmail);
+  if (error) return setEmailError(error) || false;
 
   if (await isEmailAlreadyRegistered(emailValue, isEditMode, originalEmail)) {
-    displayEmailError("This email address is already registered.");
-    toggleCreateButton();
-    return false;
+    return setEmailError("This email address is already registered.") || false;
   }
 
-  clearEmailError();
-  toggleCreateButton();
+  return clearEmailError() || true;
+}
+
+/**
+ * Clears the email error message and ensures the function returns `true`.
+ */
+function clearEmailError() {
+  document.getElementById("errorEmail").textContent = "";
   return true;
+}
+
+/**
+ * Displays an email error and ensures the function returns `false`.
+ */
+function setEmailError(message) {
+  displayEmailError(message);
+  toggleCreateButton();
+  return false;
 }
 
 /**
@@ -150,31 +159,31 @@ function clearEmailError() {
 
 /**
  * Validates the phone number in the contact form.
- *
- * @function validatePhone
- * @returns {boolean} Returns `true` if the phone number is valid; otherwise, `false`.
+ * @returns {boolean} Returns `true` if valid, otherwise `false`.
  */
 function validatePhone() {
-  const phoneInput = document.getElementById("contactPhone");
+  const phoneInput = document.getElementById("contactPhone").value.trim();
   const errorPhone = document.getElementById("errorPhone");
   const phoneRegex = /^\+?[0-9]{7,15}$/;
 
-  if (!phoneInput.value.trim()) {
-    errorPhone.textContent = "";
-    toggleCreateButton();
-    return false;
+  if (!phoneInput) return setPhoneError("", false);
+  if (!phoneRegex.test(phoneInput)) {
+    return setPhoneError(
+      "Phone number must be 7-15 digits, numbers only (optional '+').",
+      false
+    );
   }
 
-  if (!phoneRegex.test(phoneInput.value.trim())) {
-    errorPhone.textContent =
-      "Phone number must be at least 7 digits long and can only contain numbers (optional with '+').";
-    toggleCreateButton();
-    return false;
-  }
+  return setPhoneError("", true);
+}
 
-  errorPhone.textContent = "";
+/**
+ * Sets or clears the phone number error message.
+ */
+function setPhoneError(message, isValid) {
+  document.getElementById("errorPhone").textContent = message;
   toggleCreateButton();
-  return true;
+  return isValid;
 }
 
 /**
@@ -307,7 +316,7 @@ async function saveEditedContact(contactId) {
       await updateUIAfterSave(updatedData);
       closeAddContactOverlay();
     } catch (error) {
-      handleSaveError(error);
+      console.error("Save error:", error);
     }
   }
 }
@@ -356,16 +365,12 @@ async function updateContactInDatabase(contactId, updatedData) {
     `${API_CONTACTS.replace(".json", "")}/${contactId}.json`,
     {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedData),
     }
   );
 
-  if (!response.ok) {
-    throw new Error(`Error while saving: ${response.status}`);
-  }
+  if (!response.ok) throw new Error(`Error while saving: ${response.status}`);
 }
 
 /**

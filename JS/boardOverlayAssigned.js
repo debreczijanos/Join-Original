@@ -217,7 +217,7 @@ function syncDropdownWithSelectedContacts() {
  */
 document.addEventListener("DOMContentLoaded", async () => {
   const taskId = "OF604eP7v0MtTlC5Del";
-  await loadContacts();
+  // await loadContacts();
 });
 
 /**
@@ -350,74 +350,30 @@ function removeContact(name) {
 }
 
 /**
- * Renders the selected contacts with a maximum visible count.
- *
- * @param {HTMLElement} container - The container displaying the selected contacts.
- */
-function renderSelectedContacts(container) {
-  const maxVisible = 3;
-  container.innerHTML = "";
-
-  selectedContacts.slice(0, maxVisible).forEach((contactName) => {
-    const initials = contactName
-      .split(" ")
-      .map((namePart) => namePart[0].toUpperCase())
-      .join("");
-
-    const randomColor = generateColorFromLetter(contactName.charAt(0));
-
-    const participantElement = document.createElement("span");
-    participantElement.classList.add("participant");
-    participantElement.style.backgroundColor = randomColor;
-    participantElement.innerText = initials;
-
-    container.appendChild(participantElement);
-  });
-
-  const extraCount = selectedContacts.length - maxVisible;
-  if (extraCount > 0) {
-    const extraCountElement = document.createElement("span");
-    extraCountElement.classList.add("participant", "extra-count");
-    extraCountElement.innerText = `+${extraCount}`;
-    container.appendChild(extraCountElement);
-  }
-}
-
-/**
- * Deselects a contact from the selected contacts list.
- *
- * @param {string} contactName - The name of the contact to be removed.
+ * Removes a contact from the selection and updates the display.
+ * @param {string} contactName - Name of the contact to be removed.
  */
 function deselectContact(contactName) {
   selectedContacts = selectedContacts.filter((name) => name !== contactName);
-
-  const checkboxes = document.querySelectorAll(".dropdown-item input");
-  checkboxes.forEach((checkbox) => {
-    if (checkbox.value === contactName) {
-      checkbox.checked = false;
-    }
+  document.querySelectorAll(".dropdown-item input").forEach((checkbox) => {
+    if (checkbox.value === contactName) checkbox.checked = false;
   });
 
-  const selectedContactsContainer = document.getElementById("selectedContacts");
-  populateEditTaskForm(selectedContactsContainer);
+  renderSelectedContacts(document.getElementById("selectedContacts"));
 }
 
 /**
- * Generates a color based on the first letter of a name.
- *
+ * Generates a color based on the first letter of the name.
  * @param {string} letter - The first letter of the name.
- * @returns {string} The generated color in HSL format.
+ * @returns {string} - Generated HSL color.
  */
 function generateColorFromLetter(letter) {
-  const charCode = letter.toUpperCase().charCodeAt(0);
-  const hue = (charCode - 65) * 15;
-  return `hsl(${hue}, 70%, 50%)`;
+  return `hsl(${(letter.toUpperCase().charCodeAt(0) - 65) * 15}, 70%, 50%)`;
 }
 
 /**
- * Populates the edit task form with task data.
- *
- * @param {Object} task - The task data to be edited.
+ * Populates the task edit form with existing data.
+ * @param {Object} task - The task data.
  */
 function populateEditTaskForm(task) {
   document.getElementById("edit-title").value = task.title || "";
@@ -426,74 +382,50 @@ function populateEditTaskForm(task) {
   document.getElementById("edit-priority").value = task.prio || "Medium";
 
   selectedContacts = task.assignedTo || [];
-
   updateSelectedContactsDisplay();
-  const selectedContactsContainer = document.getElementById("selectedContacts");
-  selectedContactsContainer.innerHTML = "";
+}
 
-  if (task.assignedTo && task.assignedTo.length > 0) {
-    const visibleParticipants = task.assignedTo.slice(0, 3);
-    const remainingCount = task.assignedTo.length - visibleParticipants.length;
+/**
+ * Displays up to 3 selected contacts and counts additional ones.
+ * @param {HTMLElement} container - Container for displaying the contacts.
+ */
+function renderSelectedContacts(container) {
+  container.innerHTML = "";
+  selectedContacts
+    .slice(0, 3)
+    .forEach((name) => container.appendChild(createParticipant(name)));
 
-    visibleParticipants.forEach((person) => {
-      const initials = person
-        .split(" ")
-        .map((namePart) => namePart[0].toUpperCase())
-        .join("");
-
-      const randomColor = getRandomColor();
-
-      const participantElement = document.createElement("span");
-      participantElement.classList.add("participant");
-      participantElement.style.backgroundColor = randomColor;
-      participantElement.innerText = initials;
-
-      selectedContactsContainer.appendChild(participantElement);
-    });
-
-    if (remainingCount > 0) {
-      const extraCountElement = document.createElement("span");
-      extraCountElement.classList.add("participant", "extra-count");
-      extraCountElement.innerText = `+${remainingCount}`;
-      selectedContactsContainer.appendChild(extraCountElement);
-    }
-  } else {
-    selectedContactsContainer.innerHTML = `<p>No contacts assigned</p>`;
+  if (selectedContacts.length > 3) {
+    const extra = document.createElement("span");
+    extra.classList.add("participant", "extra-count");
+    extra.innerText = `+${selectedContacts.length - 3}`;
+    container.appendChild(extra);
   }
+}
+
+/**
+ * Creates a participant element with initials and color.
+ * @param {string} name - Name of the contact.
+ * @returns {HTMLElement} - The created participant element.
+ */
+function createParticipant(name) {
+  const initials = name
+    .split(" ")
+    .map((n) => n[0].toUpperCase())
+    .join("");
+  const color = generateColorFromLetter(name.charAt(0));
+
+  const participant = document.createElement("span");
+  participant.classList.add("participant");
+  participant.style.backgroundColor = color;
+  participant.innerText = initials;
+
+  return participant;
 }
 
 /**
  * Updates the display of selected contacts.
  */
 function updateSelectedContactsDisplay() {
-  const selectedContactsContainer = document.getElementById("selectedContacts");
-
-  selectedContactsContainer.innerHTML = "";
-
-  const maxVisible = 3;
-  const visibleContacts = selectedContacts.slice(0, maxVisible);
-
-  visibleContacts.forEach((contactName) => {
-    const initials = contactName
-      .split(" ")
-      .map((namePart) => namePart[0].toUpperCase())
-      .join("");
-
-    const randomColor = generateColorFromLetter(contactName.charAt(0));
-
-    const participantElement = document.createElement("span");
-    participantElement.classList.add("participant");
-    participantElement.style.backgroundColor = randomColor;
-    participantElement.innerText = initials;
-
-    selectedContactsContainer.appendChild(participantElement);
-  });
-
-  const extraCount = selectedContacts.length - maxVisible;
-  if (extraCount > 0) {
-    const extraCountElement = document.createElement("span");
-    extraCountElement.classList.add("participant", "extra-count");
-    extraCountElement.innerText = `+${extraCount}`;
-    selectedContactsContainer.appendChild(extraCountElement);
-  }
+  renderSelectedContacts(document.getElementById("selectedContacts"));
 }

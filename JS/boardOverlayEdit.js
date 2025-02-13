@@ -359,7 +359,6 @@ function saveTask() {
  */
 async function createTask() {
   const taskData = collectTaskData();
-
   if (!taskData.title || !taskData.dueDate || !taskData.category) {
     alert(
       "Please fill in all required fields (Title, Due Date, and Category)."
@@ -368,62 +367,52 @@ async function createTask() {
   }
 
   try {
-    const response = await fetch(`${API_URL}.json`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(taskData),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Fehler beim Erstellen der Aufgabe: ${response.statusText}`
-      );
-    }
-
-    const responseData = await response.json();
-    console.log("Aufgabe erfolgreich erstellt:", responseData);
-
-    const newTaskId = responseData.name;
-    const newTask = { id: newTaskId, ...taskData };
-    allTasksData.push(newTask);
-    const miniContainer = createTaskElement(newTask);
-    const toDoContainer = document.querySelector(".tasks");
-    toDoContainer.appendChild(miniContainer);
-
-    clearFormFields();
-    closeTaskWindow();
-    console.log("Mini-Container hinzugefügt:", miniContainer);
+    const taskId = await saveTaskToBackend(taskData);
+    addTaskToUI(taskId, taskData);
   } catch (error) {
-    console.error("Fehler beim Erstellen der Aufgabe:", error);
+    console.error("Error creating task:", error);
   }
 }
 
 /**
- * Loads contacts from both APIs and combines them.
+ * Saves the task to the backend and returns the task ID.
+ * @param {Object} taskData - The task data.
+ * @returns {string} - The new task ID.
  */
-async function loadContacts() {
-  const dropdownMenu = document.getElementById("dropdownMenu");
-  dropdownMenu.innerHTML = "Loading...";
+async function saveTaskToBackend(taskData) {
+  const response = await fetch(`${API_URL}.json`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(taskData),
+  });
 
-  try {
-    const [usersResponse, contactsResponse] = await Promise.all([
-      fetch(USERS_API_URL),
-      fetch(API_CONTACTS),
-    ]);
+  if (!response.ok)
+    throw new Error(`Error creating task: ${response.statusText}`);
+  const responseData = await response.json();
+  return responseData.name;
+}
 
-    if (!usersResponse.ok || !contactsResponse.ok) {
-      throw new Error("Error loading contacts from APIs.");
-    }
+/**
+ * Adds the new task to the UI and updates the list.
+ * @param {string} taskId - The task ID.
+ * @param {Object} taskData - The task data.
+ */
+function addTaskToUI(taskId, taskData) {
+  const newTask = { id: taskId, ...taskData };
+  allTasksData.push(newTask);
 
-    const users = await usersResponse.json();
-    const contacts = await contactsResponse.json();
+  const miniContainer = createTaskElement(newTask);
+  document.querySelector(".tasks").appendChild(miniContainer);
+  finalizeTaskCreation();
+}
 
-    const allContacts = [...Object.values(users), ...Object.values(contacts)];
-    renderContactsDropdown(allContacts, dropdownMenu);
-  } catch (error) {
-    dropdownMenu.innerHTML = "Error loading contacts.";
-    console.error("Fehler:", error);
-  }
+/**
+ * Clears form fields and closes the task window.
+ */
+function finalizeTaskCreation() {
+  clearFormFields();
+  closeTaskWindow();
+  loadContacts();
 }
 
 /**
@@ -449,8 +438,3 @@ function deleteSubtask(button) {
   const li = button.parentElement;
   li.remove();
 }
-
-/**
- * Loads contacts when the page is loaded.
- */
-window.onload = loadContacts;
