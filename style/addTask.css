@@ -1,6 +1,6 @@
 #dropdownMenu input[type="checkbox"] {
   appearance: none;
-  -webkit-appearance: none; /* Für Safari */
+  -webkit-appearance: none; /* For Safari */
   width: 20px;
   height: 20px;
   background-color: transparent;
@@ -221,31 +221,31 @@ p > span {
   z-index: 1;
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .dropdown-menu::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
-/* Horizontaler Scrollbalken */
+/* Horizontal scrollbar */
 .dropdown-menu::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the horizontal scrollbar */
 }
 
-/* Hintergrund der Scrollbar-Spur */
+/* Background of the scrollbar track */
 .dropdown-menu::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe */
+  background: #f1f1f1; /* Backgroundcolor */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .dropdown-menu::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
-  border-radius: 8px; /* Abgerundete Kanten */
+  /* Color */
+  border-radius: 8px; /* Rounded edges */
 }
 
 /* Hover-Effekt */
 .dropdown-menu::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* color on Hover */
 }
 
 .dropdown-menu.open {

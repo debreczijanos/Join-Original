@@ -1,6 +1,6 @@
 #dropdownMenu input[type="checkbox"] {
   appearance: none;
-  -webkit-appearance: none; /* Für Safari */
+  -webkit-appearance: none; /* For Safari */
   width: 20px;
   height: 20px;
   background-color: transparent;
@@ -236,31 +236,31 @@ p > span {
   z-index: 1;
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .dropdown-menu::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
 /* Horizontaler Scrollbalken */
 .dropdown-menu::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the horizontal scrollbar */
 }
 
 /* Hintergrund der Scrollbar-Spur */
 .dropdown-menu::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe */
+  background: #f1f1f1; /* Background color */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .dropdown-menu::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
-  border-radius: 8px; /* Abgerundete Kanten */
+  /* color */
+  border-radius: 8px; /* Rounded edges */
 }
 
 /* Hover-Effekt */
 .dropdown-menu::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* Color on hover */
 }
 
 .dropdown-menu.open {
@@ -494,31 +494,31 @@ p > span {
   transform: scale(1.2);
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .subtask-list::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
-/* Horizontaler Scrollbalken */
+/* Horizontal scrollbar */
 .subtask-list::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the horizontal scrollbar */
 }
 
-/* Hintergrund der Scrollbar-Spur */
+/* Background of the scrollbar track */
 .subtask-list::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe */
+  background: #f1f1f1; /* Background color */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .subtask-list::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
+  /* color */
   border-radius: 8px; /* Abgerundete Kanten */
 }
 
 /* Hover-Effekt */
 .subtask-list::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* Color on Hover */
 }
 
 .divider {
@@ -528,31 +528,31 @@ p > span {
   margin: 0 2px;
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .add-task-ctn-date::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
-/* Horizontaler Scrollbalken */
+/* Horizontal scrollbar */
 .add-task-ctn-date::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the horizontal scrollbar */
 }
 
-/* Hintergrund der Scrollbar-Spur */
+/* Background of the scrollbar track */
 .add-task-ctn-date::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe */
+  background: #f1f1f1; /* Background Color */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .add-task-ctn-date::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
-  border-radius: 8px; /* Abgerundete Kanten */
+  /* Color */
+  border-radius: 8px; /* Rounded edges */
 }
 
 /* Hover-Effekt */
 .add-task-ctn-date::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* Color on Hover */
 }
 
 .submit-btn {

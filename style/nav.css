@@ -67,7 +67,7 @@
 }
 
 .menu > div:hover img {
-  filter: brightness(0.8); /* Bild leicht abdunkeln */
+  filter: brightness(0.8); /* Slightly darken the image" */
 }
 
 .summary,

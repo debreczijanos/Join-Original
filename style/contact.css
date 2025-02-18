@@ -165,12 +165,12 @@
   border-radius: 10px;
   padding: 5px 10px;
   height: 40px;
-  width: 100%; /* Passe die Breite entsprechend an */
+  width: 100%; /*Adjust the width accordingly */
   box-shadow: 0 0 2px #dcdcdc;
 }
 
 .input-container input {
-  flex: 1; /* Nimmt den verbleibenden Platz ein */
+  flex: 1; /* Takes up the remaining space */
   border: none;
   outline: none;
   font-size: 16px;
@@ -179,19 +179,19 @@
 }
 
 .input-container .input-icon {
-  width: 20px; /* Passe die Icon-Größe an */
+  width: 20px; /*Adjust the icon size */
   height: 20px;
   margin-left: 10px;
 }
 
 .input-container input::placeholder {
-  color: #ccc; /* Platzhalterfarbe */
+  color: #ccc; /* Placeholder color */
 }
 
 .input-container:hover,
 .input-container:focus-within {
-  border-color: #29abe2; /* Farbe für Hover oder Fokus */
-  box-shadow: 0 0 4px #29abe2; /* Lila Schimmer */
+  border-color: #29abe2; /* Color for hover or focus" */
+  box-shadow: 0 0 4px #29abe2; /* Purple shimmer */
 }
 
 .error-message {

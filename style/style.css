@@ -136,7 +136,7 @@ button {
 }
 
 .inputEmail:focus-within {
-  border-color: #29abe2; /* Farbe des Fokusrahmens */
+  border-color: #29abe2; /* Color of the focus outline */
 }
 
 .logInPersonal > .inputPasword {
@@ -163,7 +163,7 @@ button {
 }
 
 .inputPasword:focus-within {
-  border-color: #29abe2; /* Farbe des Fokusrahmens */
+  border-color: #29abe2; /* Color of the focus outline */
 }
 
 .error {

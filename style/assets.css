@@ -72,28 +72,28 @@ button {
     contrast(100%);
 }
 
-/* Verstecke die Standard-Checkbox */
+/* Hide the default checkbox */
 input[type="checkbox"] {
-  appearance: none; /* Entfernt das native Checkbox-Styling */
-  -webkit-appearance: none; /* Für Safari */
-  width: 20px; /* Größe der Checkbox */
+  appearance: none; /* Removes the native checkbox styling */
+  -webkit-appearance: none; /* For Safari */
+  width: 20px; /* Size of the checkbox" */
   height: 20px;
-  background-color: transparent; /* Hintergrund */
-  border: 2px solid black; /* Schwarzer Rahmen */
-  border-radius: 4px; /* Leicht gerundete Ecken */
+  background-color: transparent; /* Background */
+  border: 2px solid black; /* Black border */
+  border-radius: 4px; /* Slightly rounded corners */
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
 }
 
-/* Styling für die Checkbox, wenn sie aktiv ist */
+/* Styling for the checkbox when it is active */
 input[type="checkbox"]:checked {
-  background-color: white; /* Hintergrundfarbe beim Aktivieren */
+  background-color: white; /* Background color when activated */
   border: 2px solid black;
 }
 
 input[type="checkbox"]:checked::after {
-  content: ""; /* Der Haken */
+  content: ""; /* The checkmark */
   display: block;
   width: 6px;
   height: 18px;
@@ -105,31 +105,31 @@ input[type="checkbox"]:checked::after {
   left: 8px;
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .main-content::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /* Width of the vertical scrollbar */
 }
 
-/* Horizontaler Scrollbalken */
+/* Horizontal scrollbar */
 .add-task-ctn-date::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the vertical scrollbar */
 }
 
-/* Hintergrund der Scrollbar-Spur */
+/* Background of the scrollbar track */
 .add-task-ctn-date::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Hintergrundfarbe */
+  background: #f1f1f1; /* Background color */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .main-content::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
-  border-radius: 8px; /* Abgerundete Kanten */
+  /* color */
+  border-radius: 8px; /* Rounded edges */
 }
 
 /* Hover-Effekt */
 .main-content::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* color on Hover */
 }
 
 @media (max-width: 1360px) {

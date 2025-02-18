@@ -409,20 +409,20 @@ input[type="text"]::placeholder {
 }
 
 .required-field-message {
-  color: #000; /* Schwarzer Text */
-  font-size: 12px; /* Kleine Schriftgröße */
+  color: #000; /* Black text */
+  font-size: 12px; /* Small font size */
   margin-top: 10px;
-  text-align: left; /* Linksbündig */
-  padding: 5px 20px; /* Abstand zum Rand */
-  position: relative; /* Innerhalb des Containers positioniert */
+  text-align: left; /* Left-aligned*/
+  padding: 5px 20px; /* Spacing to the edge */
+  position: relative; /* Positioned inside the container */
 }
 
 .button-container {
-  position: absolute; /* Buttons innerhalb von 'great-open-Task' */
-  bottom: 20px; /* Abstand vom unteren Rand */
-  right: 20px; /* Abstand vom rechten Rand */
+  position: absolute; /* Buttons inside of 'great-open-Task' */
+  bottom: 20px; /*Spacing from the bottom edge */
+  right: 20px; /* Spacing from the right edge */
   display: flex;
-  gap: 10px; /* Abstand zwischen den Buttons */
+  gap: 10px; /* Spacing between the buttons */
 }
 
 .cancel-button {
@@ -495,11 +495,11 @@ input[type="text"]::placeholder {
 }
 
 .priority-button.urgent:hover {
-  background-color: #f2b5b4; /* Hellerer Rotton beim Hover */
+  background-color: #f2b5b4; /* Lighter shade of red on hover */
 }
 
 .priority-button.selected.urgent {
-  background-color: #b52b27; /* Dunklerer Rotton beim Klicken */
+  background-color: #b52b27; /* Darker shade of red on click */
   color: white;
   border-color: #8f1f1c;
 }
@@ -568,32 +568,32 @@ input[type="text"]::placeholder {
   overflow-x: hidden;
 }
 
-/* Vertikaler Scrollbalken */
+/* Vertical scrollbar */
 .overlay-content::-webkit-scrollbar {
-  width: 4px; /* Breite des vertikalen Scrollbalkens */
+  width: 4px; /*Width of the vertical scrollbar */
 }
 
-/* Horizontaler Scrollbalken */
+/* Horizontal scrollbar */
 .overlay-content::-webkit-scrollbar {
-  height: 4px; /* Höhe des horizontalen Scrollbalkens */
+  height: 4px; /* Height of the horizontal scrollbar */
 }
 
-/* Hintergrund der Scrollbar-Spur */
+/* Background of the scrollbar track */
 .overlay-content::-webkit-scrollbar-track {
   background: transparent;
-  /* Hintergrundfarbe */
+  /* Background color */
 }
 
-/* Scrollbalken selbst */
+/* Scrollbar itself */
 .overlay-content::-webkit-scrollbar-thumb {
   background: #29abe2;
-  /* Farbe */
-  border-radius: 10px; /* Abgerundete Kanten */
+  /* colors */
+  border-radius: 10px; /* Rounded edges */
 }
 
 /* Hover-Effekt */
 .overlay-content::-webkit-scrollbar-thumb:hover {
-  background: #2a3647; /* Farbe bei Hover */
+  background: #2a3647; /* color on Hover */
 }
 
 .overlay-content::-webkit-scrollbar-track-piece:end {
@@ -745,10 +745,10 @@ input[type="text"]::placeholder {
 }
 
 #edit-priority option {
-  background-color: #ffffff; /* Hintergrundfarbe der Optionen */
-  color: #333; /* Schriftfarbe */
-  padding: 8px; /* Abstand im Inneren */
-  font-size: 14px; /* Schriftgröße */
+  background-color: #ffffff; /* Background color of the options */
+  color: #333; /* Font color */
+  padding: 8px; /* Inner spacing */
+  font-size: 14px; /* Font size */
 }
 
 #edit-title:focus,
@@ -1064,31 +1064,31 @@ label {
     /* padding: 0 24px; */
   }
 
-  /* Vertikaler Scrollbalken */
+  /* Vertical scrollbar */
   .tasks::-webkit-scrollbar {
-    width: 4px; /* Breite des vertikalen Scrollbalkens */
+    width: 4px; /* Width of the vertical scrollbar */
   }
 
-  /* Horizontaler Scrollbalken */
+  /* Horizontal scrollbar */
   .tasks::-webkit-scrollbar {
-    height: 4px; /* Höhe des horizontalen Scrollbalkens */
+    height: 4px; /* Height of the horizontal scrollbar */
   }
 
-  /* Hintergrund der Scrollbar-Spur */
+  /* Background of the scrollbar track */
   .tasks::-webkit-scrollbar-track {
-    background: transparent; /* Hintergrundfarbe */
+    background: transparent; /* Background color */
   }
 
-  /* Scrollbalken selbst */
+  /* Scrollbar itself */
   .tasks::-webkit-scrollbar-thumb {
     background: #29abe2;
-    /* Farbe */
-    border-radius: 10px; /* Abgerundete Kanten */
+    /* color */
+    border-radius: 10px; /* Rounded edges */
   }
 
   /* Hover-Effekt */
   .tasks::-webkit-scrollbar-thumb:hover {
-    background: #2a3647; /* Farbe bei Hover */
+    background: #2a3647; /* color on Hover */
   }
 }
 

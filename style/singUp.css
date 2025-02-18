@@ -95,7 +95,7 @@ form {
 }
 
 .costume-input:focus-within {
-  border-color: #29abe2; /* Farbe des Fokusrahmens */
+  border-color: #29abe2; /* Color of the focus outline */
 }
 
 .error {
@@ -152,7 +152,7 @@ form {
 }
 
 #successMessage {
-  display: none; /* Anfangs versteckt */
+  display: none; /* Initially hidden */
   color: white;
   padding: 0px 25px;
   border-radius: 20px;
@@ -164,15 +164,15 @@ form {
   justify-content: center;
   align-items: center;
   position: fixed;
-  bottom: -50px; /* Startet unter dem Bildschirm */
+  bottom: -50px; /* Starts below the screen*/
   left: 50%;
   transform: translateX(-50%);
   animation: slideUp 1s ease-out forwards;
   text-align: center;
-  z-index: 1000; /* Über andere Elemente */
+  z-index: 1000; /* Above other elements */
 }
 
-/* Animation für das Hochfahren des Texts */
+/* Animation for the text slide-up */
 @keyframes slideUp {
   0% {
     bottom: -50px;
@@ -182,7 +182,7 @@ form {
     opacity: 1;
   }
   100% {
-    bottom: 50%; /* Mitte des Bildschirms */
+    bottom: 50%; /* Center of the screen */
     opacity: 1;
   }
 }
