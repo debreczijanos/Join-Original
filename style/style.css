@@ -29,7 +29,8 @@ button {
   display: flex;
   gap: 35px;
   padding-top: 67px;
-  padding-left: 1039px;
+  padding-right: 24px;
+  justify-content: flex-end;
   align-items: center;
   margin: 0 auto;
   max-width: 1440px;
@@ -321,6 +322,13 @@ footer {
   transform: translate(0%, 0%);
   width: 100.03px;
   height: 121.97px;
+}
+
+@media (min-width: 1440px) {
+  .end-position-logo {
+    top: 46px;
+    left: calc((100vw - 1440px) / 2 + 77px);
+  }
 }
 
 @media (max-width: 1350px) {
